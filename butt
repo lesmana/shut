@@ -1,0 +1,10 @@
+#! /bin/sh
+
+for filename in test*; do
+  if sh "$filename"; then
+    echo -n "p "
+  else
+    echo -n "f "
+  fi
+  echo "$filename"
+done
