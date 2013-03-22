@@ -4,7 +4,14 @@ runtest() {
   testname=$1
   cd $testname
   echo $testname
-  ./runtests || echo "fail: $testname"
+  output=$(./runtests)
+  exitstatus=$?
+  if [ $exitstatus -ne 0 ]; then
+    echo "fail: $testname"
+    echo "output:"
+    echo "$output"
+    echo "exitstatus: $exitstatus"
+  fi
 }
 
 cd tests
