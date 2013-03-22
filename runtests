@@ -19,5 +19,8 @@ runtest() {
 cd tests
 
 for dir in *; do
+  if [ ! -d "$dir" ]; then
+    continue
+  fi
   (runtest $dir)
 done
