@@ -1,3 +1,30 @@
 #! /bin/sh
 
-! ../../butt
+expectedoutput="\
+f test_false1.sh
+f test_false2.sh"
+expectedexitstatus=1
+
+output=$(../../butt)
+exitstatus=$?
+
+fail=0
+
+if [ "$output" != "$expectedoutput" ]; then
+  fail=1
+  echo "output do not match"
+  echo "expected/actual output:"
+  echo "----"
+  echo "$expectedoutput"
+  echo "----"
+  echo "$output"
+  echo "----"
+fi
+
+if [ "$exitstatus" != "$expectedexitstatus" ]; then
+  fail=1
+  echo "exit status do not match"
+  echo "expected: $expectedexitstatus actual: $exitstatus"
+fi
+
+exit $fail
