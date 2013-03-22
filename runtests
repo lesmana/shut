@@ -1,0 +1,14 @@
+#! /bin/sh
+
+runtest() {
+  testname=$1
+  cd $testname
+  echo $testname
+  ./runtests
+}
+
+cd tests
+
+for dir in *; do
+  (runtest $dir)
+done
