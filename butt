@@ -1,6 +1,9 @@
 #! /bin/sh
 
 for filename in test*; do
+  if [ -d "$filename" ]; then
+    continue
+  fi
   if sh "$filename"; then
     echo -n "p "
   else
