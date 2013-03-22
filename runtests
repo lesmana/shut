@@ -3,14 +3,16 @@
 runtest() {
   testname=$1
   cd $testname
-  echo $testname
   output=$(./runtests)
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
+    echo "================"
     echo "fail: $testname"
-    echo "output:"
-    echo "$output"
     echo "exitstatus: $exitstatus"
+    echo "output:"
+    echo "----------------"
+    echo "$output"
+    echo "----------------"
   fi
 }
 
