@@ -1,5 +1,7 @@
 #! /bin/sh
 
+fail=0
+
 for filename in test*; do
   if [ -d "$filename" ]; then
     continue
@@ -8,6 +10,9 @@ for filename in test*; do
     echo -n "p "
   else
     echo -n "f "
+    fail=1
   fi
   echo "$filename"
 done
+
+exit $fail
