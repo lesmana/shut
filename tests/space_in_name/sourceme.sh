@@ -5,5 +5,4 @@ expectedoutput="\
   + false"
 expectedexitstatus=1
 
-output="$(../../butt 2>&1)"
-exitstatus=$?
+buttcommand="../../butt"
