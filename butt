@@ -6,7 +6,9 @@ for filename in test*; do
   if [ -d "$filename" ]; then
     continue
   fi
-  if sh "$filename"; then
+  sh "$filename"
+  success=$?
+  if [ $success -eq 0 ]; then
     echo -n "p "
   else
     echo -n "f "
