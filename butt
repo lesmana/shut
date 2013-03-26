@@ -40,4 +40,8 @@ runtests() {
   return $fail
 }
 
-tests | runtests
+main() {
+  tests | runtests
+}
+
+main
