@@ -1,5 +1,13 @@
 #! /bin/sh
 
+print_pass() {
+  echo -n "p "
+}
+
+print_fail() {
+  echo -n "f "
+}
+
 fail=0
 
 for filename in test*; do
@@ -9,9 +17,9 @@ for filename in test*; do
   sh "$filename"
   success=$?
   if [ $success -eq 0 ]; then
-    echo -n "p "
+    print_pass
   else
-    echo -n "f "
+    print_fail
     fail=1
   fi
   echo "$filename"
