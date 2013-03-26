@@ -1,7 +1,9 @@
 #! /bin/sh
 
 expectedoutput="\
++ false
 f ./test_false1.sh
++ false
 f ./test_false2.sh"
 expectedexitstatus=1
 

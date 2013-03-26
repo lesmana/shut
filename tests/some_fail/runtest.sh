@@ -1,7 +1,10 @@
 #! /bin/sh
 
 expectedoutput="\
-f ./test_false1.sh"
++ false
+f ./test_false1.sh
++ true
++ true"
 expectedexitstatus=1
 
 output="$(../../butt 2>&1)"
