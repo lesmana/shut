@@ -6,7 +6,7 @@ p ./test_true1.sh
 p ./test_true2.sh"
 expectedexitstatus=1
 
-output=$(../../butt)
+output="$(../../butt)"
 exitstatus=$?
 
 export expectedoutput
