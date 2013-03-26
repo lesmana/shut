@@ -7,8 +7,3 @@ expectedexitstatus=1
 
 output="$(../../butt prefix 2>&1)"
 exitstatus=$?
-
-export expectedoutput
-export expectedexitstatus
-export output
-export exitstatus
