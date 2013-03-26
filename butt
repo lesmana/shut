@@ -28,7 +28,7 @@ tests() {
 runtests() {
   fail=0
 
-  for filename in $(tests); do
+  while read filename; do
     if [ -d "$filename" ]; then
       continue
     fi
@@ -38,4 +38,4 @@ runtests() {
   return $fail
 }
 
-runtests
+tests | runtests
