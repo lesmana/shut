@@ -16,9 +16,9 @@ runtest() {
     print_pass
   else
     print_fail
-    fail=1
   fi
   echo "$filename"
+  return $success
 }
 
 fail=0
@@ -27,7 +27,7 @@ for filename in ./test*; do
   if [ -d "$filename" ]; then
     continue
   fi
-  runtest "$filename"
+  runtest "$filename" || fail=1
 done
 
 exit $fail
