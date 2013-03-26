@@ -2,13 +2,12 @@
 
 . ./sourceme.sh
 
-output="$($buttcommand 2>&1)"
-exitstatus=$?
-
 : ${expectedoutput?}
 : ${expectedexitstatus?}
-: ${output?}
-: ${exitstatus?}
+: ${buttcommand?}
+
+output="$($buttcommand 2>&1)"
+exitstatus=$?
 
 fail=0
 
