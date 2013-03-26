@@ -25,13 +25,17 @@ tests() {
   find . -maxdepth 1 -name "test*" | sort
 }
 
-fail=0
+runtests() {
+  fail=0
 
-for filename in $(tests); do
-  if [ -d "$filename" ]; then
-    continue
-  fi
-  runtest "$filename" || fail=1
-done
+  for filename in $(tests); do
+    if [ -d "$filename" ]; then
+      continue
+    fi
+    runtest "$filename" || fail=1
+  done
 
-exit $fail
+  return $fail
+}
+
+runtests
