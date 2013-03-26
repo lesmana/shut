@@ -10,7 +10,7 @@ print_fail() {
 
 runtest() {
   filename=$1
-  sh "$filename"
+  "$filename"
   success=$?
   if [ $success -eq 0 ]; then
     print_pass
@@ -23,7 +23,7 @@ runtest() {
 
 fail=0
 
-for filename in test*; do
+for filename in ./test*; do
   if [ -d "$filename" ]; then
     continue
   fi
