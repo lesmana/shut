@@ -8,12 +8,8 @@ print_fail() {
   echo -n "f "
 }
 
-fail=0
-
-for filename in test*; do
-  if [ -d "$filename" ]; then
-    continue
-  fi
+runtest() {
+  filename=$1
   sh "$filename"
   success=$?
   if [ $success -eq 0 ]; then
@@ -23,6 +19,15 @@ for filename in test*; do
     fail=1
   fi
   echo "$filename"
+}
+
+fail=0
+
+for filename in test*; do
+  if [ -d "$filename" ]; then
+    continue
+  fi
+  runtest "$filename"
 done
 
 exit $fail
