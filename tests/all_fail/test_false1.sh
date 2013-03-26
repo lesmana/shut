@@ -1,5 +1,1 @@
-#! /bin/sh
-
-set -x
-
-false
+../../test_false.sh
