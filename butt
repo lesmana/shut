@@ -22,7 +22,7 @@ runtest() {
 }
 
 tests() {
-  echo ./test*
+  find . -maxdepth 1 -name "test*" | sort
 }
 
 fail=0
