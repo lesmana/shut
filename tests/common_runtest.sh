@@ -1,15 +1,9 @@
 #! /bin/sh
 
-missing() {
-  message="$1"
-  echo "missing $message"
-  exit 2
-}
-
-[ -n "$expectedoutput" ] || missing "expectedoutput"
-[ -n "$expectedexitstatus" ] || missing "expectedexitstatus"
-[ -n "$output" ] || missing "output"
-[ -n "$exitstatus" ] || missing "exitstatus"
+: ${expectedoutput?}
+: ${expectedexitstatus?}
+: ${output?}
+: ${exitstatus?}
 
 fail=0
 
