@@ -21,9 +21,13 @@ runtest() {
   return $success
 }
 
+tests() {
+  echo ./test*
+}
+
 fail=0
 
-for filename in ./test*; do
+for filename in $(tests); do
   if [ -d "$filename" ]; then
     continue
   fi
