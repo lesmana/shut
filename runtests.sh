@@ -3,7 +3,7 @@
 runtest() {
   testname=$1
   cd $testname
-  output="$(./runtest.sh)"
+  output="$(./runtest.sh 2>&1)"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     echo "================"

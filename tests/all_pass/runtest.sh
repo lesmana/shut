@@ -4,7 +4,7 @@ expectedoutput="\
 "
 expectedexitstatus=0
 
-output="$(../../butt)"
+output="$(../../butt 2>&1)"
 exitstatus=$?
 
 export expectedoutput

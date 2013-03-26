@@ -4,7 +4,7 @@ expectedoutput="\
 f ./test_false1.sh"
 expectedexitstatus=1
 
-output="$(../../butt)"
+output="$(../../butt 2>&1)"
 exitstatus=$?
 
 export expectedoutput
