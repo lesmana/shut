@@ -1,5 +1,7 @@
 #! /bin/sh
 
+. ./sourceme.sh
+
 : ${expectedoutput?}
 : ${expectedexitstatus?}
 : ${output?}
