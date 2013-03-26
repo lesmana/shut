@@ -5,18 +5,18 @@ print_pass() {
 }
 
 print_fail() {
-  echo -n "f "
+  sed 's/^/  /'
 }
 
 runtest() {
   filename=$1
-  "$filename"
+  output="$("$filename" 2>&1)"
   success=$?
   if [ $success -eq 0 ]; then
     print_pass
   else
-    print_fail
     echo "$filename"
+    echo "$output" | print_fail
   fi
   return $success
 }
