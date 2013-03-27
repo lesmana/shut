@@ -2,6 +2,12 @@
 
 prefix="test"
 
+handle_args() {
+  if [ $# -ge 1 ]; then
+    prefix="$@"
+  fi
+}
+
 print_pass() {
   :
 }
@@ -41,9 +47,7 @@ runtests() {
 }
 
 main() {
-  if [ $# -ge 1 ]; then
-    prefix="$@"
-  fi
+  handle_args "$@"
   collecttests | runtests
 }
 
