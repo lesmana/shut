@@ -1,1 +1,1 @@
-../common_runtest.sh
+../meta_runtest.sh
