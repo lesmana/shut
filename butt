@@ -23,7 +23,7 @@ runtest() {
   return $success
 }
 
-tests() {
+collecttests() {
   find . -maxdepth 1 -name "$prefix*" | sort
 }
 
@@ -44,7 +44,7 @@ main() {
   if [ $# -ge 1 ]; then
     prefix="$@"
   fi
-  tests | runtests
+  collecttests | runtests
 }
 
 main "$@"
