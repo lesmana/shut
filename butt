@@ -1,8 +1,16 @@
 #! /bin/sh
 
 prefix="test"
+donotruntests=false
 
 handle_args() {
+  while getopts "n" "opt"; do
+    case "$opt" in
+      n) donotruntests=true;;
+      *) exit 1;;
+    esac
+  done
+  shift $(($OPTIND - 1))
   if [ $# -ge 1 ]; then
     prefix="$@"
   fi
@@ -37,7 +45,11 @@ runtests() {
   fail=0
 
   while read filename; do
-    runtest "$filename" || fail=1
+    if $donotruntests; then
+      echo "$filename"
+    else
+      runtest "$filename" || fail=1
+    fi
   done
 
   return $fail
