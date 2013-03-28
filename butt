@@ -2,11 +2,13 @@
 
 prefix="test"
 donotruntests=false
+recursive=false
 
 handle_args() {
-  while getopts "n" "opt"; do
+  while getopts "nr" "opt"; do
     case "$opt" in
       n) donotruntests=true;;
+      r) recursive=true;;
       *) exit 1;;
     esac
   done
@@ -38,7 +40,12 @@ runtest() {
 }
 
 collecttests() {
-  find -L . -maxdepth 1 -type f -name "$prefix*" | sort
+  if $recursive; then
+    maxdepth=""
+  else
+    maxdepth="-maxdepth 1"
+  fi
+  find -L . $maxdepth -type f -name "$prefix*" | sort
 }
 
 runtests() {
