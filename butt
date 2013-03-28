@@ -28,7 +28,10 @@ print_fail() {
 
 runtest() {
   filename=$1
-  output="$("$filename" 2>&1)"
+  dirname=$(dirname "$filename")
+  basename=$(basename "$filename")
+  cd "$dirname"
+  output="$("./$basename" 2>&1)"
   success=$?
   if [ $success -eq 0 ]; then
     print_pass
@@ -55,7 +58,7 @@ runtests() {
     if $donotruntests; then
       echo "$filename"
     else
-      runtest "$filename" || fail=1
+      (runtest "$filename") || fail=1
     fi
   done
 
