@@ -2,7 +2,8 @@
 
 expectedoutput="\
 ./test false 1.sh
-  + false"
-expectedexitstatus=1
+./test true 1.sh
+./test true 2.sh"
+expectedexitstatus=0
 
-buttcommand="../../butt"
+buttcommand="../../butt -n"

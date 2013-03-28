@@ -2,7 +2,8 @@
 
 expectedoutput="\
 ./prefix_false1.sh
-  + false"
-expectedexitstatus=1
+./prefix_true1.sh
+./prefix_true2.sh"
+expectedexitstatus=0
 
-buttcommand="../../butt prefix"
+buttcommand="../../butt -n prefix"
