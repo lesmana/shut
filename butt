@@ -48,7 +48,7 @@ collecttests() {
   else
     maxdepth="-maxdepth 1"
   fi
-  find -L . $maxdepth -type f -name "$prefix*" | sort
+  find -L . $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
 runtests() {
