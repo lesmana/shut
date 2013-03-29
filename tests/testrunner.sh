@@ -6,13 +6,10 @@
 test -e expected && rm -rf expected
 test -e actual && rm -rf actual
 
-mkdir expected
-mkdir actual
+cp -a stage actual
+cp -a stage expected
 
 (cd effect; tar cf - .) | (cd expected; tar xf -)
-(cd stage; tar cf - .) | (cd expected; tar xf -)
-
-(cd stage; tar cf - .) | (cd actual; tar xf -)
 
 (cd actual; ../buttcommand.sh > output 2>&1; echo $? > exitstatus)
 
