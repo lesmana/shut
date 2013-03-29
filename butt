@@ -18,6 +18,15 @@ handle_args() {
   fi
 }
 
+collecttestnames() {
+  if $recursive; then
+    maxdepth=""
+  else
+    maxdepth="-maxdepth 1"
+  fi
+  find -L . $maxdepth -type f -executable -name "$prefix*" | sort
+}
+
 print_pass() {
   :
 }
@@ -40,15 +49,6 @@ runtest() {
     echo "$output" | print_fail
   fi
   return $success
-}
-
-collecttestnames() {
-  if $recursive; then
-    maxdepth=""
-  else
-    maxdepth="-maxdepth 1"
-  fi
-  find -L . $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
 runtests() {
