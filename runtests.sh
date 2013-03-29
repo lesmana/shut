@@ -1,4 +1,4 @@
 #! /bin/sh
 
 cd tests
-../goodbutt -r runtest
+../goodshut -r runtest

@@ -11,6 +11,6 @@ cp -a stage expected
 
 (cd effect; tar cf - .) | (cd expected; tar xf -)
 
-(cd actual; ../buttcommand.sh > output 2>&1; echo $? > exitstatus)
+(cd actual; ../shutcommand.sh > output 2>&1; echo $? > exitstatus)
 
 diff -r expected actual
