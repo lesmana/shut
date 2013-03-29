@@ -41,14 +41,14 @@ runtest() {
   basename=$(basename "$testname")
   cd "$dirname"
   output="$("./$basename" 2>&1)"
-  success=$?
-  if [ $success -eq 0 ]; then
+  exitstatus=$?
+  if [ $exitstatus -eq 0 ]; then
     print_pass
   else
     echo "$testname"
     echo "$output" | print_fail
   fi
-  return $success
+  return $exitstatus
 }
 
 runtests() {
