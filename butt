@@ -27,16 +27,16 @@ print_fail() {
 }
 
 runtest() {
-  filename=$1
-  dirname=$(dirname "$filename")
-  basename=$(basename "$filename")
+  testname=$1
+  dirname=$(dirname "$testname")
+  basename=$(basename "$testname")
   cd "$dirname"
   output="$("./$basename" 2>&1)"
   success=$?
   if [ $success -eq 0 ]; then
     print_pass
   else
-    echo "$filename"
+    echo "$testname"
     echo "$output" | print_fail
   fi
   return $success
@@ -54,11 +54,11 @@ collecttestnames() {
 runtests() {
   fail=0
 
-  while read filename; do
+  while read testname; do
     if $donotruntests; then
-      echo "$filename"
+      echo "$testname"
     else
-      (runtest "$filename") || fail=1
+      (runtest "$testname") || fail=1
     fi
   done
 
