@@ -32,7 +32,15 @@ print_pass() {
 }
 
 print_fail() {
+  testname="$1"
+  exitstatus="$2"
+  echo "================"
+  echo "fail: $testname"
+  echo "exitstatus: $exitstatus"
+  echo "output:"
   sed 's/^/  /'
+  echo "----------------"
+
 }
 
 runtest() {
@@ -45,8 +53,7 @@ runtest() {
   if [ $exitstatus -eq 0 ]; then
     print_pass
   else
-    echo "$testname"
-    echo "$output" | print_fail
+    echo "$output" | print_fail "$testname" "$exitstatus"
   fi
   return $exitstatus
 }

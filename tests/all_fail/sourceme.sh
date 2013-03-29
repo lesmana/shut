@@ -1,10 +1,19 @@
 #! /bin/sh
 
 expectedoutput="\
-./test_false1.sh
+================
+fail: ./test_false1.sh
+exitstatus: 1
+output:
   + false
-./test_false2.sh
-  + false"
+----------------
+================
+fail: ./test_false2.sh
+exitstatus: 1
+output:
+  + false
+----------------"
+
 expectedexitstatus=1
 
 buttcommand="../../butt"
