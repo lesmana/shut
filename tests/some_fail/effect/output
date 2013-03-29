@@ -1,0 +1,6 @@
+================
+fail: ./test_false1.sh
+exitstatus: 1
+output:
+  + false
+----------------
