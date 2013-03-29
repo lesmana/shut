@@ -1,0 +1,80 @@
+#! /bin/sh
+
+prefix="test"
+donotruntests=false
+recursive=false
+
+handle_args() {
+  while getopts "nr" "opt"; do
+    case "$opt" in
+      n) donotruntests=true;;
+      r) recursive=true;;
+      *) exit 1;;
+    esac
+  done
+  shift $(($OPTIND - 1))
+  if [ $# -ge 1 ]; then
+    prefix="$@"
+  fi
+}
+
+collecttestnames() {
+  if $recursive; then
+    maxdepth=""
+  else
+    maxdepth="-maxdepth 1"
+  fi
+  find -L . $maxdepth -type f -executable -name "$prefix*" | sort
+}
+
+print_pass() {
+  :
+}
+
+print_fail() {
+  testname="$1"
+  exitstatus="$2"
+  echo "================"
+  echo "fail: $testname"
+  echo "exitstatus: $exitstatus"
+  echo "output:"
+  sed 's/^/  /'
+  echo "----------------"
+
+}
+
+runtest() {
+  testname=$1
+  dirname=$(dirname "$testname")
+  basename=$(basename "$testname")
+  cd "$dirname"
+  output="$("./$basename" 2>&1)"
+  exitstatus=$?
+  if [ $exitstatus -eq 0 ]; then
+    print_pass
+  else
+    echo "$output" | print_fail "$testname" "$exitstatus"
+  fi
+  return $exitstatus
+}
+
+runtests() {
+  fail=0
+
+  while read testname; do
+    if $donotruntests; then
+      echo "$testname"
+    else
+      (runtest "$testname") || fail=1
+    fi
+  done
+
+  return $fail
+}
+
+main() {
+  handle_args "$@"
+  collecttestnames | runtests
+}
+
+main "$@"
