@@ -1,1 +1,3 @@
-../meta_runtest.sh
+#! /bin/sh
+
+../testrunner.sh
