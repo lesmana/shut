@@ -42,7 +42,7 @@ runtest() {
   return $success
 }
 
-collecttests() {
+collecttestnames() {
   if $recursive; then
     maxdepth=""
   else
@@ -67,7 +67,7 @@ runtests() {
 
 main() {
   handle_args "$@"
-  collecttests | runtests
+  collecttestnames | runtests
 }
 
 main "$@"
