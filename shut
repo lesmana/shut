@@ -42,7 +42,7 @@ collecttestnames() {
   find -L . $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
-print_fail() {
+report() {
   testname="$1"
   exitstatus="$2"
   echo "================"
@@ -69,7 +69,7 @@ runtest() {
   output="$(runtestforreal "$testname" 2>&1)"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
-    echo "$output" | print_fail "$testname" "$exitstatus"
+    echo "$output" | report "$testname" "$exitstatus"
   fi
   return $exitstatus
 }
