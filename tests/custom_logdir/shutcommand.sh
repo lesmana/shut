@@ -1,2 +1,2 @@
 #! /bin/sh
-../../../shut -w logdir
+../../../shut -d logdir

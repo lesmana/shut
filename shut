@@ -7,12 +7,12 @@ keeplogdir=false
 logdir=
 
 handle_args() {
-  while getopts "knrw:" "opt"; do
+  while getopts "d:knr" "opt"; do
     case "$opt" in
+      d) logdir="$OPTARG"; keeplogdir=true;;
       k) keeplogdir=true;;
       n) donotruntests=true;;
       r) recursive=true;;
-      w) logdir="$OPTARG"; keeplogdir=true;;
       *) exit 1;;
     esac
   done
