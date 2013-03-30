@@ -3,13 +3,16 @@
 prefix="test"
 donotruntests=false
 recursive=false
+keepworkdir=false
 workdir=
 
 handle_args() {
-  while getopts "nr" "opt"; do
+  while getopts "knrw:" "opt"; do
     case "$opt" in
+      k) keepworkdir=true;;
       n) donotruntests=true;;
       r) recursive=true;;
+      w) workdir="$OPTARG"; keepworkdir=true;;
       *) exit 1;;
     esac
   done
@@ -20,7 +23,14 @@ handle_args() {
 }
 
 setup() {
-  workdir=$(mktemp -d --tmpdir shut.XXXXXXXXXX)
+  if [ -n "$workdir" ]; then
+    if [ -e "$workdir" ]; then
+      rm -rf "$workdir"
+    fi
+    mkdir -p "$workdir"
+  else
+    workdir=$(mktemp -d --tmpdir shut.XXXXXXXXXX)
+  fi
 }
 
 collecttestnames() {
@@ -78,7 +88,9 @@ runtests() {
 }
 
 cleanup() {
-  rm -rf "$workdir"
+  if ! $keepworkdir; then
+    rm -rf "$workdir"
+  fi
 }
 
 main() {
