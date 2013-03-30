@@ -46,10 +46,13 @@ report() {
   testname="$1"
   exitstatus="$2"
   echo "================"
-  echo "fail: $testname"
-  echo "exitstatus: $exitstatus"
+  echo "$testname"
+  echo "----------------"
   echo "output:"
   sed 's/^/  /'
+  echo "----------------"
+  echo "exitstatus: $exitstatus"
+  echo "FAIL $testname"
   echo "----------------"
 
 }
