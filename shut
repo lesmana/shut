@@ -51,9 +51,20 @@ runtestforreal() {
   return $exitstatus
 }
 
+runtesttofile() {
+  testname=$1
+  mkdir -p "$workdir/$testname"
+  outputfile="$workdir/$testname/output"
+  exitstatus=$( ( ( runtestforreal "$testname"; echo $? >&3 ) |
+        tee "$outputfile" >&2 ) 3>&1 ) 2>&1
+  exitstatusfile="$workdir/$testname/exitstatus"
+  echo $exitstatus > "$exitstatusfile"
+  return $exitstatus
+}
+
 runtest() {
   testname=$1
-  output="$(runtestforreal "$testname" 2>&1)"
+  output="$(runtesttofile "$testname" 2>&1)"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     echo "================"
