@@ -11,6 +11,8 @@ cp -a stage expected
 
 (cd effect; tar cf - .) | (cd expected; tar xf -)
 
+test -x prepare.sh && ./prepare.sh
+
 (cd actual; ../shutcommand.sh > output 2>&1; echo $? > exitstatus)
 
 diff -r expected actual
