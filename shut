@@ -3,6 +3,7 @@
 prefix="test"
 donotruntests=false
 recursive=false
+workdir=
 
 handle_args() {
   while getopts "nr" "opt"; do
@@ -16,6 +17,10 @@ handle_args() {
   if [ $# -ge 1 ]; then
     prefix="$@"
   fi
+}
+
+setup() {
+  workdir=$(mktemp -d --tmpdir shut.XXXXXXXXXX)
 }
 
 collecttestnames() {
@@ -72,9 +77,17 @@ runtests() {
   return $fail
 }
 
+cleanup() {
+  rm -rf "$workdir"
+}
+
 main() {
   handle_args "$@"
+  setup
   collecttestnames | runtests
+  success=$?
+  cleanup
+  return $success
 }
 
 main "$@"
