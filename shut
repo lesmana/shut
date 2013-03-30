@@ -87,7 +87,7 @@ runtests() {
     if $donotruntests; then
       echo "$testname"
     else
-      (runtest "$testname") || fail=1
+      runtest "$testname" || fail=1
     fi
   done
 
