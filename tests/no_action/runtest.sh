@@ -1,3 +1,2 @@
 #! /bin/sh
-
 ../testrunner.sh

@@ -1,4 +1,3 @@
 #! /bin/sh
-
 mkdir logdir.fakemktemp
 echo logdir.fakemktemp
