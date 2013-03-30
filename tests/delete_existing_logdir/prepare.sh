@@ -1,4 +1,4 @@
 #! /bin/sh
 
-rm expected/workdir/existingworkdir
-rm expected/workdir/newworkdir
+rm expected/logdir/existinglogdir
+rm expected/logdir/newlogdir

@@ -1,5 +1,5 @@
 #! /bin/sh
 
-mkdir workdir.fakemktemp
-touch workdir.fakemktemp/gitpleaseindexthisemptydir
-echo workdir.fakemktemp
+mkdir logdir.fakemktemp
+touch logdir.fakemktemp/gitpleaseindexthisemptydir
+echo logdir.fakemktemp

@@ -1,3 +1,3 @@
 #! /bin/sh
 
-../../../shut -w workdir
+../../../shut -w logdir

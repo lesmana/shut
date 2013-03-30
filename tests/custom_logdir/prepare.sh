@@ -1,3 +1,3 @@
 #! /bin/sh
 
-rm expected/workdir/gitpleaseindexthisemptydir
+rm expected/logdir/gitpleaseindexthisemptydir
