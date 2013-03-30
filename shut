@@ -58,8 +58,7 @@ runtestforreal() {
   testname=$1
   dirname=$(dirname "$testname")
   basename=$(basename "$testname")
-  cd "$dirname"
-  "./$basename" 2>&1
+  (cd "$dirname"; "./$basename" 2>&1)
   exitstatus=$?
   return $exitstatus
 }
