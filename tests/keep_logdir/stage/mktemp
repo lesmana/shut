@@ -1,5 +1,4 @@
 #! /bin/sh
 
 mkdir logdir.fakemktemp
-touch logdir.fakemktemp/gitpleaseindexthisemptydir
 echo logdir.fakemktemp
