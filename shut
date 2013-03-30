@@ -58,12 +58,19 @@ print_fail() {
 
 }
 
-runtest() {
+runtestforreal() {
   testname=$1
   dirname=$(dirname "$testname")
   basename=$(basename "$testname")
   cd "$dirname"
-  output="$("./$basename" 2>&1)"
+  "./$basename" 2>&1
+  exitstatus=$?
+  return $exitstatus
+}
+
+runtest() {
+  testname=$1
+  output="$(runtestforreal "$testname" 2>&1)"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
     print_pass
