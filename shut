@@ -3,14 +3,16 @@
 prefix="test"
 donotruntests=false
 recursive=false
+verbose=false
 logdir=
 
 handle_args() {
-  while getopts "d:nr" "opt"; do
+  while getopts "d:nrv" "opt"; do
     case "$opt" in
       d) logdir="$OPTARG";;
       n) donotruntests=true;;
       r) recursive=true;;
+      v) verbose=true;;
       *) exit 1;;
     esac
   done
@@ -90,8 +92,22 @@ decoratetail() {
   exitstatus=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
-  echo "FAIL $testname"
+  if [ $exitstatus -eq 0 ]; then
+    echo "PASS $testname"
+  else
+    echo "FAIL $testname"
+  fi
   echo "----------------"
+}
+
+runtestprintall() {
+  testname=$1
+  decoratehead "$testname"
+  ((((runtesttosomething "$testname"; echo $? >&3 ) |
+        decoratebody "$testname" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  exitstatus=$?
+  decoratetail "$testname" "$exitstatus"
+  return $exitstatus
 }
 
 decorate() {
@@ -102,7 +118,7 @@ decorate() {
   decoratetail "$testname" "$exitstatus"
 }
 
-runtest() {
+runtestprintsuccess() {
   testname=$1
   output="$(runtesttosomething "$testname" 2>&1)"
   exitstatus=$?
@@ -110,6 +126,15 @@ runtest() {
     echo "$output" | decorate "$testname" "$exitstatus"
   fi
   return $exitstatus
+}
+
+runtest() {
+  testname=$1
+  if $verbose; then
+    runtestprintall "$testname"
+  else
+    runtestprintsuccess "$testname"
+  fi
 }
 
 runtests() {
