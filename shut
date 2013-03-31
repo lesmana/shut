@@ -73,18 +73,33 @@ runtesttosomething() {
   fi
 }
 
-decorate() {
+decoratehead() {
   testname=$1
-  exitstatus=$2
   echo "================"
   echo "$testname"
   echo "----------------"
   echo "output:"
+}
+
+decoratebody() {
   sed 's/^/  /'
+}
+
+decoratetail() {
+  testname=$1
+  exitstatus=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
   echo "FAIL $testname"
   echo "----------------"
+}
+
+decorate() {
+  testname=$1
+  exitstatus=$2
+  decoratehead "$testname"
+  decoratebody
+  decoratetail "$testname" "$exitstatus"
 }
 
 runtest() {
