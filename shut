@@ -66,9 +66,18 @@ runtesttofile() {
   return $exitstatus
 }
 
+runtesttosomething() {
+  testname=$1
+  if [ -n "$logdir" ]; then
+    runtesttofile "$testname"
+  else
+    runtestforreal "$testname"
+  fi
+}
+
 runtest() {
   testname=$1
-  output="$(runtesttofile "$testname" 2>&1)"
+  output="$(runtesttosomething "$testname" 2>&1)"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     echo "================"
