@@ -3,14 +3,12 @@
 prefix="test"
 donotruntests=false
 recursive=false
-keeplogdir=false
 logdir=
 
 handle_args() {
-  while getopts "d:knr" "opt"; do
+  while getopts "d:nr" "opt"; do
     case "$opt" in
-      d) logdir="$OPTARG"; keeplogdir=true;;
-      k) keeplogdir=true;;
+      d) logdir="$OPTARG";;
       n) donotruntests=true;;
       r) recursive=true;;
       *) exit 1;;
@@ -94,18 +92,11 @@ runtests() {
   return $fail
 }
 
-cleanup() {
-  if ! $keeplogdir; then
-    rm -rf "$logdir"
-  fi
-}
-
 main() {
   handle_args "$@"
   setup
   collecttestnames | runtests
   success=$?
-  cleanup
   return $success
 }
 
