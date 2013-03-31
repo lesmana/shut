@@ -110,20 +110,14 @@ runtestprintall() {
   return $exitstatus
 }
 
-decorate() {
-  testname=$1
-  exitstatus=$2
-  decoratehead "$testname"
-  decoratebody
-  decoratetail "$testname" "$exitstatus"
-}
-
 runtestprintsuccess() {
   testname=$1
   output="$(runtesttosomething "$testname" 2>&1)"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
-    echo "$output" | decorate "$testname" "$exitstatus"
+    decoratehead "$testname"
+    echo "$output" | decoratebody
+    decoratetail "$testname" "$exitstatus"
   fi
   return $exitstatus
 }
