@@ -10,5 +10,3 @@ cp -a stage actual
 cp -a stage expected
 
 (cd effect; tar cf - .) | (cd expected; tar xf -)
-
-test -x arrange.sh && ./arrange.sh
