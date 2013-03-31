@@ -1,2 +1,2 @@
 #! /bin/sh
-../testrunner.sh
+../common_runtest.sh
