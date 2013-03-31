@@ -26,8 +26,6 @@ setup() {
       rm -rf "$logdir"
     fi
     mkdir -p "$logdir"
-  else
-    logdir=$(mktemp -d --tmpdir shut.XXXXXXXXXX)
   fi
 }
 
