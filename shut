@@ -56,7 +56,7 @@ runtesttofile() {
   mkdir -p "$logdir/$testname"
   outputfile="$logdir/$testname/output"
   exitstatus=$( ( ( runtestforreal "$testname"; echo $? >&3 ) |
-        tee "$outputfile" >&2 ) 3>&1 ) 2>&1
+        tee "$outputfile" >&4 ) 3>&1 ) 4>&1
   exitstatusfile="$logdir/$testname/exitstatus"
   echo $exitstatus > "$exitstatusfile"
   return $exitstatus
