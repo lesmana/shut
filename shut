@@ -73,20 +73,26 @@ runtesttosomething() {
   fi
 }
 
+decorate() {
+  testname=$1
+  exitstatus=$2
+  echo "================"
+  echo "$testname"
+  echo "----------------"
+  echo "output:"
+  sed 's/^/  /'
+  echo "----------------"
+  echo "exitstatus: $exitstatus"
+  echo "FAIL $testname"
+  echo "----------------"
+}
+
 runtest() {
   testname=$1
   output="$(runtesttosomething "$testname" 2>&1)"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
-    echo "================"
-    echo "$testname"
-    echo "----------------"
-    echo "output:"
-    echo "$output" | sed 's/^/  /'
-    echo "----------------"
-    echo "exitstatus: $exitstatus"
-    echo "FAIL $testname"
-    echo "----------------"
+    echo "$output" | decorate "$testname" "$exitstatus"
   fi
   return $exitstatus
 }
