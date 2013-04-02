@@ -3,18 +3,31 @@
 prefix="test"
 donotruntests=false
 recursive=false
+verbose=false
+logdir=
 
 handle_args() {
-  while getopts "nr" "opt"; do
+  while getopts "d:nrv" "opt"; do
     case "$opt" in
+      d) logdir="$OPTARG";;
       n) donotruntests=true;;
       r) recursive=true;;
+      v) verbose=true;;
       *) exit 1;;
     esac
   done
   shift $(($OPTIND - 1))
   if [ $# -ge 1 ]; then
     prefix="$@"
+  fi
+}
+
+setup() {
+  if [ -n "$logdir" ]; then
+    if [ -e "$logdir" ]; then
+      rm -rf "$logdir"
+    fi
+    mkdir -p "$logdir"
   fi
 }
 
@@ -27,35 +40,95 @@ collecttestnames() {
   find -L . $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
-print_pass() {
-  :
+runtesttoscreen() {
+  testname=$1
+  dirname=$(dirname "$testname")
+  basename=$(basename "$testname")
+  (cd "$dirname"; "./$basename" 2>&1)
+  exitstatus=$?
+  return $exitstatus
 }
 
-print_fail() {
-  testname="$1"
-  exitstatus="$2"
-  echo "================"
-  echo "fail: $testname"
-  echo "exitstatus: $exitstatus"
-  echo "output:"
-  sed 's/^/  /'
-  echo "----------------"
+stdintoexitstatus() {
+  read exitstatus
+  return $exitstatus
+}
 
+runtesttofileandscreen() {
+  testname=$1
+  mkdir -p "$logdir/$testname"
+  outputfile="$logdir/$testname/output"
+  ((((runtesttoscreen "$testname"; echo $? >&3 ) |
+        tee "$outputfile" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  exitstatus=$?
+  exitstatusfile="$logdir/$testname/exitstatus"
+  echo $exitstatus > "$exitstatusfile"
+  return $exitstatus
+}
+
+runtesttosomething() {
+  testname=$1
+  if [ -n "$logdir" ]; then
+    runtesttofileandscreen "$testname"
+  else
+    runtesttoscreen "$testname"
+  fi
+}
+
+decoratehead() {
+  testname=$1
+  echo "================"
+  echo "$testname"
+  echo "----------------"
+  echo "output:"
+}
+
+decoratebody() {
+  sed 's/^/  /'
+}
+
+decoratetail() {
+  testname=$1
+  exitstatus=$2
+  echo "----------------"
+  echo "exitstatus: $exitstatus"
+  if [ $exitstatus -eq 0 ]; then
+    echo "PASS $testname"
+  else
+    echo "FAIL $testname"
+  fi
+  echo "----------------"
+}
+
+runtestprintall() {
+  testname=$1
+  decoratehead "$testname"
+  ((((runtesttosomething "$testname"; echo $? >&3 ) |
+        decoratebody "$testname" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  exitstatus=$?
+  decoratetail "$testname" "$exitstatus"
+  return $exitstatus
+}
+
+runtestprintsuccess() {
+  testname=$1
+  output="$(runtesttosomething "$testname" 2>&1)"
+  exitstatus=$?
+  if [ $exitstatus -ne 0 ]; then
+    decoratehead "$testname"
+    echo "$output" | decoratebody
+    decoratetail "$testname" "$exitstatus"
+  fi
+  return $exitstatus
 }
 
 runtest() {
   testname=$1
-  dirname=$(dirname "$testname")
-  basename=$(basename "$testname")
-  cd "$dirname"
-  output="$("./$basename" 2>&1)"
-  exitstatus=$?
-  if [ $exitstatus -eq 0 ]; then
-    print_pass
+  if $verbose; then
+    runtestprintall "$testname"
   else
-    echo "$output" | print_fail "$testname" "$exitstatus"
+    runtestprintsuccess "$testname"
   fi
-  return $exitstatus
 }
 
 runtests() {
@@ -65,7 +138,7 @@ runtests() {
     if $donotruntests; then
       echo "$testname"
     else
-      (runtest "$testname") || fail=1
+      runtest "$testname" || fail=1
     fi
   done
 
@@ -74,7 +147,10 @@ runtests() {
 
 main() {
   handle_args "$@"
+  setup
   collecttestnames | runtests
+  success=$?
+  return $success
 }
 
 main "$@"
