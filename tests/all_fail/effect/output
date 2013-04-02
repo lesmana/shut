@@ -16,3 +16,4 @@ output:
 exitstatus: 1
 FAIL ./test_false2.sh
 ----------------
+run: 2 pass: 0 fail: 2

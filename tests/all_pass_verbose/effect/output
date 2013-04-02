@@ -16,3 +16,4 @@ output:
 exitstatus: 0
 PASS ./test_true2.sh
 ----------------
+run: 2 pass: 2 fail: 0

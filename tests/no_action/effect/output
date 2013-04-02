@@ -1,3 +1,4 @@
 ./test_false1.sh
 ./test_true1.sh
 ./test_true2.sh
+run: 3 pass: 3 fail: 0

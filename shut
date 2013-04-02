@@ -143,10 +143,19 @@ runtests() {
   fail=0
 
   while read testname; do
-    if ! runtestornot "$testname"; then
+    testsrun="$testsrun$testname\n"
+    if runtestornot "$testname"; then
+      testspass="$testspass$testname\n"
+    else
+      testsfail="$testsfail$testname\n"
       fail=1
     fi
   done
+
+  runcount=$(echo -n "$testsrun" | wc -l)
+  passcount=$(echo -n "$testspass" | wc -l)
+  failcount=$(echo -n "$testsfail" | wc -l)
+  echo "run: $runcount pass: $passcount fail: $failcount"
 
   return $fail
 }
