@@ -1,4 +1,5 @@
 #! /bin/sh
+set -x
 
 . ../common_arrange.sh
 . ../common_act.sh
