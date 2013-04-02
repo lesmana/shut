@@ -1,3 +1,4 @@
 #! /bin/sh
 set -x
-../common_runtest.sh
+. ../common_runtest.sh
+runtest

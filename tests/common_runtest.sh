@@ -8,5 +8,3 @@ runtest() {
   act
   assert
 }
-
-runtest
