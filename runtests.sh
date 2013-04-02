@@ -1,4 +1,4 @@
 #! /bin/sh
 
 cd tests
-../goodshut -r runtest
+../goodshut -d ../runtests.log -r runtest

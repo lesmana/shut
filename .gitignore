@@ -1,2 +1,3 @@
+runtests.log
 tests/*/actual
 tests/*/expected
