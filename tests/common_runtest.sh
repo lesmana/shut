@@ -3,6 +3,10 @@
 . ../common_act.sh
 . ../common_assert.sh
 
-arrange
-act
-assert
+runtest() {
+  arrange
+  act
+  assert
+}
+
+runtest
