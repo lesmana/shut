@@ -8,7 +8,4 @@ after_arrange() {
   rm expected/logdir/newlogdir
 }
 
-arrange
-after_arrange
-act
-assert
+runtest
