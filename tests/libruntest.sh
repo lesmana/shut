@@ -17,7 +17,9 @@ after_arrange() { :; }
 before_act() { :; }
 
 shutcommand_in_actual() {
-  ../shutcommand.sh
+  echo "you did not redefine shutcommand"
+  echo "you lost the game"
+  exit 22
 }
 
 act() {

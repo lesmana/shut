@@ -1,4 +1,5 @@
 #! /bin/sh
+
 set -x
 
 . ../libruntest.sh
@@ -6,6 +7,10 @@ set -x
 after_arrange() {
   rm expected/logdir/existinglogdir
   rm expected/logdir/newlogdir
+}
+
+shutcommand_in_actual() {
+  ../../../shut -d logdir
 }
 
 runtest
