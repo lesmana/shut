@@ -143,7 +143,9 @@ runtests() {
   fail=0
 
   while read testname; do
-    runtestornot "$testname" || fail=1
+    if ! runtestornot "$testname"; then
+      fail=1
+    fi
   done
 
   return $fail
