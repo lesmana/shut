@@ -131,15 +131,19 @@ runtest() {
   fi
 }
 
+runtestornot() {
+  if $donotruntests; then
+    echo "$testname"
+  else
+    runtest "$testname"
+  fi
+}
+
 runtests() {
   fail=0
 
   while read testname; do
-    if $donotruntests; then
-      echo "$testname"
-    else
-      runtest "$testname" || fail=1
-    fi
+    runtestornot "$testname" || fail=1
   done
 
   return $fail
