@@ -1,7 +1,7 @@
 #! /bin/sh
 set -x
 
-. ../common_runtest.sh
+. ../libruntest.sh
 
 after_arrange() {
   rm expected/logdir/existinglogdir

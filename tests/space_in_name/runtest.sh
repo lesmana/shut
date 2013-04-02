@@ -1,4 +1,4 @@
 #! /bin/sh
 set -x
-. ../common_runtest.sh
+. ../libruntest.sh
 runtest
