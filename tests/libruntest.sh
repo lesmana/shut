@@ -16,12 +16,17 @@ after_arrange() { :; }
 
 before_act() { :; }
 
-shutcommand() {
+shutcommand_in_actual() {
   ../shutcommand.sh
 }
 
 act() {
-  (cd actual; set +x; shutcommand > output 2>&1; echo $? > exitstatus)
+  (
+    cd actual
+    set +x
+    shutcommand_in_actual > output 2>&1
+    echo $? > exitstatus
+  )
 }
 
 after_act() { :; }
