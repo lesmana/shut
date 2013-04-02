@@ -1,9 +1,7 @@
 #! /bin/sh
 set -x
 
-. ../common_arrange.sh
-. ../common_act.sh
-. ../common_assert.sh
+. ../common_runtest.sh
 
 after_arrange() {
   rm expected/logdir/existinglogdir
