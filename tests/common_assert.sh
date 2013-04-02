@@ -3,5 +3,3 @@
 assert() {
   diff -r expected actual
 }
-
-assert

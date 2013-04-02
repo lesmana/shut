@@ -1,11 +1,15 @@
 #! /bin/sh
 
+. ../common_arrange.sh
+. ../common_act.sh
+. ../common_assert.sh
+
 after_arrange() {
   rm expected/logdir/existinglogdir
   rm expected/logdir/newlogdir
 }
 
-../common_arrange.sh
+arrange
 after_arrange
-../common_act.sh
-../common_assert.sh
+act
+assert

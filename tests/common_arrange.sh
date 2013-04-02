@@ -12,5 +12,3 @@ arrange() {
 
   (cd effect; tar cf - .) | (cd expected; tar xf -)
 }
-
-arrange
