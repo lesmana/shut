@@ -3,8 +3,8 @@
 before_arrange() { :; }
 
 arrange() {
-  test -e expected && rm -rf expected
-  test -e actual && rm -rf actual
+  rm -rf expected
+  rm -rf actual
 
   cp -a stage actual
   cp -a stage expected
