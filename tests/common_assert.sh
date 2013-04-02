@@ -1,3 +1,7 @@
 #! /bin/sh
 
-diff -r expected actual
+assert() {
+  diff -r expected actual
+}
+
+assert

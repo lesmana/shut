@@ -1,12 +1,16 @@
 #! /bin/sh
 
-(test -d effect && test -d stage) ||
-      { echo "need effect and stage"; exit 1; }
+arrange() {
+  (test -d effect && test -d stage) ||
+        { echo "need effect and stage"; exit 1; }
 
-test -e expected && rm -rf expected
-test -e actual && rm -rf actual
+  test -e expected && rm -rf expected
+  test -e actual && rm -rf actual
 
-cp -a stage actual
-cp -a stage expected
+  cp -a stage actual
+  cp -a stage expected
 
-(cd effect; tar cf - .) | (cd expected; tar xf -)
+  (cd effect; tar cf - .) | (cd expected; tar xf -)
+}
+
+arrange
