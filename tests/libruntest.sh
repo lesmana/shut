@@ -39,5 +39,7 @@ runtest() {
   after_act
   before_assert
   assert
-  after_assert
+  exitstatus=$?
+  after_assert $exitstatus
+  return $exitstatus
 }
