@@ -131,7 +131,7 @@ runtest() {
   fi
 }
 
-runtests() {
+runtestsandprintsummary() {
   fail=0
 
   while read testname; do
@@ -165,7 +165,7 @@ runtestsornot() {
   if $donotruntests; then
     printnotrunsummary
   else
-    runtests
+    runtestsandprintsummary
   fi
 }
 
