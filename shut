@@ -152,7 +152,7 @@ runtestsandprintsummary() {
   return $fail
 }
 
-printnotrunsummary() {
+notrunandprintsummary() {
   count=0
   while read testname; do
     echo "$testname"
@@ -163,7 +163,7 @@ printnotrunsummary() {
 
 runtestsornot() {
   if $donotruntests; then
-    printnotrunsummary
+    notrunandprintsummary
   else
     runtestsandprintsummary
   fi
