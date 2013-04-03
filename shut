@@ -164,10 +164,27 @@ runtests() {
   return $fail
 }
 
+printnotrunsummary() {
+  count=0
+  while read testname; do
+    echo "$testname"
+    count=$(($count + 1))
+  done
+  echo "would run: $count"
+}
+
+runtestsornot() {
+  if $donotruntests; then
+    printnotrunsummary
+  else
+    runtests
+  fi
+}
+
 main() {
   handle_args "$@"
   setup
-  collecttestnames | runtests
+  collecttestnames | runtestsornot
   success=$?
   return $success
 }
