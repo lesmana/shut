@@ -131,20 +131,12 @@ runtest() {
   fi
 }
 
-runtestornot() {
-  if $donotruntests; then
-    echo "$testname"
-  else
-    runtest "$testname"
-  fi
-}
-
 runtests() {
   fail=0
 
   while read testname; do
     testsrun="$testsrun$testname\n"
-    if runtestornot "$testname"; then
+    if runtest "$testname"; then
       testspass="$testspass$testname\n"
     else
       testsfail="$testsfail$testname\n"
@@ -155,11 +147,7 @@ runtests() {
   runcount=$(echo -n "$testsrun" | wc -l)
   passcount=$(echo -n "$testspass" | wc -l)
   failcount=$(echo -n "$testsfail" | wc -l)
-  if $donotruntests; then
-    echo "would run: $runcount"
-  else
-    echo "run: $runcount pass: $passcount fail: $failcount"
-  fi
+  echo "run: $runcount pass: $passcount fail: $failcount"
 
   return $fail
 }
