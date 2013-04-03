@@ -1,4 +1,3 @@
-#! /bin/sh
 
 before_arrange() { :; }
 
