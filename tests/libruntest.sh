@@ -26,8 +26,8 @@ act() {
   (
     cd actual
     set +x
-    shutcommand_in_actual > output 2>&1
-    echo $? > exitstatus
+    shutcommand_in_actual > shutoutput 2>&1
+    echo $? > shutexitstatus
   )
 }
 
