@@ -155,7 +155,11 @@ runtests() {
   runcount=$(echo -n "$testsrun" | wc -l)
   passcount=$(echo -n "$testspass" | wc -l)
   failcount=$(echo -n "$testsfail" | wc -l)
-  echo "run: $runcount pass: $passcount fail: $failcount"
+  if $donotruntests; then
+    echo "would run: $runcount"
+  else
+    echo "run: $runcount pass: $passcount fail: $failcount"
+  fi
 
   return $fail
 }

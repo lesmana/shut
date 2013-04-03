@@ -1,4 +1,4 @@
 ./test false 1.sh
 ./test true 1.sh
 ./test true 2.sh
-run: 3 pass: 3 fail: 0
+would run: 3

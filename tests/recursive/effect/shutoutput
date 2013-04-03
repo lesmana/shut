@@ -2,4 +2,4 @@
 ./subdir2/subdir21/test21
 ./subdir2/test2
 ./test0
-run: 4 pass: 4 fail: 0
+would run: 4
