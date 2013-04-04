@@ -131,25 +131,39 @@ runtest() {
   fi
 }
 
-runtestsandprintsummary() {
-  fail=0
-
+runtests() {
   while read testname; do
-    testsrun="$testsrun$testname\n"
     if runtest "$testname"; then
+      echo "true $testname" >&3
+    else
+      echo "false $testname" >&3
+    fi
+  done
+}
+
+printsummary() {
+  fail=0
+  testrun=
+  testspass=
+  testsfail=
+  while read pass testname; do
+    testsrun="$testsrun$testname\n"
+    if $pass; then
       testspass="$testspass$testname\n"
     else
       testsfail="$testsfail$testname\n"
       fail=1
     fi
   done
-
   runcount=$(echo -n "$testsrun" | wc -l)
   passcount=$(echo -n "$testspass" | wc -l)
   failcount=$(echo -n "$testsfail" | wc -l)
   echo "run: $runcount pass: $passcount fail: $failcount"
-
   return $fail
+}
+
+runtestsandprintsummary() {
+  (runtests 3>&1 1>&4 | printsummary) 4>&1
 }
 
 notrunandprintsummary() {
