@@ -150,10 +150,10 @@ summaryline() {
   read pass
   read fail
   echo "run: $run pass: $pass fail: $fail"
+  test $fail -eq 0
 }
 
 printsummary() {
-  fail=0
   testrun=
   testspass=
   testsfail=
@@ -163,14 +163,12 @@ printsummary() {
       testspass="$testspass$testname\n"
     else
       testsfail="$testsfail$testname\n"
-      fail=1
     fi
   done
   runcount=$(echo -n "$testsrun" | count)
   passcount=$(echo -n "$testspass" | count)
   failcount=$(echo -n "$testsfail" | count)
   (echo "$runcount"; echo "$passcount"; echo "$failcount") | summaryline
-  return $fail
 }
 
 runtestsandprintsummary() {
