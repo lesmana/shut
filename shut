@@ -58,8 +58,8 @@ runtesttofileandscreen() {
   testname=$1
   mkdir -p "$logdir/$testname"
   outputfile="$logdir/$testname/output"
-  ((((runtesttoscreen "$testname"; echo $? >&3 ) |
-        tee "$outputfile" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  (((runtesttoscreen "$testname"; echo $? >&3) |
+        tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   exitstatusfile="$logdir/$testname/exitstatus"
   echo $exitstatus > "$exitstatusfile"
@@ -103,8 +103,8 @@ decoratetail() {
 runtestprintall() {
   testname=$1
   decoratehead "$testname"
-  ((((runtesttosomething "$testname"; echo $? >&3 ) |
-        decoratebody "$testname" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  (((runtesttosomething "$testname"; echo $? >&3) |
+        decoratebody "$testname" >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   decoratetail "$testname" "$exitstatus"
   return $exitstatus
