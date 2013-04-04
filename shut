@@ -141,6 +141,10 @@ runtests() {
   done
 }
 
+count() {
+  wc -l
+}
+
 printsummary() {
   fail=0
   testrun=
@@ -155,9 +159,9 @@ printsummary() {
       fail=1
     fi
   done
-  runcount=$(echo -n "$testsrun" | wc -l)
-  passcount=$(echo -n "$testspass" | wc -l)
-  failcount=$(echo -n "$testsfail" | wc -l)
+  runcount=$(echo -n "$testsrun" | count)
+  passcount=$(echo -n "$testspass" | count)
+  failcount=$(echo -n "$testsfail" | count)
   echo "run: $runcount pass: $passcount fail: $failcount"
   return $fail
 }
