@@ -154,21 +154,19 @@ summaryline() {
 }
 
 printsummary() {
-  testrun=
-  testspass=
-  testsfail=
+  ((((
   while read pass testname; do
-    testsrun="$testsrun$testname\n"
+    echo "$testname" >&3
     if $pass; then
-      testspass="$testspass$testname\n"
+      echo "$testname" >&4
     else
-      testsfail="$testsfail$testname\n"
+      echo "$testname" >&5
     fi
   done
-  runcount=$(echo -n "$testsrun" | count)
-  passcount=$(echo -n "$testspass" | count)
-  failcount=$(echo -n "$testsfail" | count)
-  (echo "$runcount"; echo "$passcount"; echo "$failcount") | summaryline
+  ) 3>&1 | count >&3
+  ) 4>&1 | count >&4
+  ) 5>&1 | count >&5
+  ) 3>&1 4>&1 5>&1 | summaryline
 }
 
 runtestsandprintsummary() {
