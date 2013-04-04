@@ -145,6 +145,13 @@ count() {
   wc -l
 }
 
+summaryline() {
+  read run
+  read pass
+  read fail
+  echo "run: $run pass: $pass fail: $fail"
+}
+
 printsummary() {
   fail=0
   testrun=
@@ -162,7 +169,7 @@ printsummary() {
   runcount=$(echo -n "$testsrun" | count)
   passcount=$(echo -n "$testspass" | count)
   failcount=$(echo -n "$testsfail" | count)
-  echo "run: $runcount pass: $passcount fail: $failcount"
+  (echo "$runcount"; echo "$passcount"; echo "$failcount") | summaryline
   return $fail
 }
 
