@@ -100,7 +100,7 @@ decoratetail() {
   echo "----------------"
 }
 
-runtestprintall() {
+runtestprintalways() {
   testname=$1
   decoratehead "$testname"
   (((runtesttosomething "$testname"; echo $? >&3) |
@@ -110,7 +110,7 @@ runtestprintall() {
   return $exitstatus
 }
 
-runtestprintsuccess() {
+runtestprintfail() {
   testname=$1
   output="$(runtesttosomething "$testname")"
   exitstatus=$?
@@ -125,9 +125,9 @@ runtestprintsuccess() {
 runtest() {
   testname=$1
   if $verbose; then
-    runtestprintall "$testname"
+    runtestprintalways "$testname"
   else
-    runtestprintsuccess "$testname"
+    runtestprintfail "$testname"
   fi
 }
 
