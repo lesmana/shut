@@ -40,7 +40,7 @@ collecttestnames() {
   find -L . $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
-runtesttoscreen() {
+runtestinpwd() {
   testname=$1
   dirname=$(dirname "$testname")
   basename=$(basename "$testname")
@@ -54,11 +54,11 @@ stdintoexitstatus() {
   return $exitstatus
 }
 
-runtesttofileandscreen() {
+runtestinpwdandlog() {
   testname=$1
   mkdir -p "$logdir/$testname"
   outputfile="$logdir/$testname/output"
-  (((runtesttoscreen "$testname"; echo $? >&3) |
+  (((runtestinpwd "$testname"; echo $? >&3) |
         tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   exitstatusfile="$logdir/$testname/exitstatus"
@@ -69,9 +69,9 @@ runtesttofileandscreen() {
 runtestandlogmaybe() {
   testname=$1
   if [ -n "$logdir" ]; then
-    runtesttofileandscreen "$testname"
+    runtestinpwdandlog "$testname"
   else
-    runtesttoscreen "$testname"
+    runtestinpwd "$testname"
   fi
 }
 
