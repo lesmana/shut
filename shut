@@ -66,7 +66,7 @@ runtesttofileandscreen() {
   return $exitstatus
 }
 
-runtesttosomething() {
+runtestandlogmaybe() {
   testname=$1
   if [ -n "$logdir" ]; then
     runtesttofileandscreen "$testname"
@@ -103,7 +103,7 @@ decoratetail() {
 runtestprintalways() {
   testname=$1
   decoratehead "$testname"
-  (((runtesttosomething "$testname"; echo $? >&3) |
+  (((runtestandlogmaybe "$testname"; echo $? >&3) |
         decoratebody "$testname" >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   decoratetail "$testname" "$exitstatus"
@@ -112,7 +112,7 @@ runtestprintalways() {
 
 runtestprintfail() {
   testname=$1
-  output="$(runtesttosomething "$testname")"
+  output="$(runtestandlogmaybe "$testname")"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     decoratehead "$testname"
