@@ -112,7 +112,7 @@ runtestprintall() {
 
 runtestprintsuccess() {
   testname=$1
-  output="$(runtesttosomething "$testname" 2>&1)"
+  output="$(runtesttosomething "$testname")"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     decoratehead "$testname"
