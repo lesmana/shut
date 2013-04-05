@@ -7,9 +7,9 @@ verbose=false
 logdir=
 
 handle_args() {
-  while getopts "d:nrv" "opt"; do
+  while getopts "l:nrv" "opt"; do
     case "$opt" in
-      d) logdir="$OPTARG";;
+      l) logdir="$OPTARG";;
       n) donotruntests=true;;
       r) recursive=true;;
       v) verbose=true;;

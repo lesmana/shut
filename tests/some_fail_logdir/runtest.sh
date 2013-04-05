@@ -5,7 +5,7 @@ set -x
 . ../libruntest.sh
 
 shutcommand_in_actual() {
-  ../../../shut -d logdir
+  ../../../shut -l logdir
 }
 
 runtest

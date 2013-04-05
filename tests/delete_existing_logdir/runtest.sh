@@ -10,7 +10,7 @@ after_arrange() {
 }
 
 shutcommand_in_actual() {
-  ../../../shut -d logdir
+  ../../../shut -l logdir
 }
 
 runtest
