@@ -1,0 +1,15 @@
+todo for shell unit test
+
+----
+update goodshut and update runtests.sh to use -l instead of -d
+
+----
+capture stdout and stderr separately
+
+----
+have all test set -e and set -u
+
+----
+recognize more than one pattern argument
+shut pat1 pat2
+will find files matching pat1 or pat2
