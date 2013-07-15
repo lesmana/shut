@@ -104,7 +104,7 @@ runtestprintall() {
   testname=$1
   decoratehead "$testname"
   (((runtestandlogmaybe "$testname"; echo $? >&3) |
-        decoratebody "$testname" >&4) 3>&1 | stdintoexitstatus) 4>&1
+        decoratebody >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   decoratetail "$testname" "$exitstatus"
   return $exitstatus
