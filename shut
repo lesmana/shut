@@ -112,12 +112,10 @@ runtestprintall() {
 
 runtestprintonlyfail() {
   testname=$1
-  output="$(runtestandlogmaybe "$testname")"
+  output="$(runtestprintall "$testname")"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
-    decoratehead "$testname"
-    echo "$output" | decoratebody
-    decoratetail "$testname" "$exitstatus"
+    echo "$output"
   fi
   return $exitstatus
 }
