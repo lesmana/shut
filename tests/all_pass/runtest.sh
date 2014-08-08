@@ -2,18 +2,18 @@
 
 set -xeu
 
-testtrue="\
-#! /bin/sh
-set -x
-true
-"
-
 shutoutput="\
 run: 2 pass: 2 fail: 0
 "
 
 shutexitstatus="\
 0
+"
+
+testtrue="\
+#! /bin/sh
+set -x
+true
 "
 
 rm -rf expected actual

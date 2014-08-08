@@ -2,18 +2,6 @@
 
 set -xeu
 
-testfalse="\
-#! /bin/sh
-set -x
-false
-"
-
-testtrue="\
-#! /bin/sh
-set -x
-true
-"
-
 shutoutput="\
 ================
 ./test_false1.sh
@@ -29,6 +17,18 @@ run: 3 pass: 2 fail: 1
 
 shutexitstatus="\
 1
+"
+
+testfalse="\
+#! /bin/sh
+set -x
+false
+"
+
+testtrue="\
+#! /bin/sh
+set -x
+true
 "
 
 rm -rf expected actual

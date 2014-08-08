@@ -2,6 +2,23 @@
 
 set -xeu
 
+shutoutput="\
+================
+./test_false1.sh
+----------------
+output:
+  + false
+----------------
+exitstatus: 1
+FAIL ./test_false1.sh
+----------------
+run: 3 pass: 2 fail: 1
+"
+
+shutexitstatus="\
+1
+"
+
 testfalse="\
 #! /bin/sh
 set -x
@@ -28,23 +45,6 @@ testtrueoutput="\
 
 testtrueexitstatus="\
 0
-"
-
-shutoutput="\
-================
-./test_false1.sh
-----------------
-output:
-  + false
-----------------
-exitstatus: 1
-FAIL ./test_false1.sh
-----------------
-run: 3 pass: 2 fail: 1
-"
-
-shutexitstatus="\
-1
 "
 
 rm -rf expected actual
