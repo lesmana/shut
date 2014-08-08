@@ -1,6 +1,21 @@
 todo for shell unit test
 
 ----
+create directory for every test
+merge log directory in this directory
+example: test filename is test_foo.sh
+dirname is test_foo.sh.dir
+inside is directory workdir and files stdout, stderr and exitstatus
+workdir is pwd of test process
+stdout, stderr and exitstatus contains the stdout, stderr and exitstatus
+
+----
+create working directory for shut
+this directory will contain the test directories
+and logfile of entire stdout of shut
+and text files listing failed and passed tests
+
+----
 capture stdout and stderr separately
 
 ----
