@@ -7,9 +7,9 @@ verbose=false
 logdir=
 
 handle_args() {
-  while getopts "d:nrv" "opt"; do
+  while getopts "l:nrv" "opt"; do
     case "$opt" in
-      d) logdir="$OPTARG";;
+      l) logdir="$OPTARG";;
       n) donotruntests=true;;
       r) recursive=true;;
       v) verbose=true;;
@@ -40,7 +40,7 @@ collecttestnames() {
   find -L . $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
-runtesttoscreen() {
+runtestinpwd() {
   testname=$1
   dirname=$(dirname "$testname")
   basename=$(basename "$testname")
@@ -54,24 +54,24 @@ stdintoexitstatus() {
   return $exitstatus
 }
 
-runtesttofileandscreen() {
+runtestinpwdandlog() {
   testname=$1
   mkdir -p "$logdir/$testname"
   outputfile="$logdir/$testname/output"
-  ((((runtesttoscreen "$testname"; echo $? >&3 ) |
-        tee "$outputfile" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  (((runtestinpwd "$testname"; echo $? >&3) |
+        tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   exitstatusfile="$logdir/$testname/exitstatus"
   echo $exitstatus > "$exitstatusfile"
   return $exitstatus
 }
 
-runtesttosomething() {
+runtestandlogmaybe() {
   testname=$1
   if [ -n "$logdir" ]; then
-    runtesttofileandscreen "$testname"
+    runtestinpwdandlog "$testname"
   else
-    runtesttoscreen "$testname"
+    runtestinpwd "$testname"
   fi
 }
 
@@ -103,21 +103,19 @@ decoratetail() {
 runtestprintall() {
   testname=$1
   decoratehead "$testname"
-  ((((runtesttosomething "$testname"; echo $? >&3 ) |
-        decoratebody "$testname" >&4) 3>&1) | stdintoexitstatus) 4>&1
+  (((runtestandlogmaybe "$testname"; echo $? >&3) |
+        decoratebody >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   decoratetail "$testname" "$exitstatus"
   return $exitstatus
 }
 
-runtestprintsuccess() {
+runtestprintonlyfail() {
   testname=$1
-  output="$(runtesttosomething "$testname" 2>&1)"
+  output="$(runtestprintall "$testname")"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
-    decoratehead "$testname"
-    echo "$output" | decoratebody
-    decoratetail "$testname" "$exitstatus"
+    echo "$output"
   fi
   return $exitstatus
 }
@@ -127,43 +125,67 @@ runtest() {
   if $verbose; then
     runtestprintall "$testname"
   else
-    runtestprintsuccess "$testname"
-  fi
-}
-
-runtestornot() {
-  if $donotruntests; then
-    echo "$testname"
-  else
-    runtest "$testname"
+    runtestprintonlyfail "$testname"
   fi
 }
 
 runtests() {
   fail=0
-
   while read testname; do
-    testsrun="$testsrun$testname\n"
-    if runtestornot "$testname"; then
-      testspass="$testspass$testname\n"
+    echo "$testname" >&3
+    if runtest "$testname"; then
+      echo "$testname" >&4
     else
-      testsfail="$testsfail$testname\n"
+      echo "$testname" >&5
       fail=1
     fi
   done
-
-  runcount=$(echo -n "$testsrun" | wc -l)
-  passcount=$(echo -n "$testspass" | wc -l)
-  failcount=$(echo -n "$testsfail" | wc -l)
-  echo "run: $runcount pass: $passcount fail: $failcount"
-
   return $fail
+}
+
+count() {
+  wc -l
+}
+
+summaryline() {
+  read run
+  read pass
+  read fail
+  echo "run: $run pass: $pass fail: $fail"
+}
+
+runtestsandprintsummary() {
+  ((((((
+  runtests >&6; echo $? >&7
+  ) 3>&1 | count >&3
+  ) 4>&1 | count >&4
+  ) 5>&1 | count >&5
+  ) 3>&1 4>&1 5>&1 | summaryline >&6
+  ) 7>&1 | stdintoexitstatus
+  ) 6>&1
+}
+
+runtestsnotandprintsummary() {
+  count=0
+  while read testname; do
+    echo "$testname"
+    count=$(($count + 1))
+  done
+  echo "would run: $count"
+}
+
+runtestsornot() {
+  if $donotruntests; then
+    runtestsnotandprintsummary
+  else
+    runtestsandprintsummary
+  fi
 }
 
 main() {
   handle_args "$@"
   setup
-  collecttestnames | runtests
+  collecttestnames | runtestsornot
   success=$?
   return $success
 }
