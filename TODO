@@ -4,9 +4,6 @@ todo for shell unit test
 capture stdout and stderr separately
 
 ----
-have all test set -e and set -u
-
-----
 recognize more than one pattern argument
 shut pat1 pat2
 will find files matching pat1 or pat2
