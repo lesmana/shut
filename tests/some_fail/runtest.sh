@@ -36,10 +36,6 @@ mkdir expected actual
 
 (
   cd expected
-  printf "$testfalse" > test_false1.sh
-  printf "$testtrue" > test_true1.sh
-  printf "$testtrue" > test_true2.sh
-  chmod +x test_false1.sh test_true1.sh test_true2.sh
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
 )
@@ -54,6 +50,7 @@ mkdir expected actual
   ../../../shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
+  rm test_false1.sh test_true1.sh test_true2.sh
 )
 
 diff -r expected actual
