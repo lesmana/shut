@@ -1,11 +1,50 @@
 #! /bin/sh
 
+set -xeu
+
+shutoutput="\
+./prefix_false1.sh
+./prefix_true1.sh
+./prefix_true2.sh
+would run: 3
+"
+
+shutexitstatus="\
+0
+"
+
+testfalse="\
+#! /bin/sh
 set -x
+false
+"
 
-. ../libruntest.sh
+testtrue="\
+#! /bin/sh
+set -x
+true
+"
 
-shutcommand_in_actual() {
-  ../../../shut -n prefix
-}
+rm -rf expected actual
+mkdir expected actual
 
-runtest
+(
+  cd expected
+  printf "$shutoutput" > shutoutput
+  printf "$shutexitstatus" > shutexitstatus
+)
+
+(
+  cd actual
+  printf "$testfalse" > prefix_false1.sh
+  printf "$testtrue" > prefix_true1.sh
+  printf "$testtrue" > prefix_true2.sh
+  chmod +x prefix_false1.sh prefix_true1.sh prefix_true2.sh
+  set +e
+  ../../../shut -n prefix > shutoutput 2>&1
+  printf "$?\n" > shutexitstatus
+  set -e
+  rm prefix_false1.sh prefix_true1.sh prefix_true2.sh
+)
+
+diff -r expected actual
