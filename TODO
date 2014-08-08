@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-update goodshut and update runtests.sh to use -l instead of -d
-
-----
 capture stdout and stderr separately
 
 ----
