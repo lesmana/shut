@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-simplify tests to be one file per test
-
-----
 capture stdout and stderr separately
 
 ----
