@@ -3,20 +3,13 @@
 set -xeu
 
 shutoutput="\
-================
 ./test_false1.sh
-----------------
-output:
-  + false
-----------------
-exitstatus: 1
-FAIL ./test_false1.sh
-----------------
-run: 2 pass: 1 fail: 1
+./test_true1.sh
+would run: 2
 "
 
 shutexitstatus="\
-1
+0
 "
 
 testfalse="\
@@ -47,7 +40,7 @@ mkdir expected actual
   printf "$testtrue" > test_true2.sh
   chmod +x test_false1.sh test_true1.sh
   set +e
-  ../../../shut > shutoutput 2>&1
+  ../../../shut -n > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
   rm test_false1.sh test_true1.sh test_true2.sh
