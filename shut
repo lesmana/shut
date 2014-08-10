@@ -46,12 +46,15 @@ runtestinpwd() {
   fulltestname=$(readlink -f "$testname")
   dirname=$(dirname "$fulltestname")
   basename=$(basename "$fulltestname")
+  testworkdir="$basename.dir"
   (
-    cd "$dirname";
+    cd "$dirname"
+    mkdir "$testworkdir"
+    cd "$testworkdir";
     export SHUT_PWD
     export SHUT_TEST=$fulltestname
     export SHUT_TESTPWD=$PWD
-    "./$basename" 2>&1
+    "$fulltestname" 2>&1
   )
   exitstatus=$?
   return $exitstatus
