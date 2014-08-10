@@ -44,8 +44,8 @@ collecttestnames() {
 runtestinpwd() {
   testname=$1
   fulltestname=$(readlink -f "$testname")
-  dirname=$(dirname "$testname")
-  basename=$(basename "$testname")
+  dirname=$(dirname "$fulltestname")
+  basename=$(basename "$fulltestname")
   (
     cd "$dirname";
     export SHUT_PWD
