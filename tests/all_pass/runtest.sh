@@ -23,7 +23,7 @@ mkdir expected actual
   cd expected
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
-  mkdir test_true1.sh.dir test_true2.sh.dir
+  mkdir -p test_true1.sh.dir/workdir test_true2.sh.dir/workdir
 )
 
 (

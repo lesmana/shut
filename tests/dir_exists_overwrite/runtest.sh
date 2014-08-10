@@ -54,7 +54,7 @@ mkdir expected actual
   cd expected
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
-  mkdir test_false1.sh.dir test_true1.sh.dir test_true2.sh.dir
+  mkdir -p test_false1.sh.dir/workdir test_true1.sh.dir/workdir test_true2.sh.dir/workdir
   mkdir -p logdir/test_false1.sh logdir/test_true1.sh logdir/test_true2.sh
   printf "$testfalseoutput" > logdir/test_false1.sh/output
   printf "$testfalseexitstatus" > logdir/test_false1.sh/exitstatus
