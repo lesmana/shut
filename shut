@@ -5,11 +5,13 @@ donotruntests=false
 recursive=false
 verbose=false
 logdir=
+delete=false
 
 handle_args() {
-  while getopts "l:nrv" "opt"; do
+  while getopts "l:nrvf" "opt"; do
     case "$opt" in
       l) logdir="$OPTARG";;
+      f) delete=true;;
       n) donotruntests=true;;
       r) recursive=true;;
       v) verbose=true;;
@@ -25,7 +27,14 @@ handle_args() {
 setup() {
   if [ -n "$logdir" ]; then
     if [ -e "$logdir" ]; then
-      rm -rf "$logdir"
+      if $delete; then
+        rm -rf "$logdir"
+      else
+        echo "name exists: $logdir" >&2
+        echo "will not overwrite" >&2
+        echo "use -f to overwrite" >&2
+        exit 1
+      fi
     fi
     mkdir -p "$logdir"
   fi
