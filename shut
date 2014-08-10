@@ -43,12 +43,13 @@ collecttestnames() {
 
 runtestinpwd() {
   testname=$1
+  fulltestname=$(readlink -f "$testname")
   dirname=$(dirname "$testname")
   basename=$(basename "$testname")
   (
     cd "$dirname";
     export SHUT_PWD
-    export SHUT_TEST=$testname
+    export SHUT_TEST=$fulltestname
     export SHUT_TESTPWD=$PWD
     "./$basename" 2>&1)
   exitstatus=$?

@@ -8,7 +8,7 @@ shutoutput="\
 ----------------
 output:
   $PWD/actual
-  ./subdir1/test1
+  $PWD/actual/subdir1/test1
   $PWD/actual/subdir1
 ----------------
 exitstatus: 0
@@ -19,7 +19,7 @@ PASS ./subdir1/test1
 ----------------
 output:
   $PWD/actual
-  ./subdir2/subdir21/test21
+  $PWD/actual/subdir2/subdir21/test21
   $PWD/actual/subdir2/subdir21
 ----------------
 exitstatus: 0
@@ -30,7 +30,7 @@ PASS ./subdir2/subdir21/test21
 ----------------
 output:
   $PWD/actual
-  ./subdir2/test2
+  $PWD/actual/subdir2/test2
   $PWD/actual/subdir2
 ----------------
 exitstatus: 0
@@ -41,7 +41,7 @@ PASS ./subdir2/test2
 ----------------
 output:
   $PWD/actual
-  ./test0
+  $PWD/actual/test0
   $PWD/actual
 ----------------
 exitstatus: 0
