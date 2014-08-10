@@ -52,7 +52,7 @@ collecttestnames() {
 
 runtestinpwd() {
   testname=$1
-  fulltestname=$(readlink -f "$testname")
+  fulltestname=$2
   dirname=$(dirname "$fulltestname")
   basename=$(basename "$fulltestname")
   testworkdir="$basename.dir"
@@ -78,9 +78,10 @@ stdintoexitstatus() {
 
 runtestinpwdandlog() {
   testname=$1
+  fulltestname=$2
   mkdir -p "$logdir/$testname"
   outputfile="$logdir/$testname/output"
-  (((runtestinpwd "$testname"; echo $? >&3) |
+  (((runtestinpwd "$testname" "$fulltestname"; echo $? >&3) |
         tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   exitstatusfile="$logdir/$testname/exitstatus"
@@ -90,10 +91,11 @@ runtestinpwdandlog() {
 
 runtestandlogmaybe() {
   testname=$1
+  fulltestname=$(readlink -f "$testname")
   if [ -n "$logdir" ]; then
-    runtestinpwdandlog "$testname"
+    runtestinpwdandlog "$testname" "$fulltestname"
   else
-    runtestinpwd "$testname"
+    runtestinpwd "$testname" "$fulltestname"
   fi
 }
 
