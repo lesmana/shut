@@ -29,6 +29,7 @@ setup() {
     fi
     mkdir -p "$logdir"
   fi
+  SHUT_PWD=$PWD
 }
 
 collecttestnames() {
@@ -44,7 +45,12 @@ runtestinpwd() {
   testname=$1
   dirname=$(dirname "$testname")
   basename=$(basename "$testname")
-  (cd "$dirname"; "./$basename" 2>&1)
+  (
+    cd "$dirname";
+    export SHUT_PWD
+    export SHUT_TEST=$testname
+    export SHUT_TESTPWD=$PWD
+    "./$basename" 2>&1)
   exitstatus=$?
   return $exitstatus
 }
