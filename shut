@@ -26,9 +26,10 @@ handle_args() {
 
 setup() {
   if [ -n "$logdir" ]; then
-    if [ -e "$logdir" ]; then
+    fulllogdir=$(readlink -f "$logdir")
+    if [ -e "$fulllogdir" ]; then
       if $delete; then
-        rm -rf "$logdir"
+        rm -rf "$fulllogdir"
       else
         echo "name exists: $logdir" >&2
         echo "will not overwrite" >&2
@@ -36,7 +37,8 @@ setup() {
         exit 1
       fi
     fi
-    mkdir -p "$logdir"
+    mkdir -p "$fulllogdir"
+    logdir=$fulllogdir
   fi
   SHUT_PWD=$PWD
 }
