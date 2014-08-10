@@ -3,8 +3,8 @@
 set -xeu
 
 shutoutput="\
-./test_false1.sh
-./test_true1.sh
+./testf1.sh
+./testt1.sh
 would run: 2
 "
 
@@ -35,15 +35,15 @@ mkdir expected actual
 
 (
   cd actual
-  printf "$testfalse" > test_false1.sh
-  printf "$testtrue" > test_true1.sh
-  printf "$testtrue" > test_true2.sh
-  chmod +x test_false1.sh test_true1.sh
+  printf "$testfalse" > testf1.sh
+  printf "$testtrue" > testt1.sh
+  printf "$testtrue" > testt2.sh
+  chmod +x testf1.sh testt1.sh
   set +e
   ../../../shut -n > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
-  rm test_false1.sh test_true1.sh test_true2.sh
+  rm testf1.sh testt1.sh testt2.sh
 )
 
 diff -r expected actual

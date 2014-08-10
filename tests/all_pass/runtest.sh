@@ -23,19 +23,19 @@ mkdir expected actual
   cd expected
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
-  mkdir -p test_true1.sh.dir/workdir test_true2.sh.dir/workdir
+  mkdir -p testt1.sh.dir/workdir testt2.sh.dir/workdir
 )
 
 (
   cd actual
-  printf "$testtrue" > test_true1.sh
-  printf "$testtrue" > test_true2.sh
-  chmod +x test_true1.sh test_true2.sh
+  printf "$testtrue" > testt1.sh
+  printf "$testtrue" > testt2.sh
+  chmod +x testt1.sh testt2.sh
   set +e
   ../../../shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
-  rm test_true1.sh test_true2.sh
+  rm testt1.sh testt2.sh
 )
 
 diff -r expected actual
