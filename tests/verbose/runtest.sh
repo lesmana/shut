@@ -43,10 +43,26 @@ set -x
 false
 "
 
+testfalseoutput="\
++ false
+"
+
+testfalseexitstatus="\
+1
+"
+
 testtrue="\
 #! /bin/sh
 set -x
 true
+"
+
+testtrueoutput="\
++ true
+"
+
+testtrueexitstatus="\
+0
 "
 
 rm -rf expected actual
@@ -57,6 +73,12 @@ mkdir expected actual
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
   mkdir -p testf1.sh.dir/workdir testt1.sh.dir/workdir testt2.sh.dir/workdir
+  printf "$testfalseoutput" > testf1.sh.dir/output
+  printf "$testfalseexitstatus" > testf1.sh.dir/exitstatus
+  printf "$testtrueoutput" > testt1.sh.dir/output
+  printf "$testtrueexitstatus" > testt1.sh.dir/exitstatus
+  printf "$testtrueoutput" > testt2.sh.dir/output
+  printf "$testtrueexitstatus" > testt2.sh.dir/exitstatus
 )
 
 (

@@ -92,11 +92,7 @@ runtestandlogmaybe() {
     cd "$dirname"
     mkdir "$testworkdir"
     cd "$testworkdir";
-    if [ -n "$logdir" ]; then
-      runtestinpwdandlog "$fulltestname"
-    else
-      runtestinpwd "$fulltestname"
-    fi
+    runtestinpwdandlog "$fulltestname"
   )
 }
 
