@@ -82,15 +82,14 @@ runtestinpwdandlog() {
 
 runtestandlogmaybe() {
   testname=$1
-  fulltestname=$(readlink -f "$testname")
-  dirname=$(dirname "$fulltestname")
-  basename=$(basename "$fulltestname")
+  dirname=$(dirname "$testname")
+  basename=$(basename "$testname")
   testworkdir="$basename.dir"
   (
     cd "$dirname"
     mkdir "$testworkdir"
     cd "$testworkdir";
-    runtestinpwdandlog "$fulltestname"
+    runtestinpwdandlog "$testname"
   )
 }
 
