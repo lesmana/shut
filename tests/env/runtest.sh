@@ -61,8 +61,6 @@ echo $SHUT_TEST
 echo $SHUT_TESTPWD
 '
 
-echo $PWD
-
 rm -rf expected actual
 mkdir expected actual
 
