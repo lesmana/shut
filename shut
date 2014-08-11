@@ -72,8 +72,7 @@ stdintoexitstatus() {
 }
 
 runtestinpwdandlog() {
-  testname=$1
-  fulltestname=$2
+  fulltestname=$1
   outputfile="output"
   (((runtestinpwd "$fulltestname"; echo $? >&3) |
         tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
@@ -94,7 +93,7 @@ runtestandlogmaybe() {
     mkdir "$testworkdir"
     cd "$testworkdir";
     if [ -n "$logdir" ]; then
-      runtestinpwdandlog "$testname" "$fulltestname"
+      runtestinpwdandlog "$fulltestname"
     else
       runtestinpwd "$fulltestname"
     fi
