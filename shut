@@ -49,7 +49,7 @@ collecttestnames() {
   else
     maxdepth="-maxdepth 1"
   fi
-  find -L . $maxdepth -type f -executable -name "$prefix*" | sort
+  find -L $SHUT_PWD $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {
@@ -123,11 +123,12 @@ decoratetail() {
 
 runtestprintall() {
   testname=$1
-  decoratehead "$testname"
+  relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+  decoratehead "$relativetestname"
   (((runtestandlogmaybe "$testname"; echo $? >&3) |
         decoratebody >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
-  decoratetail "$testname" "$exitstatus"
+  decoratetail "$relativetestname" "$exitstatus"
   return $exitstatus
 }
 
@@ -189,7 +190,8 @@ runtestsandprintsummary() {
 runtestsnotandprintsummary() {
   count=0
   while read testname; do
-    echo "$testname"
+    relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+    echo "$relativetestname"
     count=$(($count + 1))
   done
   echo "would run: $count"
