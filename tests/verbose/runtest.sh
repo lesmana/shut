@@ -88,7 +88,7 @@ mkdir expected actual
   printf "$testtrue" > testt2.sh
   chmod +x testf1.sh testt1.sh testt2.sh
   set +e
-  ../../../shut -v > shutoutput 2>&1
+  shut -v > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
   rm testf1.sh testt1.sh testt2.sh

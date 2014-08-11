@@ -115,7 +115,7 @@ mkdir expected actual
   printf "$testenv" > d2/d21/test21
   chmod +x test0 d1/test1 d2/test2 d2/d21/test21
   set +e
-  ../../../shut -r -v > shutoutput 2>&1
+  shut -r -v > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

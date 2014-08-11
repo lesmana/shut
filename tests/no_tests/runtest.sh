@@ -22,7 +22,7 @@ mkdir expected actual
 (
   cd actual
   set +e
-  ../../../shut > shutoutput 2>&1
+  shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

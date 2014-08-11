@@ -28,7 +28,7 @@ mkdir expected actual
   mkdir logdir
   touch logdir/existinglogdir
   set +e
-  ../../../shut -l logdir > shutoutput 2>&1
+  shut -l logdir > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

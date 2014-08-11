@@ -38,7 +38,7 @@ mkdir expected actual
   printf "$testtrue" > subdir2/subdir21/test21
   chmod +x test0 subdir1/test1 subdir2/test2 subdir2/subdir21/test21
   set +e
-  ../../../shut -n -r > shutoutput 2>&1
+  shut -n -r > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
   rm -rf test0 subdir1 subdir2

@@ -41,7 +41,7 @@ mkdir expected actual
   printf "$testtrue" > "test true 2.sh"
   chmod +x "test false 1.sh" "test true 1.sh" "test true 2.sh"
   set +e
-  ../../../shut -n > shutoutput 2>&1
+  shut -n > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
   rm "test false 1.sh" "test true 1.sh" "test true 2.sh"

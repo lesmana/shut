@@ -62,7 +62,7 @@ mkdir expected actual
   printf "$testfalse" > testf2.sh
   chmod +x testf1.sh testf2.sh
   set +e
-  ../../../shut > shutoutput 2>&1
+  shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
   rm testf1.sh testf2.sh

@@ -41,7 +41,7 @@ mkdir expected actual
   printf "$testtrue" > prefix_true2.sh
   chmod +x prefix_false1.sh prefix_true1.sh prefix_true2.sh
   set +e
-  ../../../shut -n prefix > shutoutput 2>&1
+  shut -n prefix > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
   rm prefix_false1.sh prefix_true1.sh prefix_true2.sh
