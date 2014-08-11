@@ -53,14 +53,14 @@ collecttestnames() {
 }
 
 runtestinpwd() {
-  fulltestname=$1
+  testname=$1
   (
     mkdir workdir
     cd workdir
     export SHUT_PWD
-    export SHUT_TEST=$fulltestname
+    export SHUT_TEST=$testname
     export SHUT_TESTPWD=$PWD
-    "$fulltestname" 2>&1
+    "$testname" 2>&1
   )
   exitstatus=$?
   return $exitstatus
@@ -72,8 +72,8 @@ stdintoexitstatus() {
 }
 
 runtestinpwdandlog() {
-  fulltestname=$1
-  (((runtestinpwd "$fulltestname"; echo $? >&3) |
+  testname=$1
+  (((runtestinpwd "$testname"; echo $? >&3) |
         tee output >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
