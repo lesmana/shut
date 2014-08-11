@@ -73,12 +73,10 @@ stdintoexitstatus() {
 
 runtestinpwdandlog() {
   fulltestname=$1
-  outputfile="output"
   (((runtestinpwd "$fulltestname"; echo $? >&3) |
-        tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
+        tee output >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
-  exitstatusfile="exitstatus"
-  echo $exitstatus > "$exitstatusfile"
+  echo $exitstatus > exitstatus
   return $exitstatus
 }
 
