@@ -54,13 +54,7 @@ collecttestnames() {
 
 runtestinpwd() {
   fulltestname=$1
-  dirname=$(dirname "$fulltestname")
-  basename=$(basename "$fulltestname")
-  testworkdir="$basename.dir"
   (
-    cd "$dirname"
-    mkdir "$testworkdir"
-    cd "$testworkdir";
     mkdir workdir
     cd workdir
     export SHUT_PWD
@@ -93,11 +87,19 @@ runtestinpwdandlog() {
 runtestandlogmaybe() {
   testname=$1
   fulltestname=$(readlink -f "$testname")
-  if [ -n "$logdir" ]; then
-    runtestinpwdandlog "$testname" "$fulltestname"
-  else
-    runtestinpwd "$fulltestname"
-  fi
+  dirname=$(dirname "$fulltestname")
+  basename=$(basename "$fulltestname")
+  testworkdir="$basename.dir"
+  (
+    cd "$dirname"
+    mkdir "$testworkdir"
+    cd "$testworkdir";
+    if [ -n "$logdir" ]; then
+      runtestinpwdandlog "$testname" "$fulltestname"
+    else
+      runtestinpwd "$fulltestname"
+    fi
+  )
 }
 
 decoratehead() {
