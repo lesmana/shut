@@ -95,9 +95,9 @@ runtestandlogmaybe() {
 }
 
 decoratehead() {
-  testname=$1
+  relativetestname=$1
   echo "================"
-  echo "$testname"
+  echo "$relativetestname"
   echo "----------------"
   echo "output:"
 }
@@ -107,14 +107,14 @@ decoratebody() {
 }
 
 decoratetail() {
-  testname=$1
+  relativetestname=$1
   exitstatus=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
   if [ $exitstatus -eq 0 ]; then
-    echo "PASS $testname"
+    echo "PASS $relativetestname"
   else
-    echo "FAIL $testname"
+    echo "FAIL $relativetestname"
   fi
   echo "----------------"
 }
