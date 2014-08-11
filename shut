@@ -137,7 +137,7 @@ runtestprintall() {
 
 runtestprintonlyfail() {
   testname=$1
-  output="$(runtestprintall "$testname")"
+  output=$(runtestprintall "$testname")
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     echo "$output"
