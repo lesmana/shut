@@ -55,13 +55,13 @@ mkdir expected actual
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
   mkdir -p testf1.sh.dir/workdir testt1.sh.dir/workdir testt2.sh.dir/workdir
-  mkdir -p logdir/testf1.sh logdir/testt1.sh logdir/testt2.sh
-  printf "$testfalseoutput" > logdir/testf1.sh/output
-  printf "$testfalseexitstatus" > logdir/testf1.sh/exitstatus
-  printf "$testtrueoutput" > logdir/testt1.sh/output
-  printf "$testtrueexitstatus" > logdir/testt1.sh/exitstatus
-  printf "$testtrueoutput" > logdir/testt2.sh/output
-  printf "$testtrueexitstatus" > logdir/testt2.sh/exitstatus
+  mkdir -p logdir
+  printf "$testfalseoutput" > testf1.sh.dir/output
+  printf "$testfalseexitstatus" > testf1.sh.dir/exitstatus
+  printf "$testtrueoutput" > testt1.sh.dir/output
+  printf "$testtrueexitstatus" > testt1.sh.dir/exitstatus
+  printf "$testtrueoutput" > testt2.sh.dir/output
+  printf "$testtrueexitstatus" > testt2.sh.dir/exitstatus
 )
 
 (
