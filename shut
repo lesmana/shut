@@ -4,7 +4,7 @@ prefix="test"
 donotruntests=false
 recursive=false
 verbose=false
-shutdir=shutdir
+shutdir="shutdir"
 delete=false
 
 handle_args() {
