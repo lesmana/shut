@@ -27,6 +27,7 @@ mkdir expected actual
   cd expected
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
+  mkdir shutdir
 )
 
 (

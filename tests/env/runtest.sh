@@ -90,7 +90,7 @@ mkdir expected actual
   cd expected
   printf "$shutoutput" > shutoutput
   printf "$shutexitstatus" > shutexitstatus
-  mkdir -p test0.dir/workdir d1/test1.dir/workdir d2/test2.dir/workdir d2/d21/test21.dir/workdir
+  mkdir -p shutdir test0.dir/workdir d1/test1.dir/workdir d2/test2.dir/workdir d2/d21/test21.dir/workdir
   printf "$testenv" > test0
   printf "$testenv" > d1/test1
   printf "$testenv" > d2/test2

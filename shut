@@ -4,7 +4,7 @@ prefix="test"
 donotruntests=false
 recursive=false
 verbose=false
-logdir=
+logdir=shutdir
 delete=false
 
 handle_args() {
@@ -25,21 +25,19 @@ handle_args() {
 }
 
 setup() {
-  if [ -n "$logdir" ]; then
-    fulllogdir=$(readlink -f "$logdir")
-    if [ -e "$fulllogdir" ]; then
-      if $delete; then
-        rm -rf "$fulllogdir"
-      else
-        echo "name exists: $logdir" >&2
-        echo "will not overwrite" >&2
-        echo "use -f to overwrite" >&2
-        exit 1
-      fi
+  fulllogdir=$(readlink -f "$logdir")
+  if [ -e "$fulllogdir" ]; then
+    if $delete; then
+      rm -rf "$fulllogdir"
+    else
+      echo "name exists: $logdir" >&2
+      echo "will not overwrite" >&2
+      echo "use -f to overwrite" >&2
+      exit 1
     fi
-    mkdir -p "$fulllogdir"
-    logdir=$fulllogdir
   fi
+  mkdir -p "$fulllogdir"
+  logdir=$fulllogdir
   SHUT_PWD=$PWD
 }
 
