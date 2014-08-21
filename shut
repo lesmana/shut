@@ -4,13 +4,13 @@ prefix="test"
 donotruntests=false
 recursive=false
 verbose=false
-logdir=shutdir
+shutdir=shutdir
 delete=false
 
 handle_args() {
   while getopts "l:nrvf" "opt"; do
     case "$opt" in
-      l) logdir="$OPTARG";;
+      l) shutdir="$OPTARG";;
       f) delete=true;;
       n) donotruntests=true;;
       r) recursive=true;;
@@ -25,19 +25,19 @@ handle_args() {
 }
 
 setup() {
-  fulllogdir=$(readlink -f "$logdir")
-  if [ -e "$fulllogdir" ]; then
+  fullshutdir=$(readlink -f "$shutdir")
+  if [ -e "$fullshutdir" ]; then
     if $delete; then
-      rm -rf "$fulllogdir"
+      rm -rf "$fullshutdir"
     else
-      echo "name exists: $logdir" >&2
+      echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
       echo "use -f to overwrite" >&2
       exit 1
     fi
   fi
-  mkdir -p "$fulllogdir"
-  logdir=$fulllogdir
+  mkdir -p "$fullshutdir"
+  shutdir=$fullshutdir
   SHUT_PWD=$PWD
 }
 
