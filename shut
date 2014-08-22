@@ -80,12 +80,9 @@ runtestinpwdandlog() {
 
 runtestandlogmaybe() {
   testname=$1
-  dirname=$(dirname "$testname")
-  basename=$(basename "$testname")
-  testworkdir="$basename.dir"
+  testworkdir=$(echo "$testname" | sed "s:$SHUT_PWD:.:").dir
   (
-    cd "$dirname"
-    mkdir "$testworkdir"
+    mkdir -p "$testworkdir"
     cd "$testworkdir";
     runtestinpwdandlog "$testname"
   )
@@ -203,7 +200,7 @@ runtestsornot() {
 main() {
   handle_args "$@"
   setup
-  collecttestnames | runtestsornot
+  collecttestnames | (cd "$shutdir" && runtestsornot)
   success=$?
   return $success
 }
