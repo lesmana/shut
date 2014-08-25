@@ -4,12 +4,14 @@ prefix="test"
 donotruntests=false
 recursive=false
 verbose=false
-logdir=
+shutdir="shutdir"
+delete=false
 
 handle_args() {
-  while getopts "l:nrv" "opt"; do
+  while getopts "l:nrvf" "opt"; do
     case "$opt" in
-      l) logdir="$OPTARG";;
+      l) shutdir="$OPTARG";;
+      f) delete=true;;
       n) donotruntests=true;;
       r) recursive=true;;
       v) verbose=true;;
@@ -23,12 +25,20 @@ handle_args() {
 }
 
 setup() {
-  if [ -n "$logdir" ]; then
-    if [ -e "$logdir" ]; then
-      rm -rf "$logdir"
+  fullshutdir=$(readlink -f "$shutdir")
+  if [ -e "$fullshutdir" ]; then
+    if $delete; then
+      rm -rf "$fullshutdir"
+    else
+      echo "name exists: $shutdir" >&2
+      echo "will not overwrite" >&2
+      echo "use -f to overwrite" >&2
+      exit 1
     fi
-    mkdir -p "$logdir"
   fi
+  mkdir -p "$fullshutdir"
+  shutdir=$fullshutdir
+  SHUT_PWD=$PWD
 }
 
 collecttestnames() {
@@ -37,14 +47,19 @@ collecttestnames() {
   else
     maxdepth="-maxdepth 1"
   fi
-  find -L . $maxdepth -type f -executable -name "$prefix*" | sort
+  find -L $SHUT_PWD $maxdepth -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {
   testname=$1
-  dirname=$(dirname "$testname")
-  basename=$(basename "$testname")
-  (cd "$dirname"; "./$basename" 2>&1)
+  (
+    mkdir workdir
+    cd workdir
+    export SHUT_PWD
+    export SHUT_TEST=$testname
+    export SHUT_TESTPWD=$PWD
+    "$testname" 2>&1
+  )
   exitstatus=$?
   return $exitstatus
 }
@@ -56,29 +71,27 @@ stdintoexitstatus() {
 
 runtestinpwdandlog() {
   testname=$1
-  mkdir -p "$logdir/$testname"
-  outputfile="$logdir/$testname/output"
   (((runtestinpwd "$testname"; echo $? >&3) |
-        tee "$outputfile" >&4) 3>&1 | stdintoexitstatus) 4>&1
+        tee output >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
-  exitstatusfile="$logdir/$testname/exitstatus"
-  echo $exitstatus > "$exitstatusfile"
+  echo $exitstatus > exitstatus
   return $exitstatus
 }
 
 runtestandlogmaybe() {
   testname=$1
-  if [ -n "$logdir" ]; then
+  testworkdir=$(echo "$testname" | sed "s:$SHUT_PWD:.:").dir
+  (
+    mkdir -p "$testworkdir"
+    cd "$testworkdir";
     runtestinpwdandlog "$testname"
-  else
-    runtestinpwd "$testname"
-  fi
+  )
 }
 
 decoratehead() {
-  testname=$1
+  relativetestname=$1
   echo "================"
-  echo "$testname"
+  echo "$relativetestname"
   echo "----------------"
   echo "output:"
 }
@@ -88,31 +101,32 @@ decoratebody() {
 }
 
 decoratetail() {
-  testname=$1
+  relativetestname=$1
   exitstatus=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
   if [ $exitstatus -eq 0 ]; then
-    echo "PASS $testname"
+    echo "PASS $relativetestname"
   else
-    echo "FAIL $testname"
+    echo "FAIL $relativetestname"
   fi
   echo "----------------"
 }
 
 runtestprintall() {
   testname=$1
-  decoratehead "$testname"
+  relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+  decoratehead "$relativetestname"
   (((runtestandlogmaybe "$testname"; echo $? >&3) |
         decoratebody >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
-  decoratetail "$testname" "$exitstatus"
+  decoratetail "$relativetestname" "$exitstatus"
   return $exitstatus
 }
 
 runtestprintonlyfail() {
   testname=$1
-  output="$(runtestprintall "$testname")"
+  output=$(runtestprintall "$testname")
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     echo "$output"
@@ -168,7 +182,8 @@ runtestsandprintsummary() {
 runtestsnotandprintsummary() {
   count=0
   while read testname; do
-    echo "$testname"
+    relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+    echo "$relativetestname"
     count=$(($count + 1))
   done
   echo "would run: $count"
@@ -185,7 +200,7 @@ runtestsornot() {
 main() {
   handle_args "$@"
   setup
-  collecttestnames | runtestsornot
+  collecttestnames | (cd "$shutdir" && runtestsornot)
   success=$?
   return $success
 }

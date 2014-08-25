@@ -3,4 +3,4 @@
 PATH=$PATH:$PWD
 
 cd tests
-../goodshut -l ../runtests.log -r runtest
+../goodshut -f -l ../runtests.log -r runtest
