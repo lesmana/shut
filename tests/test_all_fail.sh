@@ -2,7 +2,25 @@
 
 set -xeu
 
-shutoutput="\
+mkdir actual
+
+printf "\
+#! /bin/sh
+set -x
+false
+" > actual/testf1.sh
+
+printf "\
+#! /bin/sh
+set -x
+false
+" > actual/testf2.sh
+
+chmod +x actual/testf1.sh actual/testf2.sh
+
+cp -a actual expected
+
+printf "\
 ================
 ./testf1.sh
 ----------------
@@ -22,52 +40,26 @@ exitstatus: 1
 FAIL ./testf2.sh
 ----------------
 run: 2 pass: 0 fail: 2
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-1
-"
+printf "1\n" > expected/shutexitstatus
 
-testfalse="\
-#! /bin/sh
-set -x
-false
-"
+mkdir -p \
+      expected/shutdir \
+      expected/shutdir/testf1.sh.dir/workdir \
+      expected/shutdir/testf2.sh.dir/workdir
 
-testfalseoutput="\
-+ false
-"
-
-testfalseexitstatus="\
-1
-"
-
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir -p shutdir
-  cd shutdir
-  mkdir -p testf1.sh.dir/workdir testf2.sh.dir/workdir
-  printf "$testfalseoutput" > testf1.sh.dir/output
-  printf "$testfalseexitstatus" > testf1.sh.dir/exitstatus
-  printf "$testfalseoutput" > testf2.sh.dir/output
-  printf "$testfalseexitstatus" > testf2.sh.dir/exitstatus
-)
+printf "+ false\n"  > expected/shutdir/testf1.sh.dir/output
+printf "1\n"        > expected/shutdir/testf1.sh.dir/exitstatus
+printf "+ false\n"  > expected/shutdir/testf2.sh.dir/output
+printf "1\n"        > expected/shutdir/testf2.sh.dir/exitstatus
 
 (
   cd actual
-  printf "$testfalse" > testf1.sh
-  printf "$testfalse" > testf2.sh
-  chmod +x testf1.sh testf2.sh
   set +e
   shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
-  rm testf1.sh testf2.sh
 )
 
 diff -r expected actual
