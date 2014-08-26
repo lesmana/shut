@@ -2,50 +2,50 @@
 
 set -xeu
 
-shutoutput="\
+mkdir actual
+
+printf "\
+#! /bin/sh
+set -x
+false
+" > actual/prefix_false1.sh
+
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/prefix_true1.sh
+
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/prefix_true2.sh
+
+chmod +x \
+      actual/prefix_false1.sh \
+      actual/prefix_true1.sh \
+      actual/prefix_true2.sh
+
+cp -a actual expected
+
+printf "\
 ./prefix_false1.sh
 ./prefix_true1.sh
 ./prefix_true2.sh
 would run: 3
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-0
-"
+printf "0\n" > expected/shutexitstatus
 
-testfalse="\
-#! /bin/sh
-set -x
-false
-"
-
-testtrue="\
-#! /bin/sh
-set -x
-true
-"
-
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir shutdir
-)
+mkdir -p expected/shutdir
 
 (
   cd actual
-  printf "$testfalse" > prefix_false1.sh
-  printf "$testtrue" > prefix_true1.sh
-  printf "$testtrue" > prefix_true2.sh
-  chmod +x prefix_false1.sh prefix_true1.sh prefix_true2.sh
   set +e
   shut -n prefix > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
-  rm prefix_false1.sh prefix_true1.sh prefix_true2.sh
 )
 
 diff -r expected actual
