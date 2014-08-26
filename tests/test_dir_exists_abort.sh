@@ -2,31 +2,22 @@
 
 set -xeu
 
-shutoutput="\
+mkdir -p actual actual/logdir
+
+touch actual/logdir/existinglogdir
+
+cp -a actual expected
+
+printf "\
 name exists: logdir
 will not overwrite
 use -f to overwrite
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-1
-"
-
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir logdir
-  touch logdir/existinglogdir
-)
+printf "1\n" > expected/shutexitstatus
 
 (
   cd actual
-  mkdir logdir
-  touch logdir/existinglogdir
   set +e
   shut -l logdir > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
