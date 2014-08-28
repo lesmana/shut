@@ -2,7 +2,33 @@
 
 set -xeu
 
-shutoutput="\
+mkdir -p actual actual/logdir
+
+printf "\
+#! /bin/sh
+set -x
+false
+" > actual/testf1.sh
+
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/testt1.sh
+
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/testt2.sh
+
+chmod +x actual/testf1.sh actual/testt1.sh actual/testt2.sh
+
+cp -a actual expected
+
+touch actual/logdir/existinglogdir
+
+printf "\
 ================
 ./testf1.sh
 ----------------
@@ -13,71 +39,29 @@ exitstatus: 1
 FAIL ./testf1.sh
 ----------------
 run: 3 pass: 2 fail: 1
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-1
-"
+printf "1\n" > expected/shutexitstatus
 
-testfalse="\
-#! /bin/sh
-set -x
-false
-"
+mkdir -p \
+      expected/logdir \
+      expected/logdir/testf1.sh.dir/workdir \
+      expected/logdir/testt1.sh.dir/workdir \
+      expected/logdir/testt2.sh.dir/workdir
 
-testfalseoutput="\
-+ false
-"
-
-testfalseexitstatus="\
-1
-"
-
-testtrue="\
-#! /bin/sh
-set -x
-true
-"
-
-testtrueoutput="\
-+ true
-"
-
-testtrueexitstatus="\
-0
-"
-
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir -p logdir
-  cd logdir
-  mkdir -p testf1.sh.dir/workdir testt1.sh.dir/workdir testt2.sh.dir/workdir
-  printf "$testfalseoutput" > testf1.sh.dir/output
-  printf "$testfalseexitstatus" > testf1.sh.dir/exitstatus
-  printf "$testtrueoutput" > testt1.sh.dir/output
-  printf "$testtrueexitstatus" > testt1.sh.dir/exitstatus
-  printf "$testtrueoutput" > testt2.sh.dir/output
-  printf "$testtrueexitstatus" > testt2.sh.dir/exitstatus
-)
+printf "+ false\n"  > expected/logdir/testf1.sh.dir/output
+printf "1\n"        > expected/logdir/testf1.sh.dir/exitstatus
+printf "+ true\n"   > expected/logdir/testt1.sh.dir/output
+printf "0\n"        > expected/logdir/testt1.sh.dir/exitstatus
+printf "+ true\n"   > expected/logdir/testt2.sh.dir/output
+printf "0\n"        > expected/logdir/testt2.sh.dir/exitstatus
 
 (
   cd actual
-  printf "$testfalse" > testf1.sh
-  printf "$testtrue" > testt1.sh
-  printf "$testtrue" > testt2.sh
-  chmod +x testf1.sh testt1.sh testt2.sh
-  mkdir logdir
-  touch logdir/existinglogdir
   set +e
   shut -l logdir -f > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
-  rm testf1.sh testt1.sh testt2.sh
 )
 
 diff -r expected actual
