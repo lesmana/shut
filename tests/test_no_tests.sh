@@ -2,23 +2,13 @@
 
 set -xeu
 
-shutoutput="\
+mkdir -p actual expected/shutdir
+
+printf "\
 run: 0 pass: 0 fail: 0
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-0
-"
-
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir shutdir
-)
+printf "0\n" > expected/shutexitstatus
 
 (
   cd actual
