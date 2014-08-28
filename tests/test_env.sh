@@ -2,7 +2,45 @@
 
 set -xeu
 
-shutoutput="\
+mkdir -p actual/d1 actual/d2/d21
+
+printf '\
+#! /bin/sh
+echo $SHUT_PWD
+echo $SHUT_TEST
+echo $SHUT_TESTPWD
+' > actual/test0
+
+printf '\
+#! /bin/sh
+echo $SHUT_PWD
+echo $SHUT_TEST
+echo $SHUT_TESTPWD
+' > actual/d1/test1
+
+printf '\
+#! /bin/sh
+echo $SHUT_PWD
+echo $SHUT_TEST
+echo $SHUT_TESTPWD
+' > actual/d2/test2
+
+printf '\
+#! /bin/sh
+echo $SHUT_PWD
+echo $SHUT_TEST
+echo $SHUT_TESTPWD
+' > actual/d2/d21/test21
+
+chmod +x \
+      actual/test0 \
+      actual/d1/test1 \
+      actual/d2/test2 \
+      actual/d2/d21/test21
+
+cp -a actual expected
+
+printf "\
 ================
 ./d1/test1
 ----------------
@@ -48,75 +86,47 @@ exitstatus: 0
 PASS ./test0
 ----------------
 run: 4 pass: 4 fail: 0
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-0
-"
+printf "0\n" > expected/shutexitstatus
 
-testenv='\
-#! /bin/sh
-echo $SHUT_PWD
-echo $SHUT_TEST
-echo $SHUT_TESTPWD
-'
+mkdir -p \
+      expected/shutdir/test0.dir/workdir \
+      expected/shutdir/d1/test1.dir/workdir \
+      expected/shutdir/d2/test2.dir/workdir \
+      expected/shutdir/d2/d21/test21.dir/workdir
 
-test0output="\
+printf "\
 $PWD/actual
 $PWD/actual/test0
 $PWD/actual/shutdir/test0.dir/workdir
-"
+" > expected/shutdir/test0.dir/output
 
-test1output="\
+printf "\
 $PWD/actual
 $PWD/actual/d1/test1
 $PWD/actual/shutdir/d1/test1.dir/workdir
-"
-test2output="\
+" > expected/shutdir/d1/test1.dir/output
+
+printf "\
 $PWD/actual
 $PWD/actual/d2/test2
 $PWD/actual/shutdir/d2/test2.dir/workdir
-"
-test21output="\
+" > expected/shutdir/d2/test2.dir/output
+
+printf "\
 $PWD/actual
 $PWD/actual/d2/d21/test21
 $PWD/actual/shutdir/d2/d21/test21.dir/workdir
-"
+" > expected/shutdir/d2/d21/test21.dir/output
 
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir -p d1 d2/d21
-  printf "$testenv" > test0
-  printf "$testenv" > d1/test1
-  printf "$testenv" > d2/test2
-  printf "$testenv" > d2/d21/test21
-  chmod +x test0 d1/test1 d2/test2 d2/d21/test21
-  mkdir -p shutdir
-  cd shutdir
-  mkdir -p test0.dir/workdir d1/test1.dir/workdir d2/test2.dir/workdir d2/d21/test21.dir/workdir
-  printf "$test0output" > test0.dir/output
-  printf "$test1output" > d1/test1.dir/output
-  printf "$test2output" > d2/test2.dir/output
-  printf "$test21output" > d2/d21/test21.dir/output
-  printf "0\n" > test0.dir/exitstatus
-  printf "0\n" > d1/test1.dir/exitstatus
-  printf "0\n" > d2/test2.dir/exitstatus
-  printf "0\n" > d2/d21/test21.dir/exitstatus
-)
+printf "0\n" > expected/shutdir/test0.dir/exitstatus
+printf "0\n" > expected/shutdir/d1/test1.dir/exitstatus
+printf "0\n" > expected/shutdir/d2/test2.dir/exitstatus
+printf "0\n" > expected/shutdir/d2/d21/test21.dir/exitstatus
 
 (
   cd actual
-  mkdir -p d1 d2/d21
-  printf "$testenv" > test0
-  printf "$testenv" > d1/test1
-  printf "$testenv" > d2/test2
-  printf "$testenv" > d2/d21/test21
-  chmod +x test0 d1/test1 d2/test2 d2/d21/test21
   set +e
   shut -r -v > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
