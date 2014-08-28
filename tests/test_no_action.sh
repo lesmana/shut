@@ -2,50 +2,47 @@
 
 set -xeu
 
-shutoutput="\
+mkdir actual
+
+printf "\
+#! /bin/sh
+set -x
+false
+" > actual/testf1.sh
+
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/testt1.sh
+
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/testt2.sh
+
+chmod +x actual/testf1.sh actual/testt1.sh actual/testt2.sh
+
+cp -a actual expected
+
+printf "\
 ./testf1.sh
 ./testt1.sh
 ./testt2.sh
 would run: 3
-"
+" > expected/shutoutput
 
-shutexitstatus="\
-0
-"
+printf "0\n" > expected/shutexitstatus
 
-testfalse="\
-#! /bin/sh
-set -x
-false
-"
-
-testtrue="\
-#! /bin/sh
-set -x
-true
-"
-
-rm -rf expected actual
-mkdir expected actual
-
-(
-  cd expected
-  printf "$shutoutput" > shutoutput
-  printf "$shutexitstatus" > shutexitstatus
-  mkdir shutdir
-)
+mkdir -p expected/shutdir
 
 (
   cd actual
-  printf "$testfalse" > testf1.sh
-  printf "$testtrue" > testt1.sh
-  printf "$testtrue" > testt2.sh
-  chmod +x testf1.sh testt1.sh testt2.sh
   set +e
   shut -n > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
-  rm testf1.sh testt1.sh testt2.sh
 )
 
 diff -r expected actual
