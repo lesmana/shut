@@ -113,7 +113,7 @@ decorate() {
 runtestprintall() {
   testname=$1
   relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
-  runtestinpwdandlog "$testname" > /dev/null
+  runtestinpwdandlog "$testname"
   exitstatus=$?
   decorate "$relativetestname" $exitstatus < output
   return $exitstatus
