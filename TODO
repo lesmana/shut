@@ -14,6 +14,9 @@ and text files listing found and failed and passed tests
 capture stdout and stderr separately
 
 ----
+let find print full and relative test names
+
+----
 recognize more than one pattern argument
 shut pat1 pat2
 will find files matching pat1 or pat2
