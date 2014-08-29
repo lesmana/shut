@@ -78,16 +78,6 @@ runtestinpwdandlog() {
   return $exitstatus
 }
 
-runtestintestworkdir() {
-  testname=$1
-  testworkdir=$(echo "$testname" | sed "s:$SHUT_PWD:.:").dir
-  (
-    mkdir -p "$testworkdir"
-    cd "$testworkdir";
-    runtestinpwdandlog "$testname"
-  )
-}
-
 decoratehead() {
   relativetestname=$1
   echo "================"
@@ -122,6 +112,16 @@ runtestprintall() {
   exitstatus=$?
   decoratetail "$relativetestname" "$exitstatus"
   return $exitstatus
+}
+
+runtestintestworkdir() {
+  testname=$1
+  testworkdir=$(echo "$testname" | sed "s:$SHUT_PWD:.:").dir
+  (
+    mkdir -p "$testworkdir"
+    cd "$testworkdir";
+    runtestinpwdandlog "$testname"
+  )
 }
 
 runtestprintonlyfail() {
