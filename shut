@@ -58,7 +58,7 @@ runtestinpwd() {
     export SHUT_PWD
     export SHUT_TEST=$testname
     export SHUT_TESTPWD=$PWD
-    "$testname" 2>&1
+    "$testname"
   )
   exitstatus=$?
   return $exitstatus
@@ -71,7 +71,7 @@ stdintoexitstatus() {
 
 runtestinpwdandlog() {
   testname=$1
-  runtestinpwd "$testname" > output
+  runtestinpwd "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
   return $exitstatus
