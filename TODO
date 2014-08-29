@@ -1,16 +1,14 @@
 todo for shell unit test
 
 ----
-no test should return non zero exit status
+if no tests found shut should return non zero exit status
 
 ----
-create shutdir only if action
+create shutdir only if tests actually run
 
 ----
-create working directory for shut
-this directory will contain the test directories
-and logfile of entire stdout of shut
-and text files listing failed and passed tests
+create logfile of entire stdout of shut
+and text files listing found and failed and passed tests
 
 ----
 capture stdout and stderr separately
