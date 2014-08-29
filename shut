@@ -116,7 +116,7 @@ runtestprintall() {
 
 runtestprintonlyfail() {
   testname=$1
-  output=$(runtestintestworkdir "$testname")
+  output=$(runtestprintall "$testname")
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     echo "$output"
@@ -127,7 +127,7 @@ runtestprintonlyfail() {
 runtest() {
   testname=$1
   if $verbose; then
-    runtestintestworkdir "$testname"
+    runtestprintall "$testname"
   else
     runtestprintonlyfail "$testname"
   fi
@@ -140,7 +140,7 @@ runtestintestworkdir() {
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtestprintall "$testname"
+    runtest "$testname"
   )
 }
 
@@ -148,7 +148,7 @@ runtests() {
   fail=0
   while read testname; do
     echo "$testname" >&3
-    if runtest "$testname"; then
+    if runtestintestworkdir "$testname"; then
       echo "$testname" >&4
     else
       echo "$testname" >&5
