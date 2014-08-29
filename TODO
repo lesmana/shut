@@ -4,6 +4,9 @@ todo for shell unit test
 no test should return non zero exit status
 
 ----
+create shutdir only if action
+
+----
 create working directory for shut
 this directory will contain the test directories
 and logfile of entire stdout of shut
