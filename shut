@@ -78,7 +78,7 @@ runtestinpwdandlog() {
   return $exitstatus
 }
 
-runtestandlogmaybe() {
+runtestintestworkdir() {
   testname=$1
   testworkdir=$(echo "$testname" | sed "s:$SHUT_PWD:.:").dir
   (
@@ -117,7 +117,7 @@ runtestprintall() {
   testname=$1
   relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
   decoratehead "$relativetestname"
-  (((runtestandlogmaybe "$testname"; echo $? >&3) |
+  (((runtestintestworkdir "$testname"; echo $? >&3) |
         decoratebody >&4) 3>&1 | stdintoexitstatus) 4>&1
   exitstatus=$?
   decoratetail "$relativetestname" "$exitstatus"
