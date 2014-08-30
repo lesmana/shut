@@ -34,8 +34,11 @@ mkdir -p expected/shutdir/test0.sh.dir/workdir
 
 printf "\
 stdout
-stderr
 " > expected/shutdir/test0.sh.dir/output
+
+printf "\
+stderr
+" > expected/shutdir/test0.sh.dir/stderr
 
 printf "0\n" > expected/shutdir/test0.sh.dir/exitstatus
 

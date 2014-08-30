@@ -116,13 +116,13 @@ printonlyfail() {
 
 runtestsplitouterr() {
   testname=$1
-  runtestinpwd "$testname" > output 2>&1
+  runtestinpwd "$testname" > output 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
   if $verbose; then
-    printall "$testname" $exitstatus < output
+    cat output stderr | printall "$testname" $exitstatus
   else
-    printonlyfail "$testname" $exitstatus < output
+    cat output stderr | printonlyfail "$testname" $exitstatus
   fi
   return $exitstatus
 }
