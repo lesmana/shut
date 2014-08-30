@@ -121,7 +121,7 @@ runtestprintall() {
 
 runtestprintonlyfail() {
   testname=$1
-  output=$(runtestprintall "$testname")
+  runtestinpwdandlog "$testname"
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     decorate "$testname" $exitstatus
