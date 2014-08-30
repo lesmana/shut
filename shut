@@ -106,13 +106,13 @@ decorate() {
   decoratetail "$relativetestname" "$exitstatus"
 }
 
-runtestprintall() {
+printall() {
   testname=$1
   exitstatus=$2
   decorate "$testname" $exitstatus
 }
 
-runtestprintonlyfail() {
+printonlyfail() {
   testname=$1
   exitstatus=$2
   if [ $exitstatus -ne 0 ]; then
@@ -125,9 +125,9 @@ runtest() {
   runtestinpwdandlog "$testname"
   exitstatus=$?
   if $verbose; then
-    runtestprintall "$testname" $exitstatus
+    printall "$testname" $exitstatus
   else
-    runtestprintonlyfail "$testname" $exitstatus
+    printonlyfail "$testname" $exitstatus
   fi
   return $exitstatus
 }
