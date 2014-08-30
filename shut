@@ -155,7 +155,7 @@ runtest() {
 
 runtestintestworkdir() {
   testname=$1
-  relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+  relativetestname=$2
   testworkdir=$relativetestname.dir
   (
     mkdir -p "$testworkdir"
@@ -167,8 +167,9 @@ runtestintestworkdir() {
 runtests() {
   fail=0
   while read testname; do
+    relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
     echo "$testname" >&3
-    if runtestintestworkdir "$testname"; then
+    if runtestintestworkdir "$testname" "$relativetestname"; then
       echo "$testname" >&4
     else
       echo "$testname" >&5
