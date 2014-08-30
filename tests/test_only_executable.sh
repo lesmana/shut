@@ -4,31 +4,15 @@ set -xeu
 
 mkdir actual
 
-printf "\
-#! /bin/sh
-set -x
-false
-" > actual/testf1.sh
+touch actual/test0 actual/test1 actual/test2
 
-printf "\
-#! /bin/sh
-set -x
-true
-" > actual/testt1.sh
-
-printf "\
-#! /bin/sh
-set -x
-true
-" > actual/testt2.sh
-
-chmod +x actual/testf1.sh actual/testt1.sh
+chmod +x actual/test1 actual/test2
 
 cp -a actual expected
 
 printf "\
-./testf1.sh
-./testt1.sh
+./test1
+./test2
 would run: 2
 " > expected/shutoutput
 
