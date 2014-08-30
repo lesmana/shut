@@ -58,8 +58,8 @@ runtestinpwd() {
     mkdir workdir
     cd workdir
     export SHUT_PWD
-    export SHUT_TEST=$testname
-    export SHUT_TESTPWD=$PWD
+    export SHUT_TEST="$testname"
+    export SHUT_TESTPWD="$PWD"
     "$testname"
   )
   exitstatus=$?
