@@ -114,8 +114,7 @@ printonlyfail() {
 }
 
 printoutput() {
-  testname=$1
-  relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+  relativetestname=$1
   exitstatus=$2
   if $verbose; then
     printall "$relativetestname" $exitstatus
@@ -126,28 +125,31 @@ printoutput() {
 
 runtestsplitouterr() {
   testname=$1
+  relativetestname=$2
   runtestinpwd "$testname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
-  cat stdout stderr | printoutput "$testname" $exitstatus
+  cat stdout stderr | printoutput "$relativetestname" $exitstatus
   return $exitstatus
 }
 
 runtestmergedouterr() {
   testname=$1
+  relativetestname=$2
   runtestinpwd "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
-  printoutput "$testname" $exitstatus < output
+  printoutput "$relativetestname" $exitstatus < output
   return $exitstatus
 }
 
 runtest() {
   testname=$1
+  relativetestname=$2
   if $split; then
-    runtestsplitouterr "$testname"
+    runtestsplitouterr "$testname" "$relativetestname"
   else
-    runtestmergedouterr "$testname"
+    runtestmergedouterr "$testname" "$relativetestname"
   fi
 }
 
@@ -158,7 +160,7 @@ runtestintestworkdir() {
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtest "$testname"
+    runtest "$testname" "$relativetestname"
   )
 }
 
