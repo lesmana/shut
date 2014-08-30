@@ -64,11 +64,6 @@ runtestinpwd() {
   return $exitstatus
 }
 
-stdintoexitstatus() {
-  read exitstatus
-  return $exitstatus
-}
-
 runtestinpwdandlog() {
   testname=$1
   runtestinpwd "$testname" > output 2>&1
@@ -171,6 +166,11 @@ summaryline() {
   read pass
   read fail
   echo "run: $run pass: $pass fail: $fail"
+}
+
+stdintoexitstatus() {
+  read exitstatus
+  return $exitstatus
 }
 
 runtestsandprintsummary() {
