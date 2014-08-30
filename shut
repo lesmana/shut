@@ -113,16 +113,14 @@ decorate() {
 
 runtestprintall() {
   testname=$1
-  runtestinpwdandlog "$testname"
-  exitstatus=$?
+  exitstatus=$2
   decorate "$testname" $exitstatus
   return $exitstatus
 }
 
 runtestprintonlyfail() {
   testname=$1
-  runtestinpwdandlog "$testname"
-  exitstatus=$?
+  exitstatus=$2
   if [ $exitstatus -ne 0 ]; then
     decorate "$testname" $exitstatus
   fi
@@ -131,10 +129,12 @@ runtestprintonlyfail() {
 
 runtest() {
   testname=$1
+  runtestinpwdandlog "$testname"
+  exitstatus=$?
   if $verbose; then
-    runtestprintall "$testname"
+    runtestprintall "$testname" $exitstatus
   else
-    runtestprintonlyfail "$testname"
+    runtestprintonlyfail "$testname" $exitstatus
   fi
 }
 
