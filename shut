@@ -64,14 +64,6 @@ runtestinpwd() {
   return $exitstatus
 }
 
-runtestinpwdandlog() {
-  testname=$1
-  runtestinpwd "$testname" > output 2>&1
-  exitstatus=$?
-  echo $exitstatus > exitstatus
-  return $exitstatus
-}
-
 decoratehead() {
   relativetestname=$1
   echo "================"
@@ -122,8 +114,9 @@ printonlyfail() {
 
 runtest() {
   testname=$1
-  runtestinpwdandlog "$testname"
+  runtestinpwd "$testname" > output 2>&1
   exitstatus=$?
+  echo $exitstatus > exitstatus
   if $verbose; then
     printall "$testname" $exitstatus
   else
