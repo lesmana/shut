@@ -42,7 +42,7 @@ printf "0\n" > expected/shutdir/test0.sh.dir/exitstatus
 (
   cd actual
   set +e
-  shut -v > shutoutput 2>&1
+  shut -v -x > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

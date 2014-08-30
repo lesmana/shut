@@ -6,15 +6,17 @@ recursive=false
 verbose=false
 shutdir="shutdir"
 delete=false
+split=false
 
 handle_args() {
-  while getopts "l:nrvf" "opt"; do
+  while getopts "l:nrvfx" "opt"; do
     case "$opt" in
       l) shutdir="$OPTARG";;
       f) delete=true;;
       n) donotruntests=true;;
       r) recursive=true;;
       v) verbose=true;;
+      x) split=true;;
       *) exit 1;;
     esac
   done
