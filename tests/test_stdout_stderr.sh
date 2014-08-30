@@ -32,13 +32,9 @@ printf "0\n" > expected/shutexitstatus
 
 mkdir -p expected/shutdir/test0.sh.dir/workdir
 
-printf "\
-stdout
-" > expected/shutdir/test0.sh.dir/stdout
+printf "stdout\n" > expected/shutdir/test0.sh.dir/stdout
 
-printf "\
-stderr
-" > expected/shutdir/test0.sh.dir/stderr
+printf "stderr\n" > expected/shutdir/test0.sh.dir/stderr
 
 printf "0\n" > expected/shutdir/test0.sh.dir/exitstatus
 
