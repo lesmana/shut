@@ -114,7 +114,7 @@ printonlyfail() {
   fi
 }
 
-runtest() {
+runtestsplitouterr() {
   testname=$1
   runtestinpwd "$testname" > output 2>&1
   exitstatus=$?
@@ -125,6 +125,28 @@ runtest() {
     printonlyfail "$testname" $exitstatus < output
   fi
   return $exitstatus
+}
+
+runtestmergedouterr() {
+  testname=$1
+  runtestinpwd "$testname" > output 2>&1
+  exitstatus=$?
+  echo $exitstatus > exitstatus
+  if $verbose; then
+    printall "$testname" $exitstatus < output
+  else
+    printonlyfail "$testname" $exitstatus < output
+  fi
+  return $exitstatus
+}
+
+runtest() {
+  testname=$1
+  if $split; then
+    runtestsplitouterr "$testname"
+  else
+    runtestmergedouterr "$testname"
+  fi
 }
 
 runtestintestworkdir() {
