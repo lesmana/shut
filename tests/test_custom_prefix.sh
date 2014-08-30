@@ -4,35 +4,16 @@ set -xeu
 
 mkdir actual
 
-printf "\
-#! /bin/sh
-set -x
-false
-" > actual/prefix_false1.sh
+touch actual/prefix0 actual/prefix1 actual/prefix2
 
-printf "\
-#! /bin/sh
-set -x
-true
-" > actual/prefix_true1.sh
-
-printf "\
-#! /bin/sh
-set -x
-true
-" > actual/prefix_true2.sh
-
-chmod +x \
-      actual/prefix_false1.sh \
-      actual/prefix_true1.sh \
-      actual/prefix_true2.sh
+chmod +x actual/prefix0 actual/prefix1 actual/prefix2
 
 cp -a actual expected
 
 printf "\
-./prefix_false1.sh
-./prefix_true1.sh
-./prefix_true2.sh
+./prefix0
+./prefix1
+./prefix2
 would run: 3
 " > expected/shutoutput
 
