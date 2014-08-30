@@ -2,19 +2,17 @@
 
 prefix="test"
 donotruntests=false
-recursive=false
 verbose=false
 shutdir="shutdir"
 delete=false
 split=false
 
 handle_args() {
-  while getopts "l:nrvfx" "opt"; do
+  while getopts "l:nvfx" "opt"; do
     case "$opt" in
       l) shutdir="$OPTARG";;
       f) delete=true;;
       n) donotruntests=true;;
-      r) recursive=true;;
       v) verbose=true;;
       x) split=true;;
       *) exit 1;;
@@ -44,12 +42,7 @@ setup() {
 }
 
 collecttestnames() {
-  if $recursive; then
-    maxdepth=""
-  else
-    maxdepth="-maxdepth 1"
-  fi
-  find -L $SHUT_PWD $maxdepth -type f -executable -name "$prefix*" | sort
+  find -L $SHUT_PWD -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {

@@ -51,7 +51,7 @@ mkdir expected/shutdir
 (
   cd actual
   set +e
-  shut -n -r > shutoutput 2>&1
+  shut -n > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )
