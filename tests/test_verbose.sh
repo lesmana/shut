@@ -8,71 +8,50 @@ printf "\
 #! /bin/sh
 set -x
 false
-" > actual/testf1.sh
+" > actual/test0
 
 printf "\
 #! /bin/sh
 set -x
 true
-" > actual/testt1.sh
+" > actual/test1
 
-printf "\
-#! /bin/sh
-set -x
-true
-" > actual/testt2.sh
-
-chmod +x actual/testf1.sh actual/testt1.sh actual/testt2.sh
+chmod +x actual/test0 actual/test1
 
 cp -a actual expected
 
 printf "\
 ================
-./testf1.sh
+./test0
 ----------------
 output:
   + false
 ----------------
 exitstatus: 1
-FAIL ./testf1.sh
+FAIL ./test0
 ----------------
 ================
-./testt1.sh
+./test1
 ----------------
 output:
   + true
 ----------------
 exitstatus: 0
-PASS ./testt1.sh
+PASS ./test1
 ----------------
-================
-./testt2.sh
-----------------
-output:
-  + true
-----------------
-exitstatus: 0
-PASS ./testt2.sh
-----------------
-run: 3 pass: 2 fail: 1
+run: 2 pass: 1 fail: 1
 " > expected/shutoutput
 
 printf "1\n" > expected/shutexitstatus
 
-mkdir -p expected/shutdir
-
 mkdir -p \
-      expected/shutdir \
-      expected/shutdir/testf1.sh.dir/workdir \
-      expected/shutdir/testt1.sh.dir/workdir \
-      expected/shutdir/testt2.sh.dir/workdir
+      expected/shutdir/test0.dir/workdir \
+      expected/shutdir/test1.dir/workdir
 
-printf "+ false\n"  > expected/shutdir/testf1.sh.dir/output
-printf "1\n"        > expected/shutdir/testf1.sh.dir/exitstatus
-printf "+ true\n"   > expected/shutdir/testt1.sh.dir/output
-printf "0\n"        > expected/shutdir/testt1.sh.dir/exitstatus
-printf "+ true\n"   > expected/shutdir/testt2.sh.dir/output
-printf "0\n"        > expected/shutdir/testt2.sh.dir/exitstatus
+printf "+ false\n"  > expected/shutdir/test0.dir/output
+printf "1\n"        > expected/shutdir/test0.dir/exitstatus
+printf "+ true\n"   > expected/shutdir/test1.dir/output
+printf "0\n"        > expected/shutdir/test1.dir/exitstatus
 
 (
   cd actual
