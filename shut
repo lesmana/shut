@@ -124,7 +124,7 @@ runtestprintonlyfail() {
   output=$(runtestprintall "$testname")
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
-    echo "$output"
+    decorate "$testname" $exitstatus
   fi
   return $exitstatus
 }
