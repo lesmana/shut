@@ -115,7 +115,6 @@ runtestprintall() {
   testname=$1
   exitstatus=$2
   decorate "$testname" $exitstatus
-  return $exitstatus
 }
 
 runtestprintonlyfail() {
@@ -124,7 +123,6 @@ runtestprintonlyfail() {
   if [ $exitstatus -ne 0 ]; then
     decorate "$testname" $exitstatus
   fi
-  return $exitstatus
 }
 
 runtest() {
@@ -136,6 +134,7 @@ runtest() {
   else
     runtestprintonlyfail "$testname" $exitstatus
   fi
+  return $exitstatus
 }
 
 runtestintestworkdir() {
