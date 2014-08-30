@@ -11,7 +11,7 @@ create logfile of entire stdout of shut
 and text files listing found and failed and passed tests
 
 ----
-capture stdout and stderr separately
+print stdout and stderr separately
 
 ----
 let find print full and relative test names
