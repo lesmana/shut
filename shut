@@ -77,10 +77,10 @@ decoratehead() {
   echo "================"
   echo "$relativetestname"
   echo "----------------"
-  echo "output:"
 }
 
 decoratebody() {
+  echo "output:"
   sed 's/^/  /'
 }
 
