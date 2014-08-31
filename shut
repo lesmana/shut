@@ -6,6 +6,7 @@ verbose=false
 shutdir="shutdir"
 delete=false
 split=false
+SHUT_PWD=$PWD
 
 handle_args() {
   while getopts "d:nvfx" "opt"; do
@@ -38,7 +39,6 @@ setup() {
   fi
   mkdir -p "$fullshutdir"
   shutdir=$fullshutdir
-  SHUT_PWD=$PWD
 }
 
 collecttestnames() {
