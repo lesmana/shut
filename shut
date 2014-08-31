@@ -165,9 +165,11 @@ runtestintestworkdir() {
 runtests() {
   fail=0
   foundnothing=true
-  createshutdir
-  cd "$shutdir"
   while read testname; do
+    if $foundnothing; then
+      createshutdir
+      cd "$shutdir"
+    fi
     foundnothing=false
     echo "$testname" >&3
     if runtestintestworkdir "$testname"; then
