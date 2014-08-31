@@ -164,7 +164,9 @@ runtestintestworkdir() {
 
 runtests() {
   fail=0
+  foundnothing=true
   while read testname; do
+    foundnothing=false
     echo "$testname" >&3
     if runtestintestworkdir "$testname"; then
       echo "$testname" >&4
@@ -173,6 +175,10 @@ runtests() {
       fail=1
     fi
   done
+  if $foundnothing; then
+    echo "no tests found"
+    exit 1
+  fi
   return $fail
 }
 
@@ -184,7 +190,9 @@ summaryline() {
   read run
   read pass
   read fail
-  echo "run: $run pass: $pass fail: $fail"
+  if [ $run -ne 0 ]; then
+    echo "run: $run pass: $pass fail: $fail"
+  fi
 }
 
 stdintoexitstatus() {

@@ -5,10 +5,10 @@ set -xeu
 mkdir -p actual expected/shutdir
 
 printf "\
-run: 0 pass: 0 fail: 0
+no tests found
 " > expected/shutoutput
 
-printf "0\n" > expected/shutexitstatus
+printf "1\n" > expected/shutexitstatus
 
 (
   cd actual
