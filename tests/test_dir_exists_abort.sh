@@ -2,14 +2,14 @@
 
 set -xeu
 
-mkdir -p actual actual/logdir
+mkdir -p actual actual/dirname
 
-touch actual/logdir/existinglogdir
+touch actual/dirname/existingdir
 
 cp -a actual expected
 
 printf "\
-name exists: logdir
+name exists: dirname
 will not overwrite
 use -f to overwrite
 " > expected/shutoutput
@@ -19,7 +19,7 @@ printf "1\n" > expected/shutexitstatus
 (
   cd actual
   set +e
-  shut -d logdir > shutoutput 2>&1
+  shut -d dirname > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

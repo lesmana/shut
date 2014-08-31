@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir -p actual actual/logdir
+mkdir -p actual actual/dirname
 
 printf "\
 #! /bin/sh
@@ -14,7 +14,7 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-touch actual/logdir/existinglogdir
+touch actual/dirname/existingdir
 
 printf "\
 run: 1 pass: 1 fail: 0
@@ -22,15 +22,15 @@ run: 1 pass: 1 fail: 0
 
 printf "0\n" > expected/shutexitstatus
 
-mkdir -p expected/logdir/test0.dir/workdir
+mkdir -p expected/dirname/test0.dir/workdir
 
-printf "+ true\n"   > expected/logdir/test0.dir/output
-printf "0\n"        > expected/logdir/test0.dir/exitstatus
+printf "+ true\n"   > expected/dirname/test0.dir/output
+printf "0\n"        > expected/dirname/test0.dir/exitstatus
 
 (
   cd actual
   set +e
-  shut -d logdir -f > shutoutput 2>&1
+  shut -d dirname -f > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )
