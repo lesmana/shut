@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-if no tests found shut should return non zero exit status
-
-----
 create shutdir only if tests actually run
 
 ----
