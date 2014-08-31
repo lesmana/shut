@@ -19,7 +19,7 @@ printf "1\n" > expected/shutexitstatus
 (
   cd actual
   set +e
-  shut -l logdir > shutoutput 2>&1
+  shut -d logdir > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

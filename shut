@@ -8,9 +8,9 @@ delete=false
 split=false
 
 handle_args() {
-  while getopts "l:nvfx" "opt"; do
+  while getopts "d:nvfx" "opt"; do
     case "$opt" in
-      l) shutdir="$OPTARG";;
+      d) shutdir="$OPTARG";;
       f) delete=true;;
       n) donotruntests=true;;
       v) verbose=true;;

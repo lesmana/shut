@@ -30,7 +30,7 @@ printf "0\n"        > expected/logdir/test0.dir/exitstatus
 (
   cd actual
   set +e
-  shut -l logdir -f > shutoutput 2>&1
+  shut -d logdir -f > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )
