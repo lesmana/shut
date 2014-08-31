@@ -25,7 +25,7 @@ handle_args() {
   fi
 }
 
-setup() {
+createshutdir() {
   fullshutdir=$(readlink -f "$shutdir")
   if [ -e "$fullshutdir" ]; then
     if $delete; then
@@ -231,7 +231,7 @@ runtestsornot() {
 
 main() {
   handle_args "$@"
-  setup
+  createshutdir
   collecttestnames | (cd "$shutdir" && runtestsornot)
   success=$?
   return $success
