@@ -136,7 +136,7 @@ runtestmergedouterr() {
   return $exitstatus
 }
 
-runtest() {
+runtestwithsplitormerged() {
   testname=$1
   relativetestname=$2
   if $split; then
@@ -153,7 +153,7 @@ runtestintestworkdir() {
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtest "$testname" "$relativetestname"
+    runtestwithsplitormerged "$testname" "$relativetestname"
   )
 }
 
