@@ -1,0 +1,37 @@
+bug: goodshut reports all pass even if there are fails.
+
+bug occurs when subshells are changed to command groups.
+
+before:
+  ((((((
+  runtests >&6; echo $? >&7
+  ) 3>&1 | count >&3
+  ) 4>&1 | count >&4
+  ) 5>&1 | count >&5
+  ) 3>&1 4>&1 5>&1 | summaryline >&6
+  ) 7>&1 | stdintoexitstatus
+  ) 6>&1
+
+after:
+  {{{{{{
+  runtests >&6; echo $? >&7
+  } 3>&1 | count >&3
+  } 4>&1 | count >&4
+  } 5>&1 | count >&5
+  } 3>&1 4>&1 5>&1 | summaryline >&6
+  } 7>&1 | stdintoexitstatus
+  } 6>&1
+
+goodshut is not modified. only shut is modified.
+
+note: commands groups need whitespace around braces.
+
+wrong: {{foo}}
+correct: { { foo } }
+
+using command groups without spaces causes syntax error.
+the group of opening braces are treated as a command.
+the closing braces are dangling because there are no opening braces.
+
+but why does this mess up goodshut?
+goodshut should report all fail. instead it reports all pass.
