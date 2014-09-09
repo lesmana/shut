@@ -1,3 +1,11 @@
+tl;dr
+
+close all file descriptors used internally before executing subprocesses.
+
+file descriptors are inherited to subprocesses and are globally
+readable and writeable.
+
+----
 bug: goodshut reports all pass even if there are fails.
 
 bug occurs when subshells are changed to command groups.
