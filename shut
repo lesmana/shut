@@ -53,6 +53,11 @@ runtestinpwd() {
     export SHUT_PWD
     export SHUT_TEST="$testname"
     export SHUT_TESTPWD="$PWD"
+    exec 3>&-
+    exec 4>&-
+    exec 5>&-
+    exec 6>&-
+    exec 7>&-
     "$testname"
   )
   exitstatus=$?
