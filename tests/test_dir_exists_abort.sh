@@ -4,6 +4,14 @@ set -xeu
 
 mkdir -p actual actual/dirname
 
+printf "\
+#! /bin/sh
+set -x
+true
+" > actual/test0
+
+chmod +x actual/test0
+
 touch actual/dirname/existingdir
 
 cp -a actual expected
