@@ -3,4 +3,4 @@
 PATH=$PATH:$PWD
 
 cd tests
-../goodshut -f -r
+../goodshut -f

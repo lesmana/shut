@@ -2,19 +2,19 @@
 
 prefix="test"
 donotruntests=false
-recursive=false
 verbose=false
 shutdir="shutdir"
 delete=false
+split=false
 
 handle_args() {
-  while getopts "l:nrvf" "opt"; do
+  while getopts "d:nvfx" "opt"; do
     case "$opt" in
-      l) shutdir="$OPTARG";;
+      d) shutdir="$OPTARG";;
       f) delete=true;;
       n) donotruntests=true;;
-      r) recursive=true;;
       v) verbose=true;;
+      x) split=true;;
       *) exit 1;;
     esac
   done
@@ -42,12 +42,7 @@ setup() {
 }
 
 collecttestnames() {
-  if $recursive; then
-    maxdepth=""
-  else
-    maxdepth="-maxdepth 1"
-  fi
-  find -L $SHUT_PWD $maxdepth -type f -executable -name "$prefix*" | sort
+  find -L $SHUT_PWD -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {
@@ -56,36 +51,17 @@ runtestinpwd() {
     mkdir workdir
     cd workdir
     export SHUT_PWD
-    export SHUT_TEST=$testname
-    export SHUT_TESTPWD=$PWD
-    "$testname" 2>&1
+    export SHUT_TEST="$testname"
+    export SHUT_TESTPWD="$PWD"
+    exec 3>&-
+    exec 4>&-
+    exec 5>&-
+    exec 6>&-
+    exec 7>&-
+    "$testname"
   )
   exitstatus=$?
   return $exitstatus
-}
-
-stdintoexitstatus() {
-  read exitstatus
-  return $exitstatus
-}
-
-runtestinpwdandlog() {
-  testname=$1
-  (((runtestinpwd "$testname"; echo $? >&3) |
-        tee output >&4) 3>&1 | stdintoexitstatus) 4>&1
-  exitstatus=$?
-  echo $exitstatus > exitstatus
-  return $exitstatus
-}
-
-runtestandlogmaybe() {
-  testname=$1
-  testworkdir=$(echo "$testname" | sed "s:$SHUT_PWD:.:").dir
-  (
-    mkdir -p "$testworkdir"
-    cd "$testworkdir";
-    runtestinpwdandlog "$testname"
-  )
 }
 
 decoratehead() {
@@ -93,10 +69,10 @@ decoratehead() {
   echo "================"
   echo "$relativetestname"
   echo "----------------"
-  echo "output:"
 }
 
 decoratebody() {
+  echo "output:"
   sed 's/^/  /'
 }
 
@@ -113,41 +89,84 @@ decoratetail() {
   echo "----------------"
 }
 
-runtestprintall() {
+decorate() {
+  relativetestname=$1
+  exitstatus=$2
+  decoratehead "$relativetestname"
+  decoratebody
+  decoratetail "$relativetestname" "$exitstatus"
+}
+
+printall() {
+  relativetestname=$1
+  exitstatus=$2
+  decorate "$relativetestname" $exitstatus
+}
+
+printonlyfail() {
+  relativetestname=$1
+  exitstatus=$2
+  if [ $exitstatus -ne 0 ]; then
+    decorate "$relativetestname" $exitstatus
+  fi
+}
+
+printoutput() {
+  relativetestname=$1
+  exitstatus=$2
+  if $verbose; then
+    printall "$relativetestname" $exitstatus
+  else
+    printonlyfail "$relativetestname" $exitstatus
+  fi
+}
+
+runtestsplitouterr() {
+  testname=$1
+  relativetestname=$2
+  runtestinpwd "$testname" > stdout 2> stderr
+  exitstatus=$?
+  echo $exitstatus > exitstatus
+  cat stdout stderr | printoutput "$relativetestname" $exitstatus
+  return $exitstatus
+}
+
+runtestmergedouterr() {
+  testname=$1
+  relativetestname=$2
+  runtestinpwd "$testname" > output 2>&1
+  exitstatus=$?
+  echo $exitstatus > exitstatus
+  printoutput "$relativetestname" $exitstatus < output
+  return $exitstatus
+}
+
+runtestwithsplitormerged() {
+  testname=$1
+  relativetestname=$2
+  if $split; then
+    runtestsplitouterr "$testname" "$relativetestname"
+  else
+    runtestmergedouterr "$testname" "$relativetestname"
+  fi
+}
+
+runtestintestworkdir() {
   testname=$1
   relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
-  decoratehead "$relativetestname"
-  (((runtestandlogmaybe "$testname"; echo $? >&3) |
-        decoratebody >&4) 3>&1 | stdintoexitstatus) 4>&1
-  exitstatus=$?
-  decoratetail "$relativetestname" "$exitstatus"
-  return $exitstatus
-}
-
-runtestprintonlyfail() {
-  testname=$1
-  output=$(runtestprintall "$testname")
-  exitstatus=$?
-  if [ $exitstatus -ne 0 ]; then
-    echo "$output"
-  fi
-  return $exitstatus
-}
-
-runtest() {
-  testname=$1
-  if $verbose; then
-    runtestprintall "$testname"
-  else
-    runtestprintonlyfail "$testname"
-  fi
+  testworkdir=$relativetestname.dir
+  (
+    mkdir -p "$testworkdir"
+    cd "$testworkdir";
+    runtestwithsplitormerged "$testname" "$relativetestname"
+  )
 }
 
 runtests() {
   fail=0
   while read testname; do
     echo "$testname" >&3
-    if runtest "$testname"; then
+    if runtestintestworkdir "$testname"; then
       echo "$testname" >&4
     else
       echo "$testname" >&5
@@ -166,6 +185,11 @@ summaryline() {
   read pass
   read fail
   echo "run: $run pass: $pass fail: $fail"
+}
+
+stdintoexitstatus() {
+  read exitstatus
+  return $exitstatus
 }
 
 runtestsandprintsummary() {
