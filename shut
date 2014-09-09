@@ -165,6 +165,8 @@ runtestintestworkdir() {
 runtests() {
   fail=0
   foundnothing=true
+  createshutdir
+  cd "$shutdir"
   while read testname; do
     foundnothing=false
     echo "$testname" >&3
@@ -231,8 +233,7 @@ runtestsornot() {
 
 main() {
   handle_args "$@"
-  createshutdir
-  collecttestnames | (cd "$shutdir" && runtestsornot)
+  collecttestnames | runtestsornot
   success=$?
   return $success
 }

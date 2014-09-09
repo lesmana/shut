@@ -19,8 +19,6 @@ would run: 3
 
 printf "0\n" > expected/shutexitstatus
 
-mkdir -p expected/shutdir
-
 (
   cd actual
   set +e
