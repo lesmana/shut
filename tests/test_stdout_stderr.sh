@@ -8,35 +8,35 @@ printf "\
 #! /bin/sh
 echo stdout
 echo stderr >&2
-" > actual/test0.sh
+" > actual/test0
 
-chmod +x actual/test0.sh
+chmod +x actual/test0
 
 cp -a actual expected
 
 printf "\
 ================
-./test0.sh
+./test0
 ----------------
 output:
   stdout
   stderr
 ----------------
 exitstatus: 0
-PASS ./test0.sh
+PASS ./test0
 ----------------
 run: 1 pass: 1 fail: 0
 " > expected/shutoutput
 
 printf "0\n" > expected/shutexitstatus
 
-mkdir -p expected/shutdir/test0.sh.dir/workdir
+mkdir -p expected/shutdir/test0.dir/workdir
 
-printf "stdout\n" > expected/shutdir/test0.sh.dir/stdout
+printf "stdout\n" > expected/shutdir/test0.dir/stdout
 
-printf "stderr\n" > expected/shutdir/test0.sh.dir/stderr
+printf "stderr\n" > expected/shutdir/test0.dir/stderr
 
-printf "0\n" > expected/shutdir/test0.sh.dir/exitstatus
+printf "0\n" > expected/shutdir/test0.dir/exitstatus
 
 (
   cd actual
