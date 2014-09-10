@@ -196,11 +196,6 @@ summaryline() {
   fi
 }
 
-stdintoexitstatus() {
-  read exitstatus
-  return $exitstatus
-}
-
 runtestsandprintsummary() {
   runtests
   exitstatus=$?
