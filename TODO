@@ -4,7 +4,7 @@ todo for shell unit test
 create logfile of entire stdout of shut
 
 ----
-print stdout and stderr separately
+print stdout and stderr of test separately
 
 ----
 let find print full and relative test names
