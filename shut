@@ -187,10 +187,6 @@ runtests() {
   return $fail
 }
 
-count() {
-  wc -l
-}
-
 summaryline() {
   read run
   read pass
@@ -208,9 +204,9 @@ stdintoexitstatus() {
 runtestsandprintsummary() {
   { { { { { {
   runtests >&6; echo $? >&7
-  } 3>&1 | count >&3
-  } 4>&1 | count >&4
-  } 5>&1 | count >&5
+  } 3>&1 | wc -l >&3
+  } 4>&1 | wc -l >&4
+  } 5>&1 | wc -l >&5
   } 3>&1 4>&1 5>&1 | summaryline >&6
   } 7>&1 | stdintoexitstatus
   } 6>&1
