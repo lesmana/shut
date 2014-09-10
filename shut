@@ -203,7 +203,8 @@ stdintoexitstatus() {
 
 runtestsandprintsummary() {
   { { { { { {
-  runtests >&6; echo $? >&7
+  runtests >&6
+  echo $? >&7
   cat tests >&3
   cat pass >&4
   cat fail >&5
