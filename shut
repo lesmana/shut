@@ -188,9 +188,9 @@ runtests() {
 }
 
 summaryline() {
-  read run
-  read pass
-  read fail
+  run=$(cat tests | wc -l)
+  pass=$(cat pass | wc -l)
+  fail=$(cat fail | wc -l)
   if [ $run -ne 0 ]; then
     echo "run: $run pass: $pass fail: $fail"
   fi
@@ -199,11 +199,7 @@ summaryline() {
 runtestsandprintsummary() {
   runtests
   exitstatus=$?
-  {
-  cat tests | wc -l >&3
-  cat pass | wc -l >&4
-  cat fail | wc -l >&5
-  } 3>&1 4>&1 5>&1 | summaryline
+  summaryline
   return $exitstatus
 }
 
