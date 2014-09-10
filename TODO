@@ -20,9 +20,10 @@ create logfile of entire stdout of shut
 print stdout and stderr of test separately
 
 ----
-recognize more than one pattern argument
-shut pat1 pat2
-will find files matching pat1 or pat2
+pattern argument
+if pattern is dir recurse in to dir
+if pattern is file run file
+if pattern is neither then search for files matching pattern
 
 ----
 read testnames from stdin
