@@ -38,6 +38,17 @@ printf "stderr\n" > expected/shutdir/test0.dir/stderr
 
 printf "0\n" > expected/shutdir/test0.dir/exitstatus
 
+printf "\
+$SHUT_TESTPWD/actual/test0
+" > expected/shutdir/tests
+
+printf "\
+$SHUT_TESTPWD/actual/test0
+" > expected/shutdir/pass
+
+printf "\
+" > expected/shutdir/fail
+
 (
   cd actual
   set +e

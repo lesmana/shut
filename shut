@@ -171,11 +171,12 @@ runtests() {
       cd "$shutdir"
     fi
     foundnothing=false
-    echo "$testname" >&3
+    touch tests pass fail
+    echo "$testname" | tee -a tests >&3
     if runtestintestworkdir "$testname"; then
-      echo "$testname" >&4
+      echo "$testname" | tee -a pass >&4
     else
-      echo "$testname" >&5
+      echo "$testname" | tee -a fail >&5
       fail=1
     fi
   done

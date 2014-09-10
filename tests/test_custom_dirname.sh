@@ -27,6 +27,17 @@ mkdir -p expected/dirname/test0.dir/workdir
 printf "+ true\n"   > expected/dirname/test0.dir/output
 printf "0\n"        > expected/dirname/test0.dir/exitstatus
 
+printf "\
+$SHUT_TESTPWD/actual/test0
+" > expected/dirname/tests
+
+printf "\
+$SHUT_TESTPWD/actual/test0
+" > expected/dirname/pass
+
+printf "\
+" > expected/dirname/fail
+
 (
   cd actual
   set +e

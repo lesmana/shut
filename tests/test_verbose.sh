@@ -53,6 +53,19 @@ printf "1\n"        > expected/shutdir/test0.dir/exitstatus
 printf "+ true\n"   > expected/shutdir/test1.dir/output
 printf "0\n"        > expected/shutdir/test1.dir/exitstatus
 
+printf "\
+$SHUT_TESTPWD/actual/test0
+$SHUT_TESTPWD/actual/test1
+" > expected/shutdir/tests
+
+printf "\
+$SHUT_TESTPWD/actual/test1
+" > expected/shutdir/pass
+
+printf "\
+$SHUT_TESTPWD/actual/test0
+" > expected/shutdir/fail
+
 (
   cd actual
   set +e
