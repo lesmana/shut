@@ -1,13 +1,23 @@
 todo for shell unit test
 
 ----
+restructure some code
+let find print to two files
+first file containing relative names
+second file containing absolute names
+for humans print relative names
+to execute use absolute names
+
+to determine if tests found check if files empty
+this means every invocation creates files
+workaround for now is to always create shutdir
+maybe later create shutdir in tmp first and move over if needed
+
+----
 create logfile of entire stdout of shut
 
 ----
 print stdout and stderr of test separately
-
-----
-let find print full and relative test names
 
 ----
 recognize more than one pattern argument
