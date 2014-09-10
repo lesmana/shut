@@ -10,6 +10,8 @@ chmod +x actual/test1 actual/test2
 
 cp -a actual expected
 
+mkdir expected/shutdir
+
 printf "\
 ./test1
 ./test2

@@ -161,10 +161,6 @@ runtests() {
   fail=0
   foundnothing=true
   while read testname; do
-    if $foundnothing; then
-      createshutdir
-      cd "$shutdir"
-    fi
     foundnothing=false
     touch tests pass fail
     echo "$testname" >> tests
@@ -218,7 +214,8 @@ runtestsornot() {
 
 main() {
   handle_args "$@"
-  collecttestnames | runtestsornot
+  createshutdir
+  collecttestnames | (cd "$shutdir" && runtestsornot)
   success=$?
   return $success
 }

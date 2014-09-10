@@ -10,6 +10,8 @@ chmod +x actual/prefix0 actual/prefix1 actual/prefix2
 
 cp -a actual expected
 
+mkdir expected/shutdir
+
 printf "\
 ./prefix0
 ./prefix1
