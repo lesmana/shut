@@ -4,25 +4,23 @@ set -xeu
 
 mkdir actual
 
-touch actual/test0 actual/test1 actual/test2
+touch actual/test_exec actual/test_notexec
 
-chmod +x actual/test1 actual/test2
+chmod +x actual/test_exec
 
 cp -a actual expected
 
 mkdir expected/shutdir
 
 printf "\
-./test1
-./test2
-would run: 2
+./test_exec
+would run: 1
 " > expected/shutoutput
 
 printf "0\n" > expected/shutexitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/test1
-$SHUT_TESTPWD/actual/test2
+$SHUT_TESTPWD/actual/test_exec
 " > expected/shutdir/tests
 
 (
