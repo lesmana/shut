@@ -10,6 +10,8 @@ no tests found
 
 printf "3\n" > expected/shutexitstatus
 
+touch expected/shutdir/tests
+
 (
   cd actual
   set +e

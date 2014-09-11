@@ -20,6 +20,11 @@ would run: 2
 
 printf "0\n" > expected/shutexitstatus
 
+printf "\
+$SHUT_TESTPWD/actual/test1
+$SHUT_TESTPWD/actual/test2
+" > expected/shutdir/tests
+
 (
   cd actual
   set +e

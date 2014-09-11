@@ -21,6 +21,12 @@ would run: 3
 
 printf "0\n" > expected/shutexitstatus
 
+printf "\
+$SHUT_TESTPWD/actual/prefix0
+$SHUT_TESTPWD/actual/prefix1
+$SHUT_TESTPWD/actual/prefix2
+" > expected/shutdir/tests
+
 (
   cd actual
   set +e

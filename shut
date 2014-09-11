@@ -163,7 +163,6 @@ runtests() {
   while read testname; do
     foundnothing=false
     touch tests pass fail
-    echo "$testname" >> tests
     if runtestintestworkdir "$testname"; then
       echo "$testname" >> pass
     else
@@ -205,7 +204,7 @@ runtestsnotandprintsummary() {
 }
 
 runtestsornot() {
-  if $donotruntests; then
+  tee tests | if $donotruntests; then
     runtestsnotandprintsummary
   else
     runtestsandprintsummary
@@ -215,7 +214,7 @@ runtestsornot() {
 main() {
   handle_args "$@"
   createshutdir
-  collecttestnames | (cd "$shutdir" && runtestsornot)
+  collecttestnames | (cd "$shutdir" && runtestsornot )
   success=$?
   return $success
 }
