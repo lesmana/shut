@@ -35,3 +35,6 @@ if no action then just print names and exit
 if no tests found then complain and exit
 else try to create shutdir and run tests
 if shutdir exists then complain or overwrite
+
+----
+skip shutdir when looking for tests
