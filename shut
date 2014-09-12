@@ -158,30 +158,26 @@ runtestintestworkdir() {
 }
 
 runtests() {
-  fail=0
   while read testname; do
     touch tests pass fail
     if runtestintestworkdir "$testname"; then
       echo "$testname" >> pass
     else
       echo "$testname" >> fail
-      fail=1
     fi
   done
-  return $fail
 }
 
 runtestsandprintsummary() {
   runtests
-  exitstatus=$?
   wc -l tests pass fail | {
     read run filenameignored
     read pass filenameignored
     read fail filenameignored
     read totalignored
     echo "run: $run pass: $pass fail: $fail"
+    [ $fail -eq 0 ] # return success if failcount is zero
   }
-  return $exitstatus
 }
 
 runtestsnotandprintsummary() {
