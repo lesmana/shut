@@ -214,7 +214,8 @@ runtestsornot() {
 main() {
   handle_args "$@"
   createshutdir
-  collecttestnames | tee "$shutdir"/tests | (cd "$shutdir" && runtestsornot )
+  collecttestnames > "$shutdir"/tests
+  (cd "$shutdir" && runtestsornot ) < "$shutdir"/tests
   success=$?
   return $success
 }
