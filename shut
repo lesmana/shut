@@ -204,10 +204,12 @@ doshut() {
   collecttestnames > "$shutdir"/tests
   if [ -s "$shutdir"/tests ]; then
     (cd "$shutdir" && runtestsornot ) < "$shutdir"/tests
+    exitstatus=$?
   else
     echo "no tests found"
-    return 3
+    exitstatus=3
   fi
+  return $exitstatus
 }
 
 main() {
