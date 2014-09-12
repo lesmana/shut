@@ -171,12 +171,12 @@ runtests() {
 runtestsandprintsummary() {
   runtests
   wc -l tests pass fail | {
-    read run filenameignored
-    read pass filenameignored
-    read fail filenameignored
+    read runcount filenameignored
+    read passcount filenameignored
+    read failcount filenameignored
     read totalignored
-    echo "run: $run pass: $pass fail: $fail"
-    [ $fail -eq 0 ] # return success if failcount is zero
+    echo "run: $runcount pass: $passcount fail: $failcount"
+    [ $failcount -eq 0 ] # return success if failcount is zero
   }
 }
 
