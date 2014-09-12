@@ -159,9 +159,7 @@ runtestintestworkdir() {
 
 runtests() {
   fail=0
-  foundnothing=true
   while read testname; do
-    foundnothing=false
     touch tests pass fail
     if runtestintestworkdir "$testname"; then
       echo "$testname" >> pass
@@ -170,10 +168,6 @@ runtests() {
       fail=1
     fi
   done
-  if $foundnothing; then
-    echo "no tests found"
-    exit 3
-  fi
   return $fail
 }
 
@@ -215,7 +209,12 @@ main() {
   handle_args "$@"
   createshutdir
   collecttestnames > "$shutdir"/tests
-  (cd "$shutdir" && runtestsornot ) < "$shutdir"/tests
+  if [ -s "$shutdir"/tests ]; then
+    (cd "$shutdir" && runtestsornot ) < "$shutdir"/tests
+  else
+    echo "no tests found"
+    exit 3
+  fi
   success=$?
   return $success
 }
