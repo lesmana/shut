@@ -213,8 +213,8 @@ doshut() {
 main() {
   handle_args "$@"
   doshut
-  success=$?
-  return $success
+  exitstatus=$?
+  return $exitstatus
 }
 
 main "$@"
