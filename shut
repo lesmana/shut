@@ -171,17 +171,13 @@ runtests() {
   return $fail
 }
 
-summaryline() {
+runtestsandprintsummary() {
+  runtests
+  exitstatus=$?
   run=$(cat tests | wc -l)
   pass=$(cat pass | wc -l)
   fail=$(cat fail | wc -l)
   echo "run: $run pass: $pass fail: $fail"
-}
-
-runtestsandprintsummary() {
-  runtests
-  exitstatus=$?
-  summaryline
   return $exitstatus
 }
 
