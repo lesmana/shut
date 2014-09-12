@@ -199,8 +199,7 @@ runtestsornot() {
   fi
 }
 
-main() {
-  handle_args "$@"
+doshut() {
   createshutdir
   collecttestnames > "$shutdir"/tests
   if [ -s "$shutdir"/tests ]; then
@@ -209,6 +208,11 @@ main() {
     echo "no tests found"
     exit 3
   fi
+}
+
+main() {
+  handle_args "$@"
+  doshut
   success=$?
   return $success
 }
