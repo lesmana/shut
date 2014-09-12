@@ -175,9 +175,7 @@ summaryline() {
   run=$(cat tests | wc -l)
   pass=$(cat pass | wc -l)
   fail=$(cat fail | wc -l)
-  if [ $run -ne 0 ]; then
-    echo "run: $run pass: $pass fail: $fail"
-  fi
+  echo "run: $run pass: $pass fail: $fail"
 }
 
 runtestsandprintsummary() {
