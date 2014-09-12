@@ -206,7 +206,7 @@ doshut() {
     (cd "$shutdir" && runtestsornot ) < "$shutdir"/tests
   else
     echo "no tests found"
-    exit 3
+    return 3
   fi
 }
 
