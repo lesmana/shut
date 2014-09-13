@@ -50,7 +50,7 @@ collecttestnames() {
 
 runtestinpwd() {
   testname=$1
-  fulltestname=$(echo "$testname" | sed "s:^\.:$SHUT_PWD:")
+  fulltestname=$(readlink -f "$SHUT_PWD/$testname")
   (
     mkdir workdir
     cd workdir
