@@ -181,7 +181,7 @@ runtestsandprintsummary() {
 }
 
 runtestsnotandprintsummary() {
-  cat tests | sed "s:$SHUT_PWD:.:"
+  cat tests
   wc -l tests | {
     read count filenameignored
     echo "would run: $count"
