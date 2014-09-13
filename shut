@@ -172,7 +172,7 @@ runtests() {
 }
 
 runtestsandprintsummary() {
-  runtests
+  runtests < tests
   wc -l tests pass fail | {
     read runcount filenameignored
     read passcount filenameignored
@@ -189,7 +189,7 @@ runtestsnotandprintsummary() {
     relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
     echo "$relativetestname"
     count=$(($count + 1))
-  done
+  done < tests
   echo "would run: $count"
 }
 
@@ -205,7 +205,7 @@ doshut() {
   createshutdir
   collecttestnames > "$shutdir"/tests
   if [ -s "$shutdir"/tests ]; then
-    (cd "$shutdir" && runtestsornot ) < "$shutdir"/tests
+    (cd "$shutdir" && runtestsornot )
     exitstatus=$?
   else
     echo "no tests found"
