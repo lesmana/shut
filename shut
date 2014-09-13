@@ -34,7 +34,7 @@ createshutdir() {
       echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
       echo "use -f to overwrite" >&2
-      exit 1
+      exit 2
     fi
   fi
   mkdir -p "$fullshutdir"

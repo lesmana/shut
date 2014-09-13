@@ -22,7 +22,7 @@ will not overwrite
 use -f to overwrite
 " > expected/shutoutput
 
-printf "1\n" > expected/shutexitstatus
+printf "2\n" > expected/shutexitstatus
 
 (
   cd actual
