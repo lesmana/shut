@@ -21,8 +21,8 @@ printf "0\n" > expected/shutexitstatus
 mkdir expected/shutdir
 
 printf "\
-$SHUT_TESTPWD/actual/d1/test1
-$SHUT_TESTPWD/actual/test0
+./d1/test1
+./test0
 " > expected/shutdir/tests
 
 (

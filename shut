@@ -45,7 +45,7 @@ createshutdir() {
 }
 
 collecttestnames() {
-  find -L $SHUT_PWD -type f -executable -name "$prefix*" | sort
+  find -L -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {
@@ -161,13 +161,13 @@ runtestintestworkdir() {
 }
 
 runtests() {
-  while read testname; do
-    relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+  while read relativetestname; do
+    testname=$(echo "$relativetestname" | sed "s:^\.:$SHUT_PWD:")
     touch tests pass fail
     if runtestintestworkdir "$testname" "$relativetestname"; then
-      echo "$testname" >> pass
+      echo "$relativetestname" >> pass
     else
-      echo "$testname" >> fail
+      echo "$relativetestname" >> fail
     fi
   done
 }

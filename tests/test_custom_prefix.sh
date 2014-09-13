@@ -21,8 +21,8 @@ would run: 2
 printf "0\n" > expected/shutexitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/prefix0
-$SHUT_TESTPWD/actual/prefix1
+./prefix0
+./prefix1
 " > expected/shutdir/tests
 
 (

@@ -20,7 +20,7 @@ would run: 1
 printf "0\n" > expected/shutexitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/test_exec
+./test_exec
 " > expected/shutdir/tests
 
 (

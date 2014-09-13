@@ -54,16 +54,16 @@ printf "+ false\n"  > expected/shutdir/test1.dir/output
 printf "1\n"        > expected/shutdir/test1.dir/exitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/test0
-$SHUT_TESTPWD/actual/test1
+./test0
+./test1
 " > expected/shutdir/tests
 
 printf "\
 " > expected/shutdir/pass
 
 printf "\
-$SHUT_TESTPWD/actual/test0
-$SHUT_TESTPWD/actual/test1
+./test0
+./test1
 " > expected/shutdir/fail
 
 (

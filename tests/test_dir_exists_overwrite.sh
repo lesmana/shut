@@ -28,11 +28,11 @@ printf "+ true\n"   > expected/shutdir/test0.dir/output
 printf "0\n"        > expected/shutdir/test0.dir/exitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/test0
+./test0
 " > expected/shutdir/tests
 
 printf "\
-$SHUT_TESTPWD/actual/test0
+./test0
 " > expected/shutdir/pass
 
 printf "\

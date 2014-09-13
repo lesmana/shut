@@ -48,13 +48,13 @@ printf "0\n" > expected/shutdir/test0.dir/exitstatus
 printf "0\n" > expected/shutdir/d1/test1.dir/exitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/d1/test1
-$SHUT_TESTPWD/actual/test0
+./d1/test1
+./test0
 " > expected/shutdir/tests
 
 printf "\
-$SHUT_TESTPWD/actual/d1/test1
-$SHUT_TESTPWD/actual/test0
+./d1/test1
+./test0
 " > expected/shutdir/pass
 
 printf "\

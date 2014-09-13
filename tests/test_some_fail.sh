@@ -76,20 +76,20 @@ printf "+ true\n"   > expected/shutdir/test3.dir/output
 printf "0\n"        > expected/shutdir/test3.dir/exitstatus
 
 printf "\
-$SHUT_TESTPWD/actual/test0
-$SHUT_TESTPWD/actual/test1
-$SHUT_TESTPWD/actual/test2
-$SHUT_TESTPWD/actual/test3
+./test0
+./test1
+./test2
+./test3
 " > expected/shutdir/tests
 
 printf "\
-$SHUT_TESTPWD/actual/test1
-$SHUT_TESTPWD/actual/test3
+./test1
+./test3
 " > expected/shutdir/pass
 
 printf "\
-$SHUT_TESTPWD/actual/test0
-$SHUT_TESTPWD/actual/test2
+./test0
+./test2
 " > expected/shutdir/fail
 
 (
