@@ -63,9 +63,9 @@ runtestinpwd() {
 }
 
 decoratehead() {
-  relativetestname=$1
+  testname=$1
   echo "================"
-  echo "$relativetestname"
+  echo "$testname"
   echo "----------------"
 }
 
@@ -75,99 +75,99 @@ decoratebody() {
 }
 
 decoratetail() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
   if [ $exitstatus -eq 0 ]; then
-    echo "PASS $relativetestname"
+    echo "PASS $testname"
   else
-    echo "FAIL $relativetestname"
+    echo "FAIL $testname"
   fi
   echo "----------------"
 }
 
 decorate() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
-  decoratehead "$relativetestname"
+  decoratehead "$testname"
   decoratebody
-  decoratetail "$relativetestname" "$exitstatus"
+  decoratetail "$testname" "$exitstatus"
 }
 
 printall() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
-  decorate "$relativetestname" $exitstatus
+  decorate "$testname" $exitstatus
 }
 
 printonlyfail() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
   if [ $exitstatus -ne 0 ]; then
-    decorate "$relativetestname" $exitstatus
+    decorate "$testname" $exitstatus
   fi
 }
 
 printoutput() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
   if $verbose; then
-    printall "$relativetestname" $exitstatus
+    printall "$testname" $exitstatus
   else
-    printonlyfail "$relativetestname" $exitstatus
+    printonlyfail "$testname" $exitstatus
   fi
 }
 
 runtestsplitouterr() {
   fulltestname=$1
-  relativetestname=$2
+  testname=$2
   runtestinpwd "$fulltestname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
-  cat stdout stderr | printoutput "$relativetestname" $exitstatus
+  cat stdout stderr | printoutput "$testname" $exitstatus
   return $exitstatus
 }
 
 runtestmergedouterr() {
   fulltestname=$1
-  relativetestname=$2
+  testname=$2
   runtestinpwd "$fulltestname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
-  printoutput "$relativetestname" $exitstatus < output
+  printoutput "$testname" $exitstatus < output
   return $exitstatus
 }
 
 runtestwithsplitormerged() {
   fulltestname=$1
-  relativetestname=$2
+  testname=$2
   if $split; then
-    runtestsplitouterr "$fulltestname" "$relativetestname"
+    runtestsplitouterr "$fulltestname" "$testname"
   else
-    runtestmergedouterr "$fulltestname" "$relativetestname"
+    runtestmergedouterr "$fulltestname" "$testname"
   fi
 }
 
 runtestintestworkdir() {
   fulltestname=$1
-  relativetestname=$2
-  testworkdir=$relativetestname.dir
+  testname=$2
+  testworkdir=$testname.dir
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtestwithsplitormerged "$fulltestname" "$relativetestname"
+    runtestwithsplitormerged "$fulltestname" "$testname"
   )
 }
 
 runtests() {
-  while read relativetestname; do
-    fulltestname=$(echo "$relativetestname" | sed "s:^\.:$SHUT_PWD:")
+  while read testname; do
+    fulltestname=$(echo "$testname" | sed "s:^\.:$SHUT_PWD:")
     touch tests pass fail
-    if runtestintestworkdir "$fulltestname" "$relativetestname"; then
-      echo "$relativetestname" >> pass
+    if runtestintestworkdir "$fulltestname" "$testname"; then
+      echo "$testname" >> pass
     else
-      echo "$relativetestname" >> fail
+      echo "$testname" >> fail
     fi
   done
 }
