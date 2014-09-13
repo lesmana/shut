@@ -204,9 +204,10 @@ runtestsornot() {
 
 doshut() {
   createshutdir
-  collecttestnames > "$shutdir"/tests
-  if [ -s "$shutdir"/tests ]; then
-    runtestsornot "$shutdir"/tests
+  testnames="$shutdir"/tests
+  collecttestnames > "$testnames"
+  if [ -s "$testnames" ]; then
+    runtestsornot "$testnames"
     exitstatus=$?
   else
     echo "no tests found"
