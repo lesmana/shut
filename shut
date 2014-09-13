@@ -49,14 +49,14 @@ collecttestnames() {
 }
 
 runtestinpwd() {
-  testname=$1
+  fulltestname=$1
   (
     mkdir workdir
     cd workdir
     export SHUT_PWD
-    export SHUT_TEST="$testname"
+    export SHUT_TEST="$fulltestname"
     export SHUT_TESTPWD="$PWD"
-    "$testname"
+    "$fulltestname"
   )
   exitstatus=$?
   return $exitstatus
@@ -120,9 +120,9 @@ printoutput() {
 }
 
 runtestsplitouterr() {
-  testname=$1
+  fulltestname=$1
   relativetestname=$2
-  runtestinpwd "$testname" > stdout 2> stderr
+  runtestinpwd "$fulltestname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
   cat stdout stderr | printoutput "$relativetestname" $exitstatus
@@ -130,9 +130,9 @@ runtestsplitouterr() {
 }
 
 runtestmergedouterr() {
-  testname=$1
+  fulltestname=$1
   relativetestname=$2
-  runtestinpwd "$testname" > output 2>&1
+  runtestinpwd "$fulltestname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
   printoutput "$relativetestname" $exitstatus < output
@@ -140,31 +140,31 @@ runtestmergedouterr() {
 }
 
 runtestwithsplitormerged() {
-  testname=$1
+  fulltestname=$1
   relativetestname=$2
   if $split; then
-    runtestsplitouterr "$testname" "$relativetestname"
+    runtestsplitouterr "$fulltestname" "$relativetestname"
   else
-    runtestmergedouterr "$testname" "$relativetestname"
+    runtestmergedouterr "$fulltestname" "$relativetestname"
   fi
 }
 
 runtestintestworkdir() {
-  testname=$1
+  fulltestname=$1
   relativetestname=$2
   testworkdir=$relativetestname.dir
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtestwithsplitormerged "$testname" "$relativetestname"
+    runtestwithsplitormerged "$fulltestname" "$relativetestname"
   )
 }
 
 runtests() {
   while read relativetestname; do
-    testname=$(echo "$relativetestname" | sed "s:^\.:$SHUT_PWD:")
+    fulltestname=$(echo "$relativetestname" | sed "s:^\.:$SHUT_PWD:")
     touch tests pass fail
-    if runtestintestworkdir "$testname" "$relativetestname"; then
+    if runtestintestworkdir "$fulltestname" "$relativetestname"; then
       echo "$relativetestname" >> pass
     else
       echo "$relativetestname" >> fail
