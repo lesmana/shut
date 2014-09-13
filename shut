@@ -179,17 +179,13 @@ printsummary() {
   }
 }
 
-runtestsandprintsummary() {
-  runtests
-  printsummary
-}
-
 runtestsinshutdir() {
   (
     # TODO create shutdir here
     cd "$shutdir"
     # TODO copy tempfile to shutdir here
-    runtestsandprintsummary
+    runtests
+    printsummary
   )
 }
 
