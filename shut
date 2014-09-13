@@ -151,7 +151,7 @@ runtestwithsplitormerged() {
 
 runtestintestworkdir() {
   testname=$1
-  relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
+  relativetestname=$2
   testworkdir=$relativetestname.dir
   (
     mkdir -p "$testworkdir"
@@ -162,8 +162,9 @@ runtestintestworkdir() {
 
 runtests() {
   while read testname; do
+    relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
     touch tests pass fail
-    if runtestintestworkdir "$testname"; then
+    if runtestintestworkdir "$testname" "$relativetestname"; then
       echo "$testname" >> pass
     else
       echo "$testname" >> fail
