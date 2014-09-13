@@ -182,7 +182,9 @@ runtestsandprintsummary() {
 
 runtestsinshutdir() {
   (
+    # TODO create shutdir here
     cd "$shutdir"
+    # TODO copy tempfile to shutdir here
     runtestsandprintsummary
   )
 }
@@ -206,8 +208,8 @@ runtestsornot() {
 }
 
 doshut() {
-  createshutdir
-  testnames="$shutdir"/tests
+  createshutdir # TODO move to runtestsinshutdir
+  testnames="$shutdir"/tests # TODO mktemp filename
   collecttestnames > "$testnames"
   if [ -s "$testnames" ]; then
     runtestsornot "$testnames"
