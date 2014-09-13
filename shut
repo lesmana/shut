@@ -181,7 +181,10 @@ runtestsandprintsummary() {
 }
 
 runtestsinshutdir() {
-  (cd "$shutdir" && runtestsandprintsummary)
+  (
+    cd "$shutdir"
+    runtestsandprintsummary
+  )
 }
 
 runtestsnotandprintsummary() {
