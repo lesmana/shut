@@ -185,20 +185,20 @@ runtestsinshutdir() {
 }
 
 runtestsnotandprintsummary() {
-  filename=$1
-  cat "$filename"
-  wc -l "$filename" | {
+  testnames=$1
+  cat "$testnames"
+  wc -l "$testnames" | {
     read count filenameignored
     echo "would run: $count"
   }
 }
 
 runtestsornot() {
-  filename=$1
+  testnames=$1
   if ! $donotruntests; then
     runtestsinshutdir
   else
-    runtestsnotandprintsummary "$filename"
+    runtestsnotandprintsummary "$testnames"
   fi
 }
 
