@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir -p actual actual/shutdir
+mkdir -p actual/shutdir
 
 printf "\
 #! /bin/sh
