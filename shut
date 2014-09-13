@@ -180,6 +180,7 @@ printsummary() {
 }
 
 runtestsinshutdir() {
+  testnames=$1
   (
     # TODO create shutdir here
     cd "$shutdir"
@@ -201,7 +202,7 @@ printtestnames() {
 runtestsornot() {
   testnames=$1
   if ! $donotruntests; then
-    runtestsinshutdir
+    runtestsinshutdir "$testnames"
   else
     printtestnames "$testnames"
   fi
