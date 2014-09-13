@@ -25,6 +25,10 @@ configfromargv() {
   fi
 }
 
+sanitycheck() {
+  true
+}
+
 createshutdir() {
   fullshutdir=$(readlink -f "$shutdir")
   if [ -e "$fullshutdir" ]; then
@@ -213,8 +217,12 @@ doshut() {
 
 main() {
   configfromargv "$@"
-  doshut
-  exitstatus=$?
+  if sanitycheck; then
+    doshut
+    exitstatus=$?
+  else
+    exitstatus=2
+  fi
   return $exitstatus
 }
 
