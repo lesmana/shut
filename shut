@@ -181,7 +181,7 @@ runtestsandprintsummary() {
 }
 
 runtestsnotandprintsummary() {
-  filename=tests
+  filename=$1
   cat "$filename"
   wc -l "$filename" | {
     read count filenameignored
@@ -191,7 +191,7 @@ runtestsnotandprintsummary() {
 
 runtestsornot() {
   if $donotruntests; then
-    runtestsnotandprintsummary
+    runtestsnotandprintsummary tests
   else
     runtestsandprintsummary
   fi
