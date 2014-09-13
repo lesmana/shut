@@ -49,7 +49,8 @@ collecttestnames() {
 }
 
 runtestinpwd() {
-  fulltestname=$1
+  testname=$1
+  fulltestname=$(echo "$testname" | sed "s:^\.:$SHUT_PWD:")
   (
     mkdir workdir
     cd workdir
@@ -120,9 +121,8 @@ printoutput() {
 }
 
 runtestsplitouterr() {
-  fulltestname=$1
-  testname=$2
-  runtestinpwd "$fulltestname" > stdout 2> stderr
+  testname=$1
+  runtestinpwd "$testname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
   cat stdout stderr | printoutput "$testname" $exitstatus
@@ -130,9 +130,8 @@ runtestsplitouterr() {
 }
 
 runtestmergedouterr() {
-  fulltestname=$1
-  testname=$2
-  runtestinpwd "$fulltestname" > output 2>&1
+  testname=$1
+  runtestinpwd "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
   printoutput "$testname" $exitstatus < output
@@ -140,31 +139,28 @@ runtestmergedouterr() {
 }
 
 runtestwithsplitormerged() {
-  fulltestname=$1
-  testname=$2
+  testname=$1
   if $split; then
-    runtestsplitouterr "$fulltestname" "$testname"
+    runtestsplitouterr "$testname"
   else
-    runtestmergedouterr "$fulltestname" "$testname"
+    runtestmergedouterr "$testname"
   fi
 }
 
 runtestintestworkdir() {
-  fulltestname=$1
-  testname=$2
+  testname=$1
   testworkdir=$testname.dir
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtestwithsplitormerged "$fulltestname" "$testname"
+    runtestwithsplitormerged "$testname"
   )
 }
 
 runtests() {
   while read testname; do
-    fulltestname=$(echo "$testname" | sed "s:^\.:$SHUT_PWD:")
     touch tests pass fail
-    if runtestintestworkdir "$fulltestname" "$testname"; then
+    if runtestintestworkdir "$testname"; then
       echo "$testname" >> pass
     else
       echo "$testname" >> fail
