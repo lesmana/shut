@@ -180,6 +180,10 @@ runtestsandprintsummary() {
   }
 }
 
+runtestsinshutdir() {
+  (cd "$shutdir" && runtestsandprintsummary)
+}
+
 runtestsnotandprintsummary() {
   filename=$1
   cat "$filename"
@@ -192,7 +196,7 @@ runtestsnotandprintsummary() {
 runtestsornot() {
   filename=$1
   if ! $donotruntests; then
-    (cd "$shutdir" && runtestsandprintsummary)
+    runtestsinshutdir
   else
     runtestsnotandprintsummary "$filename"
   fi
