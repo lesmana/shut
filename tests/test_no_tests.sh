@@ -10,7 +10,7 @@ no tests found
 
 printf "3\n" > expected/shutexitstatus
 
-touch expected/shutdir/tests
+touch expected/shutdir/mktempfilename
 
 (
   cd actual

@@ -23,7 +23,7 @@ printf "0\n" > expected/shutexitstatus
 printf "\
 ./prefix0
 ./prefix1
-" > expected/shutdir/tests
+" > expected/shutdir/mktempfilename
 
 (
   cd actual

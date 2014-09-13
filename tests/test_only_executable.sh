@@ -21,7 +21,7 @@ printf "0\n" > expected/shutexitstatus
 
 printf "\
 ./test_exec
-" > expected/shutdir/tests
+" > expected/shutdir/mktempfilename
 
 (
   cd actual
