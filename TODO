@@ -29,6 +29,9 @@ create logfile of entire stdout of shut
 print stdout and stderr of test separately
 
 ----
+only print last x lines from test output
+
+----
 pattern argument
 if pattern is dir recurse in to dir
 if pattern is file run file
