@@ -158,8 +158,8 @@ runtestintestworkdir() {
 }
 
 runtests() {
+  touch pass fail
   while read testname; do
-    touch pass fail
     if runtestintestworkdir "$testname"; then
       echo "$testname" >> pass
     else
