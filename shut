@@ -159,7 +159,7 @@ runtestintestworkdir() {
 
 runtests() {
   while read testname; do
-    touch tests pass fail
+    touch pass fail
     if runtestintestworkdir "$testname"; then
       echo "$testname" >> pass
     else
