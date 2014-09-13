@@ -32,6 +32,9 @@ print stdout and stderr of test separately
 only print last x lines from test output
 
 ----
+print names of failed tests at end
+
+----
 pattern argument
 if pattern is dir recurse in to dir
 if pattern is file run file
