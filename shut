@@ -8,7 +8,7 @@ delete=false
 split=false
 SHUT_PWD=$PWD
 
-handle_args() {
+configfromargv() {
   while getopts "d:nvfx" "opt"; do
     case "$opt" in
       d) shutdir="$OPTARG";;
@@ -212,7 +212,7 @@ doshut() {
 }
 
 main() {
-  handle_args "$@"
+  configfromargv "$@"
   doshut
   exitstatus=$?
   return $exitstatus
