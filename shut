@@ -29,15 +29,16 @@ sanitycheck() {
   fullshutdir=$(readlink -f "$shutdir")
   if [ -e "$fullshutdir" ]; then
     if $delete; then
-      true
+      exitstatus=0
     else
       echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
       echo "use -f to overwrite" >&2
-      exit 2
+      exitstatus=2
     fi
   fi
   shutdir=$fullshutdir
+  return $exitstatus
 }
 
 createshutdir() {
