@@ -165,11 +165,11 @@ runtests() {
     else
       echo "$testname" >> fail
     fi
-  done
+  done < tests
 }
 
 runtestsandprintsummary() {
-  runtests < tests
+  runtests
   wc -l tests pass fail | {
     read runcount filenameignored
     read passcount filenameignored
