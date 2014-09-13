@@ -191,10 +191,10 @@ runtestsnotandprintsummary() {
 
 runtestsornot() {
   filename=$1
-  if $donotruntests; then
-    runtestsnotandprintsummary "$filename"
-  else
+  if ! $donotruntests; then
     (cd "$shutdir" && runtestsandprintsummary)
+  else
+    runtestsnotandprintsummary "$filename"
   fi
 }
 
