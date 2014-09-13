@@ -168,8 +168,7 @@ runtests() {
   done < tests
 }
 
-runtestsandprintsummary() {
-  runtests
+printsummary() {
   wc -l tests pass fail | {
     read runcount filenameignored
     read passcount filenameignored
@@ -178,6 +177,11 @@ runtestsandprintsummary() {
     echo "run: $runcount pass: $passcount fail: $failcount"
     [ $failcount -eq 0 ] # return success if failcount is zero
   }
+}
+
+runtestsandprintsummary() {
+  runtests
+  printsummary
 }
 
 runtestsinshutdir() {
