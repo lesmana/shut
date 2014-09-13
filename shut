@@ -189,7 +189,7 @@ runtestsinshutdir() {
   )
 }
 
-runtestsnotandprintsummary() {
+printtestnames() {
   testnames=$1
   cat "$testnames"
   wc -l "$testnames" | {
@@ -203,7 +203,7 @@ runtestsornot() {
   if ! $donotruntests; then
     runtestsinshutdir
   else
-    runtestsnotandprintsummary "$testnames"
+    printtestnames "$testnames"
   fi
 }
 
