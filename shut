@@ -181,8 +181,9 @@ runtestsandprintsummary() {
 }
 
 runtestsnotandprintsummary() {
-  cat tests
-  wc -l tests | {
+  filename=tests
+  cat "$filename"
+  wc -l "$filename" | {
     read count filenameignored
     echo "would run: $count"
   }
