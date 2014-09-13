@@ -191,9 +191,9 @@ runtestsnotandprintsummary() {
 
 runtestsornot() {
   if $donotruntests; then
-    runtestsnotandprintsummary tests
+    runtestsnotandprintsummary "$shutdir"/tests
   else
-    runtestsandprintsummary
+    (cd "$shutdir" && runtestsandprintsummary)
   fi
 }
 
@@ -201,7 +201,7 @@ doshut() {
   createshutdir
   collecttestnames > "$shutdir"/tests
   if [ -s "$shutdir"/tests ]; then
-    (cd "$shutdir" && runtestsornot )
+    runtestsornot
     exitstatus=$?
   else
     echo "no tests found"
