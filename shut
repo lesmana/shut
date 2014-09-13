@@ -26,14 +26,10 @@ configfromargv() {
 }
 
 sanitycheck() {
-  true
-}
-
-createshutdir() {
   fullshutdir=$(readlink -f "$shutdir")
   if [ -e "$fullshutdir" ]; then
     if $delete; then
-      rm -rf "$fullshutdir"
+      true
     else
       echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
@@ -41,8 +37,12 @@ createshutdir() {
       exit 2
     fi
   fi
-  mkdir -p "$fullshutdir"
   shutdir=$fullshutdir
+}
+
+createshutdir() {
+  rm -rf "$shutdir"
+  mkdir -p "$shutdir"
 }
 
 collecttestnames() {
