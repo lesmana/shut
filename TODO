@@ -15,9 +15,7 @@ main code:
 
 create tempdir
 find tests save to file in tempdir
-test is file empty?
-  error exit no tests found
-else
+test is file not empty?
   test is do action?
     delete existing shutdir and ignore error if not exists
     copy/move tempdir to shutdir
@@ -29,6 +27,8 @@ else
   endif
   cd to dir (either shutdir or tempdir)
   execute action (either action or no action)
+else
+  error exit no tests found
 end if
 return exit status from execute or from error exit
 
