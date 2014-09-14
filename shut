@@ -40,7 +40,7 @@ sanitycheck() {
 }
 
 collecttestnames() {
-  find -L -type f -executable -name "$prefix*" | sort
+  find -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {
