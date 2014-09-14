@@ -165,10 +165,10 @@ runtests() {
 
 printsummary() {
   wc -l tests pass fail | {
-    read runcount filenameignored
-    read passcount filenameignored
-    read failcount filenameignored
-    read totalignored
+    read runcount ignorefilename
+    read passcount ignorefilename
+    read failcount ignorefilename
+    read ignoretotal
     echo "run: $runcount pass: $passcount fail: $failcount"
     [ $failcount -eq 0 ] # return success if failcount is zero
   }
@@ -190,7 +190,7 @@ printtestnames() {
   testnames=$1
   cat "$testnames"
   wc -l "$testnames" | {
-    read count filenameignored
+    read count ignorefilename
     echo "would run: $count"
   }
 }
