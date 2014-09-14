@@ -180,7 +180,7 @@ runtestsinshutdir() {
     rm -rf "$shutdir"
     mkdir -p "$shutdir"
     cd "$shutdir"
-    mv "$testnames" tests
+    cp "$testnames" tests
     runtests
     printsummary
   )
@@ -214,6 +214,7 @@ doshut() {
     echo "no tests found"
     exitstatus=3
   fi
+  rm "$testnames"
   return $exitstatus
 }
 
