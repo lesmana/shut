@@ -10,8 +10,6 @@ chmod +x actual/test_exec
 
 cp -a actual expected
 
-mkdir expected/shutdir
-
 printf "\
 ./test_exec
 would run: 1

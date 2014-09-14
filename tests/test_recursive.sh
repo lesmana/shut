@@ -18,8 +18,6 @@ would run: 2
 
 printf "0\n" > expected/shutexitstatus
 
-mkdir expected/shutdir
-
 (
   cd actual
   set +e

@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir -p actual expected/shutdir
+mkdir actual expected
 
 printf "\
 no tests found
