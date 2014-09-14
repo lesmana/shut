@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir actual expected
+mkdir -p actual expected
 
 printf "\
 no tests found

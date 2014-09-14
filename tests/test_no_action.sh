@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir actual
+mkdir -p actual
 
 touch actual/test0 actual/test1
 

@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir actual
+mkdir -p actual
 
 printf "\
 #! /bin/sh

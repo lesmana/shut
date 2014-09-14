@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir actual
+mkdir -p actual
 
 touch actual/test_exec actual/test_notexec
 

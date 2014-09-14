@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir actual
+mkdir -p actual
 
 touch actual/prefix0 actual/prefix1 actual/notprefix
 
