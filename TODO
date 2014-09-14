@@ -1,28 +1,6 @@
 todo for shell unit test
 
 ----
-restructure some code
-
-    find tests save to tempfile
-    test is file not empty?
-      runtest
-    else
-      error exit no tests found
-    end if
-    return exit status from execute or from error exit
-
-runtest code:
-
-    test is do action?
-      delete existing shutdir and ignore error if not exists
-      copy/move tempfile to shutdir
-      cd to shutdir
-      execute action
-    else
-      execute noaction with tempfile
-    endif
-
-----
 create logfile of entire stdout of shut
 
 ----
