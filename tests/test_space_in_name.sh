@@ -20,6 +20,29 @@ chmod +x "actual/test 0" "actual/d 1/test 1"
 
 cp -a actual expected
 
+mkdir -p \
+      "expected/shutdir/test 0.dir/workdir" \
+      "expected/shutdir/d 1/test 1.dir/workdir"
+
+printf "+ false\n"  > "expected/shutdir/test 0.dir/output"
+printf "1\n"        > "expected/shutdir/test 0.dir/exitstatus"
+
+printf "+ true\n"   > "expected/shutdir/d 1/test 1.dir/output"
+printf "0\n"        > "expected/shutdir/d 1/test 1.dir/exitstatus"
+
+printf "\
+./d 1/test 1
+./test 0
+" > expected/shutdir/tests
+
+printf "\
+./d 1/test 1
+" > expected/shutdir/pass
+
+printf "\
+./test 0
+" > expected/shutdir/fail
+
 printf "\
 ================
 ./d 1/test 1
@@ -43,28 +66,6 @@ run: 2 pass: 1 fail: 1
 " > expected/shutoutput
 
 printf "1\n" > expected/shutexitstatus
-
-mkdir -p \
-      "expected/shutdir/test 0.dir/workdir" \
-      "expected/shutdir/d 1/test 1.dir/workdir"
-
-printf "+ false\n"  > "expected/shutdir/test 0.dir/output"
-printf "1\n"        > "expected/shutdir/test 0.dir/exitstatus"
-printf "+ true\n"   > "expected/shutdir/d 1/test 1.dir/output"
-printf "0\n"        > "expected/shutdir/d 1/test 1.dir/exitstatus"
-
-printf "\
-./d 1/test 1
-./test 0
-" > expected/shutdir/tests
-
-printf "\
-./d 1/test 1
-" > expected/shutdir/pass
-
-printf "\
-./test 0
-" > expected/shutdir/fail
 
 (
   cd actual

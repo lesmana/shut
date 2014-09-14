@@ -16,12 +16,6 @@ cp -a actual expected
 
 touch actual/shutdir/existingdir
 
-printf "\
-run: 1 pass: 1 fail: 0
-" > expected/shutoutput
-
-printf "0\n" > expected/shutexitstatus
-
 mkdir -p expected/shutdir/test0.dir/workdir
 
 printf "+ true\n"   > expected/shutdir/test0.dir/output
@@ -37,6 +31,12 @@ printf "\
 
 printf "\
 " > expected/shutdir/fail
+
+printf "\
+run: 1 pass: 1 fail: 0
+" > expected/shutoutput
+
+printf "0\n" > expected/shutexitstatus
 
 (
   cd actual

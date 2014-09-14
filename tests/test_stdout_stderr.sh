@@ -14,22 +14,6 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-printf "\
-================
-./test0
-----------------
-output:
-  stdout
-  stderr
-----------------
-exitstatus: 0
-PASS ./test0
-----------------
-run: 1 pass: 1 fail: 0
-" > expected/shutoutput
-
-printf "0\n" > expected/shutexitstatus
-
 mkdir -p expected/shutdir/test0.dir/workdir
 
 printf "stdout\n" > expected/shutdir/test0.dir/stdout
@@ -48,6 +32,22 @@ printf "\
 
 printf "\
 " > expected/shutdir/fail
+
+printf "\
+================
+./test0
+----------------
+output:
+  stdout
+  stderr
+----------------
+exitstatus: 0
+PASS ./test0
+----------------
+run: 1 pass: 1 fail: 0
+" > expected/shutoutput
+
+printf "0\n" > expected/shutexitstatus
 
 (
   cd actual
