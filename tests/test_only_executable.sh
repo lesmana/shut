@@ -19,10 +19,6 @@ would run: 1
 
 printf "0\n" > expected/shutexitstatus
 
-printf "\
-./test_exec
-" > expected/shutdir/mktempfilename
-
 (
   cd actual
   set +e

@@ -210,7 +210,7 @@ runtestsornot() {
 
 doshut() {
   createshutdir # TODO move to runtestsinshutdir
-  testnames="$shutdir"/mktempfilename # TODO mktemp filename
+  testnames=$(mktemp --tmpdir shuttestnames.XXX)
   collecttestnames > "$testnames"
   if [ -s "$testnames" ]; then
     runtestsornot "$testnames"

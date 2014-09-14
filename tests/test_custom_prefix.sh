@@ -20,11 +20,6 @@ would run: 2
 
 printf "0\n" > expected/shutexitstatus
 
-printf "\
-./prefix0
-./prefix1
-" > expected/shutdir/mktempfilename
-
 (
   cd actual
   set +e

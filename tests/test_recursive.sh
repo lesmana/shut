@@ -20,11 +20,6 @@ printf "0\n" > expected/shutexitstatus
 
 mkdir expected/shutdir
 
-printf "\
-./d1/test1
-./test0
-" > expected/shutdir/mktempfilename
-
 (
   cd actual
   set +e
