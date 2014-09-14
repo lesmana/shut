@@ -39,11 +39,6 @@ sanitycheck() {
   return $exitstatus
 }
 
-createshutdir() {
-  rm -rf "$shutdir"
-  mkdir -p "$shutdir"
-}
-
 collecttestnames() {
   find -L -type f -executable -name "$prefix*" | sort
 }
@@ -182,7 +177,8 @@ printsummary() {
 runtestsinshutdir() {
   testnames=$1
   (
-    createshutdir
+    rm -rf "$shutdir"
+    mkdir -p "$shutdir"
     cd "$shutdir"
     mv "$testnames" tests
     runtests
