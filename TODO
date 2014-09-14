@@ -22,12 +22,4 @@ if pattern is neither then search for files matching pattern
 read testnames from stdin
 
 ----
-create shutdir only when tests are actually run
-first find tests
-if no action then just print names and exit
-if no tests found then complain and exit
-else try to create shutdir and run tests
-if shutdir exists then complain or overwrite
-
-----
 skip shutdir when looking for tests
