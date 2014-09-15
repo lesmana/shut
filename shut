@@ -30,7 +30,8 @@ setup() {
 }
 
 collecttestnames() {
-  find -type f -executable -name "$prefix*" | sort
+  find -type d -name "$shutdir" -prune -o \
+        -type f -executable -name "$prefix*" -print | sort
 }
 
 createshutdir() {
