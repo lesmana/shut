@@ -25,12 +25,15 @@ configfromargv() {
   fi
 }
 
+setup() {
+  fullshutdir=$(readlink -f "$shutdir")
+}
+
 collecttestnames() {
   find -type f -executable -name "$prefix*" | sort
 }
 
 sanitycheck() {
-  fullshutdir=$(readlink -f "$shutdir")
   if [ -e "$fullshutdir" ]; then
     if ! $delete; then
       echo "name exists: $shutdir" >&2
@@ -229,6 +232,7 @@ doshut() {
 
 main() {
   configfromargv "$@"
+  setup
   doshut
   exitstatus=$?
   return $exitstatus
