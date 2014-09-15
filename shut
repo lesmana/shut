@@ -130,22 +130,11 @@ printoutputsplitfail() {
   cat stdout stderr | printoutput "$testname" 1
 }
 
-printoutputsplit() {
-  testname=$1
-  exitstatus=$2
-  if [ $exitstatus -eq 0 ]; then
-    printoutputsplitpass "$testname"
-  else
-    printoutputsplitfail "$testname"
-  fi
-}
-
 runtestsplitouterr() {
   testname=$1
   runtestinworkdir "$testname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
-  printoutputsplit "$testname" $exitstatus
   return $exitstatus
 }
 
@@ -159,22 +148,11 @@ printoutputmergedfail() {
   printoutput "$testname" 1 < output
 }
 
-printoutputmerged() {
-  testname=$1
-  exitstatus=$2
-  if [ $exitstatus -eq 0 ]; then
-    printoutputmergedpass "$testname"
-  else
-    printoutputmergedfail "$testname"
-  fi
-}
-
 runtestmergedouterr() {
   testname=$1
   runtestinworkdir "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
-  printoutputmerged "$testname" $exitstatus
   return $exitstatus
 }
 
@@ -189,12 +167,20 @@ runtestandlogoutput() {
 
 printreportpass() {
   testname=$1
-  true
+  if $split; then
+    printoutputsplitpass "$testname"
+  else
+    printoutputmergedpass "$testname"
+  fi
 }
 
 printreportfail() {
   testname=$1
-  true
+  if $split; then
+    printoutputsplitfail "$testname"
+  else
+    printoutputmergedfail "$testname"
+  fi
 }
 
 runtestandprintreport() {
