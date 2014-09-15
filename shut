@@ -47,11 +47,6 @@ candeleteandcreateshutdir_dontdelete() {
   [ ! -e "$fullshutdir" ]
 }
 
-deleteandcreateshutdir() {
-  rm -rf "$fullshutdir"
-  mkdir -p "$fullshutdir"
-}
-
 runtestinpwd() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
@@ -191,7 +186,8 @@ printsummary() {
 
 runtestsinshutdir() {
   testnames=$1
-  deleteandcreateshutdir
+  rm -rf "$fullshutdir"
+  mkdir -p "$fullshutdir"
   (
     cd "$fullshutdir"
     cp "$testnames" tests
