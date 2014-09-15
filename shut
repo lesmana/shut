@@ -37,6 +37,15 @@ setup() {
   else
     shutaction=runtests
   fi
+  if $split; then
+    runtestandlogoutput=runtestsplitouterr
+    printreportpass=printoutputsplitpass
+    printreportfail=printoutputsplitfail
+  else
+    runtestandlogoutput=runtestmergedouterr
+    printreportpass=printoutputmergedpass
+    printreportfail=printoutputmergedfail
+  fi
 }
 
 collecttestnames() {
@@ -156,41 +165,14 @@ runtestmergedouterr() {
   return $exitstatus
 }
 
-runtestandlogoutput() {
-  testname=$1
-  if $split; then
-    runtestsplitouterr "$testname"
-  else
-    runtestmergedouterr "$testname"
-  fi
-}
-
-printreportpass() {
-  testname=$1
-  if $split; then
-    printoutputsplitpass "$testname"
-  else
-    printoutputmergedpass "$testname"
-  fi
-}
-
-printreportfail() {
-  testname=$1
-  if $split; then
-    printoutputsplitfail "$testname"
-  else
-    printoutputmergedfail "$testname"
-  fi
-}
-
 runtestandprintreport() {
   testname=$1
-  runtestandlogoutput "$testname"
+  $runtestandlogoutput "$testname"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    printreportpass "$testname"
+    $printreportpass "$testname"
   else
-    printreportfail "$testname"
+    $printreportfail "$testname"
   fi
   return $exitstatus
 }
