@@ -1,63 +1,79 @@
 #! /bin/sh
 
-prefix="test"
-donotruntests=false
-verbose=false
-shutdir="shutdir"
-delete=false
-split=false
+config_prefix="test"
+config_donotruntests=false
+config_verbose=false
+config_shutdir="shutdir"
+config_delete=false
+config_split=false
+config_quiet=false
+config_tail=10
 SHUT_PWD=$PWD
 
 configfromargv() {
-  while getopts "d:nvfx" "opt"; do
+  while getopts "d:nvfxqt:" "opt"; do
     case "$opt" in
-      d) shutdir="$OPTARG";;
-      f) delete=true;;
-      n) donotruntests=true;;
-      v) verbose=true;;
-      x) split=true;;
+      d) config_shutdir="$OPTARG";;
+      f) config_delete=true;;
+      n) config_donotruntests=true;;
+      v) config_verbose=true;;
+      x) config_split=true;;
+      q) config_quiet=true;;
+      t) config_tail="$OPTARG";;
       *) exit 1;;
     esac
   done
   shift $(($OPTIND - 1))
   if [ $# -ge 1 ]; then
-    prefix="$@"
+    config_prefix="$@"
   fi
 }
 
 setup() {
-  fullshutdir=$(readlink -f "$shutdir")
+  config_fullshutdir=$(readlink -f "$config_shutdir")
+  if $config_delete; then
+    candeleteshutdir_func=true
+  else
+    candeleteshutdir_func=trueifshutdirdoesnotexists
+  fi
+  if $config_donotruntests; then
+    shutaction_func=printtestnames
+  else
+    shutaction_func=runtests
+  fi
+  if $config_split; then
+    runtestsaveoutput_func=runtestsaveoutputsplit
+    printbody_func=printbodysplit
+  else
+    runtestsaveoutput_func=runtestsaveoutputmerge
+    printbody_func=printbodymerge
+  fi
+  if $config_verbose; then
+    printoutputpass_func=printoutputpass
+    printoutputfail_func=printoutputfail
+  elif $config_quiet; then
+    printoutputpass_func=true
+    printoutputfail_func=true
+  else
+    printoutputpass_func=true
+    printoutputfail_func=printoutputfail
+  fi
 }
 
 collecttestnames() {
-  find -type d -name "$shutdir" -prune -o \
-        -type f -executable -name "$prefix*" -print | sort
+  find -type d -name "$config_shutdir" -prune -o \
+        -type f -executable -name "$config_prefix*" -print | sort
 }
 
-createshutdir() {
-  if $delete; then
-    if [ -e "$fullshutdir" ]; then
-      rm -rf "$fullshutdir"
-    fi
-    mkdir -p "$fullshutdir"
-  else
-    if [ -e "$fullshutdir" ]; then
-      echo "name exists: $shutdir" >&2
-      echo "will not overwrite" >&2
-      echo "use -f to overwrite" >&2
-      exitstatus=2
-    else
-      mkdir -p "$fullshutdir"
-    fi
-  fi
-  return $exitstatus
+trueifshutdirdoesnotexists() {
+  [ ! -e "$config_fullshutdir" ]
 }
 
-runtestinpwd() {
+runtestinworkdir() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
+  mkdir workdir
   (
-    mkdir workdir
     cd workdir
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
@@ -68,104 +84,88 @@ runtestinpwd() {
   return $exitstatus
 }
 
-decoratehead() {
+runtestsaveoutputsplit() {
   testname=$1
+  runtestinworkdir "$testname" > stdout 2> stderr
+}
+
+runtestsaveoutputmerge() {
+  testname=$1
+  runtestinworkdir "$testname" > output 2>&1
+}
+
+runtestsaveoutputexitstatus() {
+  testname=$1
+  $runtestsaveoutput_func "$testname"
+  exitstatus=$?
+  echo $exitstatus > exitstatus
+  return $exitstatus
+}
+
+printbodysplit() {
+  echo "stdout:"
+  cat stdout | tail -n $config_tail | sed 's/^/  /'
+  echo "stderr:"
+  cat stderr | tail -n $config_tail | sed 's/^/  /'
+}
+
+printbodymerge() {
+  echo "output:"
+  cat output | tail -n $config_tail | sed 's/^/  /'
+}
+
+printoutputdecorated() {
+  testname=$1
+  exitstatus=$2
+  state=$3
   echo "================"
   echo "$testname"
   echo "----------------"
-}
-
-decoratebody() {
-  echo "output:"
-  sed 's/^/  /'
-}
-
-decoratetail() {
-  testname=$1
-  exitstatus=$2
+  $printbody_func
   echo "----------------"
   echo "exitstatus: $exitstatus"
-  if [ $exitstatus -eq 0 ]; then
-    echo "PASS $testname"
-  else
-    echo "FAIL $testname"
-  fi
+  echo "$state $testname"
   echo "----------------"
 }
 
-decorate() {
+printoutputpass() {
   testname=$1
   exitstatus=$2
-  decoratehead "$testname"
-  decoratebody
-  decoratetail "$testname" "$exitstatus"
+  printoutputdecorated "$testname" $exitstatus "PASS"
 }
 
-printall() {
+printoutputfail() {
   testname=$1
   exitstatus=$2
-  decorate "$testname" $exitstatus
+  printoutputdecorated "$testname" $exitstatus "FAIL"
 }
 
-printonlyfail() {
+runtestandprintoutput() {
   testname=$1
-  exitstatus=$2
-  if [ $exitstatus -ne 0 ]; then
-    decorate "$testname" $exitstatus
-  fi
-}
-
-printoutput() {
-  testname=$1
-  exitstatus=$2
-  if $verbose; then
-    printall "$testname" $exitstatus
-  else
-    printonlyfail "$testname" $exitstatus
-  fi
-}
-
-runtestsplitouterr() {
-  testname=$1
-  runtestinpwd "$testname" > stdout 2> stderr
+  runtestsaveoutputexitstatus "$testname"
   exitstatus=$?
-  echo $exitstatus > exitstatus
-  cat stdout stderr | printoutput "$testname" $exitstatus
+  if [ $exitstatus -eq 0 ]; then
+    $printoutputpass_func "$testname" $exitstatus
+  else
+    $printoutputfail_func "$testname" $exitstatus
+  fi
   return $exitstatus
 }
 
-runtestmergedouterr() {
+runtestintestdir() {
   testname=$1
-  runtestinpwd "$testname" > output 2>&1
-  exitstatus=$?
-  echo $exitstatus > exitstatus
-  printoutput "$testname" $exitstatus < output
-  return $exitstatus
-}
-
-runtestwithsplitormerged() {
-  testname=$1
-  if $split; then
-    runtestsplitouterr "$testname"
-  else
-    runtestmergedouterr "$testname"
-  fi
-}
-
-runtestintestworkdir() {
-  testname=$1
-  testworkdir=$testname.dir
+  testdir=$testname.dir
+  mkdir -p "$testdir"
   (
-    mkdir -p "$testworkdir"
-    cd "$testworkdir";
-    runtestwithsplitormerged "$testname"
+    cd "$testdir";
+    runtestandprintoutput "$testname"
   )
 }
 
-runtests() {
+runtestsandlog() {
   touch pass fail
   while read testname; do
-    if runtestintestworkdir "$testname"; then
+    if runtestintestdir "$testname"; then
       echo "$testname" >> pass
     else
       echo "$testname" >> fail
@@ -174,27 +174,46 @@ runtests() {
 }
 
 printsummary() {
+  if [ -s fail ]; then
+    echo "failed tests:"
+    cat fail
+    echo "----------------"
+    exitstatus=1
+  fi
   wc -l tests pass fail | {
     read runcount ignorefilename
     read passcount ignorefilename
     read failcount ignorefilename
     read ignoretotal
     echo "run: $runcount pass: $passcount fail: $failcount"
-    [ $failcount -eq 0 ] # return success if failcount is zero
   }
+  return $exitstatus
 }
 
 runtestsinshutdir() {
   testnames=$1
-  if ! createshutdir; then
-    return 2
-  fi
+  mkdir -p "$config_fullshutdir"
   (
-    cd "$fullshutdir"
+    cd "$config_fullshutdir"
     cp "$testnames" tests
-    runtests
+    runtestsandlog
     printsummary
   )
+}
+
+runtests() {
+  testnames=$1
+  if $candeleteshutdir_func; then
+    rm -rf "$config_fullshutdir"
+    runtestsinshutdir "$testnames"
+    exitstatus=$?
+  else
+    echo "name exists: $config_shutdir" >&2
+    echo "will not overwrite" >&2
+    echo "use -f to overwrite" >&2
+    exitstatus=2
+  fi
+  return $exitstatus
 }
 
 printtestnames() {
@@ -206,20 +225,11 @@ printtestnames() {
   }
 }
 
-runtestsornot() {
-  testnames=$1
-  if ! $donotruntests; then
-    runtestsinshutdir "$testnames"
-  else
-    printtestnames "$testnames"
-  fi
-}
-
 doshut() {
   testnames=$(mktemp --tmpdir shuttestnames.XXX)
   collecttestnames > "$testnames"
   if [ -s "$testnames" ]; then
-    runtestsornot "$testnames"
+    $shutaction_func "$testnames"
     exitstatus=$?
   else
     echo "no tests found"
