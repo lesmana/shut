@@ -130,12 +130,12 @@ printoutputfailsplit() {
 
 printoutputpassmerge() {
   testname=$1
-  decorate "$testname" "PASS" < output
+  cat output | decorate "$testname" "PASS"
 }
 
 printoutputfailmerge() {
   testname=$1
-  decorate "$testname" "FAIL" < output
+  cat output | decorate "$testname" "FAIL"
 }
 
 runtestandprintoutput() {
