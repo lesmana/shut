@@ -107,7 +107,7 @@ decorate() {
   echo "================"
   echo "$testname"
   echo "----------------"
-  decoratebody
+  $printbody | decoratebody
   echo "----------------"
   echo "exitstatus: $exitstatus"
   echo "$state $testname"
@@ -125,13 +125,13 @@ printbodymerge() {
 printoutputpassfunc() {
   testname=$1
   exitstatus=$2
-  $printbody | decorate "$testname" $exitstatus "PASS"
+  decorate "$testname" $exitstatus "PASS"
 }
 
 printoutputfailfunc() {
   testname=$1
   exitstatus=$2
-  $printbody | decorate "$testname" $exitstatus "FAIL"
+  decorate "$testname" $exitstatus "FAIL"
 }
 
 runtestandprintoutput() {
