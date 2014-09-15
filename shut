@@ -39,14 +39,13 @@ sanitycheck() {
       exitstatus=2
     fi
   fi
-  shutdir=$fullshutdir
   return $exitstatus
 }
 
 createshutdir() {
   if sanitycheck; then
-    rm -rf "$shutdir"
-    mkdir -p "$shutdir"
+    rm -rf "$fullshutdir"
+    mkdir -p "$fullshutdir"
   else
     return 2
   fi
@@ -189,7 +188,7 @@ runtestsinshutdir() {
     return 2
   fi
   (
-    cd "$shutdir"
+    cd "$fullshutdir"
     cp "$testnames" tests
     runtests
     printsummary
