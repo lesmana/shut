@@ -82,17 +82,27 @@ runtestinworkdir() {
   return $exitstatus
 }
 
-runtestsplit() {
+runtestandsaveoutputsplit() {
   testname=$1
   runtestinworkdir "$testname" > stdout 2> stderr
+}
+
+runtestsplit() {
+  testname=$1
+  runtestandsaveoutputsplit "$testname"
   exitstatus=$?
   echo $exitstatus > exitstatus
   return $exitstatus
 }
 
-runtestmerge() {
+runtestandsaveoutputmerge() {
   testname=$1
   runtestinworkdir "$testname" > output 2>&1
+}
+
+runtestmerge() {
+  testname=$1
+  runtestandsaveoutputmerge "$testname"
   exitstatus=$?
   echo $exitstatus > exitstatus
   return $exitstatus
