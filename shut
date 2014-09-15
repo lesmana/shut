@@ -149,10 +149,24 @@ runtestsplitouterr() {
   return $exitstatus
 }
 
+printoutputmergedpass() {
+  testname=$1
+  printoutput "$testname" 0 < output
+}
+
+printoutputmergedfail() {
+  testname=$1
+  printoutput "$testname" 1 < output
+}
+
 printoutputmerged() {
   testname=$1
   exitstatus=$2
-  printoutput "$testname" $exitstatus < output
+  if [ $exitstatus -eq 0 ]; then
+    printoutputmergedpass "$testname"
+  else
+    printoutputmergedfail "$testname"
+  fi
 }
 
 runtestmergedouterr() {
