@@ -82,6 +82,22 @@ runtestinworkdir() {
   return $exitstatus
 }
 
+runtestsplitouterr() {
+  testname=$1
+  runtestinworkdir "$testname" > stdout 2> stderr
+  exitstatus=$?
+  echo $exitstatus > exitstatus
+  return $exitstatus
+}
+
+runtestmergedouterr() {
+  testname=$1
+  runtestinworkdir "$testname" > output 2>&1
+  exitstatus=$?
+  echo $exitstatus > exitstatus
+  return $exitstatus
+}
+
 decoratehead() {
   testname=$1
   echo "================"
@@ -125,14 +141,6 @@ printoutputsplitfail() {
   cat stdout stderr | decorate "$testname" 1
 }
 
-runtestsplitouterr() {
-  testname=$1
-  runtestinworkdir "$testname" > stdout 2> stderr
-  exitstatus=$?
-  echo $exitstatus > exitstatus
-  return $exitstatus
-}
-
 printoutputmergedpass() {
   testname=$1
   decorate "$testname" 0 < output
@@ -141,14 +149,6 @@ printoutputmergedpass() {
 printoutputmergedfail() {
   testname=$1
   decorate "$testname" 1 < output
-}
-
-runtestmergedouterr() {
-  testname=$1
-  runtestinworkdir "$testname" > output 2>&1
-  exitstatus=$?
-  echo $exitstatus > exitstatus
-  return $exitstatus
 }
 
 runtestandprintreport() {
