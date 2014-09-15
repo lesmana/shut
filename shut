@@ -120,13 +120,25 @@ printoutput() {
   fi
 }
 
+printoutputsplit() {
+  testname=$1
+  exitstatus=$2
+  cat stdout stderr | printoutput "$testname" $exitstatus
+}
+
 runtestsplitouterr() {
   testname=$1
   runtestinworkdir "$testname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
-  cat stdout stderr | printoutput "$testname" $exitstatus
+  printoutputsplit "$testname" $exitstatus
   return $exitstatus
+}
+
+printoutputmerged() {
+  testname=$1
+  exitstatus=$2
+  printoutput "$testname" $exitstatus < output
 }
 
 runtestmergedouterr() {
@@ -134,7 +146,7 @@ runtestmergedouterr() {
   runtestinworkdir "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
-  printoutput "$testname" $exitstatus < output
+  printoutputmerged "$testname" $exitstatus
   return $exitstatus
 }
 
