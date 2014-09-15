@@ -151,7 +151,7 @@ printoutputmergedfail() {
   decorate "$testname" 1 < output
 }
 
-runtestandprintreport() {
+runtestandprintoutput() {
   testname=$1
   $runtestandlogoutput "$testname"
   exitstatus=$?
@@ -169,7 +169,7 @@ runtestintestdir() {
   mkdir -p "$testdir"
   (
     cd "$testdir";
-    runtestandprintreport "$testname"
+    runtestandprintoutput "$testname"
   )
 }
 
