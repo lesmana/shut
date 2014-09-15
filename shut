@@ -43,6 +43,15 @@ sanitycheck() {
   return $exitstatus
 }
 
+createshutdir() {
+  if sanitycheck; then
+    rm -rf "$shutdir"
+    mkdir -p "$shutdir"
+  else
+    return 2
+  fi
+}
+
 runtestinpwd() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
@@ -176,12 +185,10 @@ printsummary() {
 
 runtestsinshutdir() {
   testnames=$1
-  if ! sanitycheck; then
+  if ! createshutdir; then
     return 2
   fi
   (
-    rm -rf "$shutdir"
-    mkdir -p "$shutdir"
     cd "$shutdir"
     cp "$testnames" tests
     runtests
