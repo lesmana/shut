@@ -149,10 +149,10 @@ runtestwithsplitormerged() {
 
 runtestintestdir() {
   testname=$1
-  testworkdir=$testname.dir
-  mkdir -p "$testworkdir"
+  testdir=$testname.dir
+  mkdir -p "$testdir"
   (
-    cd "$testworkdir";
+    cd "$testdir";
     runtestwithsplitormerged "$testname"
   )
 }
