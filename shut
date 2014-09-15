@@ -196,12 +196,14 @@ runtests() {
   if $candeleteshutdir; then
     rm -rf "$fullshutdir"
     runtestsinshutdir "$@"
+    exitstatus=$?
   else
     echo "name exists: $shutdir" >&2
     echo "will not overwrite" >&2
     echo "use -f to overwrite" >&2
-    return 2
+    exitstatus=2
   fi
+  return $exitstatus
 }
 
 printtestnames() {
