@@ -32,31 +32,31 @@ configfromargv() {
 setup() {
   config_fullshutdir=$(readlink -f "$config_shutdir")
   if $config_delete; then
-    candeleteshutdir=true
+    candeleteshutdir_func=true
   else
-    candeleteshutdir=trueifshutdirdoesnotexists
+    candeleteshutdir_func=trueifshutdirdoesnotexists
   fi
   if $config_donotruntests; then
-    shutaction=printtestnames
+    shutaction_func=printtestnames
   else
-    shutaction=runtests
+    shutaction_func=runtests
   fi
   if $config_split; then
-    runtestsaveoutput=runtestsaveoutputsplit
-    printbody=printbodysplit
+    runtestsaveoutput_func=runtestsaveoutputsplit
+    printbody_func=printbodysplit
   else
-    runtestsaveoutput=runtestsaveoutputmerge
-    printbody=printbodymerge
+    runtestsaveoutput_func=runtestsaveoutputmerge
+    printbody_func=printbodymerge
   fi
   if $config_verbose; then
-    printoutputpass=printoutputpassfunc
-    printoutputfail=printoutputfailfunc
+    printoutputpass_func=printoutputpassfunc
+    printoutputfail_func=printoutputfailfunc
   elif $config_quiet; then
-    printoutputpass=true
-    printoutputfail=true
+    printoutputpass_func=true
+    printoutputfail_func=true
   else
-    printoutputpass=true
-    printoutputfail=printoutputfailfunc
+    printoutputpass_func=true
+    printoutputfail_func=printoutputfailfunc
   fi
 }
 
@@ -96,7 +96,7 @@ runtestsaveoutputmerge() {
 
 runtestsaveoutputexitstatus() {
   testname=$1
-  $runtestsaveoutput "$testname"
+  $runtestsaveoutput_func "$testname"
   exitstatus=$?
   echo $exitstatus > exitstatus
   return $exitstatus
@@ -121,7 +121,7 @@ printoutputdecorated() {
   echo "================"
   echo "$testname"
   echo "----------------"
-  $printbody
+  $printbody_func
   echo "----------------"
   echo "exitstatus: $exitstatus"
   echo "$state $testname"
@@ -145,9 +145,9 @@ runtestandprintoutput() {
   runtestsaveoutputexitstatus "$testname"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    $printoutputpass "$testname" $exitstatus
+    $printoutputpass_func "$testname" $exitstatus
   else
-    $printoutputfail "$testname" $exitstatus
+    $printoutputfail_func "$testname" $exitstatus
   fi
   return $exitstatus
 }
@@ -203,7 +203,7 @@ runtestsinshutdir() {
 
 runtests() {
   testnames=$1
-  if $candeleteshutdir; then
+  if $candeleteshutdir_func; then
     rm -rf "$config_fullshutdir"
     runtestsinshutdir "$testnames"
     exitstatus=$?
@@ -229,7 +229,7 @@ doshut() {
   testnames=$(mktemp --tmpdir shuttestnames.XXX)
   collecttestnames > "$testnames"
   if [ -s "$testnames" ]; then
-    $shutaction "$testnames"
+    $shutaction_func "$testnames"
     exitstatus=$?
   else
     echo "no tests found"
