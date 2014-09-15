@@ -120,10 +120,24 @@ printoutput() {
   fi
 }
 
+printoutputsplitpass() {
+  testname=$1
+  cat stdout stderr | printoutput "$testname" 0
+}
+
+printoutputsplitfail() {
+  testname=$1
+  cat stdout stderr | printoutput "$testname" 1
+}
+
 printoutputsplit() {
   testname=$1
   exitstatus=$2
-  cat stdout stderr | printoutput "$testname" $exitstatus
+  if [ $exitstatus -eq 0 ]; then
+    printoutputsplitpass "$testname"
+  else
+    printoutputsplitfail "$testname"
+  fi
 }
 
 runtestsplitouterr() {
