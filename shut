@@ -39,12 +39,22 @@ setup() {
   fi
   if $split; then
     runtestandlogoutput=runtestsplitouterr
-    printreportpass=printoutputsplitpass
-    printreportfail=printoutputsplitfail
+    if $verbose; then
+      printreportpass=printoutputsplitpass
+      printreportfail=printoutputsplitfail
+    else
+      printreportpass=true
+      printreportfail=printoutputsplitfail
+    fi
   else
     runtestandlogoutput=runtestmergedouterr
-    printreportpass=printoutputmergedpass
-    printreportfail=printoutputmergedfail
+    if $verbose; then
+      printreportpass=printoutputmergedpass
+      printreportfail=printoutputmergedfail
+    else
+      printreportpass=true
+      printreportfail=printoutputmergedfail
+    fi
   fi
 }
 
