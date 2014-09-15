@@ -28,9 +28,9 @@ configfromargv() {
 setup() {
   fullshutdir=$(readlink -f "$shutdir")
   if $delete; then
-    candeleteandcreateshutdir=candeleteandcreateshutdir_delete
+    candeleteshutdir=candeleteshutdir_delete
   else
-    candeleteandcreateshutdir=candeleteandcreateshutdir_dontdelete
+    candeleteshutdir=candeleteshutdir_dontdelete
   fi
 }
 
@@ -39,11 +39,11 @@ collecttestnames() {
         -type f -executable -name "$prefix*" -print | sort
 }
 
-candeleteandcreateshutdir_delete() {
+candeleteshutdir_delete() {
   true
 }
 
-candeleteandcreateshutdir_dontdelete() {
+candeleteshutdir_dontdelete() {
   [ ! -e "$fullshutdir" ]
 }
 
@@ -197,7 +197,7 @@ runtestsinshutdir() {
 
 runtests() {
   testnames=$1
-  if ! $candeleteandcreateshutdir; then
+  if ! $candeleteshutdir; then
     echo "name exists: $shutdir" >&2
     echo "will not overwrite" >&2
     echo "use -f to overwrite" >&2
