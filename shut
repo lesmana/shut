@@ -100,33 +100,22 @@ runtestsaveoutputexitstatus() {
   return $exitstatus
 }
 
-decoratehead() {
-  testname=$1
-  echo "================"
-  echo "$testname"
-  echo "----------------"
-}
-
 decoratebody() {
   echo "output:"
   sed 's/^/  /'
 }
 
-decoratetail() {
+decorate() {
   testname=$1
   state=$2
+  echo "================"
+  echo "$testname"
+  echo "----------------"
+  decoratebody
   echo "----------------"
   echo "exitstatus: $exitstatus"
   echo "$state $testname"
   echo "----------------"
-}
-
-decorate() {
-  testname=$1
-  state=$2
-  decoratehead "$testname"
-  decoratebody
-  decoratetail "$testname" "$state"
 }
 
 printoutputpasssplit() {
