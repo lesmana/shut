@@ -40,21 +40,21 @@ collecttestnames() {
 }
 
 createshutdir_delete() {
-    if [ -e "$fullshutdir" ]; then
-      rm -rf "$fullshutdir"
-    fi
-    mkdir -p "$fullshutdir"
+  if [ -e "$fullshutdir" ]; then
+    rm -rf "$fullshutdir"
+  fi
+  mkdir -p "$fullshutdir"
 }
 
 createshutdir_dontdelete() {
-    if [ -e "$fullshutdir" ]; then
-      echo "name exists: $shutdir" >&2
-      echo "will not overwrite" >&2
-      echo "use -f to overwrite" >&2
-      exitstatus=2
-    else
-      mkdir -p "$fullshutdir"
-    fi
+  if [ -e "$fullshutdir" ]; then
+    echo "name exists: $shutdir" >&2
+    echo "will not overwrite" >&2
+    echo "use -f to overwrite" >&2
+    exitstatus=2
+  else
+    mkdir -p "$fullshutdir"
+  fi
   return $exitstatus
 }
 
