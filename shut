@@ -147,9 +147,14 @@ runtestwithsplitormerged() {
   fi
 }
 
-runtestandprintreport() {
+runtestandlogoutput() {
   testname=$1
   runtestwithsplitormerged "$testname"
+}
+
+runtestandprintreport() {
+  testname=$1
+  runtestandlogoutput "$testname"
 }
 
 runtestintestdir() {
