@@ -95,6 +95,16 @@ runtestsaveoutputexitstatus() {
   return $exitstatus
 }
 
+printbodysplit() {
+  echo "output:"
+  cat stdout stderr | sed 's/^/  /'
+}
+
+printbodymerge() {
+  echo "output:"
+  cat output | sed 's/^/  /'
+}
+
 decorate() {
   testname=$1
   exitstatus=$2
@@ -107,16 +117,6 @@ decorate() {
   echo "exitstatus: $exitstatus"
   echo "$state $testname"
   echo "----------------"
-}
-
-printbodysplit() {
-  echo "output:"
-  cat stdout stderr | sed 's/^/  /'
-}
-
-printbodymerge() {
-  echo "output:"
-  cat output | sed 's/^/  /'
 }
 
 printoutputpassfunc() {
