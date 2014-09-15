@@ -44,13 +44,7 @@ candeleteandcreateshutdir_delete() {
 }
 
 candeleteandcreateshutdir_dontdelete() {
-  if [ -e "$fullshutdir" ]; then
-    echo "name exists: $shutdir" >&2
-    echo "will not overwrite" >&2
-    echo "use -f to overwrite" >&2
-    exitstatus=2
-  fi
-  return $exitstatus
+  [ ! -e "$fullshutdir" ]
 }
 
 deleteandcreateshutdir() {
@@ -198,6 +192,9 @@ printsummary() {
 runtestsinshutdir() {
   testnames=$1
   if ! $candeleteandcreateshutdir; then
+    echo "name exists: $shutdir" >&2
+    echo "will not overwrite" >&2
+    echo "use -f to overwrite" >&2
     return 2
   fi
   deleteandcreateshutdir
