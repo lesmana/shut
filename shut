@@ -46,8 +46,8 @@ trueifshutdirdoesnotexists() {
 runtestinpwd() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
+  mkdir workdir
   (
-    mkdir workdir
     cd workdir
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
@@ -145,8 +145,8 @@ runtestwithsplitormerged() {
 runtestintestworkdir() {
   testname=$1
   testworkdir=$testname.dir
+  mkdir -p "$testworkdir"
   (
-    mkdir -p "$testworkdir"
     cd "$testworkdir";
     runtestwithsplitormerged "$testname"
   )
