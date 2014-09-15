@@ -189,14 +189,20 @@ printsummary() {
   return $exitstatus
 }
 
-runtestsinshutdir() {
+runtests() {
   testnames=$1
   if ! $candeleteandcreateshutdir; then
     echo "name exists: $shutdir" >&2
     echo "will not overwrite" >&2
     echo "use -f to overwrite" >&2
     return 2
+  else
+    runtestsinshutdir "$@"
   fi
+}
+
+runtestsinshutdir() {
+  testnames=$1
   deleteandcreateshutdir
   (
     cd "$fullshutdir"
@@ -218,7 +224,7 @@ printtestnames() {
 runtestsornot() {
   testnames=$1
   if ! $donotruntests; then
-    runtestsinshutdir "$testnames"
+    runtests "$testnames"
   else
     printtestnames "$testnames"
   fi
