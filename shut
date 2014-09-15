@@ -27,6 +27,11 @@ configfromargv() {
 
 setup() {
   fullshutdir=$(readlink -f "$shutdir")
+  if $delete; then
+    createshutdir=createshutdir_delete
+  else
+    createshutdir=createshutdir_dontdelete
+  fi
 }
 
 collecttestnames() {
@@ -51,14 +56,6 @@ createshutdir_dontdelete() {
       mkdir -p "$fullshutdir"
     fi
   return $exitstatus
-}
-
-createshutdir() {
-  if $delete; then
-    createshutdir_delete
-  else
-    createshutdir_dontdelete
-  fi
 }
 
 runtestinpwd() {
@@ -200,7 +197,7 @@ printsummary() {
 
 runtestsinshutdir() {
   testnames=$1
-  if ! createshutdir; then
+  if ! $createshutdir; then
     return 2
   fi
   (
