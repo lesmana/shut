@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-print names of failed tests at end
-
-----
 only print last x lines from test output
 
 ----
