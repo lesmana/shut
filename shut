@@ -40,20 +40,20 @@ setup() {
   if $split; then
     runtestandsaveoutput=runtestsplitouterr
     if $verbose; then
-      printreportpass=printoutputsplitpass
-      printreportfail=printoutputsplitfail
+      printoutputpass=printoutputsplitpass
+      printoutputfail=printoutputsplitfail
     else
-      printreportpass=true
-      printreportfail=printoutputsplitfail
+      printoutputpass=true
+      printoutputfail=printoutputsplitfail
     fi
   else
     runtestandsaveoutput=runtestmergedouterr
     if $verbose; then
-      printreportpass=printoutputmergedpass
-      printreportfail=printoutputmergedfail
+      printoutputpass=printoutputmergedpass
+      printoutputfail=printoutputmergedfail
     else
-      printreportpass=true
-      printreportfail=printoutputmergedfail
+      printoutputpass=true
+      printoutputfail=printoutputmergedfail
     fi
   fi
 }
@@ -156,9 +156,9 @@ runtestandprintoutput() {
   $runtestandsaveoutput "$testname"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    $printreportpass "$testname"
+    $printoutputpass "$testname"
   else
-    $printreportfail "$testname"
+    $printoutputfail "$testname"
   fi
   return $exitstatus
 }
