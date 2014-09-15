@@ -38,7 +38,7 @@ setup() {
     shutaction=runtests
   fi
   if $split; then
-    runtestandsaveoutput=runtestsplitouterr
+    runtestandsaveoutput=runtestsplit
     if $verbose; then
       printoutputpass=printoutputpasssplit
       printoutputfail=printoutputfailsplit
@@ -47,7 +47,7 @@ setup() {
       printoutputfail=printoutputfailsplit
     fi
   else
-    runtestandsaveoutput=runtestmergeouterr
+    runtestandsaveoutput=runtestmerge
     if $verbose; then
       printoutputpass=printoutputpassmerge
       printoutputfail=printoutputfailmerge
@@ -82,7 +82,7 @@ runtestinworkdir() {
   return $exitstatus
 }
 
-runtestsplitouterr() {
+runtestsplit() {
   testname=$1
   runtestinworkdir "$testname" > stdout 2> stderr
   exitstatus=$?
@@ -90,7 +90,7 @@ runtestsplitouterr() {
   return $exitstatus
 }
 
-runtestmergeouterr() {
+runtestmerge() {
   testname=$1
   runtestinworkdir "$testname" > output 2>&1
   exitstatus=$?
