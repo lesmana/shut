@@ -147,13 +147,18 @@ runtestwithsplitormerged() {
   fi
 }
 
+runtestandprintreport() {
+  testname=$1
+  runtestwithsplitormerged "$testname"
+}
+
 runtestintestdir() {
   testname=$1
   testdir=$testname.dir
   mkdir -p "$testdir"
   (
     cd "$testdir";
-    runtestwithsplitormerged "$testname"
+    runtestandprintreport "$testname"
   )
 }
 
