@@ -102,7 +102,8 @@ decoratebody() {
 
 decorate() {
   testname=$1
-  state=$2
+  exitstatus=$2
+  state=$3
   echo "================"
   echo "$testname"
   echo "----------------"
@@ -123,12 +124,14 @@ printbodymerge() {
 
 printoutputpassfunc() {
   testname=$1
-  $printbody | decorate "$testname" "PASS"
+  exitstatus=$2
+  $printbody | decorate "$testname" $exitstatus "PASS"
 }
 
 printoutputfailfunc() {
   testname=$1
-  $printbody | decorate "$testname" "FAIL"
+  exitstatus=$2
+  $printbody | decorate "$testname" $exitstatus "FAIL"
 }
 
 runtestandprintoutput() {
@@ -136,9 +139,9 @@ runtestandprintoutput() {
   runtestsaveoutputexitstatus "$testname"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    $printoutputpass "$testname"
+    $printoutputpass "$testname" $exitstatus
   else
-    $printoutputfail "$testname"
+    $printoutputfail "$testname" $exitstatus
   fi
   return $exitstatus
 }
