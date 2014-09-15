@@ -39,6 +39,7 @@ setup() {
   fi
   if $split; then
     runtestsaveoutput=runtestsaveoutputsplit
+    printbody=printbodysplit
     if $verbose; then
       printoutputpass=printoutputpasssplit
       printoutputfail=printoutputfailsplit
@@ -48,6 +49,7 @@ setup() {
     fi
   else
     runtestsaveoutput=runtestsaveoutputmerge
+    printbody=printbodymerge
     if $verbose; then
       printoutputpass=printoutputpassmerge
       printoutputfail=printoutputfailmerge
@@ -124,12 +126,12 @@ printbodysplit() {
 
 printoutputpasssplit() {
   testname=$1
-  printbodysplit | decorate "$testname" "PASS"
+  $printbody | decorate "$testname" "PASS"
 }
 
 printoutputfailsplit() {
   testname=$1
-  printbodysplit | decorate "$testname" "FAIL"
+  $printbody | decorate "$testname" "FAIL"
 }
 
 printbodymerge() {
@@ -138,12 +140,12 @@ printbodymerge() {
 
 printoutputpassmerge() {
   testname=$1
-  printbodymerge | decorate "$testname" "PASS"
+  $printbody | decorate "$testname" "PASS"
 }
 
 printoutputfailmerge() {
   testname=$1
-  printbodymerge | decorate "$testname" "FAIL"
+  $printbody | decorate "$testname" "FAIL"
 }
 
 runtestandprintoutput() {
