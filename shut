@@ -40,10 +40,7 @@ collecttestnames() {
 }
 
 candeleteandcreateshutdir_delete() {
-  if [ -e "$fullshutdir" ]; then
-    rm -rf "$fullshutdir"
-  fi
-  mkdir -p "$fullshutdir"
+  true
 }
 
 candeleteandcreateshutdir_dontdelete() {
@@ -52,10 +49,13 @@ candeleteandcreateshutdir_dontdelete() {
     echo "will not overwrite" >&2
     echo "use -f to overwrite" >&2
     exitstatus=2
-  else
-    mkdir -p "$fullshutdir"
   fi
   return $exitstatus
+}
+
+deleteandcreateshutdir() {
+  rm -rf "$fullshutdir"
+  mkdir -p "$fullshutdir"
 }
 
 runtestinpwd() {
@@ -200,6 +200,7 @@ runtestsinshutdir() {
   if ! $candeleteandcreateshutdir; then
     return 2
   fi
+  deleteandcreateshutdir
   (
     cd "$fullshutdir"
     cp "$testnames" tests
