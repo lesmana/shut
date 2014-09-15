@@ -115,30 +115,6 @@ decorate() {
   decoratetail "$testname" "$exitstatus"
 }
 
-printall() {
-  testname=$1
-  exitstatus=$2
-  decorate "$testname" $exitstatus
-}
-
-printonlyfail() {
-  testname=$1
-  exitstatus=$2
-  if [ $exitstatus -ne 0 ]; then
-    decorate "$testname" $exitstatus
-  fi
-}
-
-printoutput() {
-  testname=$1
-  exitstatus=$2
-  if $verbose; then
-    printall "$testname" $exitstatus
-  else
-    printonlyfail "$testname" $exitstatus
-  fi
-}
-
 printoutputsplitpass() {
   testname=$1
   cat stdout stderr | decorate "$testname" 0
