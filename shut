@@ -7,10 +7,11 @@ shutdir="shutdir"
 delete=false
 split=false
 quiet=false
+tail=10
 SHUT_PWD=$PWD
 
 configfromargv() {
-  while getopts "d:nvfxq" "opt"; do
+  while getopts "d:nvfxqt:" "opt"; do
     case "$opt" in
       d) shutdir="$OPTARG";;
       f) delete=true;;
@@ -18,6 +19,7 @@ configfromargv() {
       v) verbose=true;;
       x) split=true;;
       q) quiet=true;;
+      t) tail="$OPTARG";;
       *) exit 1;;
     esac
   done
@@ -102,14 +104,14 @@ runtestsaveoutputexitstatus() {
 
 printbodysplit() {
   echo "stdout:"
-  cat stdout | sed 's/^/  /'
+  cat stdout | tail -n $tail | sed 's/^/  /'
   echo "stderr:"
-  cat stderr | sed 's/^/  /'
+  cat stderr | tail -n $tail | sed 's/^/  /'
 }
 
 printbodymerge() {
   echo "output:"
-  cat output | sed 's/^/  /'
+  cat output | tail -n $tail | sed 's/^/  /'
 }
 
 printoutputdecorated() {
