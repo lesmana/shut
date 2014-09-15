@@ -40,20 +40,20 @@ setup() {
   if $split; then
     runtestandsaveoutput=runtestsplitouterr
     if $verbose; then
-      printoutputpass=printoutputsplitpass
-      printoutputfail=printoutputsplitfail
+      printoutputpass=printoutputpasssplit
+      printoutputfail=printoutputfailsplit
     else
       printoutputpass=true
-      printoutputfail=printoutputsplitfail
+      printoutputfail=printoutputfailsplit
     fi
   else
     runtestandsaveoutput=runtestmergeouterr
     if $verbose; then
-      printoutputpass=printoutputmergepass
-      printoutputfail=printoutputmergefail
+      printoutputpass=printoutputpassmerge
+      printoutputfail=printoutputfailmerge
     else
       printoutputpass=true
-      printoutputfail=printoutputmergefail
+      printoutputfail=printoutputfailmerge
     fi
   fi
 }
@@ -131,22 +131,22 @@ decorate() {
   decoratetail "$testname" "$exitstatus"
 }
 
-printoutputsplitpass() {
+printoutputpasssplit() {
   testname=$1
   cat stdout stderr | decorate "$testname" 0
 }
 
-printoutputsplitfail() {
+printoutputfailsplit() {
   testname=$1
   cat stdout stderr | decorate "$testname" 1
 }
 
-printoutputmergepass() {
+printoutputpassmerge() {
   testname=$1
   decorate "$testname" 0 < output
 }
 
-printoutputmergefail() {
+printoutputfailmerge() {
   testname=$1
   decorate "$testname" 1 < output
 }
