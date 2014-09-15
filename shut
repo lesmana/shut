@@ -147,7 +147,7 @@ runtestwithsplitormerged() {
   fi
 }
 
-runtestintestworkdir() {
+runtestintestdir() {
   testname=$1
   testworkdir=$testname.dir
   mkdir -p "$testworkdir"
@@ -160,7 +160,7 @@ runtestintestworkdir() {
 runtestsandlog() {
   touch pass fail
   while read testname; do
-    if runtestintestworkdir "$testname"; then
+    if runtestintestdir "$testname"; then
       echo "$testname" >> pass
     else
       echo "$testname" >> fail
