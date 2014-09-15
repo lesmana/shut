@@ -118,24 +118,32 @@ decorate() {
   echo "----------------"
 }
 
+printbodysplit() {
+  cat stdout stderr
+}
+
 printoutputpasssplit() {
   testname=$1
-  cat stdout stderr | decorate "$testname" "PASS"
+  printbodysplit | decorate "$testname" "PASS"
 }
 
 printoutputfailsplit() {
   testname=$1
-  cat stdout stderr | decorate "$testname" "FAIL"
+  printbodysplit | decorate "$testname" "FAIL"
+}
+
+printbodymerge() {
+  cat output
 }
 
 printoutputpassmerge() {
   testname=$1
-  cat output | decorate "$testname" "PASS"
+  printbodymerge | decorate "$testname" "PASS"
 }
 
 printoutputfailmerge() {
   testname=$1
-  cat output | decorate "$testname" "FAIL"
+  printbodymerge | decorate "$testname" "FAIL"
 }
 
 runtestandprintoutput() {
