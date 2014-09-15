@@ -1,57 +1,57 @@
 #! /bin/sh
 
-prefix="test"
-donotruntests=false
-verbose=false
-shutdir="shutdir"
-delete=false
-split=false
-quiet=false
-tail=10
+config_prefix="test"
+config_donotruntests=false
+config_verbose=false
+config_shutdir="shutdir"
+config_delete=false
+config_split=false
+config_quiet=false
+config_tail=10
 SHUT_PWD=$PWD
 
 configfromargv() {
   while getopts "d:nvfxqt:" "opt"; do
     case "$opt" in
-      d) shutdir="$OPTARG";;
-      f) delete=true;;
-      n) donotruntests=true;;
-      v) verbose=true;;
-      x) split=true;;
-      q) quiet=true;;
-      t) tail="$OPTARG";;
+      d) config_shutdir="$OPTARG";;
+      f) config_delete=true;;
+      n) config_donotruntests=true;;
+      v) config_verbose=true;;
+      x) config_split=true;;
+      q) config_quiet=true;;
+      t) config_tail="$OPTARG";;
       *) exit 1;;
     esac
   done
   shift $(($OPTIND - 1))
   if [ $# -ge 1 ]; then
-    prefix="$@"
+    config_prefix="$@"
   fi
 }
 
 setup() {
-  fullshutdir=$(readlink -f "$shutdir")
-  if $delete; then
+  config_fullshutdir=$(readlink -f "$config_shutdir")
+  if $config_delete; then
     candeleteshutdir=true
   else
     candeleteshutdir=trueifshutdirdoesnotexists
   fi
-  if $donotruntests; then
+  if $config_donotruntests; then
     shutaction=printtestnames
   else
     shutaction=runtests
   fi
-  if $split; then
+  if $config_split; then
     runtestsaveoutput=runtestsaveoutputsplit
     printbody=printbodysplit
   else
     runtestsaveoutput=runtestsaveoutputmerge
     printbody=printbodymerge
   fi
-  if $verbose; then
+  if $config_verbose; then
     printoutputpass=printoutputpassfunc
     printoutputfail=printoutputfailfunc
-  elif $quiet; then
+  elif $config_quiet; then
     printoutputpass=true
     printoutputfail=true
   else
@@ -61,12 +61,12 @@ setup() {
 }
 
 collecttestnames() {
-  find -type d -name "$shutdir" -prune -o \
-        -type f -executable -name "$prefix*" -print | sort
+  find -type d -name "$config_shutdir" -prune -o \
+        -type f -executable -name "$config_prefix*" -print | sort
 }
 
 trueifshutdirdoesnotexists() {
-  [ ! -e "$fullshutdir" ]
+  [ ! -e "$config_fullshutdir" ]
 }
 
 runtestinworkdir() {
@@ -104,14 +104,14 @@ runtestsaveoutputexitstatus() {
 
 printbodysplit() {
   echo "stdout:"
-  cat stdout | tail -n $tail | sed 's/^/  /'
+  cat stdout | tail -n $config_tail | sed 's/^/  /'
   echo "stderr:"
-  cat stderr | tail -n $tail | sed 's/^/  /'
+  cat stderr | tail -n $config_tail | sed 's/^/  /'
 }
 
 printbodymerge() {
   echo "output:"
-  cat output | tail -n $tail | sed 's/^/  /'
+  cat output | tail -n $config_tail | sed 's/^/  /'
 }
 
 printoutputdecorated() {
@@ -192,9 +192,9 @@ printsummary() {
 
 runtestsinshutdir() {
   testnames=$1
-  mkdir -p "$fullshutdir"
+  mkdir -p "$config_fullshutdir"
   (
-    cd "$fullshutdir"
+    cd "$config_fullshutdir"
     cp "$testnames" tests
     runtestsandlog
     printsummary
@@ -204,11 +204,11 @@ runtestsinshutdir() {
 runtests() {
   testnames=$1
   if $candeleteshutdir; then
-    rm -rf "$fullshutdir"
+    rm -rf "$config_fullshutdir"
     runtestsinshutdir "$testnames"
     exitstatus=$?
   else
-    echo "name exists: $shutdir" >&2
+    echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
     echo "use -f to overwrite" >&2
     exitstatus=2
