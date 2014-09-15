@@ -138,18 +138,13 @@ runtestmergedouterr() {
   return $exitstatus
 }
 
-runtestwithsplitormerged() {
+runtestandlogoutput() {
   testname=$1
   if $split; then
     runtestsplitouterr "$testname"
   else
     runtestmergedouterr "$testname"
   fi
-}
-
-runtestandlogoutput() {
-  testname=$1
-  runtestwithsplitormerged "$testname"
 }
 
 printreportpass() {
