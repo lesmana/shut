@@ -37,8 +37,9 @@ printf "\
 ================
 ./test0
 ----------------
-output:
+stdout:
   stdout
+stderr:
   stderr
 ----------------
 exitstatus: 0

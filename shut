@@ -96,8 +96,10 @@ runtestsaveoutputexitstatus() {
 }
 
 printbodysplit() {
-  echo "output:"
-  cat stdout stderr | sed 's/^/  /'
+  echo "stdout:"
+  cat stdout | sed 's/^/  /'
+  echo "stderr:"
+  cat stderr | sed 's/^/  /'
 }
 
 printbodymerge() {
