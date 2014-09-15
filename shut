@@ -178,6 +178,7 @@ printsummary() {
     echo "failed tests:"
     cat fail
     echo "----------------"
+    exitstatus=1
   fi
   wc -l tests pass fail | {
     read runcount ignorefilename
@@ -185,8 +186,8 @@ printsummary() {
     read failcount ignorefilename
     read ignoretotal
     echo "run: $runcount pass: $passcount fail: $failcount"
-    [ $failcount -eq 0 ] # return success if failcount is zero
   }
+  return $exitstatus
 }
 
 runtestsinshutdir() {
