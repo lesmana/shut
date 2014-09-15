@@ -47,13 +47,13 @@ setup() {
       printoutputfail=printoutputsplitfail
     fi
   else
-    runtestandsaveoutput=runtestmergedouterr
+    runtestandsaveoutput=runtestmergeouterr
     if $verbose; then
-      printoutputpass=printoutputmergedpass
-      printoutputfail=printoutputmergedfail
+      printoutputpass=printoutputmergepass
+      printoutputfail=printoutputmergefail
     else
       printoutputpass=true
-      printoutputfail=printoutputmergedfail
+      printoutputfail=printoutputmergefail
     fi
   fi
 }
@@ -90,7 +90,7 @@ runtestsplitouterr() {
   return $exitstatus
 }
 
-runtestmergedouterr() {
+runtestmergeouterr() {
   testname=$1
   runtestinworkdir "$testname" > output 2>&1
   exitstatus=$?
@@ -141,12 +141,12 @@ printoutputsplitfail() {
   cat stdout stderr | decorate "$testname" 1
 }
 
-printoutputmergedpass() {
+printoutputmergepass() {
   testname=$1
   decorate "$testname" 0 < output
 }
 
-printoutputmergedfail() {
+printoutputmergefail() {
   testname=$1
   decorate "$testname" 1 < output
 }
