@@ -176,6 +176,9 @@ printsummary() {
 
 runtestsinshutdir() {
   testnames=$1
+  if ! sanitycheck; then
+    return 2
+  fi
   (
     rm -rf "$shutdir"
     mkdir -p "$shutdir"
@@ -220,12 +223,8 @@ doshut() {
 
 main() {
   configfromargv "$@"
-  if sanitycheck; then
-    doshut
-    exitstatus=$?
-  else
-    exitstatus=2
-  fi
+  doshut
+  exitstatus=$?
   return $exitstatus
 }
 
