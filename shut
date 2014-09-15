@@ -107,7 +107,7 @@ printbodymerge() {
   cat output | sed 's/^/  /'
 }
 
-decorate() {
+printoutputdecorated() {
   testname=$1
   exitstatus=$2
   state=$3
@@ -124,13 +124,13 @@ decorate() {
 printoutputpassfunc() {
   testname=$1
   exitstatus=$2
-  decorate "$testname" $exitstatus "PASS"
+  printoutputdecorated "$testname" $exitstatus "PASS"
 }
 
 printoutputfailfunc() {
   testname=$1
   exitstatus=$2
-  decorate "$testname" $exitstatus "FAIL"
+  printoutputdecorated "$testname" $exitstatus "FAIL"
 }
 
 runtestandprintoutput() {
