@@ -6,8 +6,9 @@ verbose=false
 shutdir="shutdir"
 delete=false
 split=false
+SHUT_PWD=$PWD
 
-handle_args() {
+configfromargv() {
   while getopts "d:nvfx" "opt"; do
     case "$opt" in
       d) shutdir="$OPTARG";;
@@ -26,48 +27,51 @@ handle_args() {
 
 setup() {
   fullshutdir=$(readlink -f "$shutdir")
-  if [ -e "$fullshutdir" ]; then
-    if $delete; then
-      rm -rf "$fullshutdir"
-    else
-      echo "name exists: $shutdir" >&2
-      echo "will not overwrite" >&2
-      echo "use -f to overwrite" >&2
-      exit 1
-    fi
-  fi
-  mkdir -p "$fullshutdir"
-  shutdir=$fullshutdir
-  SHUT_PWD=$PWD
 }
 
 collecttestnames() {
-  find -L $SHUT_PWD -type f -executable -name "$prefix*" | sort
+  find -type d -name "$shutdir" -prune -o \
+        -type f -executable -name "$prefix*" -print | sort
+}
+
+createshutdir() {
+  if $delete; then
+    if [ -e "$fullshutdir" ]; then
+      rm -rf "$fullshutdir"
+    fi
+    mkdir -p "$fullshutdir"
+  else
+    if [ -e "$fullshutdir" ]; then
+      echo "name exists: $shutdir" >&2
+      echo "will not overwrite" >&2
+      echo "use -f to overwrite" >&2
+      exitstatus=2
+    else
+      mkdir -p "$fullshutdir"
+    fi
+  fi
+  return $exitstatus
 }
 
 runtestinpwd() {
   testname=$1
+  fulltestname=$(readlink -f "$SHUT_PWD/$testname")
   (
     mkdir workdir
     cd workdir
     export SHUT_PWD
-    export SHUT_TEST="$testname"
+    export SHUT_TEST="$fulltestname"
     export SHUT_TESTPWD="$PWD"
-    exec 3>&-
-    exec 4>&-
-    exec 5>&-
-    exec 6>&-
-    exec 7>&-
-    "$testname"
+    "$fulltestname"
   )
   exitstatus=$?
   return $exitstatus
 }
 
 decoratehead() {
-  relativetestname=$1
+  testname=$1
   echo "================"
-  echo "$relativetestname"
+  echo "$testname"
   echo "----------------"
 }
 
@@ -77,156 +81,160 @@ decoratebody() {
 }
 
 decoratetail() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
   if [ $exitstatus -eq 0 ]; then
-    echo "PASS $relativetestname"
+    echo "PASS $testname"
   else
-    echo "FAIL $relativetestname"
+    echo "FAIL $testname"
   fi
   echo "----------------"
 }
 
 decorate() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
-  decoratehead "$relativetestname"
+  decoratehead "$testname"
   decoratebody
-  decoratetail "$relativetestname" "$exitstatus"
+  decoratetail "$testname" "$exitstatus"
 }
 
 printall() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
-  decorate "$relativetestname" $exitstatus
+  decorate "$testname" $exitstatus
 }
 
 printonlyfail() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
   if [ $exitstatus -ne 0 ]; then
-    decorate "$relativetestname" $exitstatus
+    decorate "$testname" $exitstatus
   fi
 }
 
 printoutput() {
-  relativetestname=$1
+  testname=$1
   exitstatus=$2
   if $verbose; then
-    printall "$relativetestname" $exitstatus
+    printall "$testname" $exitstatus
   else
-    printonlyfail "$relativetestname" $exitstatus
+    printonlyfail "$testname" $exitstatus
   fi
 }
 
 runtestsplitouterr() {
   testname=$1
-  relativetestname=$2
   runtestinpwd "$testname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
-  cat stdout stderr | printoutput "$relativetestname" $exitstatus
+  cat stdout stderr | printoutput "$testname" $exitstatus
   return $exitstatus
 }
 
 runtestmergedouterr() {
   testname=$1
-  relativetestname=$2
   runtestinpwd "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
-  printoutput "$relativetestname" $exitstatus < output
+  printoutput "$testname" $exitstatus < output
   return $exitstatus
 }
 
 runtestwithsplitormerged() {
   testname=$1
-  relativetestname=$2
   if $split; then
-    runtestsplitouterr "$testname" "$relativetestname"
+    runtestsplitouterr "$testname"
   else
-    runtestmergedouterr "$testname" "$relativetestname"
+    runtestmergedouterr "$testname"
   fi
 }
 
 runtestintestworkdir() {
   testname=$1
-  relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
-  testworkdir=$relativetestname.dir
+  testworkdir=$testname.dir
   (
     mkdir -p "$testworkdir"
     cd "$testworkdir";
-    runtestwithsplitormerged "$testname" "$relativetestname"
+    runtestwithsplitormerged "$testname"
   )
 }
 
 runtests() {
-  fail=0
+  touch pass fail
   while read testname; do
-    echo "$testname" >&3
     if runtestintestworkdir "$testname"; then
-      echo "$testname" >&4
+      echo "$testname" >> pass
     else
-      echo "$testname" >&5
-      fail=1
+      echo "$testname" >> fail
     fi
-  done
-  return $fail
+  done < tests
 }
 
-count() {
-  wc -l
+printsummary() {
+  wc -l tests pass fail | {
+    read runcount ignorefilename
+    read passcount ignorefilename
+    read failcount ignorefilename
+    read ignoretotal
+    echo "run: $runcount pass: $passcount fail: $failcount"
+    [ $failcount -eq 0 ] # return success if failcount is zero
+  }
 }
 
-summaryline() {
-  read run
-  read pass
-  read fail
-  echo "run: $run pass: $pass fail: $fail"
+runtestsinshutdir() {
+  testnames=$1
+  if ! createshutdir; then
+    return 2
+  fi
+  (
+    cd "$fullshutdir"
+    cp "$testnames" tests
+    runtests
+    printsummary
+  )
 }
 
-stdintoexitstatus() {
-  read exitstatus
-  return $exitstatus
-}
-
-runtestsandprintsummary() {
-  ((((((
-  runtests >&6; echo $? >&7
-  ) 3>&1 | count >&3
-  ) 4>&1 | count >&4
-  ) 5>&1 | count >&5
-  ) 3>&1 4>&1 5>&1 | summaryline >&6
-  ) 7>&1 | stdintoexitstatus
-  ) 6>&1
-}
-
-runtestsnotandprintsummary() {
-  count=0
-  while read testname; do
-    relativetestname=$(echo "$testname" | sed "s:$SHUT_PWD:.:")
-    echo "$relativetestname"
-    count=$(($count + 1))
-  done
-  echo "would run: $count"
+printtestnames() {
+  testnames=$1
+  cat "$testnames"
+  wc -l "$testnames" | {
+    read count ignorefilename
+    echo "would run: $count"
+  }
 }
 
 runtestsornot() {
-  if $donotruntests; then
-    runtestsnotandprintsummary
+  testnames=$1
+  if ! $donotruntests; then
+    runtestsinshutdir "$testnames"
   else
-    runtestsandprintsummary
+    printtestnames "$testnames"
   fi
 }
 
+doshut() {
+  testnames=$(mktemp --tmpdir shuttestnames.XXX)
+  collecttestnames > "$testnames"
+  if [ -s "$testnames" ]; then
+    runtestsornot "$testnames"
+    exitstatus=$?
+  else
+    echo "no tests found"
+    exitstatus=3
+  fi
+  rm "$testnames"
+  return $exitstatus
+}
+
 main() {
-  handle_args "$@"
+  configfromargv "$@"
   setup
-  collecttestnames | (cd "$shutdir" && runtestsornot)
-  success=$?
-  return $success
+  doshut
+  exitstatus=$?
+  return $exitstatus
 }
 
 main "$@"
