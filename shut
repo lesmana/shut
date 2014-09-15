@@ -6,16 +6,18 @@ verbose=false
 shutdir="shutdir"
 delete=false
 split=false
+quiet=false
 SHUT_PWD=$PWD
 
 configfromargv() {
-  while getopts "d:nvfx" "opt"; do
+  while getopts "d:nvfxq" "opt"; do
     case "$opt" in
       d) shutdir="$OPTARG";;
       f) delete=true;;
       n) donotruntests=true;;
       v) verbose=true;;
       x) split=true;;
+      q) quiet=true;;
       *) exit 1;;
     esac
   done
@@ -47,6 +49,9 @@ setup() {
   if $verbose; then
     printoutputpass=printoutputpassfunc
     printoutputfail=printoutputfailfunc
+  elif $quiet; then
+    printoutputpass=true
+    printoutputfail=true
   else
     printoutputpass=true
     printoutputfail=printoutputfailfunc
