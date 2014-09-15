@@ -21,3 +21,6 @@ forced fail for tests which take longer than x seconds
 ----
 decide whether quiet should be really quiet (no output at all)
 or just not print test output but still print summary (as is now)
+
+----
+rewrite argv handling to allow long options
