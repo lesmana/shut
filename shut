@@ -38,7 +38,7 @@ setup() {
     shutaction=runtests
   fi
   if $split; then
-    runtestsaveoutput=runtestsplit
+    runtestsaveoutputexitstatus=runtestsplit
     if $verbose; then
       printoutputpass=printoutputpasssplit
       printoutputfail=printoutputfailsplit
@@ -47,7 +47,7 @@ setup() {
       printoutputfail=printoutputfailsplit
     fi
   else
-    runtestsaveoutput=runtestmerge
+    runtestsaveoutputexitstatus=runtestmerge
     if $verbose; then
       printoutputpass=printoutputpassmerge
       printoutputfail=printoutputfailmerge
@@ -163,7 +163,7 @@ printoutputfailmerge() {
 
 runtestandprintoutput() {
   testname=$1
-  $runtestsaveoutput "$testname"
+  $runtestsaveoutputexitstatus "$testname"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
     $printoutputpass "$testname"
