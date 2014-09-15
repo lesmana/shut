@@ -17,3 +17,6 @@ if pattern is neither then search for files matching pattern
 
 ----
 read testnames from stdin
+
+----
+forced fail for tests which take longer than x seconds
