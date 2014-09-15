@@ -141,12 +141,12 @@ printoutput() {
 
 printoutputsplitpass() {
   testname=$1
-  cat stdout stderr | printoutput "$testname" 0
+  cat stdout stderr | decorate "$testname" 0
 }
 
 printoutputsplitfail() {
   testname=$1
-  cat stdout stderr | printoutput "$testname" 1
+  cat stdout stderr | decorate "$testname" 1
 }
 
 runtestsplitouterr() {
@@ -159,12 +159,12 @@ runtestsplitouterr() {
 
 printoutputmergedpass() {
   testname=$1
-  printoutput "$testname" 0 < output
+  decorate "$testname" 0 < output
 }
 
 printoutputmergedfail() {
   testname=$1
-  printoutput "$testname" 1 < output
+  decorate "$testname" 1 < output
 }
 
 runtestmergedouterr() {
