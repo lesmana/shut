@@ -62,6 +62,10 @@ output:
 exitstatus: 1
 FAIL ./test1
 ----------------
+failed tests:
+./test0
+./test1
+----------------
 run: 2 pass: 0 fail: 2
 " > expected/shutoutput
 
