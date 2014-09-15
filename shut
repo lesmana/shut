@@ -25,6 +25,10 @@ configfromargv() {
   fi
 }
 
+collecttestnames() {
+  find -type f -executable -name "$prefix*" | sort
+}
+
 sanitycheck() {
   fullshutdir=$(readlink -f "$shutdir")
   if [ -e "$fullshutdir" ]; then
@@ -37,10 +41,6 @@ sanitycheck() {
   fi
   shutdir=$fullshutdir
   return $exitstatus
-}
-
-collecttestnames() {
-  find -type f -executable -name "$prefix*" | sort
 }
 
 runtestinpwd() {
