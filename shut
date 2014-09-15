@@ -28,7 +28,7 @@ configfromargv() {
 setup() {
   fullshutdir=$(readlink -f "$shutdir")
   if $delete; then
-    candeleteshutdir=candeleteshutdir_delete
+    candeleteshutdir=true
   else
     candeleteshutdir=candeleteshutdir_dontdelete
   fi
@@ -37,10 +37,6 @@ setup() {
 collecttestnames() {
   find -type d -name "$shutdir" -prune -o \
         -type f -executable -name "$prefix*" -print | sort
-}
-
-candeleteshutdir_delete() {
-  true
 }
 
 candeleteshutdir_dontdelete() {
