@@ -30,7 +30,7 @@ setup() {
   if $delete; then
     candeleteshutdir=true
   else
-    candeleteshutdir=candeleteshutdir_dontdelete
+    candeleteshutdir=trueifshutdirdoesnotexists
   fi
 }
 
@@ -39,7 +39,7 @@ collecttestnames() {
         -type f -executable -name "$prefix*" -print | sort
 }
 
-candeleteshutdir_dontdelete() {
+trueifshutdirdoesnotexists() {
   [ ! -e "$fullshutdir" ]
 }
 
