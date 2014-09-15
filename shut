@@ -41,21 +41,21 @@ setup() {
     runtestsaveoutput=runtestsaveoutputsplit
     printbody=printbodysplit
     if $verbose; then
-      printoutputpass=printoutputpasssplit
-      printoutputfail=printoutputfailsplit
+      printoutputpass=printoutputpassfunc
+      printoutputfail=printoutputfailfunc
     else
       printoutputpass=true
-      printoutputfail=printoutputfailsplit
+      printoutputfail=printoutputfailfunc
     fi
   else
     runtestsaveoutput=runtestsaveoutputmerge
     printbody=printbodymerge
     if $verbose; then
-      printoutputpass=printoutputpassmerge
-      printoutputfail=printoutputfailmerge
+      printoutputpass=printoutputpassfunc
+      printoutputfail=printoutputfailfunc
     else
       printoutputpass=true
-      printoutputfail=printoutputfailmerge
+      printoutputfail=printoutputfailfunc
     fi
   fi
 }
@@ -124,26 +124,16 @@ printbodysplit() {
   cat stdout stderr
 }
 
-printoutputpasssplit() {
-  testname=$1
-  $printbody | decorate "$testname" "PASS"
-}
-
-printoutputfailsplit() {
-  testname=$1
-  $printbody | decorate "$testname" "FAIL"
-}
-
 printbodymerge() {
   cat output
 }
 
-printoutputpassmerge() {
+printoutputpassfunc() {
   testname=$1
   $printbody | decorate "$testname" "PASS"
 }
 
-printoutputfailmerge() {
+printoutputfailfunc() {
   testname=$1
   $printbody | decorate "$testname" "FAIL"
 }
