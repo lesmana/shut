@@ -152,9 +152,26 @@ runtestandlogoutput() {
   runtestwithsplitormerged "$testname"
 }
 
+printreportpass() {
+  testname=$1
+  true
+}
+
+printreportfail() {
+  testname=$1
+  true
+}
+
 runtestandprintreport() {
   testname=$1
   runtestandlogoutput "$testname"
+  exitstatus=$?
+  if [ $exitstatus -eq 0 ]; then
+    printreportpass "$testname"
+  else
+    printreportfail "$testname"
+  fi
+  return $exitstatus
 }
 
 runtestintestdir() {
