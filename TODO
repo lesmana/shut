@@ -1,6 +1,9 @@
 todo for shell unit test
 
 ----
+fix exitstatus and write test for exitstatus
+
+----
 only print last x lines from test output
 
 ----
