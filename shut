@@ -200,7 +200,7 @@ runtests() {
   testnames=$1
   if $candeleteshutdir; then
     rm -rf "$fullshutdir"
-    runtestsinshutdir "$@"
+    runtestsinshutdir "$testnames"
     exitstatus=$?
   else
     echo "name exists: $shutdir" >&2
