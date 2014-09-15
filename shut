@@ -33,25 +33,23 @@ collecttestnames() {
   find -type f -executable -name "$prefix*" | sort
 }
 
-sanitycheck() {
-  if ! $delete; then
+createshutdir() {
+  if $delete; then
+    if [ -e "$fullshutdir" ]; then
+      rm -rf "$fullshutdir"
+    fi
+    mkdir -p "$fullshutdir"
+  else
     if [ -e "$fullshutdir" ]; then
       echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
       echo "use -f to overwrite" >&2
       exitstatus=2
+    else
+      mkdir -p "$fullshutdir"
     fi
   fi
   return $exitstatus
-}
-
-createshutdir() {
-  if sanitycheck; then
-    rm -rf "$fullshutdir"
-    mkdir -p "$fullshutdir"
-  else
-    return 2
-  fi
 }
 
 runtestinpwd() {
