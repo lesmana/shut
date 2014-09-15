@@ -161,7 +161,7 @@ runtestintestworkdir() {
   )
 }
 
-runtests() {
+runtestsandlog() {
   touch pass fail
   while read testname; do
     if runtestintestworkdir "$testname"; then
@@ -201,7 +201,7 @@ runtestsinshutdir() {
   (
     cd "$fullshutdir"
     cp "$testnames" tests
-    runtests
+    runtestsandlog
     printsummary
   )
 }
