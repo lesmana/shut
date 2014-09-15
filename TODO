@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-skip shutdir when looking for tests
-
-----
 print names of failed tests at end
 
 ----
