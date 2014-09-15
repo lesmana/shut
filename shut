@@ -114,43 +114,39 @@ decoratebody() {
 
 decoratetail() {
   testname=$1
-  exitstatus=$2
+  state=$2
   echo "----------------"
   echo "exitstatus: $exitstatus"
-  if [ $exitstatus -eq 0 ]; then
-    echo "PASS $testname"
-  else
-    echo "FAIL $testname"
-  fi
+  echo "$state $testname"
   echo "----------------"
 }
 
 decorate() {
   testname=$1
-  exitstatus=$2
+  state=$2
   decoratehead "$testname"
   decoratebody
-  decoratetail "$testname" "$exitstatus"
+  decoratetail "$testname" "$state"
 }
 
 printoutputpasssplit() {
   testname=$1
-  cat stdout stderr | decorate "$testname" 0
+  cat stdout stderr | decorate "$testname" "PASS"
 }
 
 printoutputfailsplit() {
   testname=$1
-  cat stdout stderr | decorate "$testname" 1
+  cat stdout stderr | decorate "$testname" "FAIL"
 }
 
 printoutputpassmerge() {
   testname=$1
-  decorate "$testname" 0 < output
+  decorate "$testname" "PASS" < output
 }
 
 printoutputfailmerge() {
   testname=$1
-  decorate "$testname" 1 < output
+  decorate "$testname" "FAIL" < output
 }
 
 runtestandprintoutput() {
