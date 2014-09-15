@@ -34,8 +34,8 @@ collecttestnames() {
 }
 
 sanitycheck() {
-  if [ -e "$fullshutdir" ]; then
-    if ! $delete; then
+  if ! $delete; then
+    if [ -e "$fullshutdir" ]; then
       echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
       echo "use -f to overwrite" >&2
