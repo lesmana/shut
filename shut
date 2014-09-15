@@ -186,7 +186,6 @@ printsummary() {
 
 runtestsinshutdir() {
   testnames=$1
-  rm -rf "$fullshutdir"
   mkdir -p "$fullshutdir"
   (
     cd "$fullshutdir"
@@ -204,6 +203,7 @@ runtests() {
     echo "use -f to overwrite" >&2
     return 2
   else
+    rm -rf "$fullshutdir"
     runtestsinshutdir "$@"
   fi
 }
