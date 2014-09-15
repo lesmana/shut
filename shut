@@ -32,6 +32,11 @@ setup() {
   else
     candeleteshutdir=trueifshutdirdoesnotexists
   fi
+  if ! $donotruntests; then
+    shutaction=runtests
+  else
+    shutaction=printtestnames
+  fi
 }
 
 collecttestnames() {
@@ -215,20 +220,11 @@ printtestnames() {
   }
 }
 
-runtestsornot() {
-  testnames=$1
-  if ! $donotruntests; then
-    runtests "$testnames"
-  else
-    printtestnames "$testnames"
-  fi
-}
-
 doshut() {
   testnames=$(mktemp --tmpdir shuttestnames.XXX)
   collecttestnames > "$testnames"
   if [ -s "$testnames" ]; then
-    runtestsornot "$testnames"
+    $shutaction "$testnames"
     exitstatus=$?
   else
     echo "no tests found"
