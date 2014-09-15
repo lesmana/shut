@@ -21,3 +21,13 @@ or just not print test output but still print summary (as is now)
 
 ----
 rewrite argv handling to allow long options
+
+----
+specify in output if last x lines
+example:
+output (last 10 lines)
+
+----
+specify in output if empty
+example
+stderr: (empty)
