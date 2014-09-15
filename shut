@@ -40,23 +40,16 @@ setup() {
   if $split; then
     runtestsaveoutput=runtestsaveoutputsplit
     printbody=printbodysplit
-    if $verbose; then
-      printoutputpass=printoutputpassfunc
-      printoutputfail=printoutputfailfunc
-    else
-      printoutputpass=true
-      printoutputfail=printoutputfailfunc
-    fi
   else
     runtestsaveoutput=runtestsaveoutputmerge
     printbody=printbodymerge
-    if $verbose; then
-      printoutputpass=printoutputpassfunc
-      printoutputfail=printoutputfailfunc
-    else
-      printoutputpass=true
-      printoutputfail=printoutputfailfunc
-    fi
+  fi
+  if $verbose; then
+    printoutputpass=printoutputpassfunc
+    printoutputfail=printoutputfailfunc
+  else
+    printoutputpass=true
+    printoutputfail=printoutputfailfunc
   fi
 }
 
