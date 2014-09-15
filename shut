@@ -34,13 +34,14 @@ collecttestnames() {
         -type f -executable -name "$prefix*" -print | sort
 }
 
-createshutdir() {
-  if $delete; then
+createshutdir_delete() {
     if [ -e "$fullshutdir" ]; then
       rm -rf "$fullshutdir"
     fi
     mkdir -p "$fullshutdir"
-  else
+}
+
+createshutdir_dontdelete() {
     if [ -e "$fullshutdir" ]; then
       echo "name exists: $shutdir" >&2
       echo "will not overwrite" >&2
@@ -49,8 +50,15 @@ createshutdir() {
     else
       mkdir -p "$fullshutdir"
     fi
-  fi
   return $exitstatus
+}
+
+createshutdir() {
+  if $delete; then
+    createshutdir_delete
+  else
+    createshutdir_dontdelete
+  fi
 }
 
 runtestinpwd() {
