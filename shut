@@ -48,7 +48,7 @@ trueifshutdirdoesnotexists() {
   [ ! -e "$fullshutdir" ]
 }
 
-runtestinpwd() {
+runtestinworkdir() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
   mkdir workdir
@@ -122,7 +122,7 @@ printoutput() {
 
 runtestsplitouterr() {
   testname=$1
-  runtestinpwd "$testname" > stdout 2> stderr
+  runtestinworkdir "$testname" > stdout 2> stderr
   exitstatus=$?
   echo $exitstatus > exitstatus
   cat stdout stderr | printoutput "$testname" $exitstatus
@@ -131,7 +131,7 @@ runtestsplitouterr() {
 
 runtestmergedouterr() {
   testname=$1
-  runtestinpwd "$testname" > output 2>&1
+  runtestinworkdir "$testname" > output 2>&1
   exitstatus=$?
   echo $exitstatus > exitstatus
   printoutput "$testname" $exitstatus < output
