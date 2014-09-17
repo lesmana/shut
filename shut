@@ -65,9 +65,9 @@ setup() {
 }
 
 collectexecutableswithprefix() {
-  config_prefix=$1
+  prefix=$1
   find -type d -name "$config_shutdir" -prune -o \
-        -type f -executable -name "$config_prefix*" -print | sort
+        -type f -executable -name "$prefix*" -print | sort
 }
 
 collecttestnames() {
