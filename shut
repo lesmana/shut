@@ -11,6 +11,7 @@ config_tail=10
 SHUT_PWD=$PWD
 
 configfromargv() {
+  # this function expects "$@" as argument
   while getopts "d:nvfxqt:" "opt"; do
     case "$opt" in
       d) config_shutdir="$OPTARG";;
