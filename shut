@@ -73,9 +73,11 @@ collectexecutableswithprefix() {
 collecttestnames() {
   shift "$config_shiftargv"
   if [ $# -ge 1 ]; then
-    config_prefix="$@"
+    prefix="$@"
+  else
+    prefix="$config_prefix"
   fi
-  collectexecutableswithprefix "$config_prefix"
+  collectexecutableswithprefix "$prefix"
 }
 
 trueifshutdirdoesnotexists() {
