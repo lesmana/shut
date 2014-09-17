@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-create logfile of entire stdout of shut
-
-----
 pattern argument
 if pattern is dir recurse in to dir
 if pattern is file run file
@@ -11,6 +8,9 @@ if pattern is neither then search for files matching pattern
 
 ----
 read testnames from stdin
+
+----
+create logfile of entire stdout of shut
 
 ----
 forced fail for tests which take longer than x seconds
