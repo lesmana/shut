@@ -2,5 +2,10 @@
 
 PATH=$PATH:$PWD
 
-cd tests
-../goodshut -f
+if [ $# -ne 0 ]; then
+  cd tests
+  ../goodshut "$@"
+else
+  cd tests
+  ../goodshut -f
+fi
