@@ -68,7 +68,7 @@ setup() {
 collectexecutableswithprefix() {
   prefix=$1
   find -type d -name "$config_shutdir" -prune -o \
-        -type f -executable -name "$prefix*" -print | sort
+        -type f -executable -name "$prefix*" -print
 }
 
 collecttestnames() {
@@ -78,7 +78,7 @@ collecttestnames() {
   fi
   for prefix in "$@"; do
     collectexecutableswithprefix "$prefix"
-  done
+  done | sort
 }
 
 trueifshutdirdoesnotexists() {

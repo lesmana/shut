@@ -11,8 +11,8 @@ chmod +x actual/foo actual/bar actual/baz
 cp -a actual expected
 
 printf "\
-./foo
 ./bar
+./foo
 would run: 2
 " > expected/shutoutput
 
