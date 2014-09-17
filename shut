@@ -1,7 +1,8 @@
 #! /bin/sh
 
-config_shiftargv=0
 default_prefix="test"
+
+config_shiftargv=0
 config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
