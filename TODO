@@ -1,10 +1,13 @@
 todo for shell unit test
 
 ----
-pattern argument
-if pattern is dir recurse in to dir
-if pattern is file run file
-if pattern is neither then search for files matching pattern
+pattern argument behaviour
+no pattern argument: all executables starting with test
+one pattern argument:
+* if dir: all executables from dir
+* if file and executable: just that file
+* if neither: all executables starting with pattern
+many pattern arguments: for each handle as above then sort -u
 
 ----
 read testnames from stdin
