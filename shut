@@ -1,5 +1,6 @@
 #! /bin/sh
 
+config_shiftargv=0
 config_prefix="test"
 config_donotruntests=false
 config_verbose=false
@@ -24,10 +25,7 @@ configfromargv() {
       *) exit 1;;
     esac
   done
-  shift $(($OPTIND - 1))
-  if [ $# -ge 1 ]; then
-    config_prefix="$@"
-  fi
+  config_shiftargv=$(($OPTIND - 1))
 }
 
 setup() {
@@ -62,6 +60,10 @@ setup() {
 }
 
 collecttestnames() {
+  shift "$config_shiftargv"
+  if [ $# -ge 1 ]; then
+    config_prefix="$@"
+  fi
   find -type d -name "$config_shutdir" -prune -o \
         -type f -executable -name "$config_prefix*" -print | sort
 }
@@ -228,7 +230,7 @@ printtestnames() {
 
 doshut() {
   testnames=$(mktemp --tmpdir shuttestnames.XXX)
-  collecttestnames > "$testnames"
+  collecttestnames "$@" > "$testnames"
   if [ -s "$testnames" ]; then
     $shutaction_func "$testnames"
     exitstatus=$?
@@ -243,7 +245,7 @@ doshut() {
 main() {
   configfromargv "$@"
   setup
-  doshut
+  doshut "$@"
   exitstatus=$?
   return $exitstatus
 }
