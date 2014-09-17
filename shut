@@ -64,18 +64,18 @@ setup() {
   fi
 }
 
+collectexecutableswithprefix() {
+  config_prefix=$1
+  find -type d -name "$config_shutdir" -prune -o \
+        -type f -executable -name "$config_prefix*" -print | sort
+}
+
 collecttestnames() {
   shift "$config_shiftargv"
   if [ $# -ge 1 ]; then
     config_prefix="$@"
   fi
   collectexecutableswithprefix "$config_prefix"
-}
-
-collectexecutableswithprefix() {
-  config_prefix=$1
-  find -type d -name "$config_shutdir" -prune -o \
-        -type f -executable -name "$config_prefix*" -print | sort
 }
 
 trueifshutdirdoesnotexists() {
