@@ -1,7 +1,7 @@
 #! /bin/sh
 
 config_shiftargv=0
-config_prefix="test"
+default_prefix="test"
 config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
@@ -75,7 +75,7 @@ collecttestnames() {
   if [ $# -ge 1 ]; then
     prefix="$@"
   else
-    prefix="$config_prefix"
+    prefix="$default_prefix"
   fi
   collectexecutableswithprefix "$prefix"
 }
