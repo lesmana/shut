@@ -13,19 +13,24 @@ SHUT_PWD=$PWD
 
 configfromargv() {
   # this function expects "$@" as argument
-  while getopts "d:nvfxqt:" "opt"; do
-    case "$opt" in
-      d) config_shutdir="$OPTARG";;
-      f) config_delete=true;;
-      n) config_donotruntests=true;;
-      v) config_verbose=true;;
-      x) config_split=true;;
-      q) config_quiet=true;;
-      t) config_tail="$OPTARG";;
-      *) exit 1;;
+  argc=$#
+  while [ $# -ge 1 ]; do
+    arg=$1
+    case "$arg" in
+      -d) shift ; config_shutdir="$1" ;;
+      -f) config_delete=true ;;
+      -n) config_donotruntests=true ;;
+      -v) config_verbose=true ;;
+      -x) config_split=true ;;
+      -q) config_quiet=true ;;
+      -t) shift ; config_tail="$1" ;;
+      --) shift ; break ;;
+      -*) echo "argv error: $1" ; exit 2 ;;
+       *) break ;;
     esac
+    shift
   done
-  config_shiftargv=$(($OPTIND - 1))
+  config_shiftargv=$((argc - $#))
 }
 
 setup() {
