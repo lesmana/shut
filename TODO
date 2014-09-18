@@ -1,6 +1,9 @@
 todo for shell unit test
 
 ----
+test pattern argument works with absolute and relative path
+
+----
 read testnames from stdin
 
 ----
