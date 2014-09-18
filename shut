@@ -82,9 +82,11 @@ collecttestnames() {
   if [ $# -eq 0 ]; then
     set -- "$default_prefix"
   fi
+  options="-false"
   for prefix in "$@"; do
-    collectexecutableswithprefix "$prefix"
-  done | sort
+    options="$options -o -name $prefix\*"
+  done
+  findwithoptions "$options" | sort
 }
 
 trueifshutdirdoesnotexists() {
