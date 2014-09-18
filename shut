@@ -1,6 +1,6 @@
 #! /bin/sh
 
-default_prefix="test"
+default_pattern="test"
 
 config_shiftargv=0
 config_donotruntests=false
@@ -73,11 +73,11 @@ findwithargs() {
 collecttestnames() {
   shift "$config_shiftargv"
   if [ $# -eq 0 ]; then
-    set -- "$default_prefix"
+    set -- "$default_pattern"
   fi
   findargs="-false"
-  for prefix in "$@"; do
-    findargs="$findargs -o -type f -executable -name $prefix\*"
+  for pattern in "$@"; do
+    findargs="$findargs -o -type f -executable -name $pattern\*"
   done
   findwithargs "$findargs" | sort
 }
