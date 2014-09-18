@@ -79,6 +79,8 @@ collecttestnames() {
   for pattern in "$@"; do
     if [ -f "$pattern" ]; then
       findargs="$findargs -o -type f -executable -name $pattern"
+    elif [ -d "$pattern" ]; then
+      findargs="$findargs -o -type f -executable -path \*/$pattern/\*"
     else
       findargs="$findargs -o -type f -executable -name $pattern\*"
     fi
