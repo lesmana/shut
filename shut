@@ -68,7 +68,7 @@ setup() {
 findwithoptions() {
   options=$1
   find -type d -name "$config_shutdir" -prune -o \
-        -type f -executable $options -print
+        -type f -executable \( $options \) -print
 }
 
 collectexecutableswithprefix() {
