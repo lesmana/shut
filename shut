@@ -67,8 +67,7 @@ setup() {
 
 findwithoptions() {
   options=$1
-  find -type d -name "$config_shutdir" -prune -o \
-        \( $options \) -print
+  find -type d -name "$config_shutdir" -prune -o \( $options \) -print
 }
 
 collecttestnames() {
