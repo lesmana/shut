@@ -68,7 +68,7 @@ setup() {
 findwithoptions() {
   options=$1
   find -type d -name "$config_shutdir" -prune -o \
-        -type f -executable \( $options \) -print
+        \( $options \) -print
 }
 
 collecttestnames() {
@@ -78,7 +78,7 @@ collecttestnames() {
   fi
   options="-false"
   for prefix in "$@"; do
-    options="$options -o -name $prefix\*"
+    options="$options -o -type f -executable -name $prefix\*"
   done
   findwithoptions "$options" | sort
 }
