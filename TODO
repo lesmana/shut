@@ -7,6 +7,11 @@ test pattern argument works with absolute and relative path
 read testnames from stdin
 
 ----
+always delete shutdir by default but only if it is
+recognized as created by shut
+how? let shut put relatively unique marker in shutdir
+
+----
 create logfile of entire stdout of shut
 
 ----
