@@ -71,12 +71,6 @@ findwithoptions() {
         -type f -executable \( $options \) -print
 }
 
-collectexecutableswithprefix() {
-  prefix=$1
-  options="-name $prefix\*"
-  findwithoptions "$options"
-}
-
 collecttestnames() {
   shift "$config_shiftargv"
   if [ $# -eq 0 ]; then
