@@ -77,7 +77,11 @@ collecttestnames() {
   fi
   findargs="-false"
   for pattern in "$@"; do
-    findargs="$findargs -o -type f -executable -name $pattern\*"
+    if [ -f "$pattern" ]; then
+      findargs="$findargs -o -type f -executable -name $pattern"
+    else
+      findargs="$findargs -o -type f -executable -name $pattern\*"
+    fi
   done
   findwithargs "$findargs" | sort
 }
