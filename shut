@@ -65,9 +65,9 @@ setup() {
   fi
 }
 
-findwithoptions() {
-  options=$1
-  find -type d -name "$config_shutdir" -prune -o \( $options \) -print
+findwithargs() {
+  findargs=$1
+  find -type d -name "$config_shutdir" -prune -o \( $findargs \) -print
 }
 
 collecttestnames() {
@@ -75,11 +75,11 @@ collecttestnames() {
   if [ $# -eq 0 ]; then
     set -- "$default_prefix"
   fi
-  options="-false"
+  findargs="-false"
   for prefix in "$@"; do
-    options="$options -o -type f -executable -name $prefix\*"
+    findargs="$findargs -o -type f -executable -name $prefix\*"
   done
-  findwithoptions "$options" | sort
+  findwithargs "$findargs" | sort
 }
 
 trueifshutdirdoesnotexists() {
