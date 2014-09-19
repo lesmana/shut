@@ -146,8 +146,7 @@ printexitstatus() {
 
 printoutputdecorated() {
   testname=$1
-  exitstatus=$2
-  state=$3
+  state=$2
   echo "================"
   echo "$testname"
   echo "----------------"
@@ -160,14 +159,12 @@ printoutputdecorated() {
 
 printoutputpass() {
   testname=$1
-  exitstatus=$2
-  printoutputdecorated "$testname" $exitstatus "PASS"
+  printoutputdecorated "$testname" "PASS"
 }
 
 printoutputfail() {
   testname=$1
-  exitstatus=$2
-  printoutputdecorated "$testname" $exitstatus "FAIL"
+  printoutputdecorated "$testname" "FAIL"
 }
 
 runtestandprintoutput() {
@@ -177,9 +174,9 @@ runtestandprintoutput() {
   runtestsaveoutputexitstatus "$testname"
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    $printoutputpass_func "$testname" $exitstatus
+    $printoutputpass_func "$testname"
   else
-    $printoutputfail_func "$testname" $exitstatus
+    $printoutputfail_func "$testname"
   fi
   return $exitstatus
 }
