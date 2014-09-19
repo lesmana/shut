@@ -171,9 +171,7 @@ runtestandprintoutput() {
   # do not inline the functions printoutputpass and printoutputfail
   # they are used in setup to enable or disable verbose output
   testname=$1
-  runtestsaveoutputexitstatus "$testname"
-  exitstatus=$?
-  if [ $exitstatus -eq 0 ]; then
+  if runtestsaveoutputexitstatus "$testname"; then
     $printoutputpass_func "$testname"
     exitstatus=0
   else
