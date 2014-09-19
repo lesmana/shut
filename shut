@@ -175,8 +175,10 @@ runtestandprintoutput() {
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
     $printoutputpass_func "$testname"
+    exitstatus=0
   else
     $printoutputfail_func "$testname"
+    exitstatus=1
   fi
   return $exitstatus
 }
