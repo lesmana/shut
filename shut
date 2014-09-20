@@ -93,7 +93,8 @@ trueifshutdirdoesnotexists() {
 }
 
 runtest() {
-  fulltestname=$1
+  testname=$1
+  fulltestname=$(readlink -f "$SHUT_PWD/$testname")
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
@@ -103,18 +104,18 @@ runtest() {
 }
 
 runtestsaveoutputsplit() {
-  fulltestname=$1
-  runtest "$fulltestname" > ../stdout 2> ../stderr
+  testname=$1
+  runtest "$testname" > ../stdout 2> ../stderr
 }
 
 runtestsaveoutputmerge() {
-  fulltestname=$1
-  runtest "$fulltestname" > ../output 2>&1
+  testname=$1
+  runtest "$testname" > ../output 2>&1
 }
 
 runtestsaveoutputexitstatus() {
-  fulltestname=$1
-  $runtestsaveoutput_func "$fulltestname"
+  testname=$1
+  $runtestsaveoutput_func "$testname"
   exitstatus=$?
   echo $exitstatus > ../exitstatus
   return $exitstatus
@@ -122,11 +123,10 @@ runtestsaveoutputexitstatus() {
 
 runtestinworkdir() {
   testname=$1
-  fulltestname=$(readlink -f "$SHUT_PWD/$testname")
   mkdir workdir
   (
     cd workdir
-    runtestsaveoutputexitstatus "$fulltestname"
+    runtestsaveoutputexitstatus "$testname"
   )
   exitstatus=$?
   return $exitstatus
