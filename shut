@@ -54,14 +54,14 @@ setup() {
     printbody_func=printbodymerge
   fi
   if $config_verbose; then
-    printoutputpass_func=printoutputpass
-    printoutputfail_func=printoutputfail
+    printoutputpass_func=printoutputdecorated
+    printoutputfail_func=printoutputdecorated
   elif $config_quiet; then
     printoutputpass_func=true
     printoutputfail_func=true
   else
     printoutputpass_func=true
-    printoutputfail_func=printoutputfail
+    printoutputfail_func=printoutputdecorated
   fi
 }
 
@@ -157,25 +157,13 @@ printoutputdecorated() {
   echo "----------------"
 }
 
-printoutputpass() {
-  testname=$1
-  printoutputdecorated "$testname" "PASS"
-}
-
-printoutputfail() {
-  testname=$1
-  printoutputdecorated "$testname" "FAIL"
-}
-
 runtestandprintoutput() {
-  # do not inline the functions printoutputpass and printoutputfail
-  # they are used in setup to enable or disable verbose output
   testname=$1
   if runtestsaveoutputexitstatus "$testname"; then
-    $printoutputpass_func "$testname"
+    $printoutputpass_func "$testname" "PASS"
     exitstatus=0
   else
-    $printoutputfail_func "$testname"
+    $printoutputfail_func "$testname" "FAIL"
     exitstatus=1
   fi
   return $exitstatus
