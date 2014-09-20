@@ -103,7 +103,7 @@ runtest() {
   )
 }
 
-runtestsaveoutputexitstatus() {
+runtestsaveexitstatus() {
   testname=$1
   runtest "$testname"
   exitstatus=$?
@@ -113,12 +113,12 @@ runtestsaveoutputexitstatus() {
 
 runtestsaveoutputsplit() {
   testname=$1
-  runtestsaveoutputexitstatus "$testname" > ../stdout 2> ../stderr
+  runtestsaveexitstatus "$testname" > ../stdout 2> ../stderr
 }
 
 runtestsaveoutputmerge() {
   testname=$1
-  runtestsaveoutputexitstatus "$testname" > ../output 2>&1
+  runtestsaveexitstatus "$testname" > ../output 2>&1
 }
 
 runtestinworkdir() {
