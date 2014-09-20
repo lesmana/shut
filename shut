@@ -92,14 +92,19 @@ trueifshutdirdoesnotexists() {
   [ ! -e "$config_fullshutdir" ]
 }
 
+runtest() {
+  fulltestname=$1
+  "$fulltestname"
+}
+
 runtestsaveoutputsplit() {
   fulltestname=$1
-  "$fulltestname" > ../stdout 2> ../stderr
+  runtest "$fulltestname" > ../stdout 2> ../stderr
 }
 
 runtestsaveoutputmerge() {
   fulltestname=$1
-  "$fulltestname" > ../output 2>&1
+  runtest "$fulltestname" > ../output 2>&1
 }
 
 runtestsaveoutputexitstatus() {
