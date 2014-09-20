@@ -111,17 +111,17 @@ runtestinworkdir() {
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
     export SHUT_TESTPWD="$PWD"
-    $runtestsaveoutput_func "$fulltestname"
+    runtestsaveoutputexitstatus "$fulltestname"
   )
   exitstatus=$?
   return $exitstatus
 }
 
 runtestsaveoutputexitstatus() {
-  testname=$1
-  runtestinworkdir "$testname"
+  fulltestname=$1
+  $runtestsaveoutput_func "$fulltestname"
   exitstatus=$?
-  echo $exitstatus > exitstatus
+  echo $exitstatus > ../exitstatus
   return $exitstatus
 }
 
@@ -159,7 +159,7 @@ printoutputdecorated() {
 
 runtestandprintoutput() {
   testname=$1
-  if runtestsaveoutputexitstatus "$testname"; then
+  if runtestinworkdir "$testname"; then
     $printoutputpass_func "$testname" "PASS"
     exitstatus=0
   else
