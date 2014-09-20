@@ -101,25 +101,25 @@ runtestinworkdir() {
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
     export SHUT_TESTPWD="$PWD"
-    "$fulltestname"
+    $runtestsaveoutput_func "$fulltestname"
   )
   exitstatus=$?
   return $exitstatus
 }
 
 runtestsaveoutputsplit() {
-  testname=$1
-  runtestinworkdir "$testname" > stdout 2> stderr
+  fulltestname=$1
+  "$fulltestname" > ../stdout 2> ../stderr
 }
 
 runtestsaveoutputmerge() {
-  testname=$1
-  runtestinworkdir "$testname" > output 2>&1
+  fulltestname=$1
+  "$fulltestname" > ../output 2>&1
 }
 
 runtestsaveoutputexitstatus() {
   testname=$1
-  $runtestsaveoutput_func "$testname"
+  runtestinworkdir "$testname"
   exitstatus=$?
   echo $exitstatus > exitstatus
   return $exitstatus
