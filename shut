@@ -94,7 +94,12 @@ trueifshutdirdoesnotexists() {
 
 runtest() {
   fulltestname=$1
-  "$fulltestname"
+  (
+    export SHUT_PWD
+    export SHUT_TEST="$fulltestname"
+    export SHUT_TESTPWD="$PWD"
+    "$fulltestname"
+  )
 }
 
 runtestsaveoutputsplit() {
@@ -121,9 +126,6 @@ runtestinworkdir() {
   mkdir workdir
   (
     cd workdir
-    export SHUT_PWD
-    export SHUT_TEST="$fulltestname"
-    export SHUT_TESTPWD="$PWD"
     runtestsaveoutputexitstatus "$fulltestname"
   )
   exitstatus=$?
