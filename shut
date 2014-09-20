@@ -105,17 +105,17 @@ runtest() {
 
 runtestsaveoutputsplit() {
   testname=$1
-  runtest "$testname" > ../stdout 2> ../stderr
+  runtestsaveoutputexitstatus "$testname" > ../stdout 2> ../stderr
 }
 
 runtestsaveoutputmerge() {
   testname=$1
-  runtest "$testname" > ../output 2>&1
+  runtestsaveoutputexitstatus "$testname" > ../output 2>&1
 }
 
 runtestsaveoutputexitstatus() {
   testname=$1
-  $runtestsaveoutput_func "$testname"
+  runtest "$testname"
   exitstatus=$?
   echo $exitstatus > ../exitstatus
   return $exitstatus
@@ -126,7 +126,7 @@ runtestinworkdir() {
   mkdir workdir
   (
     cd workdir
-    runtestsaveoutputexitstatus "$testname"
+    $runtestsaveoutput_func "$testname"
   )
   exitstatus=$?
   return $exitstatus
