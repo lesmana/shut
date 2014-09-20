@@ -102,6 +102,14 @@ runtestsaveoutputmerge() {
   "$fulltestname" > ../output 2>&1
 }
 
+runtestsaveoutputexitstatus() {
+  fulltestname=$1
+  $runtestsaveoutput_func "$fulltestname"
+  exitstatus=$?
+  echo $exitstatus > ../exitstatus
+  return $exitstatus
+}
+
 runtestinworkdir() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
@@ -114,14 +122,6 @@ runtestinworkdir() {
     runtestsaveoutputexitstatus "$fulltestname"
   )
   exitstatus=$?
-  return $exitstatus
-}
-
-runtestsaveoutputexitstatus() {
-  fulltestname=$1
-  $runtestsaveoutput_func "$fulltestname"
-  exitstatus=$?
-  echo $exitstatus > ../exitstatus
   return $exitstatus
 }
 
