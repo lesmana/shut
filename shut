@@ -92,6 +92,16 @@ trueifshutdirdoesnotexists() {
   [ ! -e "$config_fullshutdir" ]
 }
 
+runtestsaveoutputsplit() {
+  fulltestname=$1
+  "$fulltestname" > ../stdout 2> ../stderr
+}
+
+runtestsaveoutputmerge() {
+  fulltestname=$1
+  "$fulltestname" > ../output 2>&1
+}
+
 runtestinworkdir() {
   testname=$1
   fulltestname=$(readlink -f "$SHUT_PWD/$testname")
@@ -105,16 +115,6 @@ runtestinworkdir() {
   )
   exitstatus=$?
   return $exitstatus
-}
-
-runtestsaveoutputsplit() {
-  fulltestname=$1
-  "$fulltestname" > ../stdout 2> ../stderr
-}
-
-runtestsaveoutputmerge() {
-  fulltestname=$1
-  "$fulltestname" > ../output 2>&1
 }
 
 runtestsaveoutputexitstatus() {
