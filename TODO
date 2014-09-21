@@ -1,6 +1,12 @@
 todo for shell unit test
 
 ----
+test that all or most errors are handled
+how to test?
+modify path and inject mock executables?
+source script and inject functions replacing real commands?
+
+----
 test that pattern argument works with absolute and relative path
 
 ----
