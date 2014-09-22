@@ -262,19 +262,27 @@ printtestnames() {
   }
 }
 
+doshutwithtempfile() {
+  testnames=$1
+  shift
+  collecttestnames "$@" > "$testnames"
+  if [ -s "$testnames" ]; then
+    $shutaction_func "$testnames"
+    exitstatus=$?
+  else
+    echo "no tests found"
+    exitstatus=3
+  fi
+  rm "$testnames"
+  return $exitstatus
+}
+
 doshut() {
   testnames=$(mktemp --tmpdir shuttestnames.XXX)
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    collecttestnames "$@" > "$testnames"
-    if [ -s "$testnames" ]; then
-      $shutaction_func "$testnames"
-      exitstatus=$?
-    else
-      echo "no tests found"
-      exitstatus=3
-    fi
-    rm "$testnames"
+    doshutwithtempfile "$testnames" "$@"
+    exitstatus=$?
   else
     echo "error creating tempfile" >&2
     echo "cannot continue" >&2
