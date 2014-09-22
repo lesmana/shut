@@ -108,7 +108,10 @@ runtestsaveexitstatus() {
   runtest "$testname"
   exitstatus=$?
   echo $exitstatus > ../exitstatus
-  return $exitstatus
+  case $exitstatus in
+    0) return 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 runtestsaveoutputsplit() {
