@@ -273,18 +273,19 @@ doshutwithtempfile() {
     echo "no tests found"
     exitstatus=3
   fi
-  rm "$testnames"
   return $exitstatus
 }
 
 doshut() {
-  testnames=$(mktemp --tmpdir shuttestnames.XXX)
+  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX)
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
+    testnames="$shuttempdir/testnames"
     doshutwithtempfile "$testnames" "$@"
     exitstatus=$?
+    rm -rf "$shuttempdir"
   else
-    echo "error creating tempfile" >&2
+    echo "error creating tempdir" >&2
     echo "cannot continue" >&2
     exitstatus=2
   fi

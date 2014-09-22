@@ -11,7 +11,7 @@ chmod +x actual/test0
 cp -a actual expected
 
 printf "\
-error creating tempfile
+error creating tempdir
 cannot continue
 " > expected/shutoutput
 
