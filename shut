@@ -169,13 +169,12 @@ printoutputdecorated() {
 
 runtestandprintoutput() {
   testname=$1
-  if runtestinworkdir "$testname"; then
-    $printoutputpass_func "$testname" "PASS"
-    exitstatus=0
-  else
-    $printoutputfail_func "$testname" "FAIL"
-    exitstatus=1
-  fi
+  runtestinworkdir "$testname"
+  exitstatus=$?
+  case $exitstatus in
+    0) $printoutputpass_func "$testname" "PASS" ;;
+    1) $printoutputfail_func "$testname" "FAIL" ;;
+  esac
   return $exitstatus
 }
 
