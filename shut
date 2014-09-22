@@ -191,11 +191,12 @@ runtestintestdir() {
 runtestsandlog() {
   touch pass fail
   while read testname; do
-    if runtestintestdir "$testname"; then
-      echo "$testname" >> pass
-    else
-      echo "$testname" >> fail
-    fi
+    runtestintestdir "$testname"
+    exitstatus=$?
+    case $exitstatus in
+      0) echo "$testname" >> pass ;;
+      1) echo "$testname" >> fail ;;
+    esac
   done < tests
 }
 
