@@ -54,14 +54,14 @@ setup() {
     printbody_func=printbodymerge
   fi
   if $config_verbose; then
-    printoutputpass_func=printoutputdecorated
-    printoutputfail_func=printoutputdecorated
+    printoutputpass_func=printreport
+    printoutputfail_func=printreport
   elif $config_quiet; then
     printoutputpass_func=true
     printoutputfail_func=true
   else
     printoutputpass_func=true
-    printoutputfail_func=printoutputdecorated
+    printoutputfail_func=printreport
   fi
 }
 
@@ -154,7 +154,7 @@ printexitstatus() {
   }
 }
 
-printoutputdecorated() {
+printreport() {
   testname=$1
   state=$2
   echo "================"
