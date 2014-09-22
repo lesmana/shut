@@ -190,14 +190,16 @@ runtestintestdir() {
 
 runtestsandlog() {
   touch pass fail
+  fail=0
   while read testname; do
     runtestintestdir "$testname"
     exitstatus=$?
     case $exitstatus in
       0) echo "$testname" >> pass ;;
-      1) echo "$testname" >> fail ;;
+      1) echo "$testname" >> fail ; fail=1 ;;
     esac
   done < tests
+  return $fail
 }
 
 printfails() {
@@ -222,8 +224,8 @@ printsummary() {
 
 runtestsandprintsummary() {
   runtestsandlog
-  printfails
   exitstatus=$?
+  printfails
   printsummary
   return $exitstatus
 }
