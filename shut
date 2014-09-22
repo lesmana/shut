@@ -216,14 +216,18 @@ printsummary() {
   return $exitstatus
 }
 
+runtestsandprintsummary() {
+  runtestsandlog
+  printsummary
+}
+
 runtestsinshutdir() {
   testnames=$1
   mkdir -p "$config_fullshutdir"
   (
     cd "$config_fullshutdir"
     cp "$testnames" tests
-    runtestsandlog
-    printsummary
+    runtestsandprintsummary
   )
 }
 
