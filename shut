@@ -210,8 +210,6 @@ printfails() {
 }
 
 printsummary() {
-  printfails
-  exitstatus=$?
   wc -l tests pass fail | {
     read runcount ignorefilename
     read passcount ignorefilename
@@ -219,12 +217,14 @@ printsummary() {
     read ignoretotal
     echo "run: $runcount pass: $passcount fail: $failcount"
   }
-  return $exitstatus
 }
 
 runtestsandprintsummary() {
   runtestsandlog
+  printfails
+  exitstatus=$?
   printsummary
+  return $exitstatus
 }
 
 runtestsinshutdir() {
