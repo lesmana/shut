@@ -199,13 +199,19 @@ runtestsandlog() {
   done < tests
 }
 
-printsummary() {
+printfails() {
   if [ -s fail ]; then
     echo "failed tests:"
     cat fail
     echo "----------------"
     exitstatus=1
   fi
+  return $exitstatus
+}
+
+printsummary() {
+  printfails
+  exitstatus=$?
   wc -l tests pass fail | {
     read runcount ignorefilename
     read passcount ignorefilename
