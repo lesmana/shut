@@ -203,11 +203,9 @@ runtestsandlog() {
 }
 
 printfails() {
-  if [ -s fail ]; then
-    echo "failed tests:"
-    cat fail
-    echo "----------------"
-  fi
+  echo "failed tests:"
+  cat fail
+  echo "----------------"
 }
 
 printsummary() {
@@ -223,7 +221,9 @@ printsummary() {
 runtestsandprintsummary() {
   runtestsandlog
   exitstatus=$?
-  printfails
+  if [ $exitstatus -ne 0 ]; then
+    printfails
+  fi
   printsummary
   return $exitstatus
 }
