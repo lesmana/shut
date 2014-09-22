@@ -18,6 +18,12 @@ recognized as created by shut
 how? let shut put relatively unique marker in shutdir
 
 ----
+always create temp directory
+provide option to not create shutdir
+work in temp directory instead
+always delete temp directory at end
+
+----
 write help and readme
 
 ----
