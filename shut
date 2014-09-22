@@ -207,9 +207,7 @@ printfails() {
     echo "failed tests:"
     cat fail
     echo "----------------"
-    exitstatus=1
   fi
-  return $exitstatus
 }
 
 printsummary() {
