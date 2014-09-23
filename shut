@@ -188,7 +188,7 @@ runtestintestdir() {
   )
 }
 
-runtestsandlog() {
+runtests() {
   touch pass fail
   fail=0
   while read testname; do
@@ -219,7 +219,7 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtestsandlog
+  runtests
   exitstatus=$?
   if [ $exitstatus -ne 0 ]; then
     printfails
