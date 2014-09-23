@@ -229,20 +229,18 @@ runtestsandprintsummary() {
 }
 
 runtestsinshutdir() {
-  testnames=$1
   mkdir -p "$config_fullshutdir"
   (
     cd "$config_fullshutdir"
-    cp "$testnames" tests
+    cp "$shuttempdir/testnames" tests
     runtestsandprintsummary
   )
 }
 
 shutupandruntests() {
-  testnames=$1
   if $candeleteshutdir_func; then
     rm -rf "$config_fullshutdir"
-    runtestsinshutdir "$testnames"
+    runtestsinshutdir
     exitstatus=$?
   else
     echo "name exists: $config_shutdir" >&2
@@ -272,7 +270,7 @@ shutupwithtempdir() {
   testnames="$shuttempdir/testnames"
   collecttestnames "$@" > "$testnames"
   if [ -s "$testnames" ]; then
-    $shutupandwhat_func "$testnames"
+    $shutupandwhat_func
     exitstatus=$?
   else
     echo "no tests found"
