@@ -219,15 +219,15 @@ printcounts() {
 }
 
 printsummary() {
+  if [ -s fail ]; then
+    printfails
+  fi
   printcounts
 }
 
 runtestsandprintsummary() {
   runtests
   exitstatus=$?
-  if [ -s fail ]; then
-    printfails
-  fi
   printsummary
   return $exitstatus
 }
