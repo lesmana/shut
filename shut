@@ -262,7 +262,7 @@ printtestnames() {
   }
 }
 
-doshutwithtempfile() {
+shutupwithtempfile() {
   testnames=$1
   shift
   collecttestnames "$@" > "$testnames"
@@ -276,12 +276,12 @@ doshutwithtempfile() {
   return $exitstatus
 }
 
-doshut() {
+shutup() {
   shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX)
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
     testnames="$shuttempdir/testnames"
-    doshutwithtempfile "$testnames" "$@"
+    shutupwithtempfile "$testnames" "$@"
     exitstatus=$?
     rm -rf "$shuttempdir"
   else
@@ -295,7 +295,7 @@ doshut() {
 main() {
   configfromargv "$@"
   setup
-  doshut "$@"
+  shutup "$@"
   exitstatus=$?
   return $exitstatus
 }
