@@ -254,9 +254,8 @@ shutupandruntests() {
 }
 
 printtestnames() {
-  testnames=$1
-  cat "$testnames"
-  wc -l "$testnames" | {
+  cat testnames
+  wc -l testnames | {
     read count ignorefilename
     echo "would run: $count"
   }
@@ -265,7 +264,7 @@ printtestnames() {
 shutupandprinttestnames() {
   (
     cd "$shuttempdir"
-    printtestnames "$@"
+    printtestnames
   )
 }
 
