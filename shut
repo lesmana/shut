@@ -262,7 +262,7 @@ printtestnames() {
   }
 }
 
-shutupwithtempfile() {
+shutupwithtempdir() {
   testnames="$shuttempdir/testnames"
   collecttestnames "$@" > "$testnames"
   if [ -s "$testnames" ]; then
@@ -279,7 +279,7 @@ shutup() {
   shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX)
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    shutupwithtempfile "$@"
+    shutupwithtempdir "$@"
     exitstatus=$?
     rm -rf "$shuttempdir"
   else
