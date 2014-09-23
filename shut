@@ -42,7 +42,7 @@ setup() {
     candeleteshutdir_func=trueifshutdirdoesnotexists
   fi
   if $config_donotruntests; then
-    shutaction_func=printtestnames
+    shutaction_func=shutupandprinttestnames
   else
     shutaction_func=runtests
   fi
@@ -253,7 +253,7 @@ runtests() {
   return $exitstatus
 }
 
-printtestnames() {
+shutupandprinttestnames() {
   testnames=$1
   cat "$testnames"
   wc -l "$testnames" | {
