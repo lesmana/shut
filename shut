@@ -44,7 +44,7 @@ setup() {
   if $config_donotruntests; then
     shutaction_func=shutupandprinttestnames
   else
-    shutaction_func=runtests
+    shutaction_func=shutupandruntests
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -238,7 +238,7 @@ runtestsinshutdir() {
   )
 }
 
-runtests() {
+shutupandruntests() {
   testnames=$1
   if $candeleteshutdir_func; then
     rm -rf "$config_fullshutdir"
