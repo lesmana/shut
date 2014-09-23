@@ -232,7 +232,7 @@ runtestsinshutdir() {
   mkdir -p "$config_fullshutdir"
   (
     cd "$config_fullshutdir"
-    cp "$shuttempdir/testnames" tests
+    cp "$shuttempdir/tests" tests
     runtestsandprintsummary
   )
 }
@@ -252,8 +252,8 @@ shutupandruntests() {
 }
 
 printtestnames() {
-  cat testnames
-  wc -l testnames | {
+  cat tests
+  wc -l tests | {
     read count ignorefilename
     echo "would run: $count"
   }
@@ -267,9 +267,9 @@ shutupandprinttestnames() {
 }
 
 shutupwithtempdir() {
-  testnames="$shuttempdir/testnames"
-  collecttestnames "$@" > "$testnames"
-  if [ -s "$testnames" ]; then
+  tests="$shuttempdir/tests"
+  collecttestnames "$@" > "$tests"
+  if [ -s "$tests" ]; then
     $shutupandwhat_func
     exitstatus=$?
   else
