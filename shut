@@ -225,7 +225,7 @@ printsummary() {
 runtestsandprintsummary() {
   runtests
   exitstatus=$?
-  if [ $exitstatus -ne 0 ]; then
+  if [ -s fail ]; then
     printfails
   fi
   printsummary
