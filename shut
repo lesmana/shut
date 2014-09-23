@@ -253,13 +253,17 @@ shutupandruntests() {
   return $exitstatus
 }
 
-shutupandprinttestnames() {
+printtestnames() {
   testnames=$1
   cat "$testnames"
   wc -l "$testnames" | {
     read count ignorefilename
     echo "would run: $count"
   }
+}
+
+shutupandprinttestnames() {
+  printtestnames "$@"
 }
 
 shutupwithtempdir() {
