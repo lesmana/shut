@@ -15,7 +15,7 @@ error creating tempdir
 cannot continue
 " > expected/shutoutput
 
-printf "2\n" > expected/shutexitstatus
+printf "3\n" > expected/shutexitstatus
 
 printf '\
 #! /bin/sh

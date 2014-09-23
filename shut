@@ -285,7 +285,7 @@ shutup() {
   else
     echo "error creating tempdir" >&2
     echo "cannot continue" >&2
-    exitstatus=2
+    exitstatus=3
   fi
   return $exitstatus
 }
