@@ -208,7 +208,7 @@ printfails() {
   echo "----------------"
 }
 
-printsummary() {
+printcounts() {
   wc -l tests pass fail | {
     read runcount ignorefilename
     read passcount ignorefilename
@@ -216,6 +216,10 @@ printsummary() {
     read ignoretotal
     echo "run: $runcount pass: $passcount fail: $failcount"
   }
+}
+
+printsummary() {
+  printcounts
 }
 
 runtestsandprintsummary() {
