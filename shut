@@ -263,7 +263,10 @@ printtestnames() {
 }
 
 shutupandprinttestnames() {
-  printtestnames "$@"
+  (
+    cd "$shuttempdir"
+    printtestnames "$@"
+  )
 }
 
 shutupwithtempdir() {
