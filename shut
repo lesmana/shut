@@ -42,9 +42,9 @@ setup() {
     candeleteshutdir_func=trueifshutdirdoesnotexists
   fi
   if $config_donotruntests; then
-    shutaction_func=shutupandprinttestnames
+    shutupandwhat_func=shutupandprinttestnames
   else
-    shutaction_func=shutupandruntests
+    shutupandwhat_func=shutupandruntests
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -266,7 +266,7 @@ shutupwithtempdir() {
   testnames="$shuttempdir/testnames"
   collecttestnames "$@" > "$testnames"
   if [ -s "$testnames" ]; then
-    $shutaction_func "$testnames"
+    $shutupandwhat_func "$testnames"
     exitstatus=$?
   else
     echo "no tests found"
