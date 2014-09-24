@@ -54,14 +54,14 @@ setup() {
     printbody_func=printbodymerge
   fi
   if $config_verbose; then
-    printoutputpass_func=printreport
-    printoutputfail_func=printreport
+    printreportpass_func=printreport
+    printreportfail_func=printreport
   elif $config_quiet; then
-    printoutputpass_func=true
-    printoutputfail_func=true
+    printreportpass_func=true
+    printreportfail_func=true
   else
-    printoutputpass_func=true
-    printoutputfail_func=printreport
+    printreportpass_func=true
+    printreportfail_func=printreport
   fi
 }
 
@@ -167,13 +167,13 @@ printreport() {
   echo "----------------"
 }
 
-runtestandprintoutput() {
+runtestandprintreport() {
   testname=$1
   runtestinworkdir "$testname"
   exitstatus=$?
   case $exitstatus in
-    0) $printoutputpass_func "$testname" "PASS" ;;
-    1) $printoutputfail_func "$testname" "FAIL" ;;
+    0) $printreportpass_func "$testname" "PASS" ;;
+    1) $printreportfail_func "$testname" "FAIL" ;;
   esac
   return $exitstatus
 }
@@ -184,7 +184,7 @@ runtestintestdir() {
   mkdir -p "$testdir"
   (
     cd "$testdir";
-    runtestandprintoutput "$testname"
+    runtestandprintreport "$testname"
   )
 }
 
