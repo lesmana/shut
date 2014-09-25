@@ -31,6 +31,7 @@ create logfile of entire stdout of shut
 
 ----
 forced fail for tests which take longer than x seconds
+use command timeout
 
 ----
 decide whether quiet should be really quiet (no output at all)
