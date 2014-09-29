@@ -155,10 +155,7 @@ actualprintreport() {
   echo "----------------"
   cat
   echo "----------------"
-  cat exitstatus | {
-    read exitstatus
-    echo "exitstatus: $exitstatus"
-  }
+  echo "exitstatus: $(cat exitstatus)"
   echo "$state $testname"
   echo "----------------"
 }
