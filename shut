@@ -131,8 +131,6 @@ runtestinworkdir() {
     cd workdir
     $runtestsaveoutput_func "$testname"
   )
-  exitstatus=$?
-  return $exitstatus
 }
 
 printbodysplit() {
