@@ -149,14 +149,14 @@ printbodymerge() {
 
 actualprintreport() {
   testname=$1
-  actualexitstatus=$2
+  testexitstatus=$2
   statestring=$3
   echo "================"
   echo "$testname"
   echo "----------------"
   cat
   echo "----------------"
-  echo "exitstatus: $actualexitstatus"
+  echo "exitstatus: $testexitstatus"
   echo "$statestring $testname"
   echo "----------------"
 }
@@ -168,8 +168,8 @@ printreport() {
     0) printreport_func=$printreportpass_func ; statestring="PASS" ;;
     1) printreport_func=$printreportfail_func ; statestring="FAIL" ;;
   esac
-  actualexitstatus=$(cat exitstatus)
-  $printbody_func | $printreport_func "$testname" $actualexitstatus $statestring
+  testexitstatus=$(cat exitstatus)
+  $printbody_func | $printreport_func "$testname" $testexitstatus $statestring
 }
 
 runtestandprintreport() {
