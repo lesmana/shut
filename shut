@@ -152,7 +152,7 @@ actualprintreport() {
   echo "================"
   echo "$testname"
   echo "----------------"
-  cat
+  $printbody_func
   echo "----------------"
   echo "exitstatus: $testexitstatus"
   echo "$statestring $testname"
@@ -167,7 +167,7 @@ printreport() {
     1) printreport_func=$printreportfail_func ; statestring="FAIL" ;;
   esac
   testexitstatus=$(cat exitstatus)
-  $printbody_func | $printreport_func "$testname" $testexitstatus $statestring
+  $printreport_func "$testname" $testexitstatus $statestring
 }
 
 runtestandprintreport() {
