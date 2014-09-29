@@ -54,14 +54,14 @@ setup() {
     printbody_func=printbodymerge
   fi
   if $config_verbose; then
-    printreportpass_func=printreport
-    printreportfail_func=printreport
+    printreportpass_func=actualprintreport
+    printreportfail_func=actualprintreport
   elif $config_quiet; then
     printreportpass_func=true
     printreportfail_func=true
   else
     printreportpass_func=true
-    printreportfail_func=printreport
+    printreportfail_func=actualprintreport
   fi
 }
 
@@ -168,17 +168,19 @@ actualprintreport() {
 }
 
 printreport() {
-  actualprintreport "$@"
+  testname=$1
+  exitstatus=$2
+  case $exitstatus in
+    0) $printreportpass_func "$testname" "PASS" ;;
+    1) $printreportfail_func "$testname" "FAIL" ;;
+  esac
 }
 
 runtestandprintreport() {
   testname=$1
   runtestinworkdir "$testname"
   exitstatus=$?
-  case $exitstatus in
-    0) $printreportpass_func "$testname" "PASS" ;;
-    1) $printreportfail_func "$testname" "FAIL" ;;
-  esac
+  printreport "$testname" "$exitstatus"
   return $exitstatus
 }
 
