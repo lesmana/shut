@@ -154,7 +154,7 @@ printexitstatus() {
   }
 }
 
-printreport() {
+actualprintreport() {
   testname=$1
   state=$2
   echo "================"
@@ -165,6 +165,10 @@ printreport() {
   printexitstatus
   echo "$state $testname"
   echo "----------------"
+}
+
+printreport() {
+  actualprintreport "$@"
 }
 
 runtestandprintreport() {
