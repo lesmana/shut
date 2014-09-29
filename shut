@@ -160,7 +160,7 @@ actualprintreport() {
   echo "================"
   echo "$testname"
   echo "----------------"
-  $printbody_func
+  cat
   echo "----------------"
   printexitstatus
   echo "$state $testname"
@@ -174,7 +174,7 @@ printreport() {
     0) printreport_func=$printreportpass_func ; state="PASS" ;;
     1) printreport_func=$printreportfail_func ; state="FAIL" ;;
   esac
-  $printreport_func "$testname" $state
+  $printbody_func | $printreport_func "$testname" $state
 }
 
 runtestandprintreport() {
