@@ -149,13 +149,14 @@ printbodymerge() {
 
 actualprintreport() {
   testname=$1
+  exitstatus=$(cat exitstatus)
   state=$2
   echo "================"
   echo "$testname"
   echo "----------------"
   cat
   echo "----------------"
-  echo "exitstatus: $(cat exitstatus)"
+  echo "exitstatus: $exitstatus"
   echo "$state $testname"
   echo "----------------"
 }
