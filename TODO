@@ -1,6 +1,9 @@
 todo for shell unit test
 
 ----
+local all the variables
+
+----
 test that all or most errors are handled
 how to test?
 modify path and inject mock executables?
