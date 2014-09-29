@@ -147,13 +147,6 @@ printbodymerge() {
   cat output | tail -n $config_tail | sed 's/^/  /'
 }
 
-printexitstatus() {
-  cat exitstatus | {
-    read exitstatus
-    echo "exitstatus: $exitstatus"
-  }
-}
-
 actualprintreport() {
   testname=$1
   state=$2
@@ -162,7 +155,10 @@ actualprintreport() {
   echo "----------------"
   cat
   echo "----------------"
-  printexitstatus
+  cat exitstatus | {
+    read exitstatus
+    echo "exitstatus: $exitstatus"
+  }
   echo "$state $testname"
   echo "----------------"
 }
