@@ -171,9 +171,10 @@ printreport() {
   testname=$1
   exitstatus=$2
   case $exitstatus in
-    0) $printreportpass_func "$testname" "PASS" ;;
-    1) $printreportfail_func "$testname" "FAIL" ;;
+    0) printreport_func=$printreportpass_func ; state="PASS" ;;
+    1) printreport_func=$printreportfail_func ; state="FAIL" ;;
   esac
+  $printreport_func "$testname" $state
 }
 
 runtestandprintreport() {
