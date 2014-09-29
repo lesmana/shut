@@ -182,7 +182,7 @@ runtestandprintreport() {
 
 runtestintestdir() {
   testname=$1
-  testdir=$testname.dir
+  testdir="$testname.dir"
   mkdir -p "$testdir"
   (
     cd "$testdir";
