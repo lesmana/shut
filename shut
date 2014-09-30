@@ -77,7 +77,7 @@ collecttestnames() {
     elif [ -d "$pattern" ]; then
       findargs="$findargs -o -type f -executable -path \*/$pattern/\*"
     else
-      findargs="$findargs -o -type f -executable -path \*/$pattern\*"
+      findargs="$findargs -o -type f -executable -regex .\*/$pattern[^/]\*"
     fi
   done
   find -type d -name "$config_shutdir" -prune -o \( $findargs \) -print | sort
