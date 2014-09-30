@@ -263,9 +263,8 @@ shutupandprinttestnames() {
 }
 
 shutupwithtempdir() {
-  tests="$shuttempdir/tests"
-  collecttestnames "$@" > "$tests"
-  if [ -s "$tests" ]; then
+  collecttestnames "$@" > tests
+  if [ -s tests ]; then
     $shutupandwhat_func
     exitstatus=$?
   else
