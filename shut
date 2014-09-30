@@ -272,7 +272,11 @@ collectnamesandwork() {
 
 workintempdir() {
   (
-    cd "$shuttempdir"
+    cd "$shuttempdir" > /dev/null 2>&1 || {
+      echo "failed changing directory to $shuttempdir"
+      echo "cannot continue"
+      return 3
+    }
     collectnamesandwork "$@"
   )
 }
