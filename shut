@@ -42,9 +42,9 @@ setup() {
     candeleteshutdir_func=trueifshutdirdoesnotexists
   fi
   if $config_donotruntests; then
-    whatiswork_func=shutupandprinttestnames
+    whatiswork_func=workisprinttestnames
   else
-    whatiswork_func=shutupandruntests
+    whatiswork_func=workisruntests
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -236,7 +236,7 @@ runtestsinshutdir() {
   )
 }
 
-shutupandruntests() {
+workisruntests() {
   if $candeleteshutdir_func; then
     rm -rf "$config_fullshutdir"
     runtestsinshutdir
@@ -258,7 +258,7 @@ printtestnames() {
   }
 }
 
-shutupandprinttestnames() {
+workisprinttestnames() {
   printtestnames
 }
 
