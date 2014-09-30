@@ -42,9 +42,9 @@ setup() {
     candeleteshutdir_func=trueifshutdirdoesnotexists
   fi
   if $config_donotruntests; then
-    shutupandwhat_func=shutupandprinttestnames
+    whatiswork_func=shutupandprinttestnames
   else
-    shutupandwhat_func=shutupandruntests
+    whatiswork_func=shutupandruntests
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -265,7 +265,7 @@ shutupandprinttestnames() {
 collectnamesandwork() {
   collecttestnames "$@" > tests
   if [ -s tests ]; then
-    $shutupandwhat_func
+    $whatiswork_func
     exitstatus=$?
   else
     echo "no tests found"
