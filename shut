@@ -262,7 +262,7 @@ shutupandprinttestnames() {
   printtestnames
 }
 
-shutupwithtempdir() {
+collectnamesandwork() {
   collecttestnames "$@" > tests
   if [ -s tests ]; then
     $shutupandwhat_func
@@ -277,7 +277,7 @@ shutupwithtempdir() {
 workintempdir() {
   (
     cd "$shuttempdir"
-    shutupwithtempdir "$@"
+    collectnamesandwork "$@"
   )
 }
 
