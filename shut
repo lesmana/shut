@@ -250,16 +250,12 @@ workisruntests() {
   return $exitstatus
 }
 
-printtestnames() {
+workisprinttestnames() {
   cat tests
   wc -l tests | {
     read count ignorefilename
     echo "would run: $count"
   }
-}
-
-workisprinttestnames() {
-  printtestnames
 }
 
 collectnamesandwork() {
