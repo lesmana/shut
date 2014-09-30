@@ -72,15 +72,15 @@ collecttestnames() {
   fi
   findargs="-false"
   for pattern in "$@"; do
-    if [ -f "$pattern" ]; then
+    if [ -f "$SHUT_PWD/$pattern" ]; then
       findargs="$findargs -o -type f -executable -path \*/$pattern"
-    elif [ -d "$pattern" ]; then
+    elif [ -d "$SHUT_PWD/$pattern" ]; then
       findargs="$findargs -o -type f -executable -path \*/$pattern/\*"
     else
       findargs="$findargs -o -type f -executable -regex .\*/$pattern[^/]\*"
     fi
   done
-  find -type d -name "$config_shutdir" -prune -o \( $findargs \) -print | sort
+  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \( $findargs \) -printf "./%P\n" | sort
 }
 
 trueifshutdirdoesnotexists() {
@@ -271,7 +271,10 @@ shutupandprinttestnames() {
 
 shutupwithtempdir() {
   tests="$shuttempdir/tests"
-  collecttestnames "$@" > "$tests"
+  (
+    cd "$shuttempdir"
+    collecttestnames "$@" > "$tests"
+  )
   if [ -s "$tests" ]; then
     $shutupandwhat_func
     exitstatus=$?
