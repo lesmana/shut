@@ -229,9 +229,9 @@ runtestsandprintsummary() {
 
 runtestsinshutdir() {
   mkdir -p "$config_fullshutdir"
+  cp tests "$config_fullshutdir"
   (
     cd "$config_fullshutdir"
-    cp "$shuttempdir/tests" tests
     runtestsandprintsummary
   )
 }
