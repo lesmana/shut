@@ -274,18 +274,18 @@ shutupwithtempdir() {
   return $exitstatus
 }
 
-shutupintempdir() {
+workintempdir() {
   (
     cd "$shuttempdir"
     shutupwithtempdir "$@"
   )
 }
 
-shutup() {
+work() {
   shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX)
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    shutupintempdir "$@"
+    workintempdir "$@"
     exitstatus=$?
     rm -rf "$shuttempdir"
   else
@@ -299,7 +299,7 @@ shutup() {
 main() {
   configfromargv "$@"
   setup
-  shutup "$@"
+  work "$@"
   exitstatus=$?
   return $exitstatus
 }
