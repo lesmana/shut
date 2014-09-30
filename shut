@@ -258,15 +258,8 @@ printtestnames() {
   }
 }
 
-printtestnamesinshuttempdir() {
-  (
-    cd "$shuttempdir"
-    printtestnames
-  )
-}
-
 shutupandprinttestnames() {
-  printtestnamesinshuttempdir
+  printtestnames
 }
 
 shutupwithtempdir() {
