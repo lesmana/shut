@@ -285,11 +285,18 @@ shutupwithtempdir() {
   return $exitstatus
 }
 
+shutupintempdir() {
+  (
+    cd "$shuttempdir"
+    shutupwithtempdir "$@"
+  )
+}
+
 shutup() {
   shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX)
   exitstatus=$?
   if [ $exitstatus -eq 0 ]; then
-    shutupwithtempdir "$@"
+    shutupintempdir "$@"
     exitstatus=$?
     rm -rf "$shuttempdir"
   else
