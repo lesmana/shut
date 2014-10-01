@@ -229,7 +229,11 @@ runtestsandprintsummary() {
 }
 
 runtestsinshutdir() {
-  mkdir -p "$config_fullshutdir"
+  mkdir -p "$config_fullshutdir" > /dev/null 2>&1 || {
+    echo "error creating directory $config_fullshutdir"
+    echo "cannot continue"
+    return 3
+  }
   cp tests "$config_fullshutdir"
   (
     cd "$config_fullshutdir"
