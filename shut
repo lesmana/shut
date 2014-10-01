@@ -237,15 +237,15 @@ runtestsinshutdir() {
 }
 
 workisruntests() {
-  if $candeleteshutdir_func; then
-    rm -rf "$config_fullshutdir"
-    runtestsinshutdir
-    exitstatus=$?
-  else
+  if ! $candeleteshutdir_func; then
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
     echo "use -f to overwrite" >&2
     exitstatus=2
+  else
+    rm -rf "$config_fullshutdir"
+    runtestsinshutdir
+    exitstatus=$?
   fi
   return $exitstatus
 }
