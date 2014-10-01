@@ -234,7 +234,11 @@ runtestsinshutdir() {
     echo "cannot continue"
     return 3
   }
-  cp tests "$config_fullshutdir"
+  cp tests "$config_fullshutdir" > /dev/null 2>&1 || {
+    echo "error copying tests to $config_fullshutdir"
+    echo "cannot continue"
+    return 3
+  }
   (
     cd "$config_fullshutdir"
     runtestsandprintsummary
