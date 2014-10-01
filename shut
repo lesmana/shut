@@ -280,7 +280,7 @@ collectnamesandwork() {
 }
 
 workintempdir() {
-  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX) || {
+  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null) || {
     echo "error creating tempdir" >&2
     echo "cannot continue" >&2
     return 3

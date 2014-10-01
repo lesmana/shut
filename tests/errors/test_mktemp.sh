@@ -17,17 +17,10 @@ cannot continue
 
 printf "3\n" > expected/shutexitstatus
 
-printf '\
-#! /bin/sh
-exit 13
-' > mktemp
-
-chmod +x mktemp
-
 (
   cd actual
   set +e
-  PATH=$SHUT_TESTPWD:$PATH
+  export TMPDIR=/dev/null
   shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
