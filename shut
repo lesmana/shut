@@ -260,10 +260,10 @@ workisprinttestnames() {
 
 collectnamesandwork() {
   collecttestnames "$@" > tests
-  if [ ! -s tests ]; then
+  [ -s tests ] || {
     echo "no tests found"
     return 3
-  fi
+  }
   $whatiswork_func
   exitstatus=$?
   return $exitstatus
