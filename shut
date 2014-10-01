@@ -282,13 +282,11 @@ workintempdir() {
 }
 
 work() {
-  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX)
-  exitstatus=$?
-  if [ $exitstatus -ne 0 ]; then
+  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX) || {
     echo "error creating tempdir" >&2
     echo "cannot continue" >&2
     return 3
-  fi
+  }
   workintempdir "$@"
   exitstatus=$?
   rm -rf "$shuttempdir"
