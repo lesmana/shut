@@ -260,7 +260,7 @@ workisprinttestnames() {
 
 collectnamesandwork() {
   collecttestnames "$@" > tests
-  [ -s tests ] || {
+  test -s tests || {
     echo "no tests found"
     return 3
   }
