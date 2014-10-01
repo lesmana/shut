@@ -252,8 +252,8 @@ workisruntests() {
 
 workisprinttestnames() {
   cat tests
-  wc -l tests | {
-    read count ignorefilename
+  wc -l < tests | {
+    read count
     echo "would run: $count"
   }
 }
