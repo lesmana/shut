@@ -245,8 +245,6 @@ workisruntests() {
   }
   rm -rf "$config_fullshutdir"
   runtestsinshutdir
-  exitstatus=$?
-  return $exitstatus
 }
 
 workisprinttestnames() {
