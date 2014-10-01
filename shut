@@ -287,12 +287,11 @@ work() {
   if [ $exitstatus -ne 0 ]; then
     echo "error creating tempdir" >&2
     echo "cannot continue" >&2
-    exitstatus=3
-  else
-    workintempdir "$@"
-    exitstatus=$?
-    rm -rf "$shuttempdir"
+    return 3
   fi
+  workintempdir "$@"
+  exitstatus=$?
+  rm -rf "$shuttempdir"
   return $exitstatus
 }
 
