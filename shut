@@ -270,7 +270,12 @@ collectnamesandwork() {
   return $exitstatus
 }
 
-workintempdir() {
+work() {
+  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX) || {
+    echo "error creating tempdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
   (
     cd "$shuttempdir" > /dev/null 2>&1 || {
       echo "failed changing directory to $shuttempdir"
@@ -279,15 +284,6 @@ workintempdir() {
     }
     collectnamesandwork "$@"
   )
-}
-
-work() {
-  shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX) || {
-    echo "error creating tempdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-  workintempdir "$@"
   exitstatus=$?
   rm -rf "$shuttempdir"
   return $exitstatus
