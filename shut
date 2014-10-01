@@ -270,7 +270,7 @@ collectnamesandwork() {
   return $exitstatus
 }
 
-work() {
+workintempdir() {
   shuttempdir=$(mktemp -d --tmpdir shuttempdir.XXX) || {
     echo "error creating tempdir" >&2
     echo "cannot continue" >&2
@@ -292,7 +292,7 @@ work() {
 main() {
   configfromargv "$@"
   setup
-  work "$@"
+  workintempdir "$@"
   exitstatus=$?
   return $exitstatus
 }
