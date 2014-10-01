@@ -29,6 +29,13 @@ work in temp directory instead
 add option to allow no tests found to be no error
 
 ----
+in output replace long paths with variables
+for example
+/home/lesmana/code/shellunittest/tests/shutdir/bla
+replace with
+$SHUTDIR/bla
+
+----
 write help and readme
 
 ----
