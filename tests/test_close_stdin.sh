@@ -1,5 +1,18 @@
 #! /bin/sh
 
+# test that stdin is closed.
+#
+# the first test will try to read from stdin.
+# if successfull the second test will not be run.
+# it should not be successfull.
+#
+# background:
+# in shut the testnames are redirected over stdin to a while loop
+# reading the names one by one.
+# if stdin is not closed then the tests will inherit the open stdin.
+# if a test reads from stdin shut will be missing testnames.
+# if stdin is closed in shut before starting tests this cannot happen.
+
 set -xeu
 
 mkdir -p actual
