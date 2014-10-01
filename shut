@@ -256,7 +256,11 @@ workisruntests() {
     echo "use -f to overwrite" >&2
     return 2
   }
-  rm -rf "$config_fullshutdir"
+  rm -rf "$config_fullshutdir" || {
+    echo "error deleting $config_fullshutdir"
+    echo "cannot continue"
+    return 3
+  }
   runtestsinshutdir
 }
 
