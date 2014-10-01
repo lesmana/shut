@@ -28,6 +28,9 @@ work in temp directory instead
 always delete temp directory at end
 
 ----
+add option to allow no tests found to be no error
+
+----
 write help and readme
 
 ----
