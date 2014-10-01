@@ -262,11 +262,10 @@ collectnamesandwork() {
   collecttestnames "$@" > tests
   if [ ! -s tests ]; then
     echo "no tests found"
-    exitstatus=3
-  else
-    $whatiswork_func
-    exitstatus=$?
+    return 3
   fi
+  $whatiswork_func
+  exitstatus=$?
   return $exitstatus
 }
 
