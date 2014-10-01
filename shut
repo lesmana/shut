@@ -240,7 +240,11 @@ runtestsinshutdir() {
     return 3
   }
   (
-    cd "$config_fullshutdir"
+    cd "$config_fullshutdir" > /dev/null 2>&1 || {
+      echo "error changing directory to $config_fullshutdir"
+      echo "cannot continue"
+      return 3
+    }
     runtestsandprintsummary
   )
 }
