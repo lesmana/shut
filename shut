@@ -262,7 +262,7 @@ collectnamesandwork() {
   collecttestnames "$@" > tests
   test -s tests || {
     echo "no tests found"
-    return 3
+    return 2
   }
   $whatiswork_func
 }

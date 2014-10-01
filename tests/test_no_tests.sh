@@ -8,7 +8,7 @@ printf "\
 no tests found
 " > expected/shutoutput
 
-printf "3\n" > expected/shutexitstatus
+printf "2\n" > expected/shutexitstatus
 
 (
   cd actual
