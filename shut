@@ -253,11 +253,11 @@ deleteshutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
   fi
-  $candeleteshutdir_func || {
+  if ! $config_delete && [ -d "$config_fullshutdir" ]; then
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
     return 2
-  }
+  fi
   rm -rf "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error deleting $config_fullshutdir"
     echo "cannot continue"
