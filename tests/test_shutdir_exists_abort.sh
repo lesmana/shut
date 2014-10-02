@@ -27,7 +27,7 @@ printf "2\n" > expected/shutexitstatus
 (
   cd actual
   set +e
-  shut > shutoutput 2>&1
+  shut -k > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

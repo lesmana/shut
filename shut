@@ -6,7 +6,7 @@ config_shiftargv=0
 config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
-config_delete=false
+config_delete=true
 config_split=false
 config_quiet=false
 config_tail=10
@@ -19,7 +19,7 @@ configfromargv() {
     arg=$1
     case "$arg" in
       -d) shift ; config_shutdir="$1" ;;
-      -f) config_delete=true ;;
+      -k) config_delete=false ;;
       -n) config_donotruntests=true ;;
       -v) config_verbose=true ;;
       -x) config_split=true ;;

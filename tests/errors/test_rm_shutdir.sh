@@ -36,7 +36,7 @@ chmod +x rm
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut -f > shutoutput 2>&1
+  shut > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )

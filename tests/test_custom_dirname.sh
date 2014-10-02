@@ -41,7 +41,7 @@ printf "0\n" > expected/shutexitstatus
 (
   cd actual
   set +e
-  shut -d dirname -f > shutoutput 2>&1
+  shut -d dirname > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )
