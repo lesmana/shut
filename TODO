@@ -16,6 +16,10 @@ read testnames from stdin
 add option to always try to delete existing shutdir
 
 ----
+when deciding whether existing shutdir is safe to delete
+examine contents and look for files: tests pass fail
+
+----
 provide option to not create shutdir
 work in temp directory instead
 
