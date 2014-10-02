@@ -19,7 +19,6 @@ cp -a actual expected
 printf "\
 name exists: shutdir
 will not overwrite
-use -f to overwrite
 " > expected/shutoutput
 
 printf "2\n" > expected/shutexitstatus

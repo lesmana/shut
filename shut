@@ -256,7 +256,6 @@ deleteshutdir() {
   $candeleteshutdir_func || {
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
-    echo "use -f to overwrite" >&2
     return 2
   }
   rm -rf "$config_fullshutdir" > /dev/null 2>&1 || {
