@@ -249,7 +249,7 @@ runtestsinshutdir() {
   )
 }
 
-workisruntests() {
+deleteshutdir() {
   $candeleteshutdir_func || {
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
@@ -260,6 +260,12 @@ workisruntests() {
     echo "error deleting $config_fullshutdir"
     echo "cannot continue"
     return 3
+  }
+}
+
+workisruntests() {
+  deleteshutdir || {
+    return
   }
   runtestsinshutdir
 }
