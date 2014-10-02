@@ -13,6 +13,9 @@ test that pattern argument works with absolute and relative path
 read testnames from stdin
 
 ----
+add option to always try to delete existing shutdir
+
+----
 provide option to not create shutdir
 work in temp directory instead
 
