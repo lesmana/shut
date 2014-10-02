@@ -7,5 +7,5 @@ if [ $# -ne 0 ]; then
   ../goodshut "$@"
 else
   cd tests
-  ../goodshut -f
+  ../goodshut
 fi
