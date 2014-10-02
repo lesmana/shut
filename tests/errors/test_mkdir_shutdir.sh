@@ -20,7 +20,11 @@ printf "3\n" > expected/shutexitstatus
 printf "\
 #! /bin/sh
 if [ \"\$*\" = \"-p $SHUT_TESTPWD/actual/shutdir\" ]; then
-  exit 23
+  touch $SHUT_TESTPWD/actual/shutdir
+  PATH=$PATH mkdir \"\$@\"
+  exitstatus=\$?
+  rm $SHUT_TESTPWD/actual/shutdir
+  exit \$exitstatus
 else
   PATH=$PATH mkdir \"\$@\"
 fi
