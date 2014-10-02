@@ -82,7 +82,7 @@ deleteshutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
   fi
-  if $config_keep && [ -d "$config_fullshutdir" ]; then
+  if $config_keep; then
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
     return 2
