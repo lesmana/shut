@@ -2,7 +2,7 @@
 
 set -xeu
 
-mkdir -p actual
+mkdir -p actual/shutdir
 
 touch actual/test0
 
@@ -20,7 +20,11 @@ printf "3\n" > expected/shutexitstatus
 printf "\
 #! /bin/sh
 if [ \"\$*\" = \"-rf $SHUT_TESTPWD/actual/shutdir\" ]; then
-  exit 23
+  chmod -w $SHUT_TESTPWD/actual
+  PATH=$PATH rm \"\$@\"
+  exitstatus=\$?
+  chmod +w $SHUT_TESTPWD/actual
+  exit \$exitstatus
 else
   PATH=$PATH rm \"\$@\"
 fi
@@ -32,7 +36,7 @@ chmod +x rm
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut > shutoutput 2>&1
+  shut -f > shutoutput 2>&1
   printf "$?\n" > shutexitstatus
   set -e
 )
