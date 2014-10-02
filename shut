@@ -61,6 +61,8 @@ setup() {
 }
 
 collecttestnames() {
+  # this function expects "$@" as argument
+  # the same "$@" as the function configfromargv
   shift "$config_shiftargv"
   if [ $# -eq 0 ]; then
     set -- "$default_pattern"
