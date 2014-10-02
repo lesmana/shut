@@ -5,10 +5,6 @@ local all the variables
 
 ----
 test that all or most errors are handled.
-inject errors using manipulated mktemp.
-mktemp is always called and is one of the first things shut does.
-mktemp can create directories and files so that
-later mkdir or cd or redirect attempts will fail.
 
 ----
 test that pattern argument works with absolute and relative path
