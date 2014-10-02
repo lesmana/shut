@@ -6,7 +6,7 @@ config_shiftargv=0
 config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
-config_delete=true
+config_keep=false
 config_split=false
 config_quiet=false
 config_tail=10
@@ -19,7 +19,7 @@ configfromargv() {
     arg=$1
     case "$arg" in
       -d) shift ; config_shutdir="$1" ;;
-      -k) config_delete=false ;;
+      -k) config_keep=true ;;
       -n) config_donotruntests=true ;;
       -v) config_verbose=true ;;
       -x) config_split=true ;;
@@ -82,7 +82,7 @@ deleteshutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
   fi
-  if ! $config_delete && [ -d "$config_fullshutdir" ]; then
+  if $config_keep && [ -d "$config_fullshutdir" ]; then
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
     return 2
