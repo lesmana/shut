@@ -250,6 +250,9 @@ runtestsinshutdir() {
 }
 
 deleteshutdir() {
+  if [ ! -e "$config_fullshutdir" ]; then
+    return
+  fi
   $candeleteshutdir_func || {
     echo "name exists: $config_shutdir" >&2
     echo "will not overwrite" >&2
