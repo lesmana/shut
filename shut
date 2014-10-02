@@ -36,11 +36,6 @@ configfromargv() {
 
 setup() {
   config_fullshutdir=$(readlink -f "$config_shutdir")
-  if $config_delete; then
-    candeleteshutdir_func=true
-  else
-    candeleteshutdir_func=trueifshutdirdoesnotexists
-  fi
   if $config_donotruntests; then
     whatiswork_func=workisprinttestnames
   else
@@ -81,10 +76,6 @@ collecttestnames() {
     fi
   done
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \( $findargs \) -printf "./%P\n" | sort
-}
-
-trueifshutdirdoesnotexists() {
-  [ ! -e "$config_fullshutdir" ]
 }
 
 runtest() {
