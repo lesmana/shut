@@ -192,7 +192,10 @@ runtestandprintreport() {
 runtestintestdir() {
   testname=$1
   testdir="$testname.dir"
-  mkdir -p "$testdir"
+  mkdir -p "$testdir" > /dev/null 2>&1 || {
+    echo "error creating testdir"
+    return 3
+  }
   (
     cd "$testdir";
     runtestandprintreport "$testname"
