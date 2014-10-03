@@ -77,7 +77,8 @@ collecttestnames() {
       print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
     fi
   done
-  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \( $print \) -printf "./%P\n" | sort
+  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
+        \( $print \) -printf "./%P\n" | sort
 }
 
 deleteshutdir() {
