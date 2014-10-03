@@ -207,7 +207,7 @@ runtests() {
     exitstatus=$?
     case $exitstatus in
       0) echo "$testname" >> pass ;;
-      1) echo "$testname" >> fail ; fail=1 ;;
+      *) echo "$testname" >> fail ; fail=1 ;;
     esac
   done < tests
   return $fail
