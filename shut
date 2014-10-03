@@ -133,7 +133,10 @@ runtestsaveoutputmerge() {
 
 runtestinworkdir() {
   testname=$1
-  mkdir -p workdir
+  mkdir -p workdir > /dev/null 2>&1 || {
+    echo "error creating workdir"
+    return 3
+  }
   (
     cd workdir
     $runtestsaveoutput_func "$testname"
