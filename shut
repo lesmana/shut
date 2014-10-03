@@ -67,17 +67,17 @@ collecttestnames() {
   if [ $# -eq 0 ]; then
     set -- "$default_pattern"
   fi
-  findargs="-false"
+  print="-false"
   for pattern in "$@"; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
-      findargs="$findargs -o -type f -executable -path \*/$pattern"
+      print="$print -o -type f -executable -path \*/$pattern"
     elif [ -d "$SHUT_PWD/$pattern" ]; then
-      findargs="$findargs -o -type f -executable -path \*/$pattern/\*"
+      print="$print -o -type f -executable -path \*/$pattern/\*"
     else
-      findargs="$findargs -o -type f -executable -regex .\*/$pattern[^/]\*"
+      print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
     fi
   done
-  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \( $findargs \) -printf "./%P\n" | sort
+  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \( $print \) -printf "./%P\n" | sort
 }
 
 deleteshutdir() {
