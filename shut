@@ -197,7 +197,10 @@ runtestintestdir() {
     return 3
   }
   (
-    cd "$testdir"
+    cd "$testdir" > /dev/null 2>&1 || {
+      echo "error changing directory to testdir"
+      return 3
+    }
     runtestandprintreport "$testname"
   )
 }
