@@ -137,7 +137,7 @@ runtestsaveoutputmerge() {
 
 runtestinworkdir() {
   testname=$1
-  mkdir workdir
+  mkdir -p workdir
   (
     cd workdir
     $runtestsaveoutput_func "$testname"
