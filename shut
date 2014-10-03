@@ -197,7 +197,7 @@ runtestintestdir() {
     return 3
   }
   (
-    cd "$testdir";
+    cd "$testdir"
     runtestandprintreport "$testname"
   )
 }
