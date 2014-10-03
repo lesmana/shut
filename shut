@@ -179,7 +179,9 @@ printreport() {
 
 runtestandprintreport() {
   testname=$1
-  runtestinworkdir "$testname"
+  runtestinworkdir "$testname" || {
+    return
+  }
   exitstatus=$(cat exitstatus)
   printreport "$testname" "$exitstatus"
   return $exitstatus
