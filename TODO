@@ -10,6 +10,9 @@ test that all or most errors are handled.
 test that pattern argument works with absolute and relative path
 
 ----
+in runtests handle fail and error separately
+
+----
 read testnames from stdin
 
 ----
