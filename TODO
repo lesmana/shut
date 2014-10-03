@@ -1,6 +1,9 @@
 todo for shell unit test
 
 ----
+all function return non zero exitstatus only if real error
+
+----
 between runtests and runtestintestdir
 add another function monitoring exitstatus
 if zero do nothing
