@@ -47,8 +47,12 @@ forced fail for tests which take longer than x seconds
 use command timeout
 
 ----
-decide whether quiet should be really quiet (no output at all)
-or just not print test output but still print summary (as is now)
+provide options to fine tune output
+example
+--print-all-reports
+--print-list-of-fail
+--print-list-of-pass
+--print-summary
 
 ----
 specify in output if last x lines
