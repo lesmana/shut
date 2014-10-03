@@ -1,6 +1,12 @@
 todo for shell unit test
 
 ----
+prepare file descriptors connected to pass and fail in runtests
+let later functions use file descriptors to write to pass and fail directly
+the loop in runtests should only prepare the fds and then run the tests
+(and close the fds)
+
+----
 all function return non zero exitstatus only if real error
 
 ----
