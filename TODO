@@ -69,3 +69,6 @@ output (last 10 lines)
 specify in output if empty
 example
 stderr: (empty)
+
+----
+recreate report from existing shutdir without rerunning tests
