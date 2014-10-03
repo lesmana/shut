@@ -138,7 +138,10 @@ runtestinworkdir() {
     return 3
   }
   (
-    cd workdir
+    cd workdir > /dev/null 2>&1 || {
+      echo "error changing directory to workdir"
+      return 3
+    }
     $runtestsaveoutput_func "$testname"
   )
 }
