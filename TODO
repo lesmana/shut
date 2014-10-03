@@ -40,6 +40,10 @@ $SHUTDIR/bla
 allow exluding tests
 
 ----
+provide option to show non executables which match given pattern
+to help find tests which were mistakenly not marked executable
+
+----
 write help and readme
 
 ----
