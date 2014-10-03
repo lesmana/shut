@@ -103,7 +103,7 @@ deleteshutdir() {
 
 runtest() {
   testname=$1
-  fulltestname=$(readlink -f "$SHUT_PWD/$testname")
+  fulltestname="$SHUT_PWD/${testname#./}"
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
