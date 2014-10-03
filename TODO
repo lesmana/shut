@@ -37,6 +37,9 @@ replace with
 $SHUTDIR/bla
 
 ----
+allow exluding tests
+
+----
 write help and readme
 
 ----
