@@ -55,6 +55,12 @@ example
 --print-summary
 
 ----
+allow pattern for line to begin printing output
+example
+--show-output=10 (show last 10 lines)
+--show-output=diff (show lines after line containing diff)
+
+----
 specify in output if last x lines
 example:
 output (last 10 lines)
