@@ -1,6 +1,12 @@
 todo for shell unit test
 
 ----
+between runtests and runtestintestdir
+add another function monitoring exitstatus
+if zero do nothing
+else capture stderr and print error report
+
+----
 local all the variables
 
 ----
