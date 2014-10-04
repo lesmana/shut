@@ -20,7 +20,7 @@ else capture stderr and print error report
 local all the variables
 
 ----
-test that all or most errors are handled.
+handle error rm tempdir
 
 ----
 test that pattern argument works with absolute and relative path
