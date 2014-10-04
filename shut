@@ -217,7 +217,6 @@ runtestandreporterror() {
   testname=$1
   runtestintestdir "$testname" || {
     echo "$testname" >&4
-    return
   }
 }
 
