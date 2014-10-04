@@ -14,10 +14,10 @@ mkdir -p expected/shutdir/logdir
 
 printf "\
 error changing directory to testdir
-fail:
+error:
 ./test0
 ----------------
-run: 1 pass: 0 fail: 1 error: 0
+run: 1 pass: 0 fail: 0 error: 1
 " > expected/shutoutput
 
 printf "1\n" > expected/shutexitstatus
@@ -30,10 +30,10 @@ printf "\
 " > expected/shutdir/pass
 
 printf "\
-./test0
 " > expected/shutdir/fail
 
 printf "\
+./test0
 " > expected/shutdir/error
 
 printf "\

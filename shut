@@ -214,7 +214,7 @@ runtestintestdir() {
 runtestandreporterror() {
   testname=$1
   runtestintestdir "$testname" || {
-    echo "$testname" >&4
+    echo "$testname" >&5
   }
 }
 
@@ -261,6 +261,9 @@ printsummary() {
   if [ -s fail ]; then
     printlist fail
   fi
+  if [ -s error ]; then
+    printlist error
+  fi
   printcounts
 }
 
@@ -269,7 +272,7 @@ runtestsandprintsummary() {
     return
   }
   printsummary
-  [ ! -s fail ] # exitstatus based on fail empty or not
+  [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
 }
 
 runtestsinshutdir() {
