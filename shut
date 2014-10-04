@@ -174,7 +174,7 @@ actualprintreport() {
 
 printreport() {
   testname=$1
-  statecode=$2
+  statecode=$(cat exitstatus)
   if [ $statecode -eq 0 ]; then
     echo "$testname" >&3
     printreport_func=$printreportpass_func
@@ -193,8 +193,7 @@ runtestandprintreport() {
   runtestinworkdir "$testname" || {
     return
   }
-  exitstatus=$(cat exitstatus)
-  printreport "$testname" "$exitstatus"
+  printreport "$testname"
 }
 
 runtestintestdir() {
