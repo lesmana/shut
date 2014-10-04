@@ -65,6 +65,7 @@ output:
 exitstatus: 0
 PASS ./test1
 ----------------
+================
 fail:
 ./test0
 ----------------

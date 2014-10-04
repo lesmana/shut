@@ -240,6 +240,7 @@ runtestsinlogdir() {
 
 printlist() {
   listname=$1
+  echo "================"
   echo "$listname:"
   cat "$listname"
   echo "----------------"

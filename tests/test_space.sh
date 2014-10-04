@@ -65,6 +65,7 @@ output:
 exitstatus: 1
 FAIL ./test 0
 ----------------
+================
 fail:
 ./test 0
 ----------------

@@ -14,6 +14,7 @@ mkdir -p expected/shutdir/logdir
 
 printf "\
 error changing directory to testdir
+================
 error:
 ./test0
 ----------------
