@@ -213,7 +213,8 @@ runtestintestdir() {
 }
 
 runtestandreporterror() {
-  runtestintestdir "$@"
+  testname=$1
+  runtestintestdir "$testname"
   exitstatus=$?
   case $exitstatus in
     0) echo "$testname" >&3 ;;
