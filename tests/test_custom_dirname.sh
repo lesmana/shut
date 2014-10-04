@@ -36,6 +36,7 @@ printf "\
 " > expected/dirname/error
 
 printf "\
+================
 run: 1 pass: 1 fail: 0 error: 0
 " > expected/shutoutput
 

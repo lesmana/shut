@@ -68,6 +68,7 @@ printf "\
 " > expected/shutdir/error
 
 printf "\
+================
 run: 2 pass: 2 fail: 0 error: 0
 " > expected/shutoutput
 

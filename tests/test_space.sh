@@ -68,6 +68,7 @@ FAIL ./test 0
 fail:
 ./test 0
 ----------------
+================
 run: 2 pass: 1 fail: 1 error: 0
 " > expected/shutoutput
 

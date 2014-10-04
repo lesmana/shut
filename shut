@@ -252,6 +252,7 @@ printcounts() {
     read failcount ignorefilename
     read errorcount ignorefilename
     read ignoretotal
+    echo "================"
     printf "run: %d pass: %d fail: %d error: %d\n" \
           "$runcount" "$passcount" "$failcount" "$errorcount"
   }
