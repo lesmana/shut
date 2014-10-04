@@ -174,8 +174,8 @@ actualprintreport() {
 
 printreport() {
   testname=$1
-  statecode=$(cat exitstatus)
-  if [ $statecode -eq 0 ]; then
+  exitstatus=$(cat exitstatus)
+  if [ $exitstatus -eq 0 ]; then
     echo "$testname" >&3
     printreport_func=$printreportpass_func
     statestring="PASS"
@@ -184,8 +184,7 @@ printreport() {
     printreport_func=$printreportfail_func
     statestring="FAIL"
   fi
-  testexitstatus=$(cat exitstatus)
-  $printreport_func "$testname" $testexitstatus $statestring
+  $printreport_func "$testname" $exitstatus $statestring
 }
 
 runtestandprintreport() {
