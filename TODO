@@ -94,4 +94,9 @@ example
 stderr: (empty)
 
 ----
+capture stdout stderr combined and separate simultaneously
+{ { sh foo | tee out >&3 ; } 2>&1 | tee err ; } 3>&1 | tee both > /dev/null
+and stdbuf
+
+----
 recreate report from existing shutdir without rerunning tests
