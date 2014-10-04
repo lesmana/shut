@@ -259,7 +259,9 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtestsinlogdir
+  runtestsinlogdir || {
+    return
+  }
   printsummary
   [ ! -s fail ] # exitstatus based on fail empty or not
 }
