@@ -1,10 +1,6 @@
 todo for shell unit test
 
 ----
-remove exitstatus between runtestandprintreport and runtests
-this is most likely done using the file descriptors
-
-----
 between runtests and runtestintestdir
 add another function monitoring exitstatus
 if zero do nothing
