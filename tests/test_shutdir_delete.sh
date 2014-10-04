@@ -33,6 +33,9 @@ printf "\
 " > expected/shutdir/fail
 
 printf "\
+" > expected/shutdir/error
+
+printf "\
 run: 1 pass: 1 fail: 0
 " > expected/shutoutput
 

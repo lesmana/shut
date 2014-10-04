@@ -220,7 +220,7 @@ runtestandreporterror() {
 
 runtests() {
   while read testname; do
-    runtestandreporterror "$testname" 3>> ../pass 4>> ../fail
+    runtestandreporterror "$testname" 3>> ../pass 4>> ../fail 5>> ../error
   done < ../tests
 }
 

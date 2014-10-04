@@ -33,6 +33,9 @@ printf "\
 " > expected/shutdir/fail
 
 printf "\
+" > expected/shutdir/error
+
+printf "\
 ================
 ./test0
 ----------------

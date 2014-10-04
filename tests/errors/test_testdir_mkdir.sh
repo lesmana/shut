@@ -34,6 +34,9 @@ printf "\
 " > expected/shutdir/fail
 
 printf "\
+" > expected/shutdir/error
+
+printf "\
 #! /bin/sh
 if [ \"\$*\" = \"-p ./test0.dir\" ]; then
   touch ./test0.dir
