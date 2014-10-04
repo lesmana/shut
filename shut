@@ -175,10 +175,13 @@ actualprintreport() {
 printreport() {
   testname=$1
   statecode=$2
-  case $statecode in
-    0) printreport_func=$printreportpass_func ; statestring="PASS" ;;
-    *) printreport_func=$printreportfail_func ; statestring="FAIL" ;;
-  esac
+  if [ $statecode -eq 0 ]; then
+    printreport_func=$printreportpass_func
+    statestring="PASS"
+  else
+    printreport_func=$printreportfail_func
+    statestring="FAIL"
+  fi
   testexitstatus=$(cat exitstatus)
   $printreport_func "$testname" $testexitstatus $statestring
 }
