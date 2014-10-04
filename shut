@@ -213,15 +213,15 @@ runtestandreporterror() {
   runtestintestdir "$@"
   exitstatus=$?
   case $exitstatus in
-    0) echo "$testname" >> ../pass ;;
-    *) echo "$testname" >> ../fail ;;
+    0) echo "$testname" >&3 ;;
+    *) echo "$testname" >&4 ;;
   esac
 }
 
 runtests() {
   touch ../pass ../fail
   while read testname; do
-    runtestandreporterror "$testname"
+    runtestandreporterror "$testname" 3>> ../pass 4>> ../fail
   done < ../tests
 }
 
