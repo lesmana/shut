@@ -219,7 +219,6 @@ runtestandreporterror() {
 }
 
 runtests() {
-  touch ../pass ../fail
   while read testname; do
     runtestandreporterror "$testname" 3>> ../pass 4>> ../fail
   done < ../tests
