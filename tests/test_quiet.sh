@@ -47,7 +47,7 @@ printf "\
 " > expected/shutdir/error
 
 printf "\
-failed tests:
+fail:
 ./test0
 ----------------
 run: 2 pass: 1 fail: 1 error: 0

@@ -65,7 +65,7 @@ output:
 exitstatus: 64
 FAIL ./test1
 ----------------
-failed tests:
+fail:
 ./test0
 ./test1
 ----------------

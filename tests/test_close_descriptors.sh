@@ -45,7 +45,7 @@ output:
 exitstatus: 2
 FAIL ./test0
 ----------------
-failed tests:
+fail:
 ./test0
 ----------------
 run: 1 pass: 0 fail: 1 error: 0

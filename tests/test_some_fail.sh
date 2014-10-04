@@ -93,7 +93,7 @@ output:
 exitstatus: 1
 FAIL ./test2
 ----------------
-failed tests:
+fail:
 ./test0
 ./test2
 ----------------

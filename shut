@@ -239,7 +239,7 @@ runtestsinlogdir() {
 }
 
 printfails() {
-  echo "failed tests:"
+  echo "fail:"
   cat fail
   echo "----------------"
 }

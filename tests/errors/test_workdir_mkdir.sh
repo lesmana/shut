@@ -14,7 +14,7 @@ mkdir -p expected/shutdir/logdir/test0.dir
 
 printf "\
 error creating workdir
-failed tests:
+fail:
 ./test0
 ----------------
 run: 1 pass: 0 fail: 1 error: 0
