@@ -223,6 +223,10 @@ runtests() {
   return $fail
 }
 
+runtestsinlogdir() {
+  runtests
+}
+
 printfails() {
   echo "failed tests:"
   cat fail
@@ -247,7 +251,7 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtests
+  runtestsinlogdir
   exitstatus=$?
   printsummary
   return $exitstatus
