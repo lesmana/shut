@@ -10,7 +10,7 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/shutdir
+mkdir -p expected/shutdir/logdir
 
 printf "\
 error creating testdir

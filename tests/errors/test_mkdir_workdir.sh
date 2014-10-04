@@ -10,7 +10,7 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/test0.dir
+mkdir -p expected/shutdir/logdir/test0.dir
 
 printf "\
 error creating workdir

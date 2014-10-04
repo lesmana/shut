@@ -13,7 +13,7 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/test0.dir/workdir
+mkdir -p expected/shutdir/logdir/test0.dir/workdir
 
 printf "\
 1
@@ -21,9 +21,9 @@ printf "\
 3
 4
 5
-" > expected/shutdir/test0.dir/output
+" > expected/shutdir/logdir/test0.dir/output
 
-printf "0\n" > expected/shutdir/test0.dir/exitstatus
+printf "0\n" > expected/shutdir/logdir/test0.dir/exitstatus
 
 printf "\
 ./test0

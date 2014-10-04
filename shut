@@ -210,21 +210,31 @@ runtestintestdir() {
 }
 
 runtests() {
-  touch pass fail
+  touch ../pass ../fail
   fail=0
   while read testname; do
     runtestintestdir "$testname"
     exitstatus=$?
     case $exitstatus in
-      0) echo "$testname" >> pass ;;
-      *) echo "$testname" >> fail ; fail=1 ;;
+      0) echo "$testname" >> ../pass ;;
+      *) echo "$testname" >> ../fail ; fail=1 ;;
     esac
-  done < tests
+  done < ../tests
   return $fail
 }
 
 runtestsinlogdir() {
-  runtests
+  mkdir -p logdir > /dev/null 2>&1 || {
+    echo "error creating logdir"
+    return 3
+  }
+  (
+    cd logdir > /dev/null 2>&1 || {
+      echo "error changing directory to logdir"
+      return 3
+    }
+    runtests
+  )
 }
 
 printfails() {
