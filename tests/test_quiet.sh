@@ -50,7 +50,6 @@ printf "\
 ================
 fail:
 ./test0
-----------------
 ================
 run: 2 pass: 1 fail: 1 error: 0
 " > expected/shutoutput

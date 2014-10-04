@@ -17,7 +17,6 @@ error changing directory to workdir
 ================
 error:
 ./test0
-----------------
 ================
 run: 1 pass: 0 fail: 0 error: 1
 " > expected/shutoutput

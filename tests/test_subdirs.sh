@@ -55,11 +55,9 @@ output:
 ----------------
 exitstatus: 1
 FAIL ./d1/test1
-----------------
 ================
 fail:
 ./d1/test1
-----------------
 ================
 run: 2 pass: 1 fail: 1 error: 0
 " > expected/shutoutput

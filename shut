@@ -169,7 +169,6 @@ actualprintreport() {
   echo "----------------"
   echo "exitstatus: $testexitstatus"
   echo "$statestring $testname"
-  echo "----------------"
 }
 
 printreport() {
@@ -243,7 +242,6 @@ printlist() {
   echo "================"
   echo "$listname:"
   cat "$listname"
-  echo "----------------"
 }
 
 printcounts() {

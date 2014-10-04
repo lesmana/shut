@@ -55,7 +55,6 @@ output:
 ----------------
 exitstatus: 1
 FAIL ./test0
-----------------
 ================
 ./test1
 ----------------
@@ -64,11 +63,9 @@ output:
 ----------------
 exitstatus: 0
 PASS ./test1
-----------------
 ================
 fail:
 ./test0
-----------------
 ================
 run: 2 pass: 1 fail: 1 error: 0
 " > expected/shutoutput

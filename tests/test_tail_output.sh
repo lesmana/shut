@@ -50,7 +50,6 @@ output:
 ----------------
 exitstatus: 0
 PASS ./test0
-----------------
 ================
 run: 1 pass: 1 fail: 0 error: 0
 " > expected/shutoutput
