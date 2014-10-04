@@ -211,16 +211,14 @@ runtestintestdir() {
 
 runtests() {
   touch ../pass ../fail
-  fail=0
   while read testname; do
     runtestintestdir "$testname"
     exitstatus=$?
     case $exitstatus in
       0) echo "$testname" >> ../pass ;;
-      *) echo "$testname" >> ../fail ; fail=1 ;;
+      *) echo "$testname" >> ../fail ;;
     esac
   done < ../tests
-  return $fail
 }
 
 runtestsinlogdir() {
