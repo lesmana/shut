@@ -262,9 +262,8 @@ printsummary() {
 
 runtestsandprintsummary() {
   runtestsinlogdir
-  exitstatus=$?
   printsummary
-  return $exitstatus
+  [ ! -s fail ] # exitstatus based on fail empty or not
 }
 
 runtestsinshutdir() {
