@@ -211,17 +211,17 @@ runtestintestdir() {
 
 runtestandreporterror() {
   runtestintestdir "$@"
+  exitstatus=$?
+  case $exitstatus in
+    0) echo "$testname" >> ../pass ;;
+    *) echo "$testname" >> ../fail ;;
+  esac
 }
 
 runtests() {
   touch ../pass ../fail
   while read testname; do
     runtestandreporterror "$testname"
-    exitstatus=$?
-    case $exitstatus in
-      0) echo "$testname" >> ../pass ;;
-      *) echo "$testname" >> ../fail ;;
-    esac
   done < ../tests
 }
 
