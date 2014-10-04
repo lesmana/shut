@@ -209,10 +209,14 @@ runtestintestdir() {
   )
 }
 
+runtestandreporterror() {
+  runtestintestdir "$@"
+}
+
 runtests() {
   touch ../pass ../fail
   while read testname; do
-    runtestintestdir "$testname"
+    runtestandreporterror "$testname"
     exitstatus=$?
     case $exitstatus in
       0) echo "$testname" >> ../pass ;;
