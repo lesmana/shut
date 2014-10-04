@@ -238,7 +238,7 @@ runtestsinlogdir() {
   )
 }
 
-printfails() {
+printlist() {
   listname=$1
   echo "$listname:"
   cat "$listname"
@@ -259,7 +259,7 @@ printcounts() {
 
 printsummary() {
   if [ -s fail ]; then
-    printfails fail
+    printlist fail
   fi
   printcounts
 }
