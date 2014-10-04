@@ -36,7 +36,7 @@ printf "\
 " > expected/shutdir/error
 
 printf "\
-run: 1 pass: 1 fail: 0
+run: 1 pass: 1 fail: 0 error: 0
 " > expected/shutoutput
 
 printf "0\n" > expected/shutexitstatus

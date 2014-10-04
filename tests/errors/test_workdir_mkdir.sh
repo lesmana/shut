@@ -17,7 +17,7 @@ error creating workdir
 failed tests:
 ./test0
 ----------------
-run: 1 pass: 0 fail: 1
+run: 1 pass: 0 fail: 1 error: 0
 " > expected/shutoutput
 
 printf "1\n" > expected/shutexitstatus

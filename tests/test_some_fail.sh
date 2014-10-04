@@ -97,7 +97,7 @@ failed tests:
 ./test0
 ./test2
 ----------------
-run: 4 pass: 2 fail: 2
+run: 4 pass: 2 fail: 2 error: 0
 " > expected/shutoutput
 
 printf "1\n" > expected/shutexitstatus

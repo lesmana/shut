@@ -245,12 +245,14 @@ printfails() {
 }
 
 printcounts() {
-  wc -l tests pass fail | {
+  wc -l tests pass fail error | {
     read runcount ignorefilename
     read passcount ignorefilename
     read failcount ignorefilename
+    read errorcount ignorefilename
     read ignoretotal
-    printf "run: %d pass: %d fail: %d\n" "$runcount" "$passcount" "$failcount"
+    printf "run: %d pass: %d fail: %d error: %d\n" \
+          "$runcount" "$passcount" "$failcount" "$errorcount"
   }
 }
 
