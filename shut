@@ -176,9 +176,11 @@ printreport() {
   testname=$1
   statecode=$2
   if [ $statecode -eq 0 ]; then
+    echo "$testname" >&3
     printreport_func=$printreportpass_func
     statestring="PASS"
   else
+    echo "$testname" >&4
     printreport_func=$printreportfail_func
     statestring="FAIL"
   fi
@@ -193,7 +195,6 @@ runtestandprintreport() {
   }
   exitstatus=$(cat exitstatus)
   printreport "$testname" "$exitstatus"
-  return $exitstatus
 }
 
 runtestintestdir() {
@@ -218,11 +219,6 @@ runtestandreporterror() {
     echo "$testname" >&4
     return
   }
-  exitstatus=$(cat "$testname.dir/exitstatus")
-  case $exitstatus in
-    0) echo "$testname" >&3 ;;
-    *) echo "$testname" >&4 ;;
-  esac
 }
 
 runtests() {
