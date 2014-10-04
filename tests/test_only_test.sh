@@ -35,6 +35,7 @@ printf "\
 ./testdir/test1
 ./xtestdir/test0
 ./xtestdir/test1
+================
 would run: 6
 " > expected/shutoutput
 

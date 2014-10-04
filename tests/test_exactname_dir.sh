@@ -12,6 +12,7 @@ cp -a actual expected
 
 printf "\
 ./exactdir/x
+================
 would run: 1
 " > expected/shutoutput
 

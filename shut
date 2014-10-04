@@ -307,6 +307,7 @@ workisruntests() {
 workisprinttestnames() {
   cat tests
   count=$(wc -l < tests)
+  echo "================"
   echo "would run: $count"
 }
 

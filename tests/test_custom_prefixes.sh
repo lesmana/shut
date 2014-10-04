@@ -15,6 +15,7 @@ printf "\
 ./bar2
 ./foo1
 ./foo2
+================
 would run: 4
 " > expected/shutoutput
 

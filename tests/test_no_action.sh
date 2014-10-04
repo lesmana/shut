@@ -13,6 +13,7 @@ cp -a actual expected
 printf "\
 ./test0
 ./test1
+================
 would run: 2
 " > expected/shutoutput
 

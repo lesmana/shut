@@ -12,6 +12,7 @@ cp -a actual expected
 
 printf "\
 ./exactname
+================
 would run: 1
 " > expected/shutoutput
 

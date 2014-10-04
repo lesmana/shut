@@ -12,6 +12,7 @@ cp -a actual expected
 
 printf "\
 ./test_exec
+================
 would run: 1
 " > expected/shutoutput
 
