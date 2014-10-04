@@ -214,8 +214,11 @@ runtestintestdir() {
 
 runtestandreporterror() {
   testname=$1
-  runtestintestdir "$testname"
-  exitstatus=$?
+  runtestintestdir "$testname" || {
+    echo "$testname" >&4
+    return
+  }
+  exitstatus=$(cat "$testname.dir/exitstatus")
   case $exitstatus in
     0) echo "$testname" >&3 ;;
     *) echo "$testname" >&4 ;;
