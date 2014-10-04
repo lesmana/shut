@@ -7,8 +7,8 @@ the loop in runtests should only prepare the fds and then run the tests
 (and close the fds)
 
 ----
-all functions after runtests should return non zero only if real error
-(except runtest itself which returns the exitstatus of the test itself)
+remove exitstatus between runtestandprintreport and runtests
+this is most likely done using the file descriptors
 
 ----
 between runtests and runtestintestdir
