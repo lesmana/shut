@@ -159,9 +159,9 @@ printbodymerge() {
 }
 
 actualprintreport() {
-  testname=$1
-  exitstatus=$2
-  statusstring=$3
+  statusstring=$1
+  testname=$2
+  exitstatus=$3
   echo "================"
   echo "$statusstring $testname"
   echo "exitstatus: $exitstatus"
@@ -180,7 +180,7 @@ printreport() {
     printreport_func=$printreportfail_func
     statusstring="FAIL"
   fi
-  $printreport_func "$testname" $exitstatus $statusstring
+  $printreport_func $statusstring "$testname" $exitstatus
 }
 
 runtestandprintreport() {
