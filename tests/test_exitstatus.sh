@@ -48,21 +48,15 @@ printf "\
 
 printf "\
 ================
-./test0
-----------------
+FAIL ./test0
+exitstatus: 2
 output:
   + exit 2
-----------------
-exitstatus: 2
-FAIL ./test0
 ================
-./test1
-----------------
+FAIL ./test1
+exitstatus: 64
 output:
   + exit 64
-----------------
-exitstatus: 64
-FAIL ./test1
 ================
 fail:
 ./test0

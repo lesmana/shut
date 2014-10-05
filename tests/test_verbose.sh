@@ -48,21 +48,15 @@ printf "\
 
 printf "\
 ================
-./test0
-----------------
+FAIL ./test0
+exitstatus: 1
 output:
   + false
-----------------
-exitstatus: 1
-FAIL ./test0
 ================
-./test1
-----------------
+PASS ./test1
+exitstatus: 0
 output:
   + true
-----------------
-exitstatus: 0
-PASS ./test1
 ================
 fail:
 ./test0

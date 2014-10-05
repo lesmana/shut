@@ -41,15 +41,12 @@ printf "\
 
 printf "\
 ================
-./test0
-----------------
+PASS ./test0
+exitstatus: 0
 output:
   3
   4
   5
-----------------
-exitstatus: 0
-PASS ./test0
 ================
 run: 1 pass: 1 fail: 0 error: 0
 " > expected/shutoutput

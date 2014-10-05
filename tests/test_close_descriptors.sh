@@ -37,13 +37,10 @@ printf "\
 
 printf "\
 ================
-./test0
-----------------
+FAIL ./test0
+exitstatus: 2
 output:
   $SHUT_TESTPWD/actual/test0: 3: 3: Bad file descriptor
-----------------
-exitstatus: 2
-FAIL ./test0
 ================
 fail:
 ./test0
