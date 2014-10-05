@@ -160,14 +160,14 @@ printbodymerge() {
 
 actualprintreport() {
   testname=$1
-  testexitstatus=$2
+  exitstatus=$2
   statestring=$3
   echo "================"
   echo "$testname"
   echo "----------------"
   $printbody_func
   echo "----------------"
-  echo "exitstatus: $testexitstatus"
+  echo "exitstatus: $exitstatus"
   echo "$statestring $testname"
 }
 
