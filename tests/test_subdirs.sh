@@ -57,14 +57,14 @@ fail:
 ./d1/test1
 ================
 run: 2 pass: 1 fail: 1 error: 0
-" > expected/shutoutput
+" > expected/stdout
 
 printf "1\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut > shutoutput 2>&1
+  shut > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

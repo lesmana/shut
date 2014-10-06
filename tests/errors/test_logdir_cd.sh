@@ -14,7 +14,7 @@ mkdir -p expected/shutdir
 
 printf "\
 error changing directory to logdir
-" > expected/shutoutput
+" > expected/stdout
 
 printf "3\n" > expected/exitstatus
 
@@ -37,7 +37,7 @@ chmod +x mkdir
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut > shutoutput 2>&1
+  shut > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

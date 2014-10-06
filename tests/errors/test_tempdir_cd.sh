@@ -13,7 +13,7 @@ cp -a actual expected
 printf "\
 failed changing directory to loldir
 cannot continue
-" > expected/shutoutput
+" > expected/stdout
 
 printf "3\n" > expected/exitstatus
 
@@ -28,7 +28,7 @@ chmod +x mktemp
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut > shutoutput 2>&1
+  shut > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

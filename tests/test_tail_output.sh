@@ -49,14 +49,14 @@ output:
   5
 ================
 run: 1 pass: 1 fail: 0 error: 0
-" > expected/shutoutput
+" > expected/stdout
 
 printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -v -t 3 > shutoutput 2>&1
+  shut -v -t 3 > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

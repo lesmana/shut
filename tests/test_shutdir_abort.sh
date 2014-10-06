@@ -19,14 +19,14 @@ cp -a actual expected
 printf "\
 is not shutdir: shutdir
 will not overwrite
-" > expected/shutoutput
+" > expected/stdout
 
 printf "2\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut > shutoutput 2>&1
+  shut > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

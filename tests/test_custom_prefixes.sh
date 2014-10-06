@@ -17,14 +17,14 @@ printf "\
 ./foo2
 ================
 would run: 4
-" > expected/shutoutput
+" > expected/stdout
 
 printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -n foo bar > shutoutput 2>&1
+  shut -n foo bar > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

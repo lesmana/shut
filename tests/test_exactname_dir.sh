@@ -14,14 +14,14 @@ printf "\
 ./exactdir/x
 ================
 would run: 1
-" > expected/shutoutput
+" > expected/stdout
 
 printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -n exactdir > shutoutput 2>&1
+  shut -n exactdir > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

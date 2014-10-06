@@ -13,7 +13,7 @@ cp -a actual expected
 printf "\
 error creating tempdir
 cannot continue
-" > expected/shutoutput
+" > expected/stdout
 
 printf "3\n" > expected/exitstatus
 
@@ -21,7 +21,7 @@ printf "3\n" > expected/exitstatus
   cd actual
   set +e
   export TMPDIR=/dev/null
-  shut > shutoutput 2>&1
+  shut > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

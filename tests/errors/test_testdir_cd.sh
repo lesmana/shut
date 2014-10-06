@@ -19,7 +19,7 @@ error:
 ./test0
 ================
 run: 1 pass: 0 fail: 0 error: 1
-" > expected/shutoutput
+" > expected/stdout
 
 printf "1\n" > expected/exitstatus
 
@@ -52,7 +52,7 @@ chmod +x mkdir
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut > shutoutput 2>&1
+  shut > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )

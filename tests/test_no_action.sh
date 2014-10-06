@@ -15,14 +15,14 @@ printf "\
 ./test1
 ================
 would run: 2
-" > expected/shutoutput
+" > expected/stdout
 
 printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -n > shutoutput 2>&1
+  shut -n > stdout 2>&1
   printf "$?\n" > exitstatus
   set -e
 )
