@@ -16,12 +16,15 @@ printf "\
 would run: 1
 " > expected/stdout
 
+printf "\
+" > expected/stderr
+
 printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -n exactname > stdout 2>&1
+  shut -n exactname > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )

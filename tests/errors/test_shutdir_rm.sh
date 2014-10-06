@@ -15,6 +15,9 @@ error deleting $SHUT_TESTPWD/actual/shutdir
 cannot continue
 " > expected/stdout
 
+printf "\
+" > expected/stderr
+
 printf "3\n" > expected/exitstatus
 
 printf "\
@@ -36,7 +39,7 @@ chmod +x rm
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut > stdout 2>&1
+  shut > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )

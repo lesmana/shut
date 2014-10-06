@@ -17,16 +17,19 @@ touch actual/shutdir/existingdir
 cp -a actual expected
 
 printf "\
+" > expected/stdout
+
+printf "\
 name exists: shutdir
 will not overwrite
-" > expected/stdout
+" > expected/stderr
 
 printf "2\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -k > stdout 2>&1
+  shut -k > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )

@@ -16,6 +16,9 @@ printf "\
 error creating logdir
 " > expected/stdout
 
+printf "\
+" > expected/stderr
+
 printf "3\n" > expected/exitstatus
 
 printf "\
@@ -42,7 +45,7 @@ chmod +x mkdir
   cd actual
   set +e
   PATH=$SHUT_TESTPWD:$PATH
-  shut > stdout 2>&1
+  shut > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )

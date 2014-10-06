@@ -19,12 +19,15 @@ printf "\
 would run: 4
 " > expected/stdout
 
+printf "\
+" > expected/stderr
+
 printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut -n foo bar > stdout 2>&1
+  shut -n foo bar > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )

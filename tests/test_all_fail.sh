@@ -65,12 +65,15 @@ fail:
 run: 2 pass: 0 fail: 2 error: 0
 " > expected/stdout
 
+printf "\
+" > expected/stderr
+
 printf "1\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut > stdout 2>&1
+  shut > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )
