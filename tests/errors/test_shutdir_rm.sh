@@ -11,11 +11,11 @@ chmod +x actual/test0
 cp -a actual expected
 
 printf "\
-error deleting $SHUT_TESTPWD/actual/shutdir
-cannot continue
 " > expected/stdout
 
 printf "\
+error deleting $SHUT_TESTPWD/actual/shutdir
+cannot continue
 " > expected/stderr
 
 printf "3\n" > expected/exitstatus

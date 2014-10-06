@@ -96,8 +96,8 @@ deleteshutdir() {
     return 2
   fi
   rm -rf "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error deleting $config_fullshutdir"
-    echo "cannot continue"
+    echo "error deleting $config_fullshutdir" >&2
+    echo "cannot continue" >&2
     return 3
   }
 }
@@ -134,12 +134,12 @@ runtestsaveoutputmerge() {
 runtestinworkdir() {
   testname=$1
   mkdir -p workdir > /dev/null 2>&1 || {
-    echo "error creating workdir"
+    echo "error creating workdir" >&2
     return 3
   }
   (
     cd workdir > /dev/null 2>&1 || {
-      echo "error changing directory to workdir"
+      echo "error changing directory to workdir" >&2
       return 3
     }
     $runtestsaveoutput_func "$testname"
@@ -195,12 +195,12 @@ runtestintestdir() {
   testname=$1
   testdir="$testname.dir"
   mkdir -p "$testdir" > /dev/null 2>&1 || {
-    echo "error creating testdir"
+    echo "error creating testdir" >&2
     return 3
   }
   (
     cd "$testdir" > /dev/null 2>&1 || {
-      echo "error changing directory to testdir"
+      echo "error changing directory to testdir" >&2
       return 3
     }
     runtestandprintreport "$testname"
@@ -222,12 +222,12 @@ runtests() {
 
 runtestsinlogdir() {
   mkdir -p logdir > /dev/null 2>&1 || {
-    echo "error creating logdir"
+    echo "error creating logdir" >&2
     return 3
   }
   (
     cd logdir > /dev/null 2>&1 || {
-      echo "error changing directory to logdir"
+      echo "error changing directory to logdir" >&2
       return 3
     }
     runtests
@@ -274,19 +274,19 @@ runtestsandprintsummary() {
 
 runtestsinshutdir() {
   mkdir -p "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error creating directory $config_fullshutdir"
-    echo "cannot continue"
+    echo "error creating directory $config_fullshutdir" >&2
+    echo "cannot continue" >&2
     return 3
   }
   cp tests "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error copying tests to $config_fullshutdir"
-    echo "cannot continue"
+    echo "error copying tests to $config_fullshutdir" >&2
+    echo "cannot continue" >&2
     return 3
   }
   (
     cd "$config_fullshutdir" > /dev/null 2>&1 || {
-      echo "error changing directory to $config_fullshutdir"
-      echo "cannot continue"
+      echo "error changing directory to $config_fullshutdir" >&2
+      echo "cannot continue" >&2
       return 3
     }
     runtestsandprintsummary
@@ -324,8 +324,8 @@ workintempdir() {
   }
   (
     cd "$shuttempdir" > /dev/null 2>&1 || {
-      echo "failed changing directory to $shuttempdir"
-      echo "cannot continue"
+      echo "failed changing directory to $shuttempdir" >&2
+      echo "cannot continue" >&2
       return 3
     }
     collectnamesandwork "$@"

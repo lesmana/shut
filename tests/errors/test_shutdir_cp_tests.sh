@@ -13,11 +13,11 @@ cp -a actual expected
 mkdir -p expected/shutdir
 
 printf "\
-error copying tests to $SHUT_TESTPWD/actual/shutdir
-cannot continue
 " > expected/stdout
 
 printf "\
+error copying tests to $SHUT_TESTPWD/actual/shutdir
+cannot continue
 " > expected/stderr
 
 printf "3\n" > expected/exitstatus

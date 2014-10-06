@@ -11,11 +11,11 @@ chmod +x actual/test0
 cp -a actual expected
 
 printf "\
-error changing directory to $SHUT_TESTPWD/actual/shutdir
-cannot continue
 " > expected/stdout
 
 printf "\
+error changing directory to $SHUT_TESTPWD/actual/shutdir
+cannot continue
 " > expected/stderr
 
 printf "3\n" > expected/exitstatus

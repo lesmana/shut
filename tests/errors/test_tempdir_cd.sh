@@ -11,11 +11,11 @@ chmod +x actual/test0
 cp -a actual expected
 
 printf "\
-failed changing directory to loldir
-cannot continue
 " > expected/stdout
 
 printf "\
+failed changing directory to loldir
+cannot continue
 " > expected/stderr
 
 printf "3\n" > expected/exitstatus

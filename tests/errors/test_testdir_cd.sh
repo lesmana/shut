@@ -13,7 +13,6 @@ cp -a actual expected
 mkdir -p expected/shutdir/logdir
 
 printf "\
-error changing directory to testdir
 ================
 error:
 ./test0
@@ -22,6 +21,7 @@ run: 1 pass: 0 fail: 0 error: 1
 " > expected/stdout
 
 printf "\
+error changing directory to testdir
 " > expected/stderr
 
 printf "1\n" > expected/exitstatus
