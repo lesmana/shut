@@ -40,13 +40,13 @@ printf "\
 run: 1 pass: 1 fail: 0 error: 0
 " > expected/shutoutput
 
-printf "0\n" > expected/shutexitstatus
+printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 

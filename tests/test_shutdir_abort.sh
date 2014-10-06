@@ -21,13 +21,13 @@ is not shutdir: shutdir
 will not overwrite
 " > expected/shutoutput
 
-printf "2\n" > expected/shutexitstatus
+printf "2\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 

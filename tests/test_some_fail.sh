@@ -93,13 +93,13 @@ fail:
 run: 4 pass: 2 fail: 2 error: 0
 " > expected/shutoutput
 
-printf "1\n" > expected/shutexitstatus
+printf "1\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 

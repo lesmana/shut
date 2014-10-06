@@ -21,13 +21,13 @@ name exists: shutdir
 will not overwrite
 " > expected/shutoutput
 
-printf "2\n" > expected/shutexitstatus
+printf "2\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -k > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 

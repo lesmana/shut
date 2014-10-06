@@ -19,13 +19,13 @@ printf "\
 would run: 4
 " > expected/shutoutput
 
-printf "0\n" > expected/shutexitstatus
+printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -n foo bar > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 

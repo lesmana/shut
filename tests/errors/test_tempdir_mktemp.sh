@@ -15,14 +15,14 @@ error creating tempdir
 cannot continue
 " > expected/shutoutput
 
-printf "3\n" > expected/shutexitstatus
+printf "3\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   export TMPDIR=/dev/null
   shut > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 

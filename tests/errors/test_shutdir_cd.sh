@@ -15,7 +15,7 @@ error changing directory to $SHUT_TESTPWD/actual/shutdir
 cannot continue
 " > expected/shutoutput
 
-printf "3\n" > expected/shutexitstatus
+printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
@@ -33,7 +33,7 @@ chmod +x cp
   set +e
   PATH=$SHUT_TESTPWD:$PATH
   shut > shutoutput 2>&1
-  printf "$?\n" > shutexitstatus
+  printf "$?\n" > exitstatus
   set -e
 )
 
