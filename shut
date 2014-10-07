@@ -331,7 +331,11 @@ workintempdir() {
     collectnamesandwork "$@"
   )
   exitstatus=$?
-  rm -rf "$shuttempdir"
+  rm -rf "$shuttempdir" > /dev/null 2>&1 || {
+    echo "error deleting tempdir" >&2
+    echo "not fatal but annoying" >&2
+    return 3
+  }
   return $exitstatus
 }
 
