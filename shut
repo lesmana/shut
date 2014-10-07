@@ -209,8 +209,11 @@ runtestintestdir() {
 
 runtestandreporterror() {
   testname=$1
-  runtestintestdir "$testname" || {
+  runtestintestdir "$testname" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >&5
+    echo "================"
+    echo "ERROR $testname"
+    cat "$config_tempdir/lasterror"
   }
 }
 

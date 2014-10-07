@@ -14,6 +14,9 @@ mkdir -p expected/shutdir/logdir/test0.dir
 
 printf "\
 ================
+ERROR ./test0
+error changing directory to workdir
+================
 error:
 ./test0
 ================
@@ -21,7 +24,6 @@ run: 1 pass: 0 fail: 0 error: 1
 " > expected/stdout
 
 printf "\
-error changing directory to workdir
 " > expected/stderr
 
 printf "1\n" > expected/exitstatus
