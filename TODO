@@ -7,9 +7,6 @@ better report error
 local all the variables
 
 ----
-handle error rm tempdir
-
-----
 test that pattern argument works with absolute and relative path
 
 ----
