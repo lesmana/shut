@@ -36,9 +36,9 @@ fi
 chmod +x rm
 
 (
+  PATH=$SHUT_TESTPWD:$PATH
   cd actual
   set +e
-  PATH=$SHUT_TESTPWD:$PATH
   shut > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e

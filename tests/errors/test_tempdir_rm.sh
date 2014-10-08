@@ -49,9 +49,9 @@ fi
 chmod +x mktemp rm
 
 (
+  PATH=$SHUT_TESTPWD:$PATH
   cd actual
   set +e
-  PATH=$SHUT_TESTPWD:$PATH
   shut -n > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
