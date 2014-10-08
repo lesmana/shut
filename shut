@@ -183,7 +183,7 @@ printreport() {
 
 runtestandprintreport() {
   testname=$1
-  fulltestname="$SHUT_PWD/${testname#./}"
+  fulltestname=$2
   [ -x "$fulltestname" ] || {
     echo "not found or not executable: $testname" >&2
     return 3
@@ -196,6 +196,7 @@ runtestandprintreport() {
 
 runtestintestdir() {
   testname=$1
+  fulltestname=$2
   testdir="$testname.dir"
   mkdir -p "$testdir" > /dev/null 2>&1 || {
     echo "error creating testdir" >&2
@@ -206,13 +207,14 @@ runtestintestdir() {
       echo "error changing directory to testdir" >&2
       return 3
     }
-    runtestandprintreport "$testname"
+    runtestandprintreport "$testname" "$fulltestname"
   )
 }
 
 runtestifexecutable() {
   testname=$1
-  runtestintestdir "$testname"
+  fulltestname="$SHUT_PWD/${testname#./}"
+  runtestintestdir "$testname" "$fulltestname"
 }
 
 runtestandreporterror() {
