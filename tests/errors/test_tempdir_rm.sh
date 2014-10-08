@@ -27,14 +27,12 @@ printf "3\n" > expected/exitstatus
 
 printf '\
 #! /bin/sh
-echo xxxxxxxxxxxxxxxxxx mktemp >&2
 mkdir -p tempdir
 echo tempdir
 ' > mktemp
 
 printf "\
 #! /bin/sh
-echo xxxxxxxxxxxxxxxxxxx \$* >&2
 if [ \"\$*\" = \"-rf tempdir\" ]; then
   chmod -w tempdir/..
   PATH=$PATH rm \"\$@\"
