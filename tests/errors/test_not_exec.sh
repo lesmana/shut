@@ -26,7 +26,6 @@ cp -a actual expected
 
 mkdir -p \
       expected/shutdir/logdir/test0.dir/workdir \
-      expected/shutdir/logdir/test1.dir \
       expected/shutdir/logdir/test2.dir/workdir
 
 printf "test0\n"  > expected/shutdir/logdir/test0.dir/output

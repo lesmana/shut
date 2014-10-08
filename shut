@@ -184,10 +184,6 @@ printreport() {
 runtestandprintreport() {
   testname=$1
   fulltestname=$2
-  [ -x "$fulltestname" ] || {
-    echo "not found or not executable: $testname" >&2
-    return 3
-  }
   runtestinworkdir "$fulltestname" || {
     return
   }
@@ -214,6 +210,10 @@ runtestintestdir() {
 runtestifexecutable() {
   testname=$1
   fulltestname="$SHUT_PWD/${testname#./}"
+  [ -x "$fulltestname" ] || {
+    echo "not found or not executable: $testname" >&2
+    return 3
+  }
   runtestintestdir "$testname" "$fulltestname"
 }
 
