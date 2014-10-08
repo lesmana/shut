@@ -95,7 +95,7 @@ deleteshutdir() {
     echo "will not overwrite" >&2
     return 2
   fi
-  rm -rf "$config_fullshutdir" > /dev/null 2>&1 || {
+  rm -r "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error deleting $config_fullshutdir" >&2
     echo "cannot continue" >&2
     return 3
@@ -344,7 +344,7 @@ workintempdir() {
     collectnamesandwork "$@"
   )
   exitstatus=$?
-  rm -rf "$config_tempdir" > /dev/null 2>&1 || {
+  rm -r "$config_tempdir" > /dev/null 2>&1 || {
     echo "error deleting tempdir" >&2
     echo "not fatal but annoying" >&2
     return 3

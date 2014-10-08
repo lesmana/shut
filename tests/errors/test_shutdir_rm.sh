@@ -22,7 +22,7 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-rf $PWD/actual/shutdir\" ]; then
+if [ \"\$*\" = \"-r $PWD/actual/shutdir\" ]; then
   chmod -w $PWD/actual
   PATH=$PATH rm \"\$@\"
   exitstatus=\$?

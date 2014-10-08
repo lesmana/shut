@@ -22,6 +22,7 @@ printf "3\n" > expected/exitstatus
 
 printf '\
 #! /bin/sh
+touch loldir
 echo loldir
 ' > mktemp
 

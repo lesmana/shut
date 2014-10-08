@@ -33,7 +33,7 @@ echo tempdir
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-rf tempdir\" ]; then
+if [ \"\$*\" = \"-r tempdir\" ]; then
   chmod -w tempdir/..
   PATH=$PATH rm \"\$@\"
   exitstatus=\$?
