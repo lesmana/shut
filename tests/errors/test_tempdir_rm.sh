@@ -10,8 +10,6 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/tempdir
-
 printf "\
 ./test0
 ================
@@ -34,11 +32,8 @@ echo tempdir
 printf "\
 #! /bin/sh
 if [ \"\$*\" = \"-r tempdir\" ]; then
-  chmod -w tempdir/..
   PATH=$PATH rm \"\$@\"
-  exitstatus=\$?
-  chmod +w tempdir/..
-  exit \$exitstatus
+  PATH=$PATH rm \"\$@\"
 else
   PATH=$PATH rm \"\$@\"
 fi
