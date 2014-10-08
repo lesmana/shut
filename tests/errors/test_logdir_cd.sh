@@ -37,7 +37,7 @@ fi
 chmod +x mkdir
 
 (
-  PATH=$SHUT_TESTPWD:$PATH
+  PATH=$PWD:$PATH
   cd actual
   set +e
   shut > stdout 2> stderr

@@ -8,14 +8,14 @@ printf '\
 #! /bin/sh
 echo $SHUT_PWD
 echo $SHUT_TEST
-echo $SHUT_TESTPWD
+echo $PWD
 ' > actual/test0
 
 printf '\
 #! /bin/sh
 echo $SHUT_PWD
 echo $SHUT_TEST
-echo $SHUT_TESTPWD
+echo $PWD
 ' > actual/d1/test1
 
 chmod +x actual/test0 actual/d1/test1

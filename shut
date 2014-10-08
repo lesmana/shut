@@ -108,7 +108,6 @@ runtest() {
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
-    export SHUT_TESTPWD="$PWD"
     exec 0>&- 3>&- 4>&-
     "$fulltestname"
   )

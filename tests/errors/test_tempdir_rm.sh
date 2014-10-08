@@ -49,7 +49,7 @@ fi
 chmod +x mktemp rm
 
 (
-  PATH=$SHUT_TESTPWD:$PATH
+  PATH=$PWD:$PATH
   cd actual
   set +e
   shut -n > stdout 2> stderr

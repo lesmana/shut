@@ -14,7 +14,7 @@ printf "\
 " > expected/stdout
 
 printf "\
-error deleting $SHUT_TESTPWD/actual/shutdir
+error deleting $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
@@ -22,11 +22,11 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-rf $SHUT_TESTPWD/actual/shutdir\" ]; then
-  chmod -w $SHUT_TESTPWD/actual
+if [ \"\$*\" = \"-rf $PWD/actual/shutdir\" ]; then
+  chmod -w $PWD/actual
   PATH=$PATH rm \"\$@\"
   exitstatus=\$?
-  chmod +w $SHUT_TESTPWD/actual
+  chmod +w $PWD/actual
   exit \$exitstatus
 else
   PATH=$PATH rm \"\$@\"
@@ -36,7 +36,7 @@ fi
 chmod +x rm
 
 (
-  PATH=$SHUT_TESTPWD:$PATH
+  PATH=$PWD:$PATH
   cd actual
   set +e
   shut > stdout 2> stderr

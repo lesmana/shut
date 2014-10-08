@@ -16,7 +16,7 @@ cp -a actual expected
 mkdir -p expected/shutdir/logdir/test0.dir/workdir
 
 printf "\
-$SHUT_TESTPWD/actual/test0: 3: 3: Bad file descriptor
+$PWD/actual/test0: 3: 3: Bad file descriptor
 " > expected/shutdir/logdir/test0.dir/output
 
 printf "2\n" > expected/shutdir/logdir/test0.dir/exitstatus
@@ -40,7 +40,7 @@ printf "\
 FAIL ./test0
 exitstatus: 2
 output:
-  $SHUT_TESTPWD/actual/test0: 3: 3: Bad file descriptor
+  $PWD/actual/test0: 3: 3: Bad file descriptor
 ================
 fail:
 ./test0

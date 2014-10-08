@@ -14,7 +14,7 @@ printf "\
 " > expected/stdout
 
 printf "\
-error changing directory to $SHUT_TESTPWD/actual/shutdir
+error changing directory to $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
@@ -22,8 +22,8 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"tests $SHUT_TESTPWD/actual/shutdir\" ]; then
-  rm -rf $SHUT_TESTPWD/actual/shutdir
+if [ \"\$*\" = \"tests $PWD/actual/shutdir\" ]; then
+  rm -rf $PWD/actual/shutdir
 else
   PATH=$PATH cp \"\$@\"
 fi
@@ -32,7 +32,7 @@ fi
 chmod +x cp
 
 (
-  PATH=$SHUT_TESTPWD:$PATH
+  PATH=$PWD:$PATH
   cd actual
   set +e
   shut > stdout 2> stderr

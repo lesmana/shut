@@ -14,7 +14,7 @@ printf "\
 " > expected/stdout
 
 printf "\
-error creating directory $SHUT_TESTPWD/actual/shutdir
+error creating directory $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
@@ -22,11 +22,11 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p $SHUT_TESTPWD/actual/shutdir\" ]; then
-  touch $SHUT_TESTPWD/actual/shutdir
+if [ \"\$*\" = \"-p $PWD/actual/shutdir\" ]; then
+  touch $PWD/actual/shutdir
   PATH=$PATH mkdir \"\$@\"
   exitstatus=\$?
-  rm $SHUT_TESTPWD/actual/shutdir
+  rm $PWD/actual/shutdir
   exit \$exitstatus
 else
   PATH=$PATH mkdir \"\$@\"
@@ -36,7 +36,7 @@ fi
 chmod +x mkdir
 
 (
-  PATH=$SHUT_TESTPWD:$PATH
+  PATH=$PWD:$PATH
   cd actual
   set +e
   shut > stdout 2> stderr
