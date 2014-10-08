@@ -103,8 +103,7 @@ deleteshutdir() {
 }
 
 runtest() {
-  testname=$1
-  fulltestname="$SHUT_PWD/${testname#./}"
+  fulltestname=$1
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
@@ -114,24 +113,24 @@ runtest() {
 }
 
 runtestsaveexitstatus() {
-  testname=$1
-  runtest "$testname"
+  fulltestname=$1
+  runtest "$fulltestname"
   exitstatus=$?
   echo $exitstatus > ../exitstatus
 }
 
 runtestsaveoutputsplit() {
-  testname=$1
-  runtestsaveexitstatus "$testname" > ../stdout 2> ../stderr
+  fulltestname=$1
+  runtestsaveexitstatus "$fulltestname" > ../stdout 2> ../stderr
 }
 
 runtestsaveoutputmerge() {
-  testname=$1
-  runtestsaveexitstatus "$testname" > ../output 2>&1
+  fulltestname=$1
+  runtestsaveexitstatus "$fulltestname" > ../output 2>&1
 }
 
 runtestinworkdir() {
-  testname=$1
+  fulltestname=$1
   mkdir -p workdir > /dev/null 2>&1 || {
     echo "error creating workdir" >&2
     return 3
@@ -141,7 +140,7 @@ runtestinworkdir() {
       echo "error changing directory to workdir" >&2
       return 3
     }
-    $runtestsaveoutput_func "$testname"
+    $runtestsaveoutput_func "$fulltestname"
   )
 }
 
@@ -184,7 +183,8 @@ printreport() {
 
 runtestandprintreport() {
   testname=$1
-  runtestinworkdir "$testname" || {
+  fulltestname="$SHUT_PWD/${testname#./}"
+  runtestinworkdir "$fulltestname" || {
     return
   }
   printreport "$testname"
