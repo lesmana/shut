@@ -224,6 +224,7 @@ runtestandreporterror() {
     echo "$testname" >&5
     echo "================"
     echo "ERROR $testname"
+    echo "exitstatus: n/a"
     cat "$config_tempdir/lasterror"
   }
 }

@@ -60,6 +60,7 @@ output:
   test0
 ================
 ERROR ./test1
+exitstatus: n/a
 not found or not executable: ./test1
 ================
 PASS ./test2

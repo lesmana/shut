@@ -15,6 +15,7 @@ mkdir -p expected/shutdir/logdir
 printf "\
 ================
 ERROR ./test0
+exitstatus: n/a
 error creating testdir
 ================
 error:
