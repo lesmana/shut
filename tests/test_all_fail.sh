@@ -78,4 +78,4 @@ printf "1\n" > expected/exitstatus
   set -e
 )
 
-diff -r expected actual
+diff -u -r expected actual

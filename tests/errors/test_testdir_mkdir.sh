@@ -67,4 +67,4 @@ chmod +x mkdir
   set -e
 )
 
-diff -r expected actual
+diff -u -r expected actual

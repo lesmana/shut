@@ -50,4 +50,4 @@ chmod +x mktemp rm
   set -e
 )
 
-diff -r expected actual
+diff -u -r expected actual
