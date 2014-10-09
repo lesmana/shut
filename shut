@@ -171,11 +171,11 @@ printreport() {
   testname=$1
   exitstatus=$(cat exitstatus)
   if [ $exitstatus -eq 0 ]; then
-    echo "$testname" >&3
+    echo "$testname" >> "$config_fullshutdir/pass"
     printreport_func=$printreportpass_func
     statusstring="PASS"
   else
-    echo "$testname" >&4
+    echo "$testname" >> "$config_fullshutdir/fail"
     printreport_func=$printreportfail_func
     statusstring="FAIL"
   fi
@@ -221,7 +221,7 @@ runtestifexecutable() {
 runtestandreporterror() {
   testname=$1
   runtestifexecutable "$testname" 2> "$config_tempdir/lasterror" || {
-    echo "$testname" >&5
+    echo "$testname" >> "$config_fullshutdir/error"
     echo "================"
     echo "ERROR $testname"
     echo "exitstatus: n/a"
@@ -230,8 +230,9 @@ runtestandreporterror() {
 }
 
 runtests() {
+  touch ../pass ../fail ../error
   while read testname; do
-    runtestandreporterror "$testname" 3>> ../pass 4>> ../fail 5>> ../error
+    runtestandreporterror "$testname"
   done < ../tests
 }
 
