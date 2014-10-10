@@ -3,9 +3,7 @@
 PATH=$PWD:$PATH
 
 if [ $# -ne 0 ]; then
-  cd tests
-  ../goodshut "$@"
+  goodshut "$@" tests
 else
-  cd tests
-  ../goodshut
+  goodshut tests
 fi
