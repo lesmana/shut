@@ -2,8 +2,12 @@
 
 PATH=$PWD:$PATH
 
-if [ $# -ne 0 ]; then
-  goodshut "$@" tests
-else
-  goodshut tests
-fi
+tests=tests
+
+for arg in "$@"; do
+  if [ -e "$arg" ]; then
+    tests=
+  fi
+done
+
+goodshut "$@" "$tests"
