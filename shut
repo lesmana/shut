@@ -107,7 +107,7 @@ runtest() {
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
-    exec 0>&-
+    exec 0>&- 2>&3 3>&-
     "$fulltestname"
   )
 }
@@ -121,12 +121,12 @@ runtestsaveexitstatus() {
 
 runtestsaveoutputsplit() {
   fulltestname=$1
-  runtestsaveexitstatus "$fulltestname" > ../stdout 2> ../stderr
+  runtestsaveexitstatus "$fulltestname" > ../stdout 3> ../stderr
 }
 
 runtestsaveoutputmerge() {
   fulltestname=$1
-  runtestsaveexitstatus "$fulltestname" > ../output 2>&1
+  runtestsaveexitstatus "$fulltestname" > ../output 3>&1
 }
 
 runtestinworkdir() {
