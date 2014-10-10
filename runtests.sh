@@ -1,6 +1,6 @@
 #! /bin/sh
 
-PATH=$PATH:$PWD
+PATH=$PWD:$PATH
 
 if [ $# -ne 0 ]; then
   cd tests
