@@ -13,6 +13,10 @@ cp -a actual expected
 mkdir -p expected/shutdir
 
 printf "\
+./test0
+" > expected/shutdir/tests
+
+printf "\
 " > expected/stdout
 
 printf "\
@@ -20,11 +24,6 @@ error creating logdir
 " > expected/stderr
 
 printf "3\n" > expected/exitstatus
-
-printf "\
-./test0
-" > expected/shutdir/tests
-
 
 printf "\
 #! /bin/sh

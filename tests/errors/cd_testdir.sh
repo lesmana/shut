@@ -13,6 +13,20 @@ cp -a actual expected
 mkdir -p expected/shutdir/logdir
 
 printf "\
+./test0
+" > expected/shutdir/tests
+
+printf "\
+" > expected/shutdir/pass
+
+printf "\
+" > expected/shutdir/fail
+
+printf "\
+./test0
+" > expected/shutdir/error
+
+printf "\
 ================
 ERROR ./test0
 error changing directory to testdir
@@ -27,20 +41,6 @@ printf "\
 " > expected/stderr
 
 printf "1\n" > expected/exitstatus
-
-printf "\
-./test0
-" > expected/shutdir/tests
-
-printf "\
-" > expected/shutdir/pass
-
-printf "\
-" > expected/shutdir/fail
-
-printf "\
-./test0
-" > expected/shutdir/error
 
 printf "\
 #! /bin/sh
