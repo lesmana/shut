@@ -169,11 +169,14 @@ printexitstatus() {
 }
 
 printreportpass() {
+  testname=$1
   printheader PASS "$testname"
   $printbody_func
 }
 
 printreportfail() {
+  testname=$1
+  exitstatus=$2
   printheader FAIL "$testname"
   printexitstatus $exitstatus
   $printbody_func
