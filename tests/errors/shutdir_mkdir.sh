@@ -22,7 +22,7 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p $PWD/actual/shutdir\" ]; then
+if [ \"\$*\" = \"-p -- $PWD/actual/shutdir\" ]; then
   touch $PWD/actual/shutdir
   PATH=$PATH mkdir \"\$@\"
   exitstatus=\$?

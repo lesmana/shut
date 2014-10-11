@@ -44,7 +44,7 @@ printf "\
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p ./test0\" ]; then
+if [ \"\$*\" = \"-p -- ./test0\" ]; then
   touch ./test0
   PATH=$PATH mkdir \"\$@\"
   exitstatus=\$?

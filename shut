@@ -206,7 +206,7 @@ runtestandprintreport() {
 runtestintestdir() {
   testname="$1"
   fulltestname="$2"
-  mkdir -p "$testname" > /dev/null 2>&1 || {
+  mkdir -p -- "$testname" > /dev/null 2>&1 || {
     echo "error creating testdir" >&2
     return 3
   }
@@ -297,7 +297,7 @@ runtestsandprintsummary() {
 }
 
 runtestsinshutdir() {
-  mkdir -p "$config_fullshutdir" > /dev/null 2>&1 || {
+  mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error creating directory $config_fullshutdir" >&2
     echo "cannot continue" >&2
     return 3
