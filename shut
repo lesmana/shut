@@ -14,7 +14,8 @@ SHUT_PWD="$PWD"
 
 configfromargv() {
   # this function expects "$@" as argument
-  argc=$#
+  local argc=$#
+  local arg
   while [ $# -ge 1 ]; do
     arg="$1"
     case "$arg" in
@@ -67,7 +68,7 @@ collecttestnames() {
   if [ $# -eq 0 ]; then
     set -- "$default_pattern"
   fi
-  print="-false"
+  local print="-false"
   for pattern in "$@"; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
       print="$print -o -type f -executable -path \*/$pattern"
@@ -103,7 +104,7 @@ deleteshutdir() {
 }
 
 runtest() {
-  fulltestname="$1"
+  local fulltestname="$1"
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
@@ -113,24 +114,24 @@ runtest() {
 }
 
 runtestsaveexitstatus() {
-  fulltestname="$1"
+  local fulltestname="$1"
   runtest "$fulltestname"
-  exitstatus=$?
+  local exitstatus=$?
   echo "$exitstatus" > ../exitstatus
 }
 
 runtestsaveoutputsplit() {
-  fulltestname="$1"
+  local fulltestname="$1"
   runtestsaveexitstatus "$fulltestname" > ../stdout 3> ../stderr
 }
 
 runtestsaveoutputmerge() {
-  fulltestname="$1"
+  local fulltestname="$1"
   runtestsaveexitstatus "$fulltestname" > ../output 3>&1
 }
 
 runtestinworkdir() {
-  fulltestname="$1"
+  local fulltestname="$1"
   mkdir workdir > /dev/null 2>&1 || {
     echo "error creating workdir" >&2
     return 3
@@ -157,34 +158,34 @@ printbodymerge() {
 }
 
 printheader() {
-  statusstring="$1"
-  testname="$2"
+  local statusstring="$1"
+  local testname="$2"
   echo "================"
   echo "$statusstring $testname"
 }
 
 printexitstatus() {
-  exitstatus="$1"
+  local exitstatus="$1"
   echo "exitstatus: $exitstatus"
 }
 
 printreportpass() {
-  testname="$1"
+  local testname="$1"
   printheader "PASS" "$testname"
   $printbody_func
 }
 
 printreportfail() {
-  testname="$1"
-  exitstatus="$2"
+  local testname="$1"
+  local exitstatus="$2"
   printheader "FAIL" "$testname"
   printexitstatus "$exitstatus"
   $printbody_func
 }
 
 printreport() {
-  testname="$1"
-  exitstatus="$(cat exitstatus)"
+  local testname="$1"
+  local exitstatus="$(cat exitstatus)"
   if [ 0 -eq "$exitstatus" ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
     $printreportpass_func "$testname"
@@ -195,8 +196,8 @@ printreport() {
 }
 
 runtestandprintreport() {
-  testname="$1"
-  fulltestname="$2"
+  local testname="$1"
+  local fulltestname="$2"
   runtestinworkdir "$fulltestname" || {
     return
   }
@@ -204,8 +205,8 @@ runtestandprintreport() {
 }
 
 runtestintestdir() {
-  testname="$1"
-  fulltestname="$2"
+  local testname="$1"
+  local fulltestname="$2"
   mkdir -p -- "$testname" > /dev/null 2>&1 || {
     echo "error creating testdir" >&2
     return 3
@@ -220,8 +221,8 @@ runtestintestdir() {
 }
 
 runtestifexecutable() {
-  testname="$1"
-  fulltestname="$SHUT_PWD/${testname#./}"
+  local testname="$1"
+  local fulltestname="$SHUT_PWD/${testname#./}"
   [ -x "$fulltestname" ] || {
     echo "not found or not executable: $testname" >&2
     return 3
@@ -239,6 +240,7 @@ runtestandreporterror() {
 
 runtests() {
   touch ../pass ../fail ../error
+  local testname
   while read testname; do
     runtestandreporterror "$testname"
   done < ../tests
@@ -259,7 +261,7 @@ runtestsinlogdir() {
 }
 
 printlist() {
-  listname="$1"
+  local listname="$1"
   echo "================"
   echo "$listname:"
   cat "$listname"
@@ -326,7 +328,7 @@ workisruntests() {
 
 workisprinttestnames() {
   cat tests
-  count=$(wc -l < tests)
+  local count=$(wc -l < tests)
   echo "================"
   echo "would run: $count"
 }
@@ -354,7 +356,7 @@ workintempdir() {
     }
     collectnamesandwork "$@"
   )
-  exitstatus=$?
+  local exitstatus=$?
   rm -r -- "$config_tempdir" > /dev/null 2>&1 || {
     echo "error deleting tempdir" >&2
     echo "not fatal but annoying" >&2
