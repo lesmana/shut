@@ -10,13 +10,13 @@ config_keep=false
 config_split=false
 config_quiet=false
 config_tail=10
-SHUT_PWD=$PWD
+SHUT_PWD="$PWD"
 
 configfromargv() {
   # this function expects "$@" as argument
   argc=$#
   while [ $# -ge 1 ]; do
-    arg=$1
+    arg="$1"
     case "$arg" in
       -d) shift ; config_shutdir="$1" ;;
       -k) config_keep=true ;;
@@ -31,11 +31,11 @@ configfromargv() {
     esac
     shift
   done
-  config_shiftargv=$((argc - $#))
+  config_shiftargv="$((argc - $#))"
 }
 
 setup() {
-  config_fullshutdir=$(readlink -f "$config_shutdir")
+  config_fullshutdir="$(readlink -f "$config_shutdir")"
   if $config_donotruntests; then
     whatiswork_func=workisprinttestnames
   else
@@ -103,7 +103,7 @@ deleteshutdir() {
 }
 
 runtest() {
-  fulltestname=$1
+  fulltestname="$1"
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
@@ -113,24 +113,24 @@ runtest() {
 }
 
 runtestsaveexitstatus() {
-  fulltestname=$1
+  fulltestname="$1"
   runtest "$fulltestname"
   exitstatus=$?
-  echo $exitstatus > ../exitstatus
+  echo "$exitstatus" > ../exitstatus
 }
 
 runtestsaveoutputsplit() {
-  fulltestname=$1
+  fulltestname="$1"
   runtestsaveexitstatus "$fulltestname" > ../stdout 3> ../stderr
 }
 
 runtestsaveoutputmerge() {
-  fulltestname=$1
+  fulltestname="$1"
   runtestsaveexitstatus "$fulltestname" > ../output 3>&1
 }
 
 runtestinworkdir() {
-  fulltestname=$1
+  fulltestname="$1"
   mkdir -p workdir > /dev/null 2>&1 || {
     echo "error creating workdir" >&2
     return 3
@@ -146,57 +146,57 @@ runtestinworkdir() {
 
 printbodysplit() {
   echo "stdout:"
-  cat stdout | tail -n $config_tail | sed 's/^/  /'
+  cat stdout | tail -n "$config_tail" | sed 's/^/  /'
   echo "stderr:"
-  cat stderr | tail -n $config_tail | sed 's/^/  /'
+  cat stderr | tail -n "$config_tail" | sed 's/^/  /'
 }
 
 printbodymerge() {
   echo "output:"
-  cat output | tail -n $config_tail | sed 's/^/  /'
+  cat output | tail -n "$config_tail" | sed 's/^/  /'
 }
 
 printheader() {
-  statusstring=$1
-  testname=$2
+  statusstring="$1"
+  testname="$2"
   echo "================"
   echo "$statusstring $testname"
 }
 
 printexitstatus() {
-  exitstatus=$1
+  exitstatus="$1"
   echo "exitstatus: $exitstatus"
 }
 
 printreportpass() {
-  testname=$1
+  testname="$1"
   printheader PASS "$testname"
   $printbody_func
 }
 
 printreportfail() {
-  testname=$1
-  exitstatus=$2
+  testname="$1"
+  exitstatus="$2"
   printheader FAIL "$testname"
-  printexitstatus $exitstatus
+  printexitstatus "$exitstatus"
   $printbody_func
 }
 
 printreport() {
-  testname=$1
-  exitstatus=$(cat exitstatus)
-  if [ $exitstatus -eq 0 ]; then
+  testname="$1"
+  exitstatus="$(cat exitstatus)"
+  if [ "$exitstatus" -eq 0 ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
     $printreportpass_func "$testname"
   else
     echo "$testname" >> "$config_fullshutdir/fail"
-    $printreportfail_func "$testname" $exitstatus
+    $printreportfail_func "$testname" "$exitstatus"
   fi
 }
 
 runtestandprintreport() {
-  testname=$1
-  fulltestname=$2
+  testname="$1"
+  fulltestname="$2"
   runtestinworkdir "$fulltestname" || {
     return
   }
@@ -204,8 +204,8 @@ runtestandprintreport() {
 }
 
 runtestintestdir() {
-  testname=$1
-  fulltestname=$2
+  testname="$1"
+  fulltestname="$2"
   testdir="$testname.dir"
   mkdir -p "$testdir" > /dev/null 2>&1 || {
     echo "error creating testdir" >&2
@@ -221,7 +221,7 @@ runtestintestdir() {
 }
 
 runtestifexecutable() {
-  testname=$1
+  testname="$1"
   fulltestname="$SHUT_PWD/${testname#./}"
   [ -x "$fulltestname" ] || {
     echo "not found or not executable: $testname" >&2
@@ -231,7 +231,7 @@ runtestifexecutable() {
 }
 
 runtestandreporterror() {
-  testname=$1
+  testname="$1"
   runtestifexecutable "$testname" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >> "$config_fullshutdir/error"
     printheader ERROR "$testname"
@@ -261,7 +261,7 @@ runtestsinlogdir() {
 }
 
 printlist() {
-  listname=$1
+  listname="$1"
   echo "================"
   echo "$listname:"
   cat "$listname"
@@ -343,7 +343,7 @@ collectnamesandwork() {
 }
 
 workintempdir() {
-  config_tempdir=$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null) || {
+  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
     echo "error creating tempdir" >&2
     echo "cannot continue" >&2
     return 3
@@ -362,7 +362,7 @@ workintempdir() {
     echo "not fatal but annoying" >&2
     return 3
   }
-  return $exitstatus
+  return "$exitstatus"
 }
 
 main() {
