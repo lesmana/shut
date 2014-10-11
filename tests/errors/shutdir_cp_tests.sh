@@ -46,4 +46,4 @@ chmod +x cp
   set -e
 )
 
-diff -u -r expected actual
+diff -r expected actual

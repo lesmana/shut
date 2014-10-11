@@ -43,4 +43,4 @@ chmod +x rm
   set -e
 )
 
-diff -u -r expected actual
+diff -r expected actual
