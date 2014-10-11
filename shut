@@ -167,11 +167,11 @@ actualprintreport() {
 }
 
 printreportpass() {
-  $printreportpass_func "$@"
+  $printreportpass_func PASS "$@"
 }
 
 printreportfail() {
-  $printreportfail_func "$@"
+  $printreportfail_func FAIL "$@"
 }
 
 printreport() {
@@ -180,13 +180,11 @@ printreport() {
   if [ $exitstatus -eq 0 ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
     printreport_func=printreportpass
-    statusstring="PASS"
   else
     echo "$testname" >> "$config_fullshutdir/fail"
     printreport_func=printreportfail
-    statusstring="FAIL"
   fi
-  $printreport_func $statusstring "$testname" $exitstatus
+  $printreport_func "$testname" $exitstatus
 }
 
 runtestandprintreport() {
