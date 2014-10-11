@@ -211,7 +211,7 @@ runtestintestdir() {
     return 3
   }
   (
-    cd "$testname" > /dev/null 2>&1 || {
+    cd -- "$testname" > /dev/null 2>&1 || {
       echo "error changing directory to testdir" >&2
       return 3
     }
@@ -308,7 +308,7 @@ runtestsinshutdir() {
     return 3
   }
   (
-    cd "$config_fullshutdir" > /dev/null 2>&1 || {
+    cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
       echo "error changing directory to $config_fullshutdir" >&2
       echo "cannot continue" >&2
       return 3
@@ -347,7 +347,7 @@ workintempdir() {
     return 3
   }
   (
-    cd "$config_tempdir" > /dev/null 2>&1 || {
+    cd -- "$config_tempdir" > /dev/null 2>&1 || {
       echo "failed changing directory to $config_tempdir" >&2
       echo "cannot continue" >&2
       return 3
