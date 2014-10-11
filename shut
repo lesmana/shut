@@ -156,6 +156,13 @@ printbodymerge() {
   cat output | tail -n $config_tail | sed 's/^/  /'
 }
 
+printheader() {
+  statusstring=$1
+  testname=$2
+  echo "================"
+  echo "$statusstring $testname"
+}
+
 printexitstatus() {
   exitstatus=$1
   echo "exitstatus: $exitstatus"
@@ -165,8 +172,7 @@ actualprintreport() {
   statusstring=$1
   testname=$2
   exitstatus=$3
-  echo "================"
-  echo "$statusstring $testname"
+  printheader "$statusstring" "$testname"
   printexitstatus $exitstatus
   $printbody_func
 }
