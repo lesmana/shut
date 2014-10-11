@@ -24,7 +24,7 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-r $PWD/actual/shutdir\" ]; then
+if [ \"\$*\" = \"-r -- $PWD/actual/shutdir\" ]; then
   PATH=$PATH rm \"\$@\"
   PATH=$PATH rm \"\$@\"
 else

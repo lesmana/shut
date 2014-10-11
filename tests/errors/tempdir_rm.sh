@@ -31,7 +31,7 @@ echo tempdir
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-r tempdir\" ]; then
+if [ \"\$*\" = \"-r -- tempdir\" ]; then
   PATH=$PATH rm \"\$@\"
   PATH=$PATH rm \"\$@\"
 else
