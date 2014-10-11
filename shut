@@ -241,7 +241,7 @@ runtestandreporterror() {
 runtests() {
   touch ../pass ../fail ../error
   local testname
-  while read testname; do
+  while read -r testname; do
     runtestandreporterror "$testname"
   done < ../tests
 }
@@ -269,11 +269,11 @@ printlist() {
 
 printcounts() {
   wc -l tests pass fail error | {
-    read runcount ignorefilename
-    read passcount ignorefilename
-    read failcount ignorefilename
-    read errorcount ignorefilename
-    read ignoretotal
+    read -r runcount ignorefilename
+    read -r passcount ignorefilename
+    read -r failcount ignorefilename
+    read -r errorcount ignorefilename
+    read -r ignoretotal
     echo "================"
     printf "run: %d pass: %d fail: %d error: %d\n" \
           "$runcount" "$passcount" "$failcount" "$errorcount"
