@@ -168,21 +168,16 @@ printexitstatus() {
   echo "exitstatus: $exitstatus"
 }
 
-actualprintreport() {
-  statusstring=$1
-  testname=$2
-  exitstatus=$3
-  printheader "$statusstring" "$testname"
+printreportpass() {
+  printheader PASS "$testname"
   printexitstatus $exitstatus
   $printbody_func
 }
 
-printreportpass() {
-  actualprintreport PASS "$@"
-}
-
 printreportfail() {
-  actualprintreport FAIL "$@"
+  printheader FAIL "$testname"
+  printexitstatus $exitstatus
+  $printbody_func
 }
 
 printreport() {
