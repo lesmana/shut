@@ -179,12 +179,11 @@ printreport() {
   exitstatus=$(cat exitstatus)
   if [ $exitstatus -eq 0 ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
-    printreport_func=printreportpass
+    printreportpass "$testname" $exitstatus
   else
     echo "$testname" >> "$config_fullshutdir/fail"
-    printreport_func=printreportfail
+    printreportfail "$testname" $exitstatus
   fi
-  $printreport_func "$testname" $exitstatus
 }
 
 runtestandprintreport() {
