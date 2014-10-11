@@ -302,7 +302,7 @@ runtestsinshutdir() {
     echo "cannot continue" >&2
     return 3
   }
-  cp tests "$config_fullshutdir" > /dev/null 2>&1 || {
+  cp -- tests "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error copying tests to $config_fullshutdir" >&2
     echo "cannot continue" >&2
     return 3

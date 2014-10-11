@@ -24,7 +24,7 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"tests $PWD/actual/shutdir\" ]; then
+if [ \"\$*\" = \"-- tests $PWD/actual/shutdir\" ]; then
   mkdir $PWD/actual/shutdir/tests
   PATH=$PATH cp \"\$@\"
   exitstatus=\$?

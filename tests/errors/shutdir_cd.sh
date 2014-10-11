@@ -22,7 +22,7 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"tests $PWD/actual/shutdir\" ]; then
+if [ \"\$*\" = \"-- tests $PWD/actual/shutdir\" ]; then
   rm -rf $PWD/actual/shutdir
 else
   PATH=$PATH cp \"\$@\"
