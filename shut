@@ -231,8 +231,7 @@ runtestifexecutable() {
 }
 
 runtestandreporterror() {
-  testname="$1"
-  runtestifexecutable "$testname" 2> "$config_tempdir/lasterror" || {
+  runtestifexecutable "$@" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >> "$config_fullshutdir/error"
     printheader "ERROR" "$testname"
     cat "$config_tempdir/lasterror"
