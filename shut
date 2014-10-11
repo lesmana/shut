@@ -49,14 +49,14 @@ setup() {
     printbody_func=printbodymerge
   fi
   if $config_verbose; then
-    printreportpass_func=actualprintreport
-    printreportfail_func=actualprintreport
+    printreportpass_func=printreportpass
+    printreportfail_func=printreportfail
   elif $config_quiet; then
     printreportpass_func=true
     printreportfail_func=true
   else
     printreportpass_func=true
-    printreportfail_func=actualprintreport
+    printreportfail_func=printreportfail
   fi
 }
 
@@ -167,11 +167,11 @@ actualprintreport() {
 }
 
 printreportpass() {
-  $printreportpass_func PASS "$@"
+  actualprintreport PASS "$@"
 }
 
 printreportfail() {
-  $printreportfail_func FAIL "$@"
+  actualprintreport FAIL "$@"
 }
 
 printreport() {
@@ -179,10 +179,10 @@ printreport() {
   exitstatus=$(cat exitstatus)
   if [ $exitstatus -eq 0 ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
-    printreportpass "$testname" $exitstatus
+    $printreportpass_func "$testname" $exitstatus
   else
     echo "$testname" >> "$config_fullshutdir/fail"
-    printreportfail "$testname" $exitstatus
+    $printreportfail_func "$testname" $exitstatus
   fi
 }
 
