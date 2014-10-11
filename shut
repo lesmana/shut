@@ -234,8 +234,7 @@ runtestandreporterror() {
   testname=$1
   runtestifexecutable "$testname" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >> "$config_fullshutdir/error"
-    echo "================"
-    echo "ERROR $testname"
+    printheader ERROR "$testname"
     cat "$config_tempdir/lasterror"
   }
 }
