@@ -236,7 +236,6 @@ runtestandreporterror() {
     echo "$testname" >> "$config_fullshutdir/error"
     echo "================"
     echo "ERROR $testname"
-    echo "exitstatus: n/a"
     cat "$config_tempdir/lasterror"
   }
 }
