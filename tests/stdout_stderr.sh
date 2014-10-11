@@ -39,7 +39,6 @@ printf "\
 printf "\
 ================
 PASS ./test0
-exitstatus: 0
 stdout:
   stdout
 stderr:

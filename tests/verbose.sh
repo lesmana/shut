@@ -54,7 +54,6 @@ output:
   + false
 ================
 PASS ./test1
-exitstatus: 0
 output:
   + true
 ================

@@ -170,7 +170,6 @@ printexitstatus() {
 
 printreportpass() {
   printheader PASS "$testname"
-  printexitstatus $exitstatus
   $printbody_func
 }
 

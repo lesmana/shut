@@ -42,7 +42,6 @@ printf "\
 printf "\
 ================
 PASS ./test0
-exitstatus: 0
 output:
   3
   4

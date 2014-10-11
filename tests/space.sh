@@ -49,7 +49,6 @@ printf "\
 printf "\
 ================
 PASS ./d 1/test 1
-exitstatus: 0
 output:
   + true
 ================

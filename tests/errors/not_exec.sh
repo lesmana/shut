@@ -55,7 +55,6 @@ printf "\
 printf "\
 ================
 PASS ./test0
-exitstatus: 0
 output:
   test0
 ================
@@ -64,7 +63,6 @@ exitstatus: n/a
 not found or not executable: ./test1
 ================
 PASS ./test2
-exitstatus: 0
 output:
   test2
 ================
