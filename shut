@@ -206,13 +206,12 @@ runtestandprintreport() {
 runtestintestdir() {
   testname="$1"
   fulltestname="$2"
-  testdir="$testname.dir"
-  mkdir -p "$testdir" > /dev/null 2>&1 || {
+  mkdir -p "$testname" > /dev/null 2>&1 || {
     echo "error creating testdir" >&2
     return 3
   }
   (
-    cd "$testdir" > /dev/null 2>&1 || {
+    cd "$testname" > /dev/null 2>&1 || {
       echo "error changing directory to testdir" >&2
       return 3
     }

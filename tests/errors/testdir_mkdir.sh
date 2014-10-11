@@ -44,11 +44,11 @@ printf "\
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p ./test0.dir\" ]; then
-  touch ./test0.dir
+if [ \"\$*\" = \"-p ./test0\" ]; then
+  touch ./test0
   PATH=$PATH mkdir \"\$@\"
   exitstatus=\$?
-  rm ./test0.dir
+  rm ./test0
   exit \$exitstatus
 else
   PATH=$PATH mkdir \"\$@\"

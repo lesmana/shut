@@ -13,13 +13,13 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/logdir/test0.dir/workdir
+mkdir -p expected/shutdir/logdir/test0/workdir
 
 printf "\
 $PWD/actual/test0: 3: 3: Bad file descriptor
-" > expected/shutdir/logdir/test0.dir/output
+" > expected/shutdir/logdir/test0/output
 
-printf "2\n" > expected/shutdir/logdir/test0.dir/exitstatus
+printf "2\n" > expected/shutdir/logdir/test0/exitstatus
 
 printf "\
 ./test0

@@ -44,7 +44,7 @@ printf "\
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p ./test0.dir\" ]; then
+if [ \"\$*\" = \"-p ./test0\" ]; then
   :
 else
   PATH=$PATH mkdir \"\$@\"

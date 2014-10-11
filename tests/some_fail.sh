@@ -37,22 +37,22 @@ chmod +x \
 cp -a actual expected
 
 mkdir -p \
-      expected/shutdir/logdir/test0.dir/workdir \
-      expected/shutdir/logdir/test1.dir/workdir \
-      expected/shutdir/logdir/test2.dir/workdir \
-      expected/shutdir/logdir/test3.dir/workdir
+      expected/shutdir/logdir/test0/workdir \
+      expected/shutdir/logdir/test1/workdir \
+      expected/shutdir/logdir/test2/workdir \
+      expected/shutdir/logdir/test3/workdir
 
-printf "+ false\n"  > expected/shutdir/logdir/test0.dir/output
-printf "1\n"        > expected/shutdir/logdir/test0.dir/exitstatus
+printf "+ false\n"  > expected/shutdir/logdir/test0/output
+printf "1\n"        > expected/shutdir/logdir/test0/exitstatus
 
-printf "+ true\n"   > expected/shutdir/logdir/test1.dir/output
-printf "0\n"        > expected/shutdir/logdir/test1.dir/exitstatus
+printf "+ true\n"   > expected/shutdir/logdir/test1/output
+printf "0\n"        > expected/shutdir/logdir/test1/exitstatus
 
-printf "+ false\n"  > expected/shutdir/logdir/test2.dir/output
-printf "1\n"        > expected/shutdir/logdir/test2.dir/exitstatus
+printf "+ false\n"  > expected/shutdir/logdir/test2/output
+printf "1\n"        > expected/shutdir/logdir/test2/exitstatus
 
-printf "+ true\n"   > expected/shutdir/logdir/test3.dir/output
-printf "0\n"        > expected/shutdir/logdir/test3.dir/exitstatus
+printf "+ true\n"   > expected/shutdir/logdir/test3/output
+printf "0\n"        > expected/shutdir/logdir/test3/exitstatus
 
 printf "\
 ./test0
