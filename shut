@@ -166,16 +166,24 @@ actualprintreport() {
   $printbody_func
 }
 
+printreportpass() {
+  $printreportpass_func "$@"
+}
+
+printreportfail() {
+  $printreportfail_func "$@"
+}
+
 printreport() {
   testname=$1
   exitstatus=$(cat exitstatus)
   if [ $exitstatus -eq 0 ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
-    printreport_func=$printreportpass_func
+    printreport_func=printreportpass
     statusstring="PASS"
   else
     echo "$testname" >> "$config_fullshutdir/fail"
-    printreport_func=$printreportfail_func
+    printreport_func=printreportfail
     statusstring="FAIL"
   fi
   $printreport_func $statusstring "$testname" $exitstatus
