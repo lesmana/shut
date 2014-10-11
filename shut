@@ -185,7 +185,7 @@ printreportfail() {
 printreport() {
   testname="$1"
   exitstatus="$(cat exitstatus)"
-  if [ "$exitstatus" -eq 0 ]; then
+  if [ 0 -eq "$exitstatus" ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
     $printreportpass_func "$testname"
   else
