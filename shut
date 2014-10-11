@@ -160,7 +160,6 @@ actualprintreport() {
   statusstring=$1
   testname=$2
   exitstatus=$3
-  printbody_func=$4
   echo "================"
   echo "$statusstring $testname"
   echo "exitstatus: $exitstatus"
@@ -179,7 +178,7 @@ printreport() {
     printreport_func=$printreportfail_func
     statusstring="FAIL"
   fi
-  $printreport_func $statusstring "$testname" $exitstatus $printbody_func
+  $printreport_func $statusstring "$testname" $exitstatus
 }
 
 runtestandprintreport() {
