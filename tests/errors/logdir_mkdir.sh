@@ -28,7 +28,7 @@ printf "\
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p logdir\" ]; then
+if [ \"\$*\" = \"logdir\" ]; then
   touch logdir
   PATH=$PATH mkdir \"\$@\"
   exitstatus=\$?

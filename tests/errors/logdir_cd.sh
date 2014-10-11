@@ -27,7 +27,7 @@ printf "\
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-p logdir\" ]; then
+if [ \"\$*\" = \"logdir\" ]; then
   :
 else
   PATH=$PATH mkdir \"\$@\"

@@ -131,7 +131,7 @@ runtestsaveoutputmerge() {
 
 runtestinworkdir() {
   fulltestname="$1"
-  mkdir -p workdir > /dev/null 2>&1 || {
+  mkdir workdir > /dev/null 2>&1 || {
     echo "error creating workdir" >&2
     return 3
   }
@@ -245,7 +245,7 @@ runtests() {
 }
 
 runtestsinlogdir() {
-  mkdir -p logdir > /dev/null 2>&1 || {
+  mkdir logdir > /dev/null 2>&1 || {
     echo "error creating logdir" >&2
     return 3
   }
