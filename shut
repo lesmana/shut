@@ -170,14 +170,14 @@ printexitstatus() {
 
 printreportpass() {
   testname="$1"
-  printheader PASS "$testname"
+  printheader "PASS" "$testname"
   $printbody_func
 }
 
 printreportfail() {
   testname="$1"
   exitstatus="$2"
-  printheader FAIL "$testname"
+  printheader "FAIL" "$testname"
   printexitstatus "$exitstatus"
   $printbody_func
 }
@@ -234,7 +234,7 @@ runtestandreporterror() {
   testname="$1"
   runtestifexecutable "$testname" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >> "$config_fullshutdir/error"
-    printheader ERROR "$testname"
+    printheader "ERROR" "$testname"
     cat "$config_tempdir/lasterror"
   }
 }
