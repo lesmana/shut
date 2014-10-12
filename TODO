@@ -1,6 +1,10 @@
 todo for shell unit test
 
 ----
+all echo to printf
+printf with explicit format string to guard against accidental % expansion
+
+----
 test that pattern argument works with absolute and relative path
 
 ----
