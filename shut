@@ -12,6 +12,7 @@ config_quiet=false
 config_tail=10
 SHUT_PWD="$PWD"
 
+# -----------------------------------------------------------------------------
 configfromargv() {
   # this function expects "$@" as argument
   local argc=$#
@@ -61,6 +62,7 @@ setup() {
   fi
 }
 
+# -----------------------------------------------------------------------------
 collecttestnames() {
   # this function expects "$@" as argument
   # the same "$@" as the function configfromargv
@@ -82,6 +84,7 @@ collecttestnames() {
         \( $print \) -printf "./%P\n" | sort
 }
 
+# -----------------------------------------------------------------------------
 mktemp_tempdir() {
   config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
     echo "error creating tempdir" >&2
@@ -98,6 +101,7 @@ cd_tempdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 deleteshutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
@@ -119,6 +123,7 @@ deleteshutdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 mkdir_shutdir() {
   mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error creating directory $config_fullshutdir" >&2
@@ -143,6 +148,7 @@ cd_shutdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 mkdir_logdir() {
   mkdir logdir > /dev/null 2>&1 || {
     echo "error creating logdir" >&2
@@ -157,6 +163,7 @@ cd_logdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 mkdir_testdir() {
   local testname="$1"
   mkdir -p -- "$testname" > /dev/null 2>&1 || {
@@ -173,6 +180,7 @@ cd_testdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 mkdir_workdir() {
   mkdir workdir > /dev/null 2>&1 || {
     echo "error creating workdir" >&2
@@ -187,6 +195,7 @@ cd_workdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 runtest() {
   local fulltestname="$1"
   (
@@ -214,6 +223,7 @@ runtestsaveoutputmerge() {
   runtestsaveexitstatus "$fulltestname" > ../output 3>&1
 }
 
+# -----------------------------------------------------------------------------
 runtestinworkdir() {
   local fulltestname="$1"
   mkdir_workdir || return
@@ -223,6 +233,7 @@ runtestinworkdir() {
   )
 }
 
+# -----------------------------------------------------------------------------
 printbodysplit() {
   echo "stdout:"
   cat stdout | tail -n "$config_tail" | sed 's/^/  /'
@@ -273,6 +284,7 @@ printreport() {
   fi
 }
 
+# -----------------------------------------------------------------------------
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
@@ -280,6 +292,7 @@ runtestandprintreport() {
   printreport "$testname"
 }
 
+# -----------------------------------------------------------------------------
 runtestintestdir() {
   local testname="$1"
   local fulltestname="$2"
@@ -290,6 +303,7 @@ runtestintestdir() {
   )
 }
 
+# -----------------------------------------------------------------------------
 runtestifexecutable() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
@@ -300,6 +314,7 @@ runtestifexecutable() {
   runtestintestdir "$testname" "$fulltestname"
 }
 
+# -----------------------------------------------------------------------------
 runtestandreporterror() {
   runtestifexecutable "$@" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >> "$config_fullshutdir/error"
@@ -308,6 +323,7 @@ runtestandreporterror() {
   }
 }
 
+# -----------------------------------------------------------------------------
 runtests() {
   touch ../pass ../fail ../error
   local testname
@@ -316,6 +332,7 @@ runtests() {
   done < ../tests
 }
 
+# -----------------------------------------------------------------------------
 runtestsinlogdir() {
   mkdir_logdir || return
   (
@@ -324,6 +341,7 @@ runtestsinlogdir() {
   )
 }
 
+# -----------------------------------------------------------------------------
 printlist() {
   local listname="$1"
   echo "================"
@@ -354,12 +372,14 @@ printsummary() {
   printcounts
 }
 
+# -----------------------------------------------------------------------------
 runtestsandprintsummary() {
   runtestsinlogdir || return
   printsummary
   [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
 }
 
+# -----------------------------------------------------------------------------
 runtestsinshutdir() {
   mkdir_shutdir || return
   cp_tests_shutdir || return
@@ -369,6 +389,7 @@ runtestsinshutdir() {
   )
 }
 
+# -----------------------------------------------------------------------------
 workisruntests() {
   deleteshutdir || return
   runtestsinshutdir
@@ -390,6 +411,7 @@ collectnamesandwork() {
   $whatiswork_func
 }
 
+# -----------------------------------------------------------------------------
 rm_tempdir() {
   rm -r -- "$config_tempdir" > /dev/null 2>&1 || {
     echo "error deleting tempdir" >&2
@@ -398,6 +420,7 @@ rm_tempdir() {
   }
 }
 
+# -----------------------------------------------------------------------------
 workintempdir() {
   mktemp_tempdir || return
   (
@@ -409,6 +432,7 @@ workintempdir() {
   return "$exitstatus"
 }
 
+# -----------------------------------------------------------------------------
 main() {
   configfromargv "$@"
   setup
