@@ -298,23 +298,35 @@ runtestsandprintsummary() {
   [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
 }
 
-runtestsinshutdir() {
+mkdir_shutdir() {
   mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error creating directory $config_fullshutdir" >&2
     echo "cannot continue" >&2
     return 3
   }
+}
+
+cp_tests_shutdir() {
   cp -- tests "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error copying tests to $config_fullshutdir" >&2
     echo "cannot continue" >&2
     return 3
   }
-  (
+}
+
+cd_shutdir() {
     cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
       echo "error changing directory to $config_fullshutdir" >&2
       echo "cannot continue" >&2
       return 3
     }
+}
+
+runtestsinshutdir() {
+  mkdir_shutdir || return
+  cp_tests_shutdir || return
+  (
+    cd_shutdir || return
     runtestsandprintsummary
   )
 }
