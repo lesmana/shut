@@ -41,7 +41,7 @@ setup() {
   if $config_donotruntests; then
     work_func=printtestnames
   else
-    work_func=runtestsinshutdir
+    work_func=runtestscatcherror
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -392,6 +392,10 @@ runtestsinshutdir() {
     cd_shutdir || return
     runtestsandprintsummary
   )
+}
+
+runtestscatcherror() {
+  runtestsinshutdir
 }
 
 printtestnames() {
