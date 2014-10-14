@@ -39,9 +39,9 @@ configfromargv() {
 setup() {
   config_fullshutdir="$(readlink -f "$config_shutdir")"
   if $config_donotruntests; then
-    whatiswork_func=printtestnames
+    work_func=printtestnames
   else
-    whatiswork_func=runtestsinshutdir
+    work_func=runtestsinshutdir
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -402,7 +402,7 @@ workiftestsfound() {
     echo "no tests found"
     return 2
   }
-  $whatiswork_func
+  $work_func
 }
 
 collectnamesandwork() {
