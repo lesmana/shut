@@ -103,6 +103,22 @@ deleteshutdir() {
   }
 }
 
+mkdir_testdir() {
+  local testname="$1"
+  mkdir -p -- "$testname" > /dev/null 2>&1 || {
+    echo "error creating testdir" >&2
+    return 3
+  }
+}
+
+cd_testdir() {
+  local testname="$1"
+  cd -- "$testname" > /dev/null 2>&1 || {
+    echo "error changing directory to testdir" >&2
+    return 3
+  }
+}
+
 mkdir_workdir() {
   mkdir workdir > /dev/null 2>&1 || {
     echo "error creating workdir" >&2
@@ -210,22 +226,6 @@ runtestandprintreport() {
     return
   }
   printreport "$testname"
-}
-
-mkdir_testdir() {
-  local testname="$1"
-  mkdir -p -- "$testname" > /dev/null 2>&1 || {
-    echo "error creating testdir" >&2
-    return 3
-  }
-}
-
-cd_testdir() {
-  local testname="$1"
-  cd -- "$testname" > /dev/null 2>&1 || {
-    echo "error changing directory to testdir" >&2
-    return 3
-  }
 }
 
 runtestintestdir() {
