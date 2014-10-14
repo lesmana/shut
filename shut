@@ -246,16 +246,24 @@ runtests() {
   done < ../tests
 }
 
-runtestsinlogdir() {
+mkdir_logdir() {
   mkdir logdir > /dev/null 2>&1 || {
     echo "error creating logdir" >&2
     return 3
   }
-  (
+}
+
+cd_logdir() {
     cd logdir > /dev/null 2>&1 || {
       echo "error changing directory to logdir" >&2
       return 3
     }
+}
+
+runtestsinlogdir() {
+  mkdir_logdir || return
+  (
+    cd_logdir || return
     runtests
   )
 }
