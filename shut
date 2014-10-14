@@ -381,6 +381,7 @@ runtestsandprintsummary() {
 
 # -----------------------------------------------------------------------------
 runtestsinshutdir() {
+  deleteshutdir || return
   mkdir_shutdir || return
   cp_tests_shutdir || return
   (
@@ -391,7 +392,6 @@ runtestsinshutdir() {
 
 # -----------------------------------------------------------------------------
 workisruntests() {
-  deleteshutdir || return
   runtestsinshutdir
 }
 
