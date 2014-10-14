@@ -395,7 +395,12 @@ runtestsinshutdir() {
 }
 
 runtestscatcherror() {
-  runtestsinshutdir
+  runtestsinshutdir 2> "$config_tempdir/runtestserror"
+  exitstatus=$?
+  [ -s "$config_tempdir/runtestserror" ] && {
+    cat "$config_tempdir/runtestserror" >&2
+  }
+  return "$exitstatus"
 }
 
 printtestnames() {
