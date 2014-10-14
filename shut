@@ -204,18 +204,28 @@ runtestandprintreport() {
   printreport "$testname"
 }
 
-runtestintestdir() {
+mkdir_testdir() {
   local testname="$1"
-  local fulltestname="$2"
   mkdir -p -- "$testname" > /dev/null 2>&1 || {
     echo "error creating testdir" >&2
     return 3
   }
-  (
+}
+
+cd_testdir() {
+    local testname="$1"
     cd -- "$testname" > /dev/null 2>&1 || {
       echo "error changing directory to testdir" >&2
       return 3
     }
+}
+
+runtestintestdir() {
+  local testname="$1"
+  local fulltestname="$2"
+  mkdir_testdir "$testname" || return
+  (
+    cd_testdir "$testname" || return
     runtestandprintreport "$testname" "$fulltestname"
   )
 }
