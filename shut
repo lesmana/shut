@@ -383,7 +383,6 @@ runtestsandprintsummary() {
   determineexitstatus
 }
 
-# -----------------------------------------------------------------------------
 runtestsinshutdir() {
   rm_shutdir || return
   mkdir_shutdir || return
@@ -394,6 +393,7 @@ runtestsinshutdir() {
   )
 }
 
+# -----------------------------------------------------------------------------
 runtestscatcherror() {
   runtestsinshutdir 2> "$config_tempdir/runtestserror"
   exitstatus=$?
