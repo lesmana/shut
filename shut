@@ -82,6 +82,22 @@ collecttestnames() {
         \( $print \) -printf "./%P\n" | sort
 }
 
+mktemp_tempdir() {
+  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
+    echo "error creating tempdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
+}
+
+cd_tempdir() {
+  cd -- "$config_tempdir" > /dev/null 2>&1 || {
+    echo "failed changing directory to $config_tempdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
+}
+
 deleteshutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
@@ -378,22 +394,6 @@ collectnamesandwork() {
     return 2
   }
   $whatiswork_func
-}
-
-mktemp_tempdir() {
-  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
-    echo "error creating tempdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-}
-
-cd_tempdir() {
-  cd -- "$config_tempdir" > /dev/null 2>&1 || {
-    echo "failed changing directory to $config_tempdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
 }
 
 rm_tempdir() {
