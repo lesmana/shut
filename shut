@@ -102,7 +102,7 @@ cd_tempdir() {
 }
 
 # -----------------------------------------------------------------------------
-deleteshutdir() {
+rm_shutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
   fi
@@ -381,7 +381,7 @@ runtestsandprintsummary() {
 
 # -----------------------------------------------------------------------------
 runtestsinshutdir() {
-  deleteshutdir || return
+  rm_shutdir || return
   mkdir_shutdir || return
   cp_tests_shutdir || return
   (
