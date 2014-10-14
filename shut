@@ -234,18 +234,6 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
-printbodysplit() {
-  echo "stdout:"
-  cat stdout | tail -n "$config_tail" | sed 's/^/  /'
-  echo "stderr:"
-  cat stderr | tail -n "$config_tail" | sed 's/^/  /'
-}
-
-printbodymerge() {
-  echo "output:"
-  cat output | tail -n "$config_tail" | sed 's/^/  /'
-}
-
 printheader() {
   local statusstring="$1"
   local testname="$2"
@@ -256,6 +244,18 @@ printheader() {
 printexitstatus() {
   local exitstatus="$1"
   echo "exitstatus: $exitstatus"
+}
+
+printbodysplit() {
+  echo "stdout:"
+  cat stdout | tail -n "$config_tail" | sed 's/^/  /'
+  echo "stderr:"
+  cat stderr | tail -n "$config_tail" | sed 's/^/  /'
+}
+
+printbodymerge() {
+  echo "output:"
+  cat output | tail -n "$config_tail" | sed 's/^/  /'
 }
 
 printreportpass() {
