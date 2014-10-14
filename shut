@@ -390,7 +390,6 @@ runtestsinshutdir() {
   )
 }
 
-# -----------------------------------------------------------------------------
 printtestnames() {
   cat tests
   local count=$(wc -l < tests)
