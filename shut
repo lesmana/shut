@@ -41,7 +41,7 @@ setup() {
   if $config_donotruntests; then
     whatiswork_func=workisprinttestnames
   else
-    whatiswork_func=workisruntests
+    whatiswork_func=runtestsinshutdir
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -391,10 +391,6 @@ runtestsinshutdir() {
 }
 
 # -----------------------------------------------------------------------------
-workisruntests() {
-  runtestsinshutdir
-}
-
 workisprinttestnames() {
   cat tests
   local count=$(wc -l < tests)
