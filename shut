@@ -373,10 +373,14 @@ printsummary() {
 }
 
 # -----------------------------------------------------------------------------
+determineexitstatus() {
+  [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
+}
+
 runtestsandprintsummary() {
   runtestsinlogdir || return
   printsummary
-  [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
+  determineexitstatus
 }
 
 # -----------------------------------------------------------------------------
