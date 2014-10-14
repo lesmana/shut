@@ -138,10 +138,10 @@ mkdir_workdir() {
 }
 
 cd_workdir() {
-    cd workdir > /dev/null 2>&1 || {
-      echo "error changing directory to workdir" >&2
-      return 3
-    }
+  cd workdir > /dev/null 2>&1 || {
+    echo "error changing directory to workdir" >&2
+    return 3
+  }
 }
 
 runtestinworkdir() {
@@ -221,11 +221,11 @@ mkdir_testdir() {
 }
 
 cd_testdir() {
-    local testname="$1"
-    cd -- "$testname" > /dev/null 2>&1 || {
-      echo "error changing directory to testdir" >&2
-      return 3
-    }
+  local testname="$1"
+  cd -- "$testname" > /dev/null 2>&1 || {
+    echo "error changing directory to testdir" >&2
+    return 3
+  }
 }
 
 runtestintestdir() {
@@ -272,10 +272,10 @@ mkdir_logdir() {
 }
 
 cd_logdir() {
-    cd logdir > /dev/null 2>&1 || {
-      echo "error changing directory to logdir" >&2
-      return 3
-    }
+  cd logdir > /dev/null 2>&1 || {
+    echo "error changing directory to logdir" >&2
+    return 3
+  }
 }
 
 runtestsinlogdir() {
@@ -341,11 +341,11 @@ cp_tests_shutdir() {
 }
 
 cd_shutdir() {
-    cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
-      echo "error changing directory to $config_fullshutdir" >&2
-      echo "cannot continue" >&2
-      return 3
-    }
+  cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
+    echo "error changing directory to $config_fullshutdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
 }
 
 runtestsinshutdir() {
@@ -389,11 +389,11 @@ mktemp_tempdir() {
 }
 
 cd_tempdir() {
-    cd -- "$config_tempdir" > /dev/null 2>&1 || {
-      echo "failed changing directory to $config_tempdir" >&2
-      echo "cannot continue" >&2
-      return 3
-    }
+  cd -- "$config_tempdir" > /dev/null 2>&1 || {
+    echo "failed changing directory to $config_tempdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
 }
 
 rm_tempdir() {
