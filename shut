@@ -315,7 +315,7 @@ runtestifexecutable() {
 }
 
 # -----------------------------------------------------------------------------
-runtestandreporterror() {
+runtestcatchterror() {
   runtestifexecutable "$@" 2> "$config_tempdir/lasterror" || {
     echo "$testname" >> "$config_fullshutdir/error"
     printheader "ERROR" "$testname"
@@ -328,7 +328,7 @@ runtests() {
   touch ../pass ../fail ../error
   local testname
   while read -r testname; do
-    runtestandreporterror "$testname"
+    runtestcatchterror "$testname"
   done < ../tests
 }
 
