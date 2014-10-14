@@ -276,9 +276,7 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
-  runtestinworkdir "$fulltestname" || {
-    return
-  }
+  runtestinworkdir "$fulltestname" || return
   printreport "$testname"
 }
 
@@ -357,9 +355,7 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtestsinlogdir || {
-    return
-  }
+  runtestsinlogdir || return
   printsummary
   [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
 }
@@ -374,9 +370,7 @@ runtestsinshutdir() {
 }
 
 workisruntests() {
-  deleteshutdir || {
-    return
-  }
+  deleteshutdir || return
   runtestsinshutdir
 }
 
