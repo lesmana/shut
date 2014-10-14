@@ -39,7 +39,7 @@ configfromargv() {
 setup() {
   config_fullshutdir="$(readlink -f "$config_shutdir")"
   if $config_donotruntests; then
-    whatiswork_func=workisprinttestnames
+    whatiswork_func=printtestnames
   else
     whatiswork_func=runtestsinshutdir
   fi
@@ -391,7 +391,7 @@ runtestsinshutdir() {
 }
 
 # -----------------------------------------------------------------------------
-workisprinttestnames() {
+printtestnames() {
   cat tests
   local count=$(wc -l < tests)
   echo "================"
