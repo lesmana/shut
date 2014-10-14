@@ -397,13 +397,17 @@ printtestnames() {
   echo "would run: $count"
 }
 
-collectnamesandwork() {
-  collecttestnames "$@" > tests
+workiftestsfound() {
   test -s tests || {
     echo "no tests found"
     return 2
   }
   $whatiswork_func
+}
+
+collectnamesandwork() {
+  collecttestnames "$@" > tests
+  workiftestsfound
 }
 
 # -----------------------------------------------------------------------------
