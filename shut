@@ -398,7 +398,7 @@ printtestnames() {
 }
 
 workiftestsfound() {
-  test -s tests || {
+  [ -s tests ] || {
     echo "no tests found"
     return 2
   }
