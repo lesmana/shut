@@ -400,14 +400,14 @@ configthenwork() {
 
 # -----------------------------------------------------------------------------
 workcatcherror() {
-  configthenwork "$@" 2> unhandlederror 3> handlederror
+  configthenwork "$@" 2> workerrorunhandled 3> workerrorhandled
   local exitstatus=$?
-  if [ -s handlederror ]; then
-    cat handlederror >&2
+  if [ -s workerrorhandled ]; then
+    cat workerrorhandled >&2
   fi
-  if [ -s unhandlederror ]; then
+  if [ -s workerrorunhandled ]; then
     echo "unhandled error:" >&2
-    cat unhandlederror >&2
+    cat workerrorunhandled >&2
   fi
   return "$exitstatus"
 }
