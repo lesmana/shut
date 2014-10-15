@@ -48,6 +48,7 @@ configfromargv() {
     esac
     shift
   done
+  local pattern
   for pattern in "$@"; do
     echo "$pattern" >> "$config_tempdir/patterns"
   done
@@ -86,6 +87,7 @@ collecttestnames() {
   if [ ! -s "$config_tempdir/patterns" ]; then
     echo "$default_pattern" > "$config_tempdir/patterns"
   fi
+  local pattern
   local print="-false"
   while read -r pattern; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
