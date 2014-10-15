@@ -37,7 +37,7 @@ configfromargv() {
 }
 
 setup() {
-  config_fullshutdir="$(readlink -f "$config_shutdir")"
+  config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
   if $config_donotruntests; then
     work_func=printtestnames
   else
