@@ -2,7 +2,6 @@
 
 default_pattern="test"
 
-config_shiftargv=0
 config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
@@ -32,7 +31,6 @@ cd_tempdir() {
 # -----------------------------------------------------------------------------
 configfromargv() {
   # this function expects "$@" as argument
-  local argc=$#
   local arg
   while [ $# -ge 1 ]; do
     arg="$1"
@@ -50,7 +48,9 @@ configfromargv() {
     esac
     shift
   done
-  config_shiftargv="$((argc - $#))"
+  for pattern in "$@"; do
+    echo "$pattern" >> "$config_tempdir/patterns"
+  done
 }
 
 setup() {
@@ -83,12 +83,11 @@ setup() {
 collecttestnames() {
   # this function expects "$@" as argument
   # the same "$@" as the function configfromargv
-  shift "$config_shiftargv"
-  if [ $# -eq 0 ]; then
-    set -- "$default_pattern"
+  if [ ! -s "$config_tempdir/patterns" ]; then
+    echo "$default_pattern" > "$config_tempdir/patterns"
   fi
   local print="-false"
-  for pattern in "$@"; do
+  while read -r pattern; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
       print="$print -o -type f -executable -path \*/$pattern"
     elif [ -d "$SHUT_PWD/$pattern" ]; then
@@ -96,7 +95,7 @@ collecttestnames() {
     else
       print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
     fi
-  done
+  done < "$config_tempdir/patterns"
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
         \( $print \) -printf "./%P\n" | sort
 }
