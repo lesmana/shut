@@ -12,21 +12,6 @@ config_tail=10
 SHUT_PWD="$PWD"
 
 # -----------------------------------------------------------------------------
-mkdir_workdir() {
-  mkdir workdir > /dev/null 2>&1 || {
-    echo "error creating workdir" >&2
-    return 3
-  }
-}
-
-cd_workdir() {
-  cd workdir > /dev/null 2>&1 || {
-    echo "error changing directory to workdir" >&2
-    return 3
-  }
-}
-
-# -----------------------------------------------------------------------------
 runtest() {
   local fulltestname="$1"
   (
@@ -52,6 +37,21 @@ runtestsaveoutputsplit() {
 runtestsaveoutputmerge() {
   local fulltestname="$1"
   runtestsaveexitstatus "$fulltestname" > ../output 3>&1
+}
+
+# -----------------------------------------------------------------------------
+mkdir_workdir() {
+  mkdir workdir > /dev/null 2>&1 || {
+    echo "error creating workdir" >&2
+    return 3
+  }
+}
+
+cd_workdir() {
+  cd workdir > /dev/null 2>&1 || {
+    echo "error changing directory to workdir" >&2
+    return 3
+  }
 }
 
 # -----------------------------------------------------------------------------
