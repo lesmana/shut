@@ -421,10 +421,14 @@ configthenwork() {
 
 # -----------------------------------------------------------------------------
 workcatcherror() {
-  configthenwork "$@" 3> errormessage
+  configthenwork "$@" 2> unhandlederror 3> handlederror
   local exitstatus=$?
-  if [ -s errormessage ]; then
-    cat errormessage >&2
+  if [ -s handlederror ]; then
+    cat handlederror >&2
+  fi
+  if [ -s unhandlederror ]; then
+    echo "unhandled error:" >&2
+    cat unhandlederror >&2
   fi
   return "$exitstatus"
 }
