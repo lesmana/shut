@@ -12,21 +12,6 @@ config_tail=10
 SHUT_PWD="$PWD"
 
 # -----------------------------------------------------------------------------
-mkdir_logdir() {
-  mkdir logdir > /dev/null 2>&1 || {
-    echo "error creating logdir" >&3
-    return 3
-  }
-}
-
-cd_logdir() {
-  cd logdir > /dev/null 2>&1 || {
-    echo "error changing directory to logdir" >&3
-    return 3
-  }
-}
-
-# -----------------------------------------------------------------------------
 mkdir_testdir() {
   local testname="$1"
   mkdir -p -- "$testname" > /dev/null 2>&1 || {
@@ -193,6 +178,21 @@ runtests() {
   while read -r testname; do
     runtestcatchterror "$testname"
   done < ../tests
+}
+
+# -----------------------------------------------------------------------------
+mkdir_logdir() {
+  mkdir logdir > /dev/null 2>&1 || {
+    echo "error creating logdir" >&3
+    return 3
+  }
+}
+
+cd_logdir() {
+  cd logdir > /dev/null 2>&1 || {
+    echo "error changing directory to logdir" >&3
+    return 3
+  }
 }
 
 # -----------------------------------------------------------------------------
