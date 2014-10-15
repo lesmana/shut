@@ -12,26 +12,6 @@ config_tail=10
 SHUT_PWD="$PWD"
 
 # -----------------------------------------------------------------------------
-collecttestnames() {
-  if [ ! -s patterns ]; then
-    echo "$default_pattern" > patterns
-  fi
-  local pattern
-  local print="-false"
-  while read -r pattern; do
-    if [ -f "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path \*/$pattern"
-    elif [ -d "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path \*/$pattern/\*"
-    else
-      print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
-    fi
-  done < patterns
-  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
-        \( $print \) -printf "./%P\n" | sort > tests
-}
-
-# -----------------------------------------------------------------------------
 rm_shutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
@@ -337,6 +317,26 @@ workiftestsfound() {
     return 2
   }
   $work_func
+}
+
+# -----------------------------------------------------------------------------
+collecttestnames() {
+  if [ ! -s patterns ]; then
+    echo "$default_pattern" > patterns
+  fi
+  local pattern
+  local print="-false"
+  while read -r pattern; do
+    if [ -f "$SHUT_PWD/$pattern" ]; then
+      print="$print -o -type f -executable -path \*/$pattern"
+    elif [ -d "$SHUT_PWD/$pattern" ]; then
+      print="$print -o -type f -executable -path \*/$pattern/\*"
+    else
+      print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
+    fi
+  done < patterns
+  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
+        \( $print \) -printf "./%P\n" | sort > tests
 }
 
 collectnamesandwork() {
