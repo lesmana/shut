@@ -106,18 +106,18 @@ rm_shutdir() {
     return
   fi
   if $config_keep; then
-    echo "name exists: $config_shutdir" >&2
-    echo "will not overwrite" >&2
+    echo "name exists: $config_shutdir" >&3
+    echo "will not overwrite" >&3
     return 2
   fi
   if [ ! -d "$config_fullshutdir" ]; then
-    echo "is not shutdir: $config_shutdir" >&2
-    echo "will not overwrite" >&2
+    echo "is not shutdir: $config_shutdir" >&3
+    echo "will not overwrite" >&3
     return 2
   fi
   rm -r -- "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error deleting $config_fullshutdir" >&2
-    echo "cannot continue" >&2
+    echo "error deleting $config_fullshutdir" >&3
+    echo "cannot continue" >&3
     return 3
   }
 }
@@ -125,24 +125,24 @@ rm_shutdir() {
 # -----------------------------------------------------------------------------
 mkdir_shutdir() {
   mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error creating directory $config_fullshutdir" >&2
-    echo "cannot continue" >&2
+    echo "error creating directory $config_fullshutdir" >&3
+    echo "cannot continue" >&3
     return 3
   }
 }
 
 cp_tests_shutdir() {
   cp -- tests "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error copying tests to $config_fullshutdir" >&2
-    echo "cannot continue" >&2
+    echo "error copying tests to $config_fullshutdir" >&3
+    echo "cannot continue" >&3
     return 3
   }
 }
 
 cd_shutdir() {
   cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error changing directory to $config_fullshutdir" >&2
-    echo "cannot continue" >&2
+    echo "error changing directory to $config_fullshutdir" >&3
+    echo "cannot continue" >&3
     return 3
   }
 }
@@ -150,14 +150,14 @@ cd_shutdir() {
 # -----------------------------------------------------------------------------
 mkdir_logdir() {
   mkdir logdir > /dev/null 2>&1 || {
-    echo "error creating logdir" >&2
+    echo "error creating logdir" >&3
     return 3
   }
 }
 
 cd_logdir() {
   cd logdir > /dev/null 2>&1 || {
-    echo "error changing directory to logdir" >&2
+    echo "error changing directory to logdir" >&3
     return 3
   }
 }
@@ -421,7 +421,7 @@ configthenwork() {
 
 # -----------------------------------------------------------------------------
 workcatcherror() {
-  configthenwork "$@" 2> errormessage
+  configthenwork "$@" 3> errormessage
   local exitstatus=$?
   if [ -s errormessage ]; then
     cat errormessage >&2
