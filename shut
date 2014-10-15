@@ -312,7 +312,7 @@ workiftestsfound() {
     echo "no tests found"
     return 2
   }
-  $work_func
+  $work_func # runtestsinshutdir or printtestnames
 }
 
 # -----------------------------------------------------------------------------
