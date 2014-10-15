@@ -25,13 +25,13 @@ printf "3\n" > expected/exitstatus
 
 printf '\
 #! /bin/sh
-mkdir -p tempdir
-echo tempdir
+mkdir -p $PWD/tempdir
+echo $PWD/tempdir
 ' > mktemp
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-r -- tempdir\" ]; then
+if [ \"\$*\" = \"-r -- \$PWD/tempdir\" ]; then
   PATH=$PATH rm \"\$@\"
   PATH=$PATH rm \"\$@\"
 else
