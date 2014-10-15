@@ -423,6 +423,10 @@ collectnamesandwork() {
   workiftestsfound
 }
 
+configthenwork() {
+  collectnamesandwork "$@"
+}
+
 # -----------------------------------------------------------------------------
 rm_tempdir() {
   rm -r -- "$config_tempdir" > /dev/null 2>&1 || {
@@ -437,7 +441,7 @@ workintempdir() {
   mktemp_tempdir || return
   (
     cd_tempdir || return
-    collectnamesandwork "$@"
+    configthenwork "$@"
   )
   local exitstatus=$?
   rm_tempdir || return
