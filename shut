@@ -13,6 +13,23 @@ config_tail=10
 SHUT_PWD="$PWD"
 
 # -----------------------------------------------------------------------------
+mktemp_tempdir() {
+  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
+    echo "error creating tempdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
+}
+
+cd_tempdir() {
+  cd -- "$config_tempdir" > /dev/null 2>&1 || {
+    echo "failed changing directory to $config_tempdir" >&2
+    echo "cannot continue" >&2
+    return 3
+  }
+}
+
+# -----------------------------------------------------------------------------
 configfromargv() {
   # this function expects "$@" as argument
   local argc=$#
@@ -60,23 +77,6 @@ setup() {
     printreportpass_func=true
     printreportfail_func=printreportfail
   fi
-}
-
-# -----------------------------------------------------------------------------
-mktemp_tempdir() {
-  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
-    echo "error creating tempdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-}
-
-cd_tempdir() {
-  cd -- "$config_tempdir" > /dev/null 2>&1 || {
-    echo "failed changing directory to $config_tempdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
 }
 
 # -----------------------------------------------------------------------------
