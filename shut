@@ -50,7 +50,7 @@ configfromargv() {
   done
   local pattern
   for pattern in "$@"; do
-    echo "$pattern" >> "$config_tempdir/patterns"
+    echo "$pattern" >> patterns
   done
 }
 
@@ -82,8 +82,8 @@ setup() {
 
 # -----------------------------------------------------------------------------
 collecttestnames() {
-  if [ ! -s "$config_tempdir/patterns" ]; then
-    echo "$default_pattern" > "$config_tempdir/patterns"
+  if [ ! -s patterns ]; then
+    echo "$default_pattern" > patterns
   fi
   local pattern
   local print="-false"
@@ -95,7 +95,7 @@ collecttestnames() {
     else
       print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
     fi
-  done < "$config_tempdir/patterns"
+  done < patterns
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
         \( $print \) -printf "./%P\n" | sort > tests
 }
