@@ -12,58 +12,6 @@ config_tail=10
 SHUT_PWD="$PWD"
 
 # -----------------------------------------------------------------------------
-configfromargv() {
-  # this function expects "$@" as argument
-  local arg
-  while [ $# -ge 1 ]; do
-    arg="$1"
-    case "$arg" in
-      -d) shift ; config_shutdir="$1" ;;
-      -k) config_keep=true ;;
-      -n) config_donotruntests=true ;;
-      -v) config_verbose=true ;;
-      -x) config_split=true ;;
-      -q) config_quiet=true ;;
-      -t) shift ; config_tail="$1" ;;
-      --) shift ; break ;;
-      -*) echo "argv error: $1" ; exit 2 ;;
-       *) break ;;
-    esac
-    shift
-  done
-  local pattern
-  for pattern in "$@"; do
-    echo "$pattern" >> patterns
-  done
-}
-
-setup() {
-  config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
-  if $config_donotruntests; then
-    work_func=printtestnames
-  else
-    work_func=runtestsinshutdir
-  fi
-  if $config_split; then
-    runtestsaveoutput_func=runtestsaveoutputsplit
-    printbody_func=printbodysplit
-  else
-    runtestsaveoutput_func=runtestsaveoutputmerge
-    printbody_func=printbodymerge
-  fi
-  if $config_verbose; then
-    printreportpass_func=printreportpass
-    printreportfail_func=printreportfail
-  elif $config_quiet; then
-    printreportpass_func=true
-    printreportfail_func=true
-  else
-    printreportpass_func=true
-    printreportfail_func=printreportfail
-  fi
-}
-
-# -----------------------------------------------------------------------------
 collecttestnames() {
   if [ ! -s patterns ]; then
     echo "$default_pattern" > patterns
@@ -394,6 +342,58 @@ workiftestsfound() {
 collectnamesandwork() {
   collecttestnames
   workiftestsfound
+}
+
+# -----------------------------------------------------------------------------
+configfromargv() {
+  # this function expects "$@" as argument
+  local arg
+  while [ $# -ge 1 ]; do
+    arg="$1"
+    case "$arg" in
+      -d) shift ; config_shutdir="$1" ;;
+      -k) config_keep=true ;;
+      -n) config_donotruntests=true ;;
+      -v) config_verbose=true ;;
+      -x) config_split=true ;;
+      -q) config_quiet=true ;;
+      -t) shift ; config_tail="$1" ;;
+      --) shift ; break ;;
+      -*) echo "argv error: $1" ; exit 2 ;;
+       *) break ;;
+    esac
+    shift
+  done
+  local pattern
+  for pattern in "$@"; do
+    echo "$pattern" >> patterns
+  done
+}
+
+setup() {
+  config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
+  if $config_donotruntests; then
+    work_func=printtestnames
+  else
+    work_func=runtestsinshutdir
+  fi
+  if $config_split; then
+    runtestsaveoutput_func=runtestsaveoutputsplit
+    printbody_func=printbodysplit
+  else
+    runtestsaveoutput_func=runtestsaveoutputmerge
+    printbody_func=printbodymerge
+  fi
+  if $config_verbose; then
+    printreportpass_func=printreportpass
+    printreportfail_func=printreportfail
+  elif $config_quiet; then
+    printreportpass_func=true
+    printreportfail_func=true
+  else
+    printreportpass_func=true
+    printreportfail_func=printreportfail
+  fi
 }
 
 configthenwork() {
