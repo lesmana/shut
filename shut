@@ -161,11 +161,11 @@ runtestifexecutable() {
 
 # -----------------------------------------------------------------------------
 runtestcatchterror() {
-  runtestifexecutable "$@" 2> "$config_tempdir/lasterror"
-  if [ -s "$config_tempdir/lasterror" ]; then
+  runtestifexecutable "$@" 2> "$config_tempdir/runtesterrorhandled"
+  if [ -s "$config_tempdir/runtesterrorhandled" ]; then
     echo "$testname" >> "$config_fullshutdir/error"
     printheader "ERROR" "$testname"
-    cat "$config_tempdir/lasterror"
+    cat "$config_tempdir/runtesterrorhandled"
   fi
 }
 
