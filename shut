@@ -97,7 +97,7 @@ collecttestnames() {
     fi
   done < "$config_tempdir/patterns"
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
-        \( $print \) -printf "./%P\n" | sort
+        \( $print \) -printf "./%P\n" | sort > tests
 }
 
 # -----------------------------------------------------------------------------
@@ -418,7 +418,7 @@ workiftestsfound() {
 }
 
 collectnamesandwork() {
-  collecttestnames > tests
+  collecttestnames
   workiftestsfound
 }
 
