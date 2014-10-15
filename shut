@@ -422,7 +422,7 @@ configthenwork() {
 # -----------------------------------------------------------------------------
 workcatcherror() {
   configthenwork "$@" 2> errormessage
-  exitstatus=$?
+  local exitstatus=$?
   if [ -s errormessage ]; then
     cat errormessage >&2
   fi
