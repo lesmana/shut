@@ -59,7 +59,7 @@ setup() {
   if $config_donotruntests; then
     work_func=printtestnames
   else
-    work_func=runtestscatcherror
+    work_func=runtestsinshutdir
   fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
@@ -393,15 +393,6 @@ runtestsinshutdir() {
 }
 
 # -----------------------------------------------------------------------------
-runtestscatcherror() {
-  runtestsinshutdir 2> "$config_tempdir/runtestserror"
-  exitstatus=$?
-  [ -s "$config_tempdir/runtestserror" ] && {
-    cat "$config_tempdir/runtestserror" >&2
-  }
-  return "$exitstatus"
-}
-
 printtestnames() {
   cat tests
   local count=$(wc -l < tests)
