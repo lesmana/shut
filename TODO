@@ -1,33 +1,6 @@
 todo for shell unit test
 
 ----
-all external commands in extra function
-all error throwing lines in extra function
-
-example
-
-    somefunc() {
-      foo with some params 2> /dev/null || {
-        echo error message
-        return 3
-      }
-      more commands
-    }
-
-change to
-
-    dofoo() {
-      foo with some params 2> /dev/null || {
-        echo error message
-        return 3
-      }
-    }
-    somefunc() {
-      dofoo || return
-      more commands
-    }
-
-----
 all echo to printf
 printf with explicit format string to guard against accidental % expansion
 
