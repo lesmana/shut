@@ -421,10 +421,10 @@ configthenwork() {
 
 # -----------------------------------------------------------------------------
 workcatcherror() {
-  error=$(configthenwork "$@" 2>&1 1>&3) 3>&1
+  configthenwork "$@" 2> errormessage
   exitstatus=$?
-  if [ "$error" ]; then
-    echo "$error" >&2
+  if [ -s errormessage ]; then
+    cat errormessage >&2
   fi
   return "$exitstatus"
 }
