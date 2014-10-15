@@ -32,6 +32,9 @@ replace with
 $SHUTDIR/bla
 
 ----
+add option to abort runtests loop if fail or error
+
+----
 allow exluding tests
 
 ----
