@@ -54,7 +54,6 @@ cd_workdir() {
   }
 }
 
-# -----------------------------------------------------------------------------
 runtestinworkdir() {
   local fulltestname="$1"
   mkdir_workdir || return
@@ -115,7 +114,6 @@ printreport() {
   fi
 }
 
-# -----------------------------------------------------------------------------
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
@@ -140,7 +138,6 @@ cd_testdir() {
   }
 }
 
-# -----------------------------------------------------------------------------
 runtestintestdir() {
   local testname="$1"
   local fulltestname="$2"
@@ -195,7 +192,6 @@ cd_logdir() {
   }
 }
 
-# -----------------------------------------------------------------------------
 runtestsinlogdir() {
   mkdir_logdir || return
   (
@@ -235,7 +231,6 @@ printsummary() {
   printcounts
 }
 
-# -----------------------------------------------------------------------------
 determineexitstatus() {
   [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
 }
@@ -268,7 +263,6 @@ rm_shutdir() {
   }
 }
 
-# -----------------------------------------------------------------------------
 mkdir_shutdir() {
   mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
     echo "error creating directory $config_fullshutdir" >&3
@@ -311,6 +305,7 @@ printtestnames() {
   echo "would run: $count"
 }
 
+# -----------------------------------------------------------------------------
 workiftestsfound() {
   [ -s tests ] || {
     echo "no tests found"
@@ -441,7 +436,6 @@ rm_tempdir() {
   }
 }
 
-# -----------------------------------------------------------------------------
 workintempdir() {
   mktemp_tempdir || return
   (
