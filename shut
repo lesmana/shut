@@ -424,6 +424,8 @@ collectnamesandwork() {
 }
 
 configthenwork() {
+  configfromargv "$@"
+  setup
   collectnamesandwork "$@"
 }
 
@@ -450,8 +452,6 @@ workintempdir() {
 
 # -----------------------------------------------------------------------------
 main() {
-  configfromargv "$@"
-  setup
   workintempdir "$@"
 }
 
