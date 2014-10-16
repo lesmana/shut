@@ -1,6 +1,28 @@
 todo for shell unit test
 
 ----
+redirect party
+
+from actual runtest
+redirect stdout to 3, stderr to 4
+capture exitstatus and print to file and to 1
+capture output from 3 and 4 and print to file
+
+after test
+print report to 3
+print error to 4
+
+immediately before runtests loop
+catch errors from 4 and 2 and print to 2
+catch reports from 3 and print to 1
+catch exitstatus from 1 and report to loop
+
+why the trouble?
+actual exitstatus is free to report error
+actual stderr is free to report error
+test exitstatus can be captured using $()
+
+----
 all echo to printf
 printf with explicit format string to guard against accidental % expansion
 
