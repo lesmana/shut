@@ -56,9 +56,9 @@ cd_workdir() {
 
 runtestinworkdir() {
   local fulltestname="$1"
-  mkdir_workdir || return
+  mkdir_workdir || return $?
   (
-    cd_workdir || return
+    cd_workdir || return $?
     $runtestsaveoutput_func "$fulltestname"
   )
 }
@@ -117,7 +117,7 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
-  runtestinworkdir "$fulltestname" || return
+  runtestinworkdir "$fulltestname" || return $?
   printreport "$testname"
 }
 
@@ -141,9 +141,9 @@ cd_testdir() {
 runtestintestdir() {
   local testname="$1"
   local fulltestname="$2"
-  mkdir_testdir "$testname" || return
+  mkdir_testdir "$testname" || return $?
   (
-    cd_testdir "$testname" || return
+    cd_testdir "$testname" || return $?
     runtestandprintreport "$testname" "$fulltestname"
   )
 }
@@ -201,9 +201,9 @@ cd_logdir() {
 }
 
 runtestsinlogdir() {
-  mkdir_logdir || return
+  mkdir_logdir || return $?
   (
-    cd_logdir || return
+    cd_logdir || return $?
     runtests
   )
 }
@@ -244,7 +244,7 @@ determineexitstatus() {
 }
 
 runtestsandprintsummary() {
-  runtestsinlogdir || return
+  runtestsinlogdir || return $?
   printsummary
   determineexitstatus
 }
@@ -296,11 +296,11 @@ cd_shutdir() {
 }
 
 runtestsinshutdir() {
-  rm_shutdir || return
-  mkdir_shutdir || return
-  cp_tests_shutdir || return
+  rm_shutdir || return $?
+  mkdir_shutdir || return $?
+  cp_tests_shutdir || return $?
   (
-    cd_shutdir || return
+    cd_shutdir || return $?
     runtestsandprintsummary
   )
 }
@@ -445,13 +445,13 @@ rm_tempdir() {
 }
 
 workintempdir() {
-  mktemp_tempdir || return
+  mktemp_tempdir || return $?
   (
-    cd_tempdir || return
+    cd_tempdir || return $?
     workcatcherror "$@"
   )
   local exitstatus=$?
-  rm_tempdir || return
+  rm_tempdir || return $?
   return "$exitstatus"
 }
 
