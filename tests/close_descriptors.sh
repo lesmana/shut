@@ -6,7 +6,8 @@ mkdir -p actual
 
 printf '\
 #! /bin/sh
-echo foo >&3
+{ echo foo >&3 ; } 2> /dev/null || echo fd3 closed
+{ echo foo >&4 ; } 2> /dev/null || echo fd4 closed
 ' > actual/test0
 
 chmod +x actual/test0
@@ -16,20 +17,21 @@ cp -a actual expected
 mkdir -p expected/shutdir/logdir/test0/workdir
 
 printf "\
-$PWD/actual/test0: 3: 3: Bad file descriptor
+fd3 closed
+fd4 closed
 " > expected/shutdir/logdir/test0/output
 
-printf "2\n" > expected/shutdir/logdir/test0/exitstatus
+printf "0\n" > expected/shutdir/logdir/test0/exitstatus
 
 printf "\
 ./test0
 " > expected/shutdir/tests
 
 printf "\
+./test0
 " > expected/shutdir/pass
 
 printf "\
-./test0
 " > expected/shutdir/fail
 
 printf "\
@@ -37,26 +39,23 @@ printf "\
 
 printf "\
 ================
-FAIL ./test0
-exitstatus: 2
+PASS ./test0
 output:
-  $PWD/actual/test0: 3: 3: Bad file descriptor
+  fd3 closed
+  fd4 closed
 ================
-fail:
-./test0
-================
-run: 1 pass: 0 fail: 1 error: 0
+run: 1 pass: 1 fail: 0 error: 0
 " > expected/stdout
 
 printf "\
 " > expected/stderr
 
-printf "1\n" > expected/exitstatus
+printf "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
-  shut > stdout 2> stderr
+  shut -v > stdout 2> stderr
   printf "$?\n" > exitstatus
   set -e
 )
