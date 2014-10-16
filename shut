@@ -27,6 +27,7 @@ runtestsaveexitstatus() {
   runtest "$fulltestname"
   local exitstatus=$?
   echo "$exitstatus" > ../exitstatus
+  echo "$exitstatus"
 }
 
 runtestsaveoutputsplit() {
@@ -104,7 +105,7 @@ printreportfail() {
 
 printreport() {
   local testname="$1"
-  local exitstatus="$(cat exitstatus)"
+  local exitstatus="$2"
   if [ 0 -eq "$exitstatus" ]; then
     echo "$testname" >> "$config_fullshutdir/pass"
     $printreportpass_func "$testname"
@@ -117,8 +118,8 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
-  runtestinworkdir "$fulltestname" || return $?
-  printreport "$testname"
+  exitstatus="$(runtestinworkdir "$fulltestname")" || return $?
+  printreport "$testname" "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
