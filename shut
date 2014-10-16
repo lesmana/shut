@@ -118,6 +118,7 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
+  local exitstatus
   exitstatus="$(runtestinworkdir "$fulltestname")" || return $?
   printreport "$testname" "$exitstatus"
 }
