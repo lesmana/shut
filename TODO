@@ -1,7 +1,7 @@
 todo for shell unit test
 
 ----
-redirect party
+redirect party for runtest
 
 from actual runtest
 redirect stdout to 3, stderr to 4
@@ -21,6 +21,13 @@ why the trouble?
 actual exitstatus is free to report error
 actual stderr is free to report error
 test exitstatus can be captured using $()
+
+----
+redirect party for main
+
+as above but for after runtests loop
+
+maybe with slight modifications
 
 ----
 all echo to printf
