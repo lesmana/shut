@@ -1,33 +1,22 @@
 todo for shell unit test
 
 ----
-redirect party for runtest
+redirect party
 
-from actual runtest
-redirect stdout to 3, stderr to 4
-capture exitstatus and print to file and to 1
-capture output from 3 and 4 and print to file
+in runtests loop
+redirect stdout of tests to fd3, stderr to fd4
+print shut exitstatus to fd1
+use real exitstatus to report error
 
-after test
-print report to 3
-print error to 4
-
-immediately before runtests loop
-catch errors from 4 and 2 and print to 2
-catch reports from 3 and print to 1
-catch exitstatus from 1 and report to loop
+just before main
+catch errors from fd4 and fd2 and print to fd2
+catch stdout from fd3 and print to fd1
+catch exitstatus from fd1 and process
 
 why the trouble?
-actual exitstatus is free to report error
-actual stderr is free to report error
-test exitstatus can be captured using $()
-
-----
-redirect party for main
-
-as above but for after runtests loop
-
-maybe with slight modifications
+actual exitstatus can be used to report error
+unhandled errors can flow over fd2
+shut exitstatus can flow over fd1
 
 ----
 all echo to printf
