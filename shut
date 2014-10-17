@@ -165,17 +165,18 @@ runtestifexecutable() {
 runtestcatchterror() {
   local handled="$config_tempdir/runtesterrorhandled"
   local unhandled="$config_tempdir/runtesterrorunhandled"
-  runtestifexecutable "$@" 2> "$unhandled" 4> "$handled"
-  if [ -s "$handled" ]; then
-    echo "$testname" >> "$config_fullshutdir/error"
-    printheader "ERROR" "$testname"
-    cat "$handled"
-  fi
-  if [ -s "$unhandled" ]; then
-    echo "$testname" >> "$config_fullshutdir/error"
-    printheader "UNHANDLED ERROR" "$testname"
-    cat "$unhandled"
-  fi
+  runtestifexecutable "$@" 2> "$unhandled" 4> "$handled" || {
+    if [ -s "$handled" ]; then
+      echo "$testname" >> "$config_fullshutdir/error"
+      printheader "ERROR" "$testname"
+      cat "$handled"
+    fi
+    if [ -s "$unhandled" ]; then
+      echo "$testname" >> "$config_fullshutdir/error"
+      printheader "UNHANDLED ERROR" "$testname"
+      cat "$unhandled"
+    fi
+  }
 }
 
 # -----------------------------------------------------------------------------
