@@ -167,7 +167,7 @@ runtestcatchtunhandlederror() {
   runtestifexecutable "$@" 2> "$unhandled" || {
     local exitstatus=$?
     if [ -s "$unhandled" ]; then
-      printheader "UNHANDLED ERROR" "$testname" >&4
+      echo "unhandled error:" >&4
       cat "$unhandled" >&4
     fi
     return "$exitstatus"
