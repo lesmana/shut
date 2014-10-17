@@ -174,9 +174,13 @@ runtestcatchtunhandlederror() {
   }
 }
 
+runtestcatchthandlederror() {
+  runtestcatchtunhandlederror "$@"
+}
+
 runtestcatchterror() {
   local handled="$config_tempdir/runtesterrorhandled"
-  runtestcatchtunhandlederror "$@" 4> "$handled" || {
+  runtestcatchthandlederror "$@" 4> "$handled" || {
     echo "$testname" >> "$config_fullshutdir/error"
     if [ -s "$handled" ]; then
       printheader "ERROR" "$testname"
