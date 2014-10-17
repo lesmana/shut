@@ -163,21 +163,24 @@ runtestifexecutable() {
 
 # -----------------------------------------------------------------------------
 runtestcatchtunhandlederror() {
-  runtestifexecutable "$@"
+  local unhandled="$config_tempdir/runtesterrorunhandled"
+  runtestifexecutable "$@" 2> "$unhandled" || {
+    local exitstatus=$?
+    if [ -s "$unhandled" ]; then
+      printheader "UNHANDLED ERROR" "$testname" >&4
+      cat "$unhandled" >&4
+    fi
+    return "$exitstatus"
+  }
 }
 
 runtestcatchterror() {
   local handled="$config_tempdir/runtesterrorhandled"
-  local unhandled="$config_tempdir/runtesterrorunhandled"
-  runtestcatchtunhandlederror "$@" 2> "$unhandled" 4> "$handled" || {
+  runtestcatchtunhandlederror "$@" 4> "$handled" || {
     echo "$testname" >> "$config_fullshutdir/error"
     if [ -s "$handled" ]; then
       printheader "ERROR" "$testname"
       cat "$handled"
-    fi
-    if [ -s "$unhandled" ]; then
-      printheader "UNHANDLED ERROR" "$testname"
-      cat "$unhandled"
     fi
   }
 }
