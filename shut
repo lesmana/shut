@@ -175,17 +175,20 @@ runtestcatchtunhandlederror() {
 }
 
 runtestcatchthandlederror() {
-  runtestcatchtunhandlederror "$@"
+  local handled="$config_tempdir/runtesterrorhandled"
+  runtestcatchtunhandlederror "$@" 4> "$handled" || {
+    local exitstatus=$?
+    if [ -s "$handled" ]; then
+      printheader "ERROR" "$testname" >&2
+      cat "$handled" >&2
+    fi
+    return "$exitstatus"
+  }
 }
 
 runtestcatchterror() {
-  local handled="$config_tempdir/runtesterrorhandled"
-  runtestcatchthandlederror "$@" 4> "$handled" || {
+  runtestcatchthandlederror "$@" 2>&1 || {
     echo "$testname" >> "$config_fullshutdir/error"
-    if [ -s "$handled" ]; then
-      printheader "ERROR" "$testname"
-      cat "$handled"
-    fi
   }
 }
 
