@@ -162,10 +162,14 @@ runtestifexecutable() {
 }
 
 # -----------------------------------------------------------------------------
+runtestcatchtunhandlederror() {
+  runtestifexecutable "$@"
+}
+
 runtestcatchterror() {
   local handled="$config_tempdir/runtesterrorhandled"
   local unhandled="$config_tempdir/runtesterrorunhandled"
-  runtestifexecutable "$@" 2> "$unhandled" 4> "$handled" || {
+  runtestcatchtunhandlederror "$@" 2> "$unhandled" 4> "$handled" || {
     echo "$testname" >> "$config_fullshutdir/error"
     if [ -s "$handled" ]; then
       printheader "ERROR" "$testname"
