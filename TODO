@@ -29,6 +29,23 @@ printf with explicit format string to guard against accidental % expansion
 test that pattern argument works with absolute and relative path
 
 ----
+create mirror of actual test tree with pointers to enumerated testdirs
+
+test tree:
+tests/badger/test1
+tests/mushroom/test2
+
+shutdir:
+test000001 (this is test/badger/test1)
+test000002 (this is test/mushroom/test2)
+
+mirrors (also in shutdir somehow):
+tests/badger/test1 (pointer to test000001)
+test/mushroom/test2 (pointer to test000002)
+
+pointer as symlink? or just text in file?
+
+----
 read testnames from stdin
 
 ----
