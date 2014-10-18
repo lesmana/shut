@@ -14,7 +14,7 @@ mkdir -p expected/shutdir/logdir/test0
 
 printf "\
 ./test0
-" > expected/shutdir/tests
+" > expected/shutdir/testsfound
 
 printf "\
 " > expected/shutdir/pass

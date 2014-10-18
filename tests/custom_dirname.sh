@@ -23,7 +23,7 @@ printf "0\n"        > expected/dirname/logdir/test0/exitstatus
 
 printf "\
 ./test0
-" > expected/dirname/tests
+" > expected/dirname/testsfound
 
 printf "\
 ./test0

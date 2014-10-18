@@ -33,7 +33,7 @@ printf "0\n"        > "expected/shutdir/logdir/d 1/test 1/exitstatus"
 printf "\
 ./d 1/test 1
 ./test 0
-" > expected/shutdir/tests
+" > expected/shutdir/testsfound
 
 printf "\
 ./d 1/test 1

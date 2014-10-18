@@ -59,7 +59,7 @@ printf "\
 ./test1
 ./test2
 ./test3
-" > expected/shutdir/tests
+" > expected/shutdir/testsfound
 
 printf "\
 ./test1

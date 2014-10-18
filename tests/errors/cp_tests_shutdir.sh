@@ -16,7 +16,7 @@ printf "\
 " > expected/stdout
 
 printf "\
-error copying tests to $PWD/actual/shutdir
+error copying testsfound to $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
@@ -24,11 +24,11 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 #! /bin/sh
-if [ \"\$*\" = \"-- tests $PWD/actual/shutdir\" ]; then
-  mkdir $PWD/actual/shutdir/tests
+if [ \"\$*\" = \"-- testsfound $PWD/actual/shutdir\" ]; then
+  mkdir $PWD/actual/shutdir/testsfound
   PATH=$PATH cp \"\$@\"
   exitstatus=\$?
-  rm -rf $PWD/actual/shutdir/tests
+  rm -rf $PWD/actual/shutdir/testsfound
   exit \$exitstatus
 else
   PATH=$PATH cp \"\$@\"

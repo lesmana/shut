@@ -23,7 +23,7 @@ printf "3\n" > expected/exitstatus
 
 printf "\
 ./test0
-" > expected/shutdir/tests
+" > expected/shutdir/testsfound
 
 printf "\
 #! /bin/sh
