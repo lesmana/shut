@@ -167,16 +167,16 @@ runtestcatchterror() {
 
 # -----------------------------------------------------------------------------
 mkdir_testdir() {
-  local count="$1"
-  mkdir "test$count" > /dev/null 2>&1 || {
+  local testdir="$1"
+  mkdir "$testdir" > /dev/null 2>&1 || {
     echo "error creating enumerated testdir" >&3
     return 3
   }
 }
 
 cd_testdir() {
-  local count="$1"
-  cd "test$count" > /dev/null 2>&1 || {
+  local testdir="$1"
+  cd "$testdir" > /dev/null 2>&1 || {
     echo "error changing directory to enumerated testdir" >&3
     return 3
   }
@@ -185,9 +185,10 @@ cd_testdir() {
 runtestintestdir() {
   local count="$1"
   local testname="$2"
-  mkdir_testdir "$count" || return $?
+  local testdir="test$count"
+  mkdir_testdir "$testdir" || return $?
   (
-    cd_testdir "$count" || return $?
+    cd_testdir "$testdir" || return $?
     runtestcatchterror "$testname"
   )
 }
