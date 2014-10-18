@@ -4,14 +4,14 @@ set -xeu
 
 mkdir -p actual/d1
 
-printf '\
+printf -- '\
 #! /bin/sh
 echo $SHUT_PWD
 echo $SHUT_TEST
 echo $PWD
 ' > actual/test0
 
-printf '\
+printf -- '\
 #! /bin/sh
 echo $SHUT_PWD
 echo $SHUT_TEST
@@ -26,53 +26,53 @@ mkdir -p \
       expected/shutdir/test000002/workdir \
       expected/shutdir/test000001/workdir
 
-printf "\
+printf -- "\
 $PWD/actual
 $PWD/actual/test0
 $PWD/actual/shutdir/test000002/workdir
 " > expected/shutdir/test000002/output
 
-printf "0\n" > expected/shutdir/test000002/exitstatus
+printf -- "0\n" > expected/shutdir/test000002/exitstatus
 
-printf "\
+printf -- "\
 $PWD/actual
 $PWD/actual/d1/test1
 $PWD/actual/shutdir/test000001/workdir
 " > expected/shutdir/test000001/output
 
-printf "0\n" > expected/shutdir/test000001/exitstatus
+printf -- "0\n" > expected/shutdir/test000001/exitstatus
 
-printf "\
+printf -- "\
 ./d1/test1
 ./test0
 " > expected/shutdir/testsfound
 
-printf "\
+printf -- "\
 ./d1/test1
 ./test0
 " > expected/shutdir/testspass
 
-printf "\
+printf -- "\
 " > expected/shutdir/testsfail
 
-printf "\
+printf -- "\
 " > expected/shutdir/testserror
 
-printf "\
+printf -- "\
 ================
 run: 2 pass: 2 fail: 0 error: 0
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

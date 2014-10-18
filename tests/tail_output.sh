@@ -4,7 +4,7 @@ set -xeu
 
 mkdir -p actual
 
-printf "\
+printf -- "\
 #! /bin/sh
 seq 1 5
 " > actual/test0
@@ -15,7 +15,7 @@ cp -a actual expected
 
 mkdir -p expected/shutdir/test000001/workdir
 
-printf "\
+printf -- "\
 1
 2
 3
@@ -23,23 +23,23 @@ printf "\
 5
 " > expected/shutdir/test000001/output
 
-printf "0\n" > expected/shutdir/test000001/exitstatus
+printf -- "0\n" > expected/shutdir/test000001/exitstatus
 
-printf "\
+printf -- "\
 ./test0
 " > expected/shutdir/testsfound
 
-printf "\
+printf -- "\
 ./test0
 " > expected/shutdir/testspass
 
-printf "\
+printf -- "\
 " > expected/shutdir/testsfail
 
-printf "\
+printf -- "\
 " > expected/shutdir/testserror
 
-printf "\
+printf -- "\
 ================
 PASS ./test0
 output:
@@ -50,16 +50,16 @@ output:
 run: 1 pass: 1 fail: 0 error: 0
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -v -t 3 > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

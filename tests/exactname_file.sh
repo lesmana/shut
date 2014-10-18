@@ -10,22 +10,22 @@ chmod +x actual/*
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 ./exactname
 ================
 would run: 1
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -n exactname > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

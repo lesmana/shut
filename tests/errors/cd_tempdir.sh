@@ -10,17 +10,17 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 " > expected/stdout
 
-printf "\
+printf -- "\
 failed changing directory to loldir
 cannot continue
 " > expected/stderr
 
-printf "3\n" > expected/exitstatus
+printf -- "3\n" > expected/exitstatus
 
-printf '\
+printf -- '\
 #! /bin/sh
 touch loldir
 echo loldir
@@ -33,7 +33,7 @@ chmod +x mktemp
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

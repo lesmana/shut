@@ -4,20 +4,20 @@ set -xeu
 
 mkdir -p actual expected
 
-printf "\
+printf -- "\
 no tests found
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "2\n" > expected/exitstatus
+printf -- "2\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

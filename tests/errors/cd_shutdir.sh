@@ -10,17 +10,17 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 " > expected/stdout
 
-printf "\
+printf -- "\
 error changing directory to $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
-printf "3\n" > expected/exitstatus
+printf -- "3\n" > expected/exitstatus
 
-printf "\
+printf -- "\
 #! /bin/sh
 if [ \"\$*\" = \"-- testsfound $PWD/actual/shutdir\" ]; then
   rm -rf $PWD/actual/shutdir
@@ -36,7 +36,7 @@ chmod +x cp
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

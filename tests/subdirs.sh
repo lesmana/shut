@@ -4,13 +4,13 @@ set -xeu
 
 mkdir -p actual/d1 actual/d2/d3
 
-printf "\
+printf -- "\
 #! /bin/sh
 set -x
 false
 " > actual/d1/test1
 
-printf "\
+printf -- "\
 #! /bin/sh
 set -x
 true
@@ -24,29 +24,29 @@ mkdir -p \
       expected/shutdir/test000001/workdir \
       expected/shutdir/test000002/workdir
 
-printf "+ false\n"  > expected/shutdir/test000001/output
-printf "1\n"        > expected/shutdir/test000001/exitstatus
+printf -- "+ false\n"  > expected/shutdir/test000001/output
+printf -- "1\n"        > expected/shutdir/test000001/exitstatus
 
-printf "+ true\n"   > expected/shutdir/test000002/output
-printf "0\n"        > expected/shutdir/test000002/exitstatus
+printf -- "+ true\n"   > expected/shutdir/test000002/output
+printf -- "0\n"        > expected/shutdir/test000002/exitstatus
 
-printf "\
+printf -- "\
 ./d1/test1
 ./d2/d3/test3
 " > expected/shutdir/testsfound
 
-printf "\
+printf -- "\
 ./d2/d3/test3
 " > expected/shutdir/testspass
 
-printf "\
+printf -- "\
 ./d1/test1
 " > expected/shutdir/testsfail
 
-printf "\
+printf -- "\
 " > expected/shutdir/testserror
 
-printf "\
+printf -- "\
 ================
 FAIL ./d1/test1
 exitstatus: 1
@@ -59,16 +59,16 @@ fail:
 run: 2 pass: 1 fail: 1 error: 0
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "1\n" > expected/exitstatus
+printf -- "1\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

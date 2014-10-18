@@ -10,22 +10,22 @@ chmod +x actual/exactdir/x actual/exactdirplus/x actual/x
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 ./exactdir/x
 ================
 would run: 1
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -n exactdir > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

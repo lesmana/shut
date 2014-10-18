@@ -4,7 +4,7 @@ set -xeu
 
 mkdir -p actual
 
-printf "\
+printf -- "\
 #! /bin/sh
 set -x
 true
@@ -16,21 +16,21 @@ touch actual/shutdir
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 " > expected/stdout
 
-printf "\
+printf -- "\
 is not shutdir: shutdir
 will not overwrite
 " > expected/stderr
 
-printf "2\n" > expected/exitstatus
+printf -- "2\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

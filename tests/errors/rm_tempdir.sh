@@ -10,26 +10,26 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 ./test0
 ================
 would run: 1
 " > expected/stdout
 
-printf "\
+printf -- "\
 error deleting tempdir
 not fatal but annoying
 " > expected/stderr
 
-printf "3\n" > expected/exitstatus
+printf -- "3\n" > expected/exitstatus
 
-printf '\
+printf -- '\
 #! /bin/sh
 mkdir -p $PWD/tempdir
 echo $PWD/tempdir
 ' > mktemp
 
-printf "\
+printf -- "\
 #! /bin/sh
 if [ \"\$*\" = \"-r -- \$PWD/tempdir\" ]; then
   PATH=$PATH rm \"\$@\"
@@ -46,7 +46,7 @@ chmod +x mktemp rm
   cd actual
   set +e
   shut -n > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

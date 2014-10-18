@@ -4,7 +4,7 @@ set -xeu
 
 mkdir -p actual actual/shutdir
 
-printf "\
+printf -- "\
 #! /bin/sh
 set -x
 true
@@ -18,38 +18,38 @@ touch actual/shutdir/existingdir
 
 mkdir -p expected/shutdir/test000001/workdir
 
-printf "+ true\n"   > expected/shutdir/test000001/output
-printf "0\n"        > expected/shutdir/test000001/exitstatus
+printf -- "+ true\n"   > expected/shutdir/test000001/output
+printf -- "0\n"        > expected/shutdir/test000001/exitstatus
 
-printf "\
+printf -- "\
 ./test0
 " > expected/shutdir/testsfound
 
-printf "\
+printf -- "\
 ./test0
 " > expected/shutdir/testspass
 
-printf "\
+printf -- "\
 " > expected/shutdir/testsfail
 
-printf "\
+printf -- "\
 " > expected/shutdir/testserror
 
-printf "\
+printf -- "\
 ================
 run: 1 pass: 1 fail: 0 error: 0
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

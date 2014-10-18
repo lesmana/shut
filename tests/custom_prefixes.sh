@@ -10,7 +10,7 @@ chmod +x actual/*
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 ./bar1
 ./bar2
 ./foo1
@@ -19,16 +19,16 @@ printf "\
 would run: 4
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -n foo bar > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

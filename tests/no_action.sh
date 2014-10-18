@@ -10,23 +10,23 @@ chmod +x actual/test0 actual/test1
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 ./test0
 ./test1
 ================
 would run: 2
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "0\n" > expected/exitstatus
+printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   shut -n > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

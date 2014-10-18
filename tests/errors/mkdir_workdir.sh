@@ -12,21 +12,21 @@ cp -a actual expected
 
 mkdir -p expected/shutdir/test000001
 
-printf "\
+printf -- "\
 ./test0
 " > expected/shutdir/testsfound
 
-printf "\
+printf -- "\
 " > expected/shutdir/testspass
 
-printf "\
+printf -- "\
 " > expected/shutdir/testsfail
 
-printf "\
+printf -- "\
 ./test0
 " > expected/shutdir/testserror
 
-printf "\
+printf -- "\
 ================
 ERROR ./test0
 error creating workdir
@@ -37,12 +37,12 @@ error:
 run: 1 pass: 0 fail: 0 error: 1
 " > expected/stdout
 
-printf "\
+printf -- "\
 " > expected/stderr
 
-printf "1\n" > expected/exitstatus
+printf -- "1\n" > expected/exitstatus
 
-printf "\
+printf -- "\
 #! /bin/sh
 if [ \"\$*\" = \"workdir\" ]; then
   touch workdir
@@ -62,7 +62,7 @@ chmod +x mkdir
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

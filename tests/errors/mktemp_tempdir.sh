@@ -10,22 +10,22 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 " > expected/stdout
 
-printf "\
+printf -- "\
 error creating tempdir
 cannot continue
 " > expected/stderr
 
-printf "3\n" > expected/exitstatus
+printf -- "3\n" > expected/exitstatus
 
 (
   cd actual
   set +e
   export TMPDIR=/dev/null
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 

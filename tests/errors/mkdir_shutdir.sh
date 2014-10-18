@@ -10,17 +10,17 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-printf "\
+printf -- "\
 " > expected/stdout
 
-printf "\
+printf -- "\
 error creating directory $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
-printf "3\n" > expected/exitstatus
+printf -- "3\n" > expected/exitstatus
 
-printf "\
+printf -- "\
 #! /bin/sh
 if [ \"\$*\" = \"-p -- $PWD/actual/shutdir\" ]; then
   touch $PWD/actual/shutdir
@@ -40,7 +40,7 @@ chmod +x mkdir
   cd actual
   set +e
   shut > stdout 2> stderr
-  printf "$?\n" > exitstatus
+  printf -- "$?\n" > exitstatus
   set -e
 )
 
