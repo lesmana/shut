@@ -37,7 +37,7 @@ printf "\
 
 printf "\
 ./d2/d3/test3
-" > expected/shutdir/pass
+" > expected/shutdir/testspass
 
 printf "\
 ./d1/test1

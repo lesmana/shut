@@ -64,7 +64,7 @@ printf "\
 printf "\
 ./test1
 ./test3
-" > expected/shutdir/pass
+" > expected/shutdir/testspass
 
 printf "\
 ./test0

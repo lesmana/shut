@@ -27,7 +27,7 @@ printf "\
 
 printf "\
 ./test0
-" > expected/dirname/pass
+" > expected/dirname/testspass
 
 printf "\
 " > expected/dirname/fail
