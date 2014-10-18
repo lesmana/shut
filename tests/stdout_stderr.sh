@@ -14,13 +14,13 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/logdir/test0/workdir
+mkdir -p expected/shutdir/logdir/test000001/test0/workdir
 
-printf "stdout\n" > expected/shutdir/logdir/test0/stdout
+printf "stdout\n" > expected/shutdir/logdir/test000001/test0/stdout
 
-printf "stderr\n" > expected/shutdir/logdir/test0/stderr
+printf "stderr\n" > expected/shutdir/logdir/test000001/test0/stderr
 
-printf "0\n" > expected/shutdir/logdir/test0/exitstatus
+printf "0\n" > expected/shutdir/logdir/test000001/test0/exitstatus
 
 printf "\
 ./test0
