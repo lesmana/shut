@@ -227,9 +227,10 @@ runtestsinlogdir() {
 # -----------------------------------------------------------------------------
 printlist() {
   local listname="$1"
+  local filename="$2"
   echo "================"
   echo "$listname:"
-  cat "$listname"
+  cat "$filename"
 }
 
 printcounts() {
@@ -247,10 +248,10 @@ printcounts() {
 
 printsummary() {
   if [ -s fail ]; then
-    printlist fail
+    printlist fail fail
   fi
   if [ -s error ]; then
-    printlist error
+    printlist error error
   fi
   printcounts
 }
