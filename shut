@@ -196,9 +196,9 @@ runtestcatchterror() {
 runtests() {
   touch ../testspass ../testsfail ../testserror
   local testname
-  while read -r testname; do
+  cat ../testsfound | while read -r testname; do
     runtestcatchterror "$testname"
-  done < ../testsfound
+  done
 }
 
 # -----------------------------------------------------------------------------
