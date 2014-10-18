@@ -25,7 +25,6 @@ shut exitstatus can flow over fd1
 if error during runtest just bail out
 
 ----
-all echo to printf
 printf with explicit format string to guard against accidental % expansion
 
 ----
