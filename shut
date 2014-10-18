@@ -117,27 +117,16 @@ printreport() {
 
 runtestandprintreport() {
   local testname="$1"
-  local fulltestname="$2"
+  local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
   exitstatus="$(runtestinworkdir "$fulltestname")" || return $?
   printreport "$testname" "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
-runtestifexecutable() {
-  local testname="$1"
-  local fulltestname="$SHUT_PWD/${testname#./}"
-  [ -x "$fulltestname" ] || {
-    echo "not found or not executable: $testname" >&4
-    return 3
-  }
-  runtestandprintreport "$testname" "$fulltestname"
-}
-
-# -----------------------------------------------------------------------------
 runtestcatchtunhandlederror() {
   local unhandled="$config_tempdir/runtesterrorunhandled"
-  runtestifexecutable "$@" 2> "$unhandled" || {
+  runtestandprintreport "$@" 2> "$unhandled" || {
     local exitstatus=$?
     if [ -s "$unhandled" ]; then
       echo "unhandled error:" >&4
