@@ -41,7 +41,7 @@ printf "\
 
 printf "\
 ./test 0
-" > expected/shutdir/fail
+" > expected/shutdir/testsfail
 
 printf "\
 " > expected/shutdir/error

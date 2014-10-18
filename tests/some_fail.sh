@@ -69,7 +69,7 @@ printf "\
 printf "\
 ./test0
 ./test2
-" > expected/shutdir/fail
+" > expected/shutdir/testsfail
 
 printf "\
 " > expected/shutdir/error

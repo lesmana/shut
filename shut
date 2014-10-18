@@ -110,7 +110,7 @@ printreport() {
     echo "$testname" >> "$config_fullshutdir/testspass"
     $printreportpass_func "$testname"
   else
-    echo "$testname" >> "$config_fullshutdir/fail"
+    echo "$testname" >> "$config_fullshutdir/testsfail"
     $printreportfail_func "$testname" "$exitstatus"
   fi
 }
@@ -194,7 +194,7 @@ runtestcatchterror() {
 
 # -----------------------------------------------------------------------------
 runtests() {
-  touch ../testspass ../fail ../error
+  touch ../testspass ../testsfail ../error
   local testname
   while read -r testname; do
     runtestcatchterror "$testname"
@@ -234,7 +234,7 @@ printlist() {
 }
 
 printcounts() {
-  wc -l testsfound testspass fail error | {
+  wc -l testsfound testspass testsfail error | {
     read -r runcount ignorefilename
     read -r passcount ignorefilename
     read -r failcount ignorefilename
@@ -247,8 +247,8 @@ printcounts() {
 }
 
 printsummary() {
-  if [ -s fail ]; then
-    printlist fail fail
+  if [ -s testsfail ]; then
+    printlist fail testsfail
   fi
   if [ -s error ]; then
     printlist error error
@@ -257,7 +257,7 @@ printsummary() {
 }
 
 determineexitstatus() {
-  [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
+  [ ! -s testsfail ] && [ ! -s error ] # exitstatus based on list empty or not
 }
 
 runtestsandprintsummary() {

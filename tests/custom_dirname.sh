@@ -30,7 +30,7 @@ printf "\
 " > expected/dirname/testspass
 
 printf "\
-" > expected/dirname/fail
+" > expected/dirname/testsfail
 
 printf "\
 " > expected/dirname/error
