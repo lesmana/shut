@@ -221,34 +221,11 @@ runtestinenumeratedtestdir() {
 
 # -----------------------------------------------------------------------------
 runtests() {
-  touch ../testspass ../testsfail ../testserror
+  touch testspass testsfail testserror
   local testname
-  nl -n rz ../testsfound | while read -r count testname; do
+  nl -n rz testsfound | while read -r count testname; do
     runtestinenumeratedtestdir "$count" "$testname"
   done
-}
-
-# -----------------------------------------------------------------------------
-mkdir_logdir() {
-  mkdir logdir > /dev/null 2>&1 || {
-    echo "error creating logdir" >&3
-    return 3
-  }
-}
-
-cd_logdir() {
-  cd logdir > /dev/null 2>&1 || {
-    echo "error changing directory to logdir" >&3
-    return 3
-  }
-}
-
-runtestsinlogdir() {
-  mkdir_logdir || return $?
-  (
-    cd_logdir || return $?
-    runtests
-  )
 }
 
 # -----------------------------------------------------------------------------
@@ -288,7 +265,7 @@ determineexitstatus() {
 }
 
 runtestsandprintsummary() {
-  runtestsinlogdir || return $?
+  runtests || return $?
   printsummary
   determineexitstatus
 }
