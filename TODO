@@ -1,6 +1,12 @@
 todo for shell unit test
 
 ----
+enumerate tests
+create testxx for every test
+work in testxx
+create testname dir as symlink to testxx
+
+----
 redirect party
 
 in runtests loop
