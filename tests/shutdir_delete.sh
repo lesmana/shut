@@ -16,10 +16,10 @@ cp -a actual expected
 
 touch actual/shutdir/existingdir
 
-mkdir -p expected/shutdir/test000001/test0/workdir
+mkdir -p expected/shutdir/test000001/workdir
 
-printf "+ true\n"   > expected/shutdir/test000001/test0/output
-printf "0\n"        > expected/shutdir/test000001/test0/exitstatus
+printf "+ true\n"   > expected/shutdir/test000001/output
+printf "0\n"        > expected/shutdir/test000001/exitstatus
 
 printf "\
 ./test0

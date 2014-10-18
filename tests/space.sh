@@ -21,14 +21,14 @@ chmod +x "actual/test 0" "actual/d 1/test 1"
 cp -a actual expected
 
 mkdir -p \
-      "expected/shutdir/test000002/test 0/workdir" \
-      "expected/shutdir/test000001/d 1/test 1/workdir"
+      "expected/shutdir/test000002/workdir" \
+      "expected/shutdir/test000001/workdir"
 
-printf "+ false\n"  > "expected/shutdir/test000002/test 0/output"
-printf "1\n"        > "expected/shutdir/test000002/test 0/exitstatus"
+printf "+ false\n"  > "expected/shutdir/test000002/output"
+printf "1\n"        > "expected/shutdir/test000002/exitstatus"
 
-printf "+ true\n"   > "expected/shutdir/test000001/d 1/test 1/output"
-printf "0\n"        > "expected/shutdir/test000001/d 1/test 1/exitstatus"
+printf "+ true\n"   > "expected/shutdir/test000001/output"
+printf "0\n"        > "expected/shutdir/test000001/exitstatus"
 
 printf "\
 ./d 1/test 1

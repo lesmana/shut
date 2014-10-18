@@ -10,7 +10,7 @@ chmod +x actual/test0
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/test000001/test0
+mkdir -p expected/shutdir/test000001
 
 printf "\
 ./test0
