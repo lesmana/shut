@@ -168,7 +168,7 @@ runtestcatchterror() {
 # -----------------------------------------------------------------------------
 mkdir_testdir() {
   local testdir="$1"
-  mkdir "$testdir" > /dev/null 2>&1 || {
+  mkdir -- "$testdir" > /dev/null 2>&1 || {
     echo "error creating enumerated testdir" >&3
     return 3
   }
@@ -176,7 +176,7 @@ mkdir_testdir() {
 
 cd_testdir() {
   local testdir="$1"
-  cd "$testdir" > /dev/null 2>&1 || {
+  cd -- "$testdir" > /dev/null 2>&1 || {
     echo "error changing directory to enumerated testdir" >&3
     return 3
   }
