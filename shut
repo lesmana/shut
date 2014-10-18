@@ -194,7 +194,8 @@ runtestcatchterror() {
 
 # -----------------------------------------------------------------------------
 runtestinenumeratedtestdir() {
-  local testname="$1"
+  local count="$1"
+  local testname="$2"
   runtestcatchterror "$testname"
 }
 
@@ -203,7 +204,7 @@ runtests() {
   touch ../testspass ../testsfail ../testserror
   local testname
   nl -n rz ../testsfound | while read -r count testname; do
-    runtestinenumeratedtestdir "$testname"
+    runtestinenumeratedtestdir "$count" "$testname"
   done
 }
 
