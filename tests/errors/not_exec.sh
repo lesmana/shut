@@ -50,7 +50,7 @@ printf "\
 
 printf "\
 ./test1
-" > expected/shutdir/error
+" > expected/shutdir/testserror
 
 printf "\
 ================

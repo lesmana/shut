@@ -33,7 +33,7 @@ printf "\
 " > expected/dirname/testsfail
 
 printf "\
-" > expected/dirname/error
+" > expected/dirname/testserror
 
 printf "\
 ================

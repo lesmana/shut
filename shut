@@ -188,13 +188,13 @@ runtestcatchthandlederror() {
 
 runtestcatchterror() {
   runtestcatchthandlederror "$@" 2>&1 || {
-    echo "$testname" >> "$config_fullshutdir/error"
+    echo "$testname" >> "$config_fullshutdir/testserror"
   }
 }
 
 # -----------------------------------------------------------------------------
 runtests() {
-  touch ../testspass ../testsfail ../error
+  touch ../testspass ../testsfail ../testserror
   local testname
   while read -r testname; do
     runtestcatchterror "$testname"
@@ -234,7 +234,7 @@ printlist() {
 }
 
 printcounts() {
-  wc -l testsfound testspass testsfail error | {
+  wc -l testsfound testspass testsfail testserror | {
     read -r runcount ignorefilename
     read -r passcount ignorefilename
     read -r failcount ignorefilename
@@ -250,14 +250,14 @@ printsummary() {
   if [ -s testsfail ]; then
     printlist fail testsfail
   fi
-  if [ -s error ]; then
-    printlist error error
+  if [ -s testserror ]; then
+    printlist error testserror
   fi
   printcounts
 }
 
 determineexitstatus() {
-  [ ! -s testsfail ] && [ ! -s error ] # exitstatus based on list empty or not
+  [ ! -s testsfail ] && [ ! -s testserror ] # exitstatus based on list empty or not
 }
 
 runtestsandprintsummary() {
