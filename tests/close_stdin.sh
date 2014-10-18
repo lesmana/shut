@@ -11,7 +11,6 @@
 # reading the names one by one.
 # if stdin is not closed then the tests will inherit the open stdin.
 # if a test reads from stdin shut will be missing testnames.
-# if stdin is closed in shut before starting tests this cannot happen.
 
 set -xeu
 
