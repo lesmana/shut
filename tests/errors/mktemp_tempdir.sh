@@ -22,11 +22,9 @@ printf -- "3\n" > expected/exitstatus
 
 (
   cd actual
-  set +e
   export TMPDIR=/dev/null
   shut > stdout 2> stderr
   printf -- "$?\n" > exitstatus
-  set -e
-)
+) || true
 
 diff -r expected actual

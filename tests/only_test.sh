@@ -46,10 +46,8 @@ printf -- "0\n" > expected/exitstatus
 
 (
   cd actual
-  set +e
   shut -n > stdout 2> stderr
   printf -- "$?\n" > exitstatus
-  set -e
-)
+) || true
 
 diff -r expected actual

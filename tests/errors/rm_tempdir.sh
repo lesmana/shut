@@ -44,10 +44,8 @@ chmod +x mktemp rm
 (
   PATH=$PWD:$PATH
   cd actual
-  set +e
   shut -n > stdout 2> stderr
   printf -- "$?\n" > exitstatus
-  set -e
-)
+) || true
 
 diff -r expected actual

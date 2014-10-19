@@ -38,10 +38,8 @@ chmod +x mkdir
 (
   PATH=$PWD:$PATH
   cd actual
-  set +e
   shut > stdout 2> stderr
   printf -- "$?\n" > exitstatus
-  set -e
-)
+) || true
 
 diff -r expected actual
