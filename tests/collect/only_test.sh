@@ -2,6 +2,8 @@
 
 set -xeu
 
+# prepare actual
+
 mkdir -p actual/testdir actual/xtestdir
 
 touch \
@@ -26,7 +28,11 @@ chmod +x \
       actual/xtestdir/test1 \
       actual/xtestdir/nottest
 
+# prepare expected
+
 cp -a actual expected
+
+# prepare shut output
 
 printf -- "\
 ./test0
@@ -46,10 +52,14 @@ printf -- "\
 0
 " > expected/exitstatus
 
+# run shut
+
 (
   cd actual
   shut -n > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 ) || true
+
+# compare
 
 diff -r expected actual

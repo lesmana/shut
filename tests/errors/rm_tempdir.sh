@@ -2,13 +2,19 @@
 
 set -xeu
 
+# prepare actual
+
 mkdir -p actual
 
 touch actual/test0
 
 chmod +x actual/test0
 
+# prepare expected
+
 cp -a actual expected
+
+# prepare shut output
 
 printf -- "\
 ./test0
@@ -24,6 +30,8 @@ not fatal but annoying
 printf -- "\
 3
 " > expected/exitstatus
+
+# inject error
 
 printf -- '\
 #! /bin/sh
@@ -43,11 +51,15 @@ fi
 
 chmod +x mktemp rm
 
+# run shut
+
 (
   PATH=$PWD:$PATH
   cd actual
   shut -n > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 ) || true
+
+# compare
 
 diff -r expected actual

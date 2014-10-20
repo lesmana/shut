@@ -2,13 +2,19 @@
 
 set -xeu
 
+# prepare actual
+
 mkdir -p actual
 
 touch actual/prefix0 actual/prefix1 actual/notprefix
 
 chmod +x actual/prefix0 actual/prefix1 actual/notprefix
 
+# prepare expected
+
 cp -a actual expected
+
+# prepare shut output
 
 printf -- "\
 ./prefix0
@@ -24,10 +30,14 @@ printf -- "\
 0
 " > expected/exitstatus
 
+# run shut
+
 (
   cd actual
   shut -n prefix > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 ) || true
+
+# compare
 
 diff -r expected actual

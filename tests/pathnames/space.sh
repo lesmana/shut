@@ -2,6 +2,8 @@
 
 set -xeu
 
+# prepare actual
+
 mkdir -p "actual/d 1"
 
 printf -- "\
@@ -18,11 +20,15 @@ true
 
 chmod +x "actual/test 0" "actual/d 1/test 1"
 
+# prepare expected
+
 cp -a actual expected
 
 mkdir -p \
       "expected/shutdir/test000002/workdir" \
       "expected/shutdir/test000001/workdir"
+
+# prepare test output
 
 printf -- "\
 + false
@@ -40,6 +46,8 @@ printf -- "\
 0
 " > "expected/shutdir/test000001/exitstatus"
 
+# prepare shutdir
+
 printf -- "\
 ./d 1/test 1
 ./test 0
@@ -55,6 +63,8 @@ printf -- "\
 
 printf -- "\
 " > expected/shutdir/testserror
+
+# prepare shut output
 
 printf -- "\
 ================
@@ -80,10 +90,14 @@ printf -- "\
 1
 " > expected/exitstatus
 
+# run shut
+
 (
   cd actual
   shut -v > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 ) || true
+
+# compare
 
 diff -r expected actual

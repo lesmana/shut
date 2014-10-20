@@ -2,15 +2,21 @@
 
 set -xeu
 
+# prepare actual
+
 mkdir -p actual
 
 touch actual/test0
 
 chmod +x actual/test0
 
+# prepare expected
+
 cp -a actual expected
 
 mkdir -p expected/shutdir/test000001
+
+# prepare shutdir
 
 printf -- "\
 ./test0
@@ -25,6 +31,8 @@ printf -- "\
 printf -- "\
 ./test0
 " > expected/shutdir/testserror
+
+# prepare shut output
 
 printf -- "\
 ================
@@ -44,6 +52,8 @@ printf -- "\
 1
 " > expected/exitstatus
 
+# inject error
+
 printf -- "\
 #! /bin/sh
 if [ \"\$*\" = \"workdir\" ]; then
@@ -59,11 +69,15 @@ fi
 
 chmod +x mkdir
 
+# run shut
+
 (
   PATH=$PWD:$PATH
   cd actual
   shut > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 ) || true
+
+# compare
 
 diff -r expected actual
