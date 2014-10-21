@@ -40,7 +40,9 @@ run: 1 pass: 0 fail: 0 error: 1
 printf -- "\
 " > expected/stderr
 
-printf -- "1\n" > expected/exitstatus
+printf -- "\
+1
+" > expected/exitstatus
 
 printf -- "\
 #! /bin/sh

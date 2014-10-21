@@ -21,7 +21,9 @@ error deleting tempdir
 not fatal but annoying
 " > expected/stderr
 
-printf -- "3\n" > expected/exitstatus
+printf -- "\
+3
+" > expected/exitstatus
 
 printf -- '\
 #! /bin/sh

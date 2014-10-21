@@ -18,7 +18,9 @@ error changing directory to $PWD/actual/shutdir
 cannot continue
 " > expected/stderr
 
-printf -- "3\n" > expected/exitstatus
+printf -- "\
+3
+" > expected/exitstatus
 
 printf -- "\
 #! /bin/sh

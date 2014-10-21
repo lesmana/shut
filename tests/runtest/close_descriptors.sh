@@ -21,7 +21,9 @@ fd3 closed
 fd4 closed
 " > expected/shutdir/test000001/output
 
-printf -- "0\n" > expected/shutdir/test000001/exitstatus
+printf -- "\
+0
+" > expected/shutdir/test000001/exitstatus
 
 printf -- "\
 ./test0
@@ -50,7 +52,9 @@ run: 1 pass: 1 fail: 0 error: 0
 printf -- "\
 " > expected/stderr
 
-printf -- "0\n" > expected/exitstatus
+printf -- "\
+0
+" > expected/exitstatus
 
 (
   cd actual

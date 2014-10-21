@@ -16,11 +16,17 @@ cp -a actual expected
 
 mkdir -p expected/shutdir/test000001/workdir
 
-printf -- "stdout\n" > expected/shutdir/test000001/stdout
+printf -- "\
+stdout
+" > expected/shutdir/test000001/stdout
 
-printf -- "stderr\n" > expected/shutdir/test000001/stderr
+printf -- "\
+stderr
+" > expected/shutdir/test000001/stderr
 
-printf -- "0\n" > expected/shutdir/test000001/exitstatus
+printf -- "\
+0
+" > expected/shutdir/test000001/exitstatus
 
 printf -- "\
 ./test0
@@ -50,7 +56,9 @@ run: 1 pass: 1 fail: 0 error: 0
 printf -- "\
 " > expected/stderr
 
-printf -- "0\n" > expected/exitstatus
+printf -- "\
+0
+" > expected/exitstatus
 
 (
   cd actual

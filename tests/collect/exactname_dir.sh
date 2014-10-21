@@ -19,7 +19,9 @@ would run: 1
 printf -- "\
 " > expected/stderr
 
-printf -- "0\n" > expected/exitstatus
+printf -- "\
+0
+" > expected/exitstatus
 
 (
   cd actual

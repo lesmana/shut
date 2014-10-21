@@ -18,8 +18,13 @@ touch actual/dirname/existingdir
 
 mkdir -p expected/dirname/test000001/workdir
 
-printf -- "+ true\n"   > expected/dirname/test000001/output
-printf -- "0\n"        > expected/dirname/test000001/exitstatus
+printf -- "\
++ true
+" > expected/dirname/test000001/output
+
+printf -- "\
+0
+" > expected/dirname/test000001/exitstatus
 
 printf -- "\
 ./test0
@@ -43,7 +48,9 @@ run: 1 pass: 1 fail: 0 error: 0
 printf -- "\
 " > expected/stderr
 
-printf -- "0\n" > expected/exitstatus
+printf -- "\
+0
+" > expected/exitstatus
 
 (
   cd actual

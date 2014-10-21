@@ -42,17 +42,37 @@ mkdir -p \
       expected/shutdir/test000003/workdir \
       expected/shutdir/test000004/workdir
 
-printf -- "+ false\n"  > expected/shutdir/test000001/output
-printf -- "1\n"        > expected/shutdir/test000001/exitstatus
+printf -- "\
++ false
+" > expected/shutdir/test000001/output
 
-printf -- "+ true\n"   > expected/shutdir/test000002/output
-printf -- "0\n"        > expected/shutdir/test000002/exitstatus
+printf -- "\
+1
+" > expected/shutdir/test000001/exitstatus
 
-printf -- "+ false\n"  > expected/shutdir/test000003/output
-printf -- "1\n"        > expected/shutdir/test000003/exitstatus
+printf -- "\
++ true
+" > expected/shutdir/test000002/output
 
-printf -- "+ true\n"   > expected/shutdir/test000004/output
-printf -- "0\n"        > expected/shutdir/test000004/exitstatus
+printf -- "\
+0
+" > expected/shutdir/test000002/exitstatus
+
+printf -- "\
++ false
+" > expected/shutdir/test000003/output
+
+printf -- "\
+1
+" > expected/shutdir/test000003/exitstatus
+
+printf -- "\
++ true
+" > expected/shutdir/test000004/output
+
+printf -- "\
+0
+" > expected/shutdir/test000004/exitstatus
 
 printf -- "\
 ./test0
@@ -96,7 +116,9 @@ run: 4 pass: 2 fail: 2 error: 0
 printf -- "\
 " > expected/stderr
 
-printf -- "1\n" > expected/exitstatus
+printf -- "\
+1
+" > expected/exitstatus
 
 (
   cd actual

@@ -11,7 +11,9 @@ no tests found
 printf -- "\
 " > expected/stderr
 
-printf -- "2\n" > expected/exitstatus
+printf -- "\
+2
+" > expected/exitstatus
 
 (
   cd actual
