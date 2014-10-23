@@ -57,10 +57,10 @@ printf -- "\
 printf -- '#! /bin/sh
 realmkdir="%s"
 if [ "$*" = "workdir" ]; then
-  touch workdir
+  touch "workdir"
   "$realmkdir" "$@"
   exitstatus=$?
-  rm workdir
+  rm "workdir"
   exit $exitstatus
 else
   "$realmkdir" "$@"

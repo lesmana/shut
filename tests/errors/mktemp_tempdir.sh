@@ -30,7 +30,7 @@ printf -- "\
 
 # inject error
 
-export TMPDIR=/dev/null
+export TMPDIR="/dev/null"
 
 # run shut
 
