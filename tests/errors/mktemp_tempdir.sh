@@ -28,11 +28,14 @@ printf -- "\
 3
 " > expected/exitstatus
 
+# inject error
+
+export TMPDIR=/dev/null
+
 # run shut
 
 (
   cd actual
-  export TMPDIR=/dev/null
   shut > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 ) || true
