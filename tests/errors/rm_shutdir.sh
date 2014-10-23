@@ -34,14 +34,14 @@ printf -- "\
 
 # inject error
 
-realrm="$(which rm)"
-
 printf -- '#! /bin/sh
-if [ "$*" = "-r -- %s/actual/shutdir" ]; then
-  "%s" "$@"
+shutdir="%s/actual/shutdir"
+realrm="%s"
+if [ "$*" = "-r -- $shutdir" ]; then
+  "$realrm" "$@"
 fi
-"%s" "$@"
-' "$PWD" "$realrm" "$realrm" > rm
+"$realrm" "$@"
+' "$PWD" "$(which rm)" > rm
 
 chmod +x rm
 

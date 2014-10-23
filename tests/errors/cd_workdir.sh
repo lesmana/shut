@@ -54,13 +54,12 @@ printf -- "\
 
 # inject error
 
-realmkdir="$(which mkdir)"
-
 printf -- '#! /bin/sh
+realmkdir="%s"
 if [ "$*" != "workdir" ]; then
-  "%s" "$@"
+  "$realmkdir" "$@"
 fi
-' "$realmkdir" > mkdir
+' "$(which mkdir)" > mkdir
 
 chmod +x mkdir
 

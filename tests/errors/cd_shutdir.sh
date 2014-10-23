@@ -30,15 +30,15 @@ printf -- "\
 
 # inject error
 
-realcp="$(which cp)"
-
 printf -- '#! /bin/sh
-if [ "$*" = "-- testsfound %s/actual/shutdir" ]; then
-  rm -rf -- "%s/actual/shutdir"
+shutdir="%s/actual/shutdir"
+realcp="%s"
+if [ "$*" = "-- testsfound $shutdir" ]; then
+  rm -rf -- "$shutdir"
 else
-  "%s" "$@"
+  "$realcp" "$@"
 fi
-' "$PWD" "$PWD" "$realcp" > cp
+' "$PWD" "$(which cp)" > cp
 
 chmod +x cp
 

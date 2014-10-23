@@ -30,19 +30,19 @@ printf -- "\
 
 # inject error
 
-realmkdir="$(which mkdir)"
-
 printf -- '#! /bin/sh
-if [ "$*" = "-p -- %s/actual/shutdir" ]; then
-  touch -- "%s/actual/shutdir"
-  "%s" "$@"
+shutdir="%s/actual/shutdir"
+realmkdir="%s"
+if [ "$*" = "-p -- $shutdir" ]; then
+  touch -- "$shutdir"
+  "$realmkdir" "$@"
   exitstatus=$?
-  rm -- "%s/actual/shutdir"
+  rm -- "$shutdir"
   exit $exitstatus
 else
-  "%s" "$@"
+  "$realmkdir" "$@"
 fi
-' "$PWD" "$PWD" "$realmkdir" "$PWD" "$realmkdir" > mkdir
+' "$PWD" "$(which mkdir)" > mkdir
 
 chmod +x mkdir
 

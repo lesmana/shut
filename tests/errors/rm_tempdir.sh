@@ -38,14 +38,13 @@ mkdir -p -- "$PWD/tempdir"
 printf -- "%%s\n" "$PWD/tempdir"
 ' > mktemp
 
-realrm="$(which rm)"
-
 printf -- '#! /bin/sh
+realrm="%s"
 if [ "$*" = "-r -- $PWD/tempdir" ]; then
-  "%s" "$@"
+  "$realrm" "$@"
 fi
-"%s" "$@"
-' "$realrm" "$realrm" > rm
+"$realrm" "$@"
+' "$(which rm)" > rm
 
 chmod +x mktemp rm
 
