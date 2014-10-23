@@ -32,18 +32,19 @@ printf -- "\
 
 # inject error
 
-printf -- "\
-#! /bin/sh
-if [ \"\$*\" = \"-- testsfound $PWD/actual/shutdir\" ]; then
-  mkdir $PWD/actual/shutdir/testsfound
-  PATH=$PATH cp \"\$@\"
-  exitstatus=\$?
-  rm -rf $PWD/actual/shutdir/testsfound
-  exit \$exitstatus
+realcp="$(which cp)"
+
+printf -- '#! /bin/sh
+if [ "$*" = "-- testsfound %s/actual/shutdir" ]; then
+  mkdir -- "%s/actual/shutdir/testsfound"
+  "%s" "$@"
+  exitstatus=$?
+  rm -r -- "%s/actual/shutdir/testsfound"
+  exit $exitstatus
 else
-  PATH=$PATH cp \"\$@\"
+  "%s" "$@"
 fi
-" > cp
+' "$PWD" "$PWD" "$realcp" "$PWD" "$realcp" > cp
 
 chmod +x cp
 

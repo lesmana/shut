@@ -33,21 +33,19 @@ printf -- "\
 
 # inject error
 
-printf -- '\
-#! /bin/sh
-mkdir -p $PWD/tempdir
-echo $PWD/tempdir
+printf -- '#! /bin/sh
+mkdir -p -- "$PWD/tempdir"
+printf -- "%%s\n" "$PWD/tempdir"
 ' > mktemp
 
-printf -- "\
-#! /bin/sh
-if [ \"\$*\" = \"-r -- \$PWD/tempdir\" ]; then
-  PATH=$PATH rm \"\$@\"
-  PATH=$PATH rm \"\$@\"
-else
-  PATH=$PATH rm \"\$@\"
+realrm="$(which rm)"
+
+printf -- '#! /bin/sh
+if [ "$*" = "-r -- $PWD/tempdir" ]; then
+  "%s" "$@"
 fi
-" > rm
+"%s" "$@"
+' "$realrm" "$realrm" > rm
 
 chmod +x mktemp rm
 

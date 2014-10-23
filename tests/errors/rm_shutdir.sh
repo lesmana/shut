@@ -34,15 +34,14 @@ printf -- "\
 
 # inject error
 
-printf -- "\
-#! /bin/sh
-if [ \"\$*\" = \"-r -- $PWD/actual/shutdir\" ]; then
-  PATH=$PATH rm \"\$@\"
-  PATH=$PATH rm \"\$@\"
-else
-  PATH=$PATH rm \"\$@\"
+realrm="$(which rm)"
+
+printf -- '#! /bin/sh
+if [ "$*" = "-r -- %s/actual/shutdir" ]; then
+  "%s" "$@"
 fi
-" > rm
+"%s" "$@"
+' "$PWD" "$realrm" "$realrm" > rm
 
 chmod +x rm
 

@@ -54,14 +54,13 @@ printf -- "\
 
 # inject error
 
-printf -- "\
-#! /bin/sh
-if [ \"\$*\" = \"workdir\" ]; then
-  :
-else
-  PATH=$PATH mkdir \"\$@\"
+realmkdir="$(which mkdir)"
+
+printf -- '#! /bin/sh
+if [ "$*" != "workdir" ]; then
+  "%s" "$@"
 fi
-" > mkdir
+' "$realmkdir" > mkdir
 
 chmod +x mkdir
 

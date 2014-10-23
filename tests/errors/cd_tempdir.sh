@@ -30,8 +30,7 @@ printf -- "\
 
 # inject error
 
-printf -- '\
-#! /bin/sh
+printf -- '#! /bin/sh
 touch loldir
 echo loldir
 ' > mktemp

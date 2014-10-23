@@ -30,18 +30,19 @@ printf -- "\
 
 # inject error
 
-printf -- "\
-#! /bin/sh
-if [ \"\$*\" = \"-p -- $PWD/actual/shutdir\" ]; then
-  touch $PWD/actual/shutdir
-  PATH=$PATH mkdir \"\$@\"
-  exitstatus=\$?
-  rm $PWD/actual/shutdir
-  exit \$exitstatus
+realmkdir="$(which mkdir)"
+
+printf -- '#! /bin/sh
+if [ "$*" = "-p -- %s/actual/shutdir" ]; then
+  touch -- "%s/actual/shutdir"
+  "%s" "$@"
+  exitstatus=$?
+  rm -- "%s/actual/shutdir"
+  exit $exitstatus
 else
-  PATH=$PATH mkdir \"\$@\"
+  "%s" "$@"
 fi
-" > mkdir
+' "$PWD" "$PWD" "$realmkdir" "$PWD" "$realmkdir" > mkdir
 
 chmod +x mkdir
 
