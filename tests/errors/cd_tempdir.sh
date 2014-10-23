@@ -20,7 +20,7 @@ printf -- "\
 " > expected/stdout
 
 printf -- "\
-failed changing directory to loldir
+failed changing directory to $PWD/actual/loldir
 cannot continue
 " > expected/stderr
 
@@ -31,8 +31,8 @@ printf -- "\
 # inject error
 
 printf -- '#! /bin/sh
-touch loldir
-echo loldir
+touch -- "$PWD/loldir"
+printf -- "%%s\n" "$PWD/loldir"
 ' > mktemp
 
 chmod +x mktemp
