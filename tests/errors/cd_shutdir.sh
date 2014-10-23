@@ -42,10 +42,11 @@ fi
 
 chmod +x cp
 
+export PATH=$PWD:$PATH
+
 # run shut
 
 (
-  PATH=$PWD:$PATH
   cd actual
   shut > stdout 2> stderr
   printf -- "$?\n" > exitstatus
