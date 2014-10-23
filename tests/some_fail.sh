@@ -31,20 +31,20 @@ true
 " > actual/test3
 
 chmod +x \
-      actual/test0 \
-      actual/test1 \
-      actual/test2 \
-      actual/test3
+  actual/test0 \
+  actual/test1 \
+  actual/test2 \
+  actual/test3
 
 # prepare expected
 
 cp -a actual expected
 
 mkdir -p \
-      expected/shutdir/test000001/workdir \
-      expected/shutdir/test000002/workdir \
-      expected/shutdir/test000003/workdir \
-      expected/shutdir/test000004/workdir
+  expected/shutdir/test000001/workdir \
+  expected/shutdir/test000002/workdir \
+  expected/shutdir/test000003/workdir \
+  expected/shutdir/test000004/workdir
 
 # prepare test output
 

@@ -27,8 +27,8 @@ chmod +x actual/test0 actual/d1/test1
 cp -a actual expected
 
 mkdir -p \
-      expected/shutdir/test000002/workdir \
-      expected/shutdir/test000001/workdir
+  expected/shutdir/test000002/workdir \
+  expected/shutdir/test000001/workdir
 
 printf -- "\
 $PWD/actual

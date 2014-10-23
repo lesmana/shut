@@ -7,26 +7,26 @@ set -xeu
 mkdir -p actual/testdir actual/xtestdir
 
 touch \
-      actual/test0 \
-      actual/test1 \
-      actual/nottest \
-      actual/testdir/test0 \
-      actual/testdir/test1 \
-      actual/testdir/nottest \
-      actual/xtestdir/test0 \
-      actual/xtestdir/test1 \
-      actual/xtestdir/nottest
+  actual/test0 \
+  actual/test1 \
+  actual/nottest \
+  actual/testdir/test0 \
+  actual/testdir/test1 \
+  actual/testdir/nottest \
+  actual/xtestdir/test0 \
+  actual/xtestdir/test1 \
+  actual/xtestdir/nottest
 
 chmod +x \
-      actual/test0 \
-      actual/test1 \
-      actual/nottest \
-      actual/testdir/test0 \
-      actual/testdir/test1 \
-      actual/testdir/nottest \
-      actual/xtestdir/test0 \
-      actual/xtestdir/test1 \
-      actual/xtestdir/nottest
+  actual/test0 \
+  actual/test1 \
+  actual/nottest \
+  actual/testdir/test0 \
+  actual/testdir/test1 \
+  actual/testdir/nottest \
+  actual/xtestdir/test0 \
+  actual/xtestdir/test1 \
+  actual/xtestdir/nottest
 
 # prepare expected
 

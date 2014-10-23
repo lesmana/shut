@@ -25,8 +25,8 @@ chmod +x actual/d1/test1 actual/d2/d3/test3
 cp -a actual expected
 
 mkdir -p \
-      expected/shutdir/test000001/workdir \
-      expected/shutdir/test000002/workdir
+  expected/shutdir/test000001/workdir \
+  expected/shutdir/test000002/workdir
 
 # prepare test output
 
