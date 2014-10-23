@@ -63,7 +63,7 @@ fi
 
 chmod +x mkdir
 
-export PATH=$PWD:$PATH
+export PATH="$PWD:$PATH"
 
 # run shut
 

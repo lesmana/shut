@@ -48,7 +48,7 @@ fi
 
 chmod +x mktemp rm
 
-export PATH=$PWD:$PATH
+export PATH="$PWD:$PATH"
 
 # run shut
 

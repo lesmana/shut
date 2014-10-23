@@ -45,7 +45,7 @@ fi
 
 chmod +x rm
 
-export PATH=$PWD:$PATH
+export PATH="$PWD:$PATH"
 
 # run shut
 

@@ -37,7 +37,7 @@ printf -- "%%s\n" "$PWD/loldir"
 
 chmod +x mktemp
 
-export PATH=$PWD:$PATH
+export PATH="$PWD:$PATH"
 
 # run shut
 

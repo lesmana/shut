@@ -42,7 +42,7 @@ fi
 
 chmod +x cp
 
-export PATH=$PWD:$PATH
+export PATH="$PWD:$PATH"
 
 # run shut
 
