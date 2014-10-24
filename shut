@@ -158,7 +158,7 @@ runtestcatchterror() {
 mkdir_testdir() {
   local testdir="$1"
   mkdir -- "$testdir" > /dev/null 2>&1 || {
-    printf -- '%s\n' "error creating testdir: $testdir" >&3
+    printf -- '%s\n' "error creating testdir: $testdir" >&4
     return 3
   }
 }
@@ -166,7 +166,7 @@ mkdir_testdir() {
 cd_testdir() {
   local testdir="$1"
   cd -- "$testdir" > /dev/null 2>&1 || {
-    printf -- '%s\n' "error changing directory to testdir: $testdir" >&3
+    printf -- '%s\n' "error changing directory to testdir: $testdir" >&4
     return 3
   }
 }
@@ -239,42 +239,42 @@ rm_shutdir() {
     return
   fi
   if $config_keep; then
-    printf -- '%s\n' "name exists: $config_shutdir" >&3
-    printf -- '%s\n' "will not overwrite" >&3
+    printf -- '%s\n' "name exists: $config_shutdir" >&4
+    printf -- '%s\n' "will not overwrite" >&4
     return 2
   fi
   if [ ! -d "$config_fullshutdir" ]; then
-    printf -- '%s\n' "is not shutdir: $config_shutdir" >&3
-    printf -- '%s\n' "will not overwrite" >&3
+    printf -- '%s\n' "is not shutdir: $config_shutdir" >&4
+    printf -- '%s\n' "will not overwrite" >&4
     return 2
   fi
   rm -r -- "$config_fullshutdir" > /dev/null 2>&1 || {
-    printf -- '%s\n' "error deleting $config_fullshutdir" >&3
-    printf -- '%s\n' "cannot continue" >&3
+    printf -- '%s\n' "error deleting $config_fullshutdir" >&4
+    printf -- '%s\n' "cannot continue" >&4
     return 3
   }
 }
 
 mkdir_shutdir() {
   mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
-    printf -- '%s\n' "error creating directory $config_fullshutdir" >&3
-    printf -- '%s\n' "cannot continue" >&3
+    printf -- '%s\n' "error creating directory $config_fullshutdir" >&4
+    printf -- '%s\n' "cannot continue" >&4
     return 3
   }
 }
 
 cp_tests_shutdir() {
   cp -- testsfound "$config_fullshutdir" > /dev/null 2>&1 || {
-    printf -- '%s\n' "error copying testsfound to $config_fullshutdir" >&3
-    printf -- '%s\n' "cannot continue" >&3
+    printf -- '%s\n' "error copying testsfound to $config_fullshutdir" >&4
+    printf -- '%s\n' "cannot continue" >&4
     return 3
   }
 }
 
 cd_shutdir() {
   cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
-    printf -- '%s\n' "error changing directory to $config_fullshutdir" >&3
-    printf -- '%s\n' "cannot continue" >&3
+    printf -- '%s\n' "error changing directory to $config_fullshutdir" >&4
+    printf -- '%s\n' "cannot continue" >&4
     return 3
   }
 }
@@ -391,7 +391,7 @@ configthenwork() {
 
 # -----------------------------------------------------------------------------
 workcatcherror() {
-  configthenwork "$@" 2> workerrorunhandled 3> workerrorhandled
+  configthenwork "$@" 2> workerrorunhandled 4> workerrorhandled
   local exitstatus=$?
   if [ -s workerrorhandled ]; then
     cat workerrorhandled >&2
