@@ -303,7 +303,11 @@ workiftestsfound() {
     printf -- '%s\n' "no tests found"
     return 2
   }
-  $work_func # runtestsinshutdir or printtestnames
+  if $config_donotruntests; then
+    printtestnames
+  else
+    runtestsinshutdir
+  fi
 }
 
 # -----------------------------------------------------------------------------
@@ -359,11 +363,6 @@ configfromargv() {
 
 setup() {
   config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
-  if $config_donotruntests; then
-    work_func=printtestnames
-  else
-    work_func=runtestsinshutdir
-  fi
   if $config_split; then
     runtestsaveoutput_func=runtestsaveoutputsplit
     printbody_func=printbodysplit
