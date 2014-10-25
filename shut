@@ -183,11 +183,16 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
+runtestdetermineexitstatus() {
+  runtestintestdir "$@"
+}
+
+# -----------------------------------------------------------------------------
 runtests() {
   touch testspass testsfail testserror
   local testname
   nl -n rz testsfound | while read -r count testname; do
-    runtestintestdir "$count" "$testname"
+    runtestdetermineexitstatus "$count" "$testname"
   done
 }
 
