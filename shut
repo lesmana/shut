@@ -194,6 +194,7 @@ runtests() {
   nl -n rz testsfound | while read -r count testname; do
     runtestdetermineexitstatus "$count" "$testname"
   done
+  return 0
 }
 
 # -----------------------------------------------------------------------------
