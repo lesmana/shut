@@ -106,12 +106,12 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
-  printf -- '%s\n' "$testname" >> "$config_fullshutdir/testsrun"
+  printf -- '%s\n' "$testname" >> "../testsrun"
   if [ "$exitstatus" -eq 0 ]; then
-    printf -- '%s\n' "$testname" >> "$config_fullshutdir/testspass"
+    printf -- '%s\n' "$testname" >> "../testspass"
     $printreportpass_func "$testname"
   else
-    printf -- '%s\n' "$testname" >> "$config_fullshutdir/testsfail"
+    printf -- '%s\n' "$testname" >> "../testsfail"
     $printreportfail_func "$testname" "$exitstatus"
   fi
 }
@@ -151,7 +151,7 @@ runtestcatchthandlederror() {
 
 runtestcatchterror() {
   runtestcatchthandlederror "$@" 2>&1 || {
-    printf -- '%s\n' "$testname" >> "$config_fullshutdir/testserror"
+    printf -- '%s\n' "$testname" >> "../testserror"
   }
 }
 
