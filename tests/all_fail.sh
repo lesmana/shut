@@ -54,6 +54,11 @@ printf -- "\
 " > expected/shutdir/testsfound
 
 printf -- "\
+./test0
+./test1
+" > expected/shutdir/testsrun
+
+printf -- "\
 " > expected/shutdir/testspass
 
 printf -- "\

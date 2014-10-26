@@ -106,6 +106,7 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
+  printf -- '%s\n' "$testname" >> "$config_fullshutdir/testsrun"
   if [ "$exitstatus" -eq 0 ]; then
     printf -- '%s\n' "$testname" >> "$config_fullshutdir/testspass"
     $printreportpass_func "$testname"
@@ -189,7 +190,7 @@ runtestdetermineexitstatus() {
 
 # -----------------------------------------------------------------------------
 runtests() {
-  touch testspass testsfail testserror
+  touch testsrun testspass testsfail testserror
   local testname
   nl -n rz testsfound | while read -r count testname; do
     runtestdetermineexitstatus "$count" "$testname"

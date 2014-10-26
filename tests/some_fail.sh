@@ -90,6 +90,13 @@ printf -- "\
 " > expected/shutdir/testsfound
 
 printf -- "\
+./test0
+./test1
+./test2
+./test3
+" > expected/shutdir/testsrun
+
+printf -- "\
 ./test1
 ./test3
 " > expected/shutdir/testspass

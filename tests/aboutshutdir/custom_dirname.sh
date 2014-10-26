@@ -40,6 +40,10 @@ printf -- "\
 
 printf -- "\
 ./test0
+" > expected/dirname/testsrun
+
+printf -- "\
+./test0
 " > expected/dirname/testspass
 
 printf -- "\

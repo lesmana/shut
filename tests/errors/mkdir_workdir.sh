@@ -23,6 +23,9 @@ printf -- "\
 " > expected/shutdir/testsfound
 
 printf -- "\
+" > expected/shutdir/testsrun
+
+printf -- "\
 " > expected/shutdir/testspass
 
 printf -- "\
