@@ -231,19 +231,19 @@ printsummary() {
   printcounts
 }
 
+runtestsandprintsummary() {
+  runtests || return $?
+  printsummary
+}
+
+# -----------------------------------------------------------------------------
 determineexitstatus() {
   [ ! -s testsfail ] && [ ! -s testserror ] # exitstatus based on list empty or not
 }
 
-runtestsandprintsummary() {
-  runtests || return $?
-  printsummary
-  determineexitstatus
-}
-
-# -----------------------------------------------------------------------------
 runtestsdetermineexitstatus() {
   runtestsandprintsummary
+  determineexitstatus
 }
 
 # -----------------------------------------------------------------------------
