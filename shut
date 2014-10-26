@@ -311,6 +311,15 @@ printtestnames() {
 }
 
 # -----------------------------------------------------------------------------
+work() {
+  if $config_donotruntests; then
+    printtestnames
+  else
+    runtestsinshutdir
+  fi
+}
+
+# -----------------------------------------------------------------------------
 collecttestnames() {
   if [ ! -s patterns ]; then
     printf -- '%s\n' "$default_pattern" > patterns
@@ -335,11 +344,7 @@ workiftestsfound() {
     printf -- '%s\n' "no tests found"
     return 2
   }
-  if $config_donotruntests; then
-    printtestnames
-  else
-    runtestsinshutdir
-  fi
+  work
 }
 
 collectnamesandwork() {
