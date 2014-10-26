@@ -73,7 +73,7 @@ printf -- "\
 
 printf -- "\
 ================
-run: 2 pass: 2 fail: 0 error: 0
+found: 2 run: 2 pass: 2 fail: 0 error: 0
 " > expected/stdout
 
 printf -- "\

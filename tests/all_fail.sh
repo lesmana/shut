@@ -87,7 +87,7 @@ fail:
 ./test0
 ./test1
 ================
-run: 2 pass: 0 fail: 2 error: 0
+found: 2 run: 2 pass: 0 fail: 2 error: 0
 " > expected/stdout
 
 printf -- "\

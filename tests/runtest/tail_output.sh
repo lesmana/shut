@@ -63,7 +63,7 @@ output:
   4
   5
 ================
-run: 1 pass: 1 fail: 0 error: 0
+found: 1 run: 1 pass: 1 fail: 0 error: 0
 " > expected/stdout
 
 printf -- "\
