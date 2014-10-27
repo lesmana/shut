@@ -324,11 +324,11 @@ collecttestnames() {
   local print="-false"
   while read -r pattern; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path \*/$pattern"
+      print="$print -o -type f -executable -path */$pattern"
     elif [ -d "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path \*/$pattern/\*"
+      print="$print -o -type f -executable -path */$pattern/*"
     else
-      print="$print -o -type f -executable -regex .\*/$pattern[^/]\*"
+      print="$print -o -type f -executable -regex .*/$pattern[^/]*"
     fi
   done < patterns
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
