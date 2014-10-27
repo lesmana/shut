@@ -121,7 +121,7 @@ runtestandprintreport() {
   local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
   exitstatus="$(runtestinworkdir "$fulltestname")" || return $?
-  printreport "$testname" "$exitstatus"
+  printreport "$testname" "$exitstatus" >&3
 }
 
 # -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ printsummary() {
 
 runtestsandprintsummary() {
   runtests || return $?
-  printsummary
+  printsummary >&3
 }
 
 # -----------------------------------------------------------------------------
@@ -452,8 +452,13 @@ workintempdir() {
 }
 
 # -----------------------------------------------------------------------------
+switchstdoutexitstatus() {
+  workintempdir "$@" 3>&1
+}
+
+# -----------------------------------------------------------------------------
 main() {
-  workintempdir "$@"
+  switchstdoutexitstatus "$@"
 }
 
 main "$@"
