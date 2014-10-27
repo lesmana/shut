@@ -151,7 +151,9 @@ runtestcatchthandlederror() {
 
 runtestcatchterror() {
   runtestcatchthandlederror "$@" 2>&1 || {
+    local exitstatus=$?
     printf -- '%s\n' "$testname" >> "../testserror"
+    return "$exitstatus"
   }
 }
 
@@ -193,9 +195,8 @@ runtests() {
   touch testsrun testspass testsfail testserror
   local testname
   nl -n rz testsfound | while read -r count testname; do
-    runtestdetermineexitstatus "$count" "$testname"
+    runtestdetermineexitstatus "$count" "$testname" || return $?
   done
-  return 0
 }
 
 # -----------------------------------------------------------------------------
