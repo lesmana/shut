@@ -208,16 +208,15 @@ printlist() {
 }
 
 printcounts() {
-  wc -l testsfound testsrun testspass testsfail testserror | {
+  wc -l testsfound testsrun testspass testsfail | {
     read -r foundcount ignorefilename
     read -r runcount ignorefilename
     read -r passcount ignorefilename
     read -r failcount ignorefilename
-    read -r errorcount ignorefilename
     read -r ignoretotal
     printf -- '%s\n' "================"
-    printf -- 'found: %d run: %d pass: %d fail: %d error: %d\n' \
-          "$foundcount" "$runcount" "$passcount" "$failcount" "$errorcount"
+    printf -- 'found: %d run: %d pass: %d fail: %d\n' \
+          "$foundcount" "$runcount" "$passcount" "$failcount"
   }
 }
 

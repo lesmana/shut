@@ -45,7 +45,7 @@ error changing directory to workdir
 error:
 ./test0
 ================
-found: 1 run: 0 pass: 0 fail: 0 error: 1
+found: 1 run: 0 pass: 0 fail: 0
 " > expected/stdout
 
 printf -- "\
