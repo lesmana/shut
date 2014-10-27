@@ -42,9 +42,6 @@ printf -- "\
 ERROR ./test0
 error creating workdir
 ================
-error:
-./test0
-================
 found: 1 run: 0 pass: 0 fail: 0
 " > expected/stdout
 

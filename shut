@@ -224,9 +224,6 @@ printsummary() {
   if [ -s testsfail ]; then
     printlist fail testsfail
   fi
-  if [ -s testserror ]; then
-    printlist error testserror
-  fi
   printcounts
 }
 
