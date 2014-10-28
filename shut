@@ -203,7 +203,7 @@ runtestsandprintsummary() {
 
 # -----------------------------------------------------------------------------
 determineexitstatus() {
-  [ ! -s testsfail ] && [ ! -s testserror ] # exitstatus based on list empty or not
+  [ ! -s testsfail ] # exitstatus based on list empty or not
 }
 
 runtestsdetermineexitstatus() {
