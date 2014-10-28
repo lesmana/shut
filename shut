@@ -160,6 +160,7 @@ runtests() {
   while read -r count testname; do
     runtestintestdir "$count" "$testname" || return $?
   done < "$config_tempdir/testfoundenum"
+  determineexitstatus
 }
 
 # -----------------------------------------------------------------------------
@@ -203,7 +204,6 @@ determineexitstatus() {
 
 runtestsdetermineexitstatus() {
   runtestsandprintsummary || return $?
-  determineexitstatus
 }
 
 # -----------------------------------------------------------------------------
