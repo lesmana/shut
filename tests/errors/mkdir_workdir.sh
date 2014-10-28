@@ -32,7 +32,6 @@ printf -- "\
 " > expected/shutdir/testsfail
 
 printf -- "\
-./test0
 " > expected/shutdir/testserror
 
 # prepare shut output
@@ -45,7 +44,7 @@ error creating workdir
 " > expected/stderr
 
 printf -- "\
-1
+3
 " > expected/exitstatus
 
 # inject error

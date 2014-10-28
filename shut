@@ -125,37 +125,6 @@ runtestandprintreport() {
 }
 
 # -----------------------------------------------------------------------------
-runtestcatchtunhandlederror() {
-  local unhandled="$config_tempdir/runtesterrorunhandled"
-  runtestandprintreport "$@" 2> "$unhandled" || {
-    local exitstatus=$?
-    if [ -s "$unhandled" ]; then
-      cat "$unhandled" >&4
-    fi
-    return "$exitstatus"
-  }
-}
-
-runtestcatchthandlederror() {
-  local handled="$config_tempdir/runtesterrorhandled"
-  runtestcatchtunhandlederror "$@" 4> "$handled" || {
-    local exitstatus=$?
-    if [ -s "$handled" ]; then
-      cat "$handled" >&2
-    fi
-    return "$exitstatus"
-  }
-}
-
-runtestcatchterror() {
-  runtestcatchthandlederror "$@" 2>&4 || {
-    local exitstatus=$?
-    printf -- '%s\n' "$testname" >> "../testserror"
-    return "$exitstatus"
-  }
-}
-
-# -----------------------------------------------------------------------------
 mkdir_testdir() {
   local testdir="$1"
   mkdir -- "$testdir" > /dev/null 2>&1 || {
@@ -179,7 +148,7 @@ runtestintestdir() {
   mkdir_testdir "$testdir" || return $?
   (
     cd_testdir "$testdir" || return $?
-    runtestcatchterror "$testname"
+    runtestandprintreport "$testname"
   )
 }
 
@@ -238,7 +207,7 @@ determineexitstatus() {
 }
 
 runtestsdetermineexitstatus() {
-  runtestsandprintsummary
+  runtestsandprintsummary || return $?
   determineexitstatus
   local exitstatus=$?
   printf -- '%s\n' "$exitstatus"
