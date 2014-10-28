@@ -398,6 +398,8 @@ configthenwork() {
   configfromargv "$@"
   setup
   collectnamesandwork
+  local exitstatus=$?
+  printf -- '%s\n' "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
@@ -452,7 +454,9 @@ workintempdir() {
 
 # -----------------------------------------------------------------------------
 switchstdoutexitstatus() {
-  workintempdir "$@" 3>&1
+  local exitstatus
+  exitstatus=$(workintempdir "$@") 3>&1 || return $?
+  return "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
