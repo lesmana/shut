@@ -1,9 +1,6 @@
 todo for shell unit test
 
 ----
-if error during runtest just bail out
-
-----
 printf with explicit format string to guard against accidental % expansion
 
 ----
