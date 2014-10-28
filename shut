@@ -153,17 +153,12 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-runtestdetermineexitstatus() {
-  runtestintestdir "$@"
-}
-
-# -----------------------------------------------------------------------------
 runtests() {
   touch testsrun testspass testsfail
   local count testname
   nl -n rz testsfound > "$config_tempdir/testfoundenum"
   while read -r count testname; do
-    runtestdetermineexitstatus "$count" "$testname" || return $?
+    runtestintestdir "$count" "$testname" || return $?
   done < "$config_tempdir/testfoundenum"
 }
 
