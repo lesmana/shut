@@ -198,14 +198,12 @@ runtestsandprintsummary() {
 
 # -----------------------------------------------------------------------------
 determineexitstatus() {
-  [ ! -s testsfail ] # exitstatus based on list empty or not
+  [ ! -s testsfail ] && printf -- '%s\n' "0" || printf -- '%s\n' "1"
 }
 
 runtestsdetermineexitstatus() {
   runtestsandprintsummary || return $?
   determineexitstatus
-  local exitstatus=$?
-  printf -- '%s\n' "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
