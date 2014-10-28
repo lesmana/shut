@@ -299,10 +299,10 @@ runtestsinshutdir() {
 
 # -----------------------------------------------------------------------------
 printtestnames() {
-  cat testsfound
+  cat testsfound >&3
   local count=$(wc -l < testsfound)
-  printf -- '%s\n' "================"
-  printf -- '%s\n' "would run: $count"
+  printf -- '%s\n' "================" >&3
+  printf -- '%s\n' "would run: $count" >&3
 }
 
 # -----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ collecttestnames() {
 
 workiftestsfound() {
   [ -s testsfound ] || {
-    printf -- '%s\n' "no tests found"
+    printf -- '%s\n' "no tests found" >&3
     return 2
   }
   work
