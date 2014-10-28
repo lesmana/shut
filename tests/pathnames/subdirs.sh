@@ -66,9 +66,6 @@ printf -- "\
 ./d1/test1
 " > expected/shutdir/testsfail
 
-printf -- "\
-" > expected/shutdir/testserror
-
 # prepare shut output
 
 printf -- "\

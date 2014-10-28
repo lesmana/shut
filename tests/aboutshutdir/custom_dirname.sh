@@ -49,9 +49,6 @@ printf -- "\
 printf -- "\
 " > expected/dirname/testsfail
 
-printf -- "\
-" > expected/dirname/testserror
-
 # prepare shut output
 
 printf -- "\

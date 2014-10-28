@@ -51,9 +51,6 @@ printf -- "\
 printf -- "\
 " > expected/shutdir/testsfail
 
-printf -- "\
-" > expected/shutdir/testserror
-
 # prepare shut output
 
 printf -- "\
