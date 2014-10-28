@@ -455,7 +455,7 @@ workintempdir() {
 # -----------------------------------------------------------------------------
 switchstdoutexitstatus() {
   local exitstatus
-  exitstatus=$(workintempdir "$@") 3>&1 || return $?
+  exitstatus="$(workintempdir "$@")" 3>&1 || return $?
   return "$exitstatus"
 }
 
