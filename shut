@@ -192,9 +192,10 @@ runtestdetermineexitstatus() {
 runtests() {
   touch testsrun testspass testsfail testserror
   local count testname
-  nl -n rz testsfound | while read -r count testname; do
+  nl -n rz testsfound > "$config_tempdir/testfoundenum"
+  while read -r count testname; do
     runtestdetermineexitstatus "$count" "$testname" || return $?
-  done
+  done < "$config_tempdir/testfoundenum"
 }
 
 # -----------------------------------------------------------------------------
