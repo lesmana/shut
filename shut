@@ -130,7 +130,6 @@ runtestcatchtunhandlederror() {
   runtestandprintreport "$@" 2> "$unhandled" || {
     local exitstatus=$?
     if [ -s "$unhandled" ]; then
-      echo "unhandled error:" >&4
       cat "$unhandled" >&4
     fi
     return "$exitstatus"
@@ -142,7 +141,6 @@ runtestcatchthandlederror() {
   runtestcatchtunhandlederror "$@" 4> "$handled" || {
     local exitstatus=$?
     if [ -s "$handled" ]; then
-      printheader "ERROR" "$testname" >&2
       cat "$handled" >&2
     fi
     return "$exitstatus"
