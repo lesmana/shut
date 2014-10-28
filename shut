@@ -193,7 +193,7 @@ runtestdetermineexitstatus() {
 # -----------------------------------------------------------------------------
 runtests() {
   touch testsrun testspass testsfail testserror
-  local testname
+  local count testname
   nl -n rz testsfound | while read -r count testname; do
     runtestdetermineexitstatus "$count" "$testname" || return $?
   done
