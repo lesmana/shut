@@ -1,25 +1,6 @@
 todo for shell unit test
 
 ----
-switch stdout and exitstatus
-between main and workintempdir
-1. capture stdout in variable (semantic exitstatus)
-2. redirect fd3 to fd1 (actual output)
-3. if error return error (actual exitstatus)
-4. return semantic exitstatus
-
-maybe like this?
-
-switchstdoutexitstatus() {
-  exitstatus=$(workintempdir "$@") 3>&1 || return $?
-  return $exitstatus
-}
-
-main() {
-  switchstdoutexitstatus "$@"
-}
-
-----
 test error handling in runtestintestdir
 
 ----
