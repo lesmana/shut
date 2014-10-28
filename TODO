@@ -1,24 +1,6 @@
 todo for shell unit test
 
 ----
-redirect party
-
-in runtests loop
-redirect stdout of tests to fd3, stderr to fd4
-print shut exitstatus to fd1
-use real exitstatus to report error
-
-just before main
-catch errors from fd4 and fd2 and print to fd2
-catch stdout from fd3 and print to fd1
-catch exitstatus from fd1 and process
-
-why the trouble?
-actual exitstatus can be used to report error
-unhandled errors can flow over fd2
-shut exitstatus can flow over fd1
-
-----
 if error during runtest just bail out
 
 ----
