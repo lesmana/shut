@@ -274,6 +274,14 @@ work() {
   fi
 }
 
+workiftestsfound() {
+  [ -s testsfound ] || {
+    printf -- '%s\n' "no tests found" >&3
+    return 2
+  }
+  work
+}
+
 # -----------------------------------------------------------------------------
 collecttestnames() {
   if [ ! -s patterns ]; then
@@ -292,14 +300,6 @@ collecttestnames() {
   done < patterns
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
         \( $print \) -printf "./%P\n" | sort > testsfound
-}
-
-workiftestsfound() {
-  [ -s testsfound ] || {
-    printf -- '%s\n' "no tests found" >&3
-    return 2
-  }
-  work
 }
 
 collectnamesandwork() {
