@@ -153,6 +153,10 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
+determineexitstatus() {
+  [ ! -s testsfail ] && printf -- '%s\n' "0" || printf -- '%s\n' "1"
+}
+
 runtests() {
   touch testsrun testspass testsfail
   local count testname
@@ -198,10 +202,6 @@ runtestsandprintsummary() {
 }
 
 # -----------------------------------------------------------------------------
-determineexitstatus() {
-  [ ! -s testsfail ] && printf -- '%s\n' "0" || printf -- '%s\n' "1"
-}
-
 runtestsdetermineexitstatus() {
   runtestsandprintsummary || return $?
 }
