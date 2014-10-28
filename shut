@@ -148,7 +148,7 @@ runtestcatchthandlederror() {
 }
 
 runtestcatchterror() {
-  runtestcatchthandlederror "$@" 2>&1 || {
+  runtestcatchthandlederror "$@" 2>&4 || {
     local exitstatus=$?
     printf -- '%s\n' "$testname" >> "../testserror"
     return "$exitstatus"

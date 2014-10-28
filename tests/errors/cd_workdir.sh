@@ -38,10 +38,10 @@ printf -- "\
 # prepare shut output
 
 printf -- "\
-error changing directory to workdir
 " > expected/stdout
 
 printf -- "\
+error changing directory to workdir
 " > expected/stderr
 
 printf -- "\

@@ -38,10 +38,10 @@ printf -- "\
 # prepare shut output
 
 printf -- "\
-error creating workdir
 " > expected/stdout
 
 printf -- "\
+error creating workdir
 " > expected/stderr
 
 printf -- "\
