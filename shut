@@ -202,11 +202,6 @@ runtestsandprintsummary() {
 }
 
 # -----------------------------------------------------------------------------
-runtestsdetermineexitstatus() {
-  runtestsandprintsummary || return $?
-}
-
-# -----------------------------------------------------------------------------
 rm_shutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
@@ -258,7 +253,7 @@ runtestsinshutdir() {
   cp_tests_shutdir || return $?
   (
     cd_shutdir || return $?
-    runtestsdetermineexitstatus
+    runtestsandprintsummary
   )
 }
 
