@@ -312,6 +312,8 @@ work() {
   else
     runtestsinshutdir
   fi
+  local exitstatus=$?
+  printf -- '%s\n' "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
@@ -345,8 +347,6 @@ workiftestsfound() {
 collectnamesandwork() {
   collecttestnames
   workiftestsfound
-  local exitstatus=$?
-  printf -- '%s\n' "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
