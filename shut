@@ -267,6 +267,7 @@ actualprinttestnames() {
 
 printtestnames() {
   actualprinttestnames >&3
+  printf -- '%s\n' "0"
 }
 
 # -----------------------------------------------------------------------------
