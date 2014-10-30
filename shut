@@ -153,6 +153,10 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
+enumeratetestnames() {
+  nl -n rz testsfound >"$config_tempdir/testsfoundenum"
+}
+
 printsemanticexitstatus() {
   if [ ! -s testsfail ]; then
     printf -- '%s\n' "0"
@@ -164,7 +168,7 @@ printsemanticexitstatus() {
 runtests() {
   touch testsrun testspass testsfail
   local count testname
-  nl -n rz testsfound >"$config_tempdir/testsfoundenum"
+  enumeratetestnames
   while read -r count testname; do
     runtestintestdir "$count" "$testname" || return $?
   done <"$config_tempdir/testsfoundenum"
