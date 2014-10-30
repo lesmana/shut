@@ -259,14 +259,14 @@ runtestsinshutdir() {
 
 # -----------------------------------------------------------------------------
 actualprinttestnames() {
-  printlist found testsfound >&3
+  printlist found testsfound
   local foundcount=$(wc -l <testsfound)
-  printf -- '%s\n' "================" >&3
-  printf -- '%s\n' "found: $foundcount" >&3
+  printf -- '%s\n' "================"
+  printf -- '%s\n' "found: $foundcount"
 }
 
 printtestnames() {
-  actualprinttestnames
+  actualprinttestnames >&3
 }
 
 # -----------------------------------------------------------------------------
