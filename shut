@@ -167,8 +167,8 @@ printsemanticexitstatus() {
 
 runtests() {
   touch testsrun testspass testsfail
-  local count testname
   enumeratetestnames
+  local count testname
   while read -r count testname; do
     runtestintestdir "$count" "$testname" || return $?
   done <"$config_tempdir/testsfoundenum"
