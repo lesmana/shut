@@ -17,10 +17,12 @@ cp -a actual expected
 # prepare shut output
 
 printf -- "\
+================
+found:
 ./test0
 ./test1
 ================
-would run: 2
+found: 2
 " > expected/stdout
 
 printf -- "\

@@ -35,6 +35,8 @@ cp -a actual expected
 # prepare shut output
 
 printf -- "\
+================
+found:
 ./test0
 ./test1
 ./testdir/test0
@@ -42,7 +44,7 @@ printf -- "\
 ./xtestdir/test0
 ./xtestdir/test1
 ================
-would run: 6
+found: 6
 " > expected/stdout
 
 printf -- "\

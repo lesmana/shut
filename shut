@@ -259,10 +259,10 @@ runtestsinshutdir() {
 
 # -----------------------------------------------------------------------------
 printtestnames() {
-  cat testsfound >&3
-  local count=$(wc -l <testsfound)
+  printlist found testsfound >&3
+  local foundcount=$(wc -l <testsfound)
   printf -- '%s\n' "================" >&3
-  printf -- '%s\n' "would run: $count" >&3
+  printf -- '%s\n' "found: $foundcount" >&3
 }
 
 # -----------------------------------------------------------------------------
