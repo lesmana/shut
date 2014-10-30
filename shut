@@ -419,9 +419,6 @@ workintempdir() {
 switchstdoutexitstatus() {
   local exitstatus
   exitstatus="$(workintempdir "$@")" 3>&1 || return $?
-  if [ -z "$exitstatus" ]; then
-    exitstatus=0
-  fi
   return "$exitstatus"
 }
 
