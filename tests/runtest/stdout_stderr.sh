@@ -81,4 +81,4 @@ printf -- "\
 
 # compare
 
-diff -r expected actual
+diff ${SHUT_VERBOSE+"-u"} -r expected actual
