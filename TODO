@@ -4,6 +4,17 @@ todo for shell unit test
 printf with explicit format string to guard against accidental % expansion
 
 ----
+how to build arguments for find in collecttests
+
+    while read -r pattern; do
+      set -- "$@" "$(buildfindarg "$pattern")"
+    done
+
+    find "$@"
+
+the idea is to abuse "$@" as an array.
+
+----
 test that pattern argument works with absolute and relative path
 
 ----
