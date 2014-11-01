@@ -104,3 +104,13 @@ stderr: (empty)
 
 ----
 recreate report from existing shutdir without rerunning tests
+
+----
+add callbacks for shut start, shut end, test start, and test end.
+let caller of shut define variables with commands
+then call in appropriate place
+${callbacktestend-true} $passorfail
+or
+${callbackshutend-true} $testcount $runcount $passcount $failcount
+if variable is defined will use command
+if not defined will use true
