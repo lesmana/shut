@@ -15,6 +15,16 @@ how to build arguments for find in collecttests
 the idea is to abuse "$@" as an array.
 
 ----
+let find print relative names and full names to two files
+using -fprintf testnames "%P\n" and -fprintf fulltestnames "%p\n"
+then before runtests loop
+paste together with tab as separator
+then read using tab as IFS
+while IFS="\t" read -r count testname fulltestname; do
+  ...
+done
+
+----
 test that pattern argument works with absolute and relative path
 
 ----
