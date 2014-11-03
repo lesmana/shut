@@ -11,6 +11,9 @@ config_quiet=false
 config_tail=10
 SHUT_PWD="$PWD"
 
+exitstatus_pass=0
+exitstatus_fail=1
+
 # -----------------------------------------------------------------------------
 runtest() {
   local fulltestname="$1"
@@ -107,7 +110,7 @@ printreport() {
   local testname="$1"
   local exitstatus="$2"
   printf -- '%s\n' "$testname" >>"../testsrun"
-  if [ "$exitstatus" -eq 0 ]; then
+  if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
     printf -- '%s\n' "$testname" >>"../testspass"
     $printreportpass_func "$testname"
   else
@@ -166,9 +169,9 @@ loopovertestnames() {
 
 printsemanticexitstatus() {
   if [ ! -s testsfail ]; then
-    printf -- '%s\n' "0"
+    printf -- '%s\n' "$exitstatus_pass"
   else
-    printf -- '%s\n' "1"
+    printf -- '%s\n' "$exitstatus_fail"
   fi
 }
 
@@ -279,7 +282,7 @@ actualprinttestnames() {
 
 printtestnames() {
   actualprinttestnames >&3
-  printf -- '%s\n' "0"
+  printf -- '%s\n' "$exitstatus_pass"
 }
 
 # -----------------------------------------------------------------------------
