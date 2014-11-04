@@ -37,7 +37,7 @@ printf -- "\
 
 printf -- '#! /bin/sh
 mkdir -p -- "$PWD/tempdir"
-printf -- "%%s\n" "$PWD/tempdir"
+printf -- "%%s\\n" "$PWD/tempdir"
 ' > mktemp
 
 printf -- '#! /bin/sh

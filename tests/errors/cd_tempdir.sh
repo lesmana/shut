@@ -32,7 +32,7 @@ printf -- "\
 
 printf -- '#! /bin/sh
 touch -- "$PWD/loldir"
-printf -- "%%s\n" "$PWD/loldir"
+printf -- "%%s\\n" "$PWD/loldir"
 ' > mktemp
 
 chmod +x mktemp
