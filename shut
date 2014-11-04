@@ -20,7 +20,7 @@ runtest() {
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
-    exec 0</dev/null 1>&3 3>&- 2>&4 4>&-
+    exec 0< /dev/null 1>&3 3>&- 2>&4 4>&-
     "$fulltestname"
   )
 }
@@ -29,30 +29,30 @@ runtestsaveexitstatus() {
   local fulltestname="$1"
   runtest "$fulltestname"
   local exitstatus=$?
-  printf -- '%s\n' "$exitstatus" >../exitstatus
+  printf -- '%s\n' "$exitstatus" > ../exitstatus
   printf -- '%s\n' "$exitstatus"
 }
 
 runtestsaveoutputsplit() {
   local fulltestname="$1"
-  runtestsaveexitstatus "$fulltestname" 3>../stdout 4>../stderr
+  runtestsaveexitstatus "$fulltestname" 3> ../stdout 4> ../stderr
 }
 
 runtestsaveoutputmerge() {
   local fulltestname="$1"
-  runtestsaveexitstatus "$fulltestname" 3>../output 4>&3
+  runtestsaveexitstatus "$fulltestname" 3> ../output 4>&3
 }
 
 # -----------------------------------------------------------------------------
 mkdir_workdir() {
-  mkdir workdir >/dev/null 2>&1 || {
+  mkdir workdir > /dev/null 2>&1 || {
     printf -- 'error creating workdir\n' >&4
     return 3
   }
 }
 
 cd_workdir() {
-  cd workdir >/dev/null 2>&1 || {
+  cd workdir > /dev/null 2>&1 || {
     printf -- 'error changing directory to workdir\n' >&4
     return 3
   }
@@ -109,12 +109,12 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
-  printf -- '%s\n' "$testname" >>"../testsrun"
+  printf -- '%s\n' "$testname" >> "../testsrun"
   if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
-    printf -- '%s\n' "$testname" >>"../testspass"
+    printf -- '%s\n' "$testname" >> "../testspass"
     $printreportpass_func "$testname"
   else
-    printf -- '%s\n' "$testname" >>"../testsfail"
+    printf -- '%s\n' "$testname" >> "../testsfail"
     $printreportfail_func "$testname" "$exitstatus"
   fi
 }
@@ -130,7 +130,7 @@ runtestandprintreport() {
 # -----------------------------------------------------------------------------
 mkdir_testdir() {
   local testdir="$1"
-  mkdir -- "$testdir" >/dev/null 2>&1 || {
+  mkdir -- "$testdir" > /dev/null 2>&1 || {
     printf -- 'error creating testdir: %s\n' "$testdir" >&4
     return 3
   }
@@ -138,7 +138,7 @@ mkdir_testdir() {
 
 cd_testdir() {
   local testdir="$1"
-  cd -- "$testdir" >/dev/null 2>&1 || {
+  cd -- "$testdir" > /dev/null 2>&1 || {
     printf -- 'error changing directory to testdir: %s\n' "$testdir" >&4
     return 3
   }
@@ -157,14 +157,14 @@ runtestintestdir() {
 
 # -----------------------------------------------------------------------------
 enumeratetestnames() {
-  nl -n rz testsfound >"$config_tempdir/testsfoundenum"
+  nl -n rz testsfound > "$config_tempdir/testsfoundenum"
 }
 
 loopovertestnames() {
   local count testname
   while read -r count testname; do
     runtestintestdir "$count" "$testname" || return $?
-  done <"$config_tempdir/testsfoundenum"
+  done < "$config_tempdir/testsfoundenum"
 }
 
 printsemanticexitstatus() {
@@ -231,7 +231,7 @@ rm_shutdir() {
     printf -- 'will not overwrite\n' >&4
     return 2
   fi
-  rm -r -- "$config_fullshutdir" >/dev/null 2>&1 || {
+  rm -r -- "$config_fullshutdir" > /dev/null 2>&1 || {
     printf -- 'error deleting %s\n' "$config_fullshutdir" >&4
     printf -- 'cannot continue\n' >&4
     return 3
@@ -239,7 +239,7 @@ rm_shutdir() {
 }
 
 mkdir_shutdir() {
-  mkdir -p -- "$config_fullshutdir" >/dev/null 2>&1 || {
+  mkdir -p -- "$config_fullshutdir" > /dev/null 2>&1 || {
     printf -- 'error creating directory %s\n' "$config_fullshutdir" >&4
     printf -- 'cannot continue\n' >&4
     return 3
@@ -247,7 +247,7 @@ mkdir_shutdir() {
 }
 
 cp_tests_shutdir() {
-  cp -- testsfound "$config_fullshutdir" >/dev/null 2>&1 || {
+  cp -- testsfound "$config_fullshutdir" > /dev/null 2>&1 || {
     printf -- 'error copying testsfound to %s\n' "$config_fullshutdir" >&4
     printf -- 'cannot continue\n' >&4
     return 3
@@ -255,7 +255,7 @@ cp_tests_shutdir() {
 }
 
 cd_shutdir() {
-  cd -- "$config_fullshutdir" >/dev/null 2>&1 || {
+  cd -- "$config_fullshutdir" > /dev/null 2>&1 || {
     printf -- 'error changing directory to %s\n' "$config_fullshutdir" >&4
     printf -- 'cannot continue\n' >&4
     return 3
@@ -276,7 +276,7 @@ runtestsinshutdir() {
 actualprinttestnames() {
   printf -- '================\n'
   printlist found testsfound
-  local foundcount=$(wc -l <testsfound)
+  local foundcount=$(wc -l < testsfound)
   printf -- 'found: %s\n' "$foundcount"
 }
 
@@ -305,7 +305,7 @@ workiftestsfound() {
 # -----------------------------------------------------------------------------
 collecttestnames() {
   if [ ! -s patterns ]; then
-    printf -- '%s\n' "$default_pattern" >patterns
+    printf -- '%s\n' "$default_pattern" > patterns
   fi
   local pattern
   local print="-false"
@@ -317,9 +317,9 @@ collecttestnames() {
     else
       print="$print -o -type f -executable -regex .*/$pattern[^/]*"
     fi
-  done <patterns
+  done < patterns
   find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
-        \( $print \) -printf "./%P\n" | sort >testsfound
+        \( $print \) -printf "./%P\n" | sort > testsfound
 }
 
 collectnamesandwork() {
@@ -349,7 +349,7 @@ configfromargv() {
   done
   local pattern
   for pattern in "$@"; do
-    printf -- '%s\n' "$pattern" >>patterns
+    printf -- '%s\n' "$pattern" >> patterns
   done
 }
 
@@ -382,7 +382,7 @@ configthenwork() {
 
 # -----------------------------------------------------------------------------
 workcatcherror() {
-  configthenwork "$@" 2>workerrorunhandled 4>workerrorhandled
+  configthenwork "$@" 2> workerrorunhandled 4> workerrorhandled
   local exitstatus=$?
   if [ -s workerrorhandled ]; then
     cat workerrorhandled >&2
@@ -396,7 +396,7 @@ workcatcherror() {
 
 # -----------------------------------------------------------------------------
 mktemp_tempdir() {
-  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2>/dev/null)" || {
+  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null)" || {
     printf -- 'error creating tempdir\n' >&2
     printf -- 'cannot continue\n' >&2
     return 3
@@ -404,7 +404,7 @@ mktemp_tempdir() {
 }
 
 cd_tempdir() {
-  cd -- "$config_tempdir" >/dev/null 2>&1 || {
+  cd -- "$config_tempdir" > /dev/null 2>&1 || {
     printf -- 'failed changing directory to %s\n' "$config_tempdir" >&2
     printf -- 'cannot continue\n' >&2
     return 3
@@ -412,7 +412,7 @@ cd_tempdir() {
 }
 
 rm_tempdir() {
-  rm -r -- "$config_tempdir" >/dev/null 2>&1 || {
+  rm -r -- "$config_tempdir" > /dev/null 2>&1 || {
     printf -- 'error deleting tempdir\n' >&2
     printf -- 'not fatal but annoying\n' >&2
     return 3
