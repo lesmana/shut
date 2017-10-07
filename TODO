@@ -89,7 +89,7 @@ provide option to show non executables which match given pattern
 to help find tests which were mistakenly not marked executable
 
 ----
-write help and readme
+write help and better readme
 
 ----
 create logfile of entire stdout of shut
