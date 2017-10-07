@@ -112,6 +112,8 @@ example
 --show-output=10 (show last 10 lines)
 --show-output=diff (show lines after line containing diff)
 
+also allow custom filter command like git filter-branch
+
 ----
 specify in output if last x lines
 example:
