@@ -11,9 +11,6 @@ hence: command line tool black box test
 short: cltbbt
 
 ----
-printf with explicit format string to guard against accidental % expansion
-
-----
 how to build arguments for find in collecttests
 
     while read -r pattern; do
