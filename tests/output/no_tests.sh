@@ -27,4 +27,4 @@ printf -- "\
 
 # compare
 
-diff -r expected actual
+diff -r -C 9000 expected actual
