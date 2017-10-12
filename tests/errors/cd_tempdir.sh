@@ -47,4 +47,4 @@ export PATH="$PWD:$PATH"
 
 # compare
 
-diff ${SHUT_VERBOSE+"-u"} -r expected actual
+diff -r expected actual
