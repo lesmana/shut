@@ -1,7 +1,5 @@
 #! /bin/sh
 
-set -xeu
-
 # prepare actual
 
 mkdir -p actual expected

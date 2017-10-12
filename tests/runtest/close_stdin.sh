@@ -12,8 +12,6 @@
 # if stdin is not closed then the tests will inherit the open stdin.
 # if a test reads from stdin shut will be missing testnames.
 
-set -xeu
-
 # prepare actual
 
 mkdir -p actual
