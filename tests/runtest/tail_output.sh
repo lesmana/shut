@@ -74,7 +74,7 @@ printf -- "\
   cd actual
   shut -v -t 3 > stdout 2> stderr
   printf -- "$?\n" > exitstatus
-) || true
+)
 
 # compare
 
