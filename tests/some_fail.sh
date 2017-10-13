@@ -8,31 +8,31 @@ printf -- "\
 #! /bin/sh
 set -x
 false
-" > actual/test0
-
-printf -- "\
-#! /bin/sh
-set -x
-true
 " > actual/test1
 
 printf -- "\
 #! /bin/sh
 set -x
-false
+true
 " > actual/test2
 
 printf -- "\
 #! /bin/sh
 set -x
-true
+false
 " > actual/test3
 
+printf -- "\
+#! /bin/sh
+set -x
+true
+" > actual/test4
+
 chmod +x \
-  actual/test0 \
   actual/test1 \
   actual/test2 \
-  actual/test3
+  actual/test3 \
+  actual/test4
 
 # prepare expected
 
@@ -81,46 +81,46 @@ printf -- "\
 # prepare shutdir
 
 printf -- "\
-./test0
 ./test1
 ./test2
 ./test3
+./test4
 " > expected/shutdir/testsfound
 
 printf -- "\
-./test0
 ./test1
 ./test2
 ./test3
+./test4
 " > expected/shutdir/testsrun
 
 printf -- "\
-./test1
-./test3
+./test2
+./test4
 " > expected/shutdir/testspass
 
 printf -- "\
-./test0
-./test2
+./test1
+./test3
 " > expected/shutdir/testsfail
 
 # prepare shut output
 
 printf -- "\
 ================
-FAIL ./test0
+FAIL ./test1
 exitstatus: 1
 output:
   + false
 ================
-FAIL ./test2
+FAIL ./test3
 exitstatus: 1
 output:
   + false
 ================
 fail:
-./test0
-./test2
+./test1
+./test3
 ================
 found: 4 run: 4 pass: 2 fail: 2
 " > expected/stdout

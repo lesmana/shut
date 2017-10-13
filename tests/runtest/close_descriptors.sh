@@ -8,9 +8,9 @@ printf -- '\
 #! /bin/sh
 { echo foo >&3 ; } 2> /dev/null || echo fd3 closed
 { echo foo >&4 ; } 2> /dev/null || echo fd4 closed
-' > actual/test0
+' > actual/test1
 
-chmod +x actual/test0
+chmod +x actual/test1
 
 # prepare expected
 
@@ -32,15 +32,15 @@ printf -- "\
 # prepare shutdir
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testsfound
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testsrun
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testspass
 
 printf -- "\
@@ -50,7 +50,7 @@ printf -- "\
 
 printf -- "\
 ================
-PASS ./test0
+PASS ./test1
 output:
   fd3 closed
   fd4 closed

@@ -5,25 +5,25 @@
 mkdir -p actual/testdir actual/xtestdir
 
 touch \
-  actual/test0 \
   actual/test1 \
+  actual/test2 \
   actual/nottest \
-  actual/testdir/test0 \
   actual/testdir/test1 \
+  actual/testdir/test2 \
   actual/testdir/nottest \
-  actual/xtestdir/test0 \
   actual/xtestdir/test1 \
+  actual/xtestdir/test2 \
   actual/xtestdir/nottest
 
 chmod +x \
-  actual/test0 \
   actual/test1 \
+  actual/test2 \
   actual/nottest \
-  actual/testdir/test0 \
   actual/testdir/test1 \
+  actual/testdir/test2 \
   actual/testdir/nottest \
-  actual/xtestdir/test0 \
   actual/xtestdir/test1 \
+  actual/xtestdir/test2 \
   actual/xtestdir/nottest
 
 # prepare expected
@@ -35,12 +35,12 @@ cp -a actual expected
 printf -- "\
 ================
 found:
-./test0
 ./test1
-./testdir/test0
+./test2
 ./testdir/test1
-./xtestdir/test0
+./testdir/test2
 ./xtestdir/test1
+./xtestdir/test2
 ================
 found: 6
 " > expected/stdout

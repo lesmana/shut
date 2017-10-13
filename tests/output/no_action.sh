@@ -4,9 +4,9 @@
 
 mkdir -p actual
 
-touch actual/test0 actual/test1
+touch actual/test1 actual/test2
 
-chmod +x actual/test0 actual/test1
+chmod +x actual/test1 actual/test2
 
 # prepare expected
 
@@ -17,8 +17,8 @@ cp -a actual expected
 printf -- "\
 ================
 found:
-./test0
 ./test1
+./test2
 ================
 found: 2
 " > expected/stdout

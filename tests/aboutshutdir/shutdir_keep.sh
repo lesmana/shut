@@ -8,9 +8,9 @@ printf -- "\
 #! /bin/sh
 set -x
 true
-" > actual/test0
+" > actual/test1
 
-chmod +x actual/test0
+chmod +x actual/test1
 
 touch actual/shutdir/existingdir
 

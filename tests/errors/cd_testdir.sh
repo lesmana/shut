@@ -4,9 +4,9 @@
 
 mkdir -p actual
 
-touch actual/test0
+touch actual/test1
 
-chmod +x actual/test0
+chmod +x actual/test1
 
 # prepare expected
 
@@ -17,7 +17,7 @@ mkdir -p expected/shutdir
 # prepare shutdir
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testsfound
 
 printf -- "\

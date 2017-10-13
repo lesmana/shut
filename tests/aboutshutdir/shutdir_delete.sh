@@ -8,9 +8,9 @@ printf -- "\
 #! /bin/sh
 set -x
 true
-" > actual/test0
+" > actual/test1
 
-chmod +x actual/test0
+chmod +x actual/test1
 
 # prepare expected
 
@@ -33,15 +33,15 @@ printf -- "\
 # prepare shutdir
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testsfound
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testsrun
 
 printf -- "\
-./test0
+./test1
 " > expected/shutdir/testspass
 
 printf -- "\

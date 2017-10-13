@@ -9,16 +9,16 @@ printf -- '\
 echo $SHUT_PWD
 echo $SHUT_TEST
 echo $PWD
-' > actual/test0
+' > actual/test1
 
 printf -- '\
 #! /bin/sh
 echo $SHUT_PWD
 echo $SHUT_TEST
 echo $PWD
-' > actual/d1/test1
+' > actual/d1/test2
 
-chmod +x actual/test0 actual/d1/test1
+chmod +x actual/test1 actual/d1/test2
 
 # prepare expected
 
@@ -30,7 +30,7 @@ mkdir -p \
 
 printf -- "\
 $PWD/actual
-$PWD/actual/test0
+$PWD/actual/test1
 $PWD/actual/shutdir/test000002/workdir
 " > expected/shutdir/test000002/output
 
@@ -42,7 +42,7 @@ printf -- "\
 
 printf -- "\
 $PWD/actual
-$PWD/actual/d1/test1
+$PWD/actual/d1/test2
 $PWD/actual/shutdir/test000001/workdir
 " > expected/shutdir/test000001/output
 
@@ -53,18 +53,18 @@ printf -- "\
 # prepare shutdir
 
 printf -- "\
-./d1/test1
-./test0
+./d1/test2
+./test1
 " > expected/shutdir/testsfound
 
 printf -- "\
-./d1/test1
-./test0
+./d1/test2
+./test1
 " > expected/shutdir/testsrun
 
 printf -- "\
-./d1/test1
-./test0
+./d1/test2
+./test1
 " > expected/shutdir/testspass
 
 printf -- "\
