@@ -128,6 +128,32 @@ runtestandprintreport() {
 }
 
 # -----------------------------------------------------------------------------
+mkdir_testdir() {
+  local testdir="$1"
+  mkdir -p -- "$testdir" > /dev/null 2>&1 || {
+    printf -- 'error creating testdir: %s\n' "$testdir" >&4
+    return 3
+  }
+}
+
+cd_testdir() {
+  local testdir="$1"
+  cd -- "$testdir" > /dev/null 2>&1 || {
+    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&4
+    return 3
+  }
+}
+
+runtestintestdir() {
+  local testname="$1"
+  mkdir_testdir "$testname" || return $?
+  (
+    cd_testdir "$testname" || return $?
+    runtestandprintreport "$testname"
+  )
+}
+
+# -----------------------------------------------------------------------------
 mkdir_enumdir() {
   local testdir="$1"
   mkdir -- "$testdir" > /dev/null 2>&1 || {
@@ -151,7 +177,7 @@ runtestinenumdir() {
   mkdir_enumdir "$testdir" || return $?
   (
     cd_enumdir "$testdir" || return $?
-    runtestandprintreport "$testname"
+    runtestintestdir "$testname"
   )
 }
 

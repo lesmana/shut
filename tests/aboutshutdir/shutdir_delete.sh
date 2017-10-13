@@ -18,17 +18,17 @@ cp -a actual expected
 
 touch actual/shutdir/existingdir
 
-mkdir -p expected/shutdir/test000001/workdir
+mkdir -p expected/shutdir/test000001/test1/workdir
 
 # prepare test output
 
 printf -- "\
 + true
-" > expected/shutdir/test000001/output
+" > expected/shutdir/test000001/test1/output
 
 printf -- "\
 0
-" > expected/shutdir/test000001/exitstatus
+" > expected/shutdir/test000001/test1/exitstatus
 
 # prepare shutdir
 

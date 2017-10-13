@@ -12,7 +12,7 @@ chmod +x actual/test1
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/test000001
+mkdir -p expected/shutdir/test000001/test1
 
 # prepare shutdir
 

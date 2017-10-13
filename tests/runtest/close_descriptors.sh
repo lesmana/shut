@@ -16,18 +16,18 @@ chmod +x actual/test1
 
 cp -a actual expected
 
-mkdir -p expected/shutdir/test000001/workdir
+mkdir -p expected/shutdir/test000001/test1/workdir
 
 # prepare test output
 
 printf -- "\
 fd3 closed
 fd4 closed
-" > expected/shutdir/test000001/output
+" > expected/shutdir/test000001/test1/output
 
 printf -- "\
 0
-" > expected/shutdir/test000001/exitstatus
+" > expected/shutdir/test000001/test1/exitstatus
 
 # prepare shutdir
 
