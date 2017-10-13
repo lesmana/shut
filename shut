@@ -177,8 +177,11 @@ printsemanticexitstatus() {
 
 runtests() {
   touch testsrun testspass testsfail
-  enumeratetestnames
-  loopovertestnames || return $?
+  (
+    trap 'rm "$config_tempdir/testsfoundenum"' EXIT
+    enumeratetestnames
+    loopovertestnames || exit $?
+  ) || return $?
   printsemanticexitstatus
 }
 
