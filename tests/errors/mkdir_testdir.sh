@@ -35,7 +35,7 @@ printf -- "\
 " > expected/stdout
 
 printf -- "\
-error creating testdir: test000001
+error creating testdir: ./test1
 " > expected/stderr
 
 printf -- "\
@@ -46,11 +46,11 @@ printf -- "\
 
 printf -- '#! /bin/sh
 realmkdir="%s"
-if [ "$*" = "-- test000001" ]; then
-  touch "test000001"
+if [ "$*" = "-p -- ./test1" ]; then
+  touch "./test1"
   "$realmkdir" "$@"
   exitstatus=$?
-  rm "test000001"
+  rm "./test1"
   exit $exitstatus
 else
   "$realmkdir" "$@"

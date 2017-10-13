@@ -154,34 +154,6 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-mkdir_enumdir() {
-  local testdir="$1"
-  mkdir -- "$testdir" > /dev/null 2>&1 || {
-    printf -- 'error creating testdir: %s\n' "$testdir" >&4
-    return 3
-  }
-}
-
-cd_enumdir() {
-  local testdir="$1"
-  cd -- "$testdir" > /dev/null 2>&1 || {
-    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&4
-    return 3
-  }
-}
-
-runtestinenumdir() {
-  local count="$1"
-  local testname="$2"
-  local testdir="test$count"
-  mkdir_enumdir "$testdir" || return $?
-  (
-    cd_enumdir "$testdir" || return $?
-    runtestintestdir "$testname"
-  )
-}
-
-# -----------------------------------------------------------------------------
 enumeratetestnames() {
   nl -n rz testsfound > testsfoundenum
 }
@@ -189,7 +161,7 @@ enumeratetestnames() {
 loopovertestnames() {
   local count testname
   while read -r count testname; do
-    runtestinenumdir "$count" "$testname" || return $?
+    runtestintestdir "$testname" || return $?
   done < testsfoundenum 5>testsrun 6>testspass 7>testsfail
 }
 

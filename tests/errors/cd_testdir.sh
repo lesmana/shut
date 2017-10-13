@@ -35,7 +35,7 @@ printf -- "\
 " > expected/stdout
 
 printf -- "\
-error changing directory to testdir: test000001
+error changing directory to testdir: ./test1
 " > expected/stderr
 
 printf -- "\
@@ -46,7 +46,7 @@ printf -- "\
 
 printf -- '#! /bin/sh
 realmkdir="%s"
-if [ "$*" != "-- test000001" ]; then
+if [ "$*" != "-p -- ./test1" ]; then
   "$realmkdir" "$@"
 fi
 ' "$(which mkdir)" > mkdir

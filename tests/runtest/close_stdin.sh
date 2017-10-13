@@ -37,26 +37,26 @@ chmod +x actual/test1 actual/test2
 cp -a actual expected
 
 mkdir -p \
-  expected/shutdir/test000001/test1/workdir \
-  expected/shutdir/test000002/test2/workdir
+  expected/shutdir/test1/workdir \
+  expected/shutdir/test2/workdir
 
 # prepare test output
 
 printf -- "\
 got nothing
-" > expected/shutdir/test000001/test1/output
+" > expected/shutdir/test1/output
 
 printf -- "\
 0
-" > expected/shutdir/test000001/test1/exitstatus
+" > expected/shutdir/test1/exitstatus
 
 printf -- "\
 yay
-" > expected/shutdir/test000002/test2/output
+" > expected/shutdir/test2/output
 
 printf -- "\
 0
-" > expected/shutdir/test000002/test2/exitstatus
+" > expected/shutdir/test2/exitstatus
 
 # prepare shutdir
 
