@@ -43,6 +43,15 @@ runtestsaveoutputmerge() {
   runtestsaveexitstatus "$fulltestname" 3> ../output 4>&3
 }
 
+runtestsaveoutput() {
+  local fulltestname="$1"
+  if $config_split; then
+    runtestsaveoutputsplit "$fulltestname"
+  else
+    runtestsaveoutputmerge "$fulltestname"
+  fi
+}
+
 # -----------------------------------------------------------------------------
 mkdir_workdir() {
   mkdir workdir > /dev/null 2>&1 || {
@@ -63,7 +72,7 @@ runtestinworkdir() {
   mkdir_workdir || return $?
   (
     cd_workdir || return $?
-    $runtestsaveoutput_func "$fulltestname"
+    runtestsaveoutput "$fulltestname"
   )
 }
 
@@ -92,10 +101,18 @@ printbodymerge() {
   cat output | tail -n "$config_tail" | sed 's/^/  /'
 }
 
+printbody() {
+  if $config_split; then
+    printbodysplit
+  else
+    printbodymerge
+  fi
+}
+
 printreportpass() {
   local testname="$1"
   printheader "PASS" "$testname"
-  $printbody_func
+  printbody
 }
 
 printreportfail() {
@@ -103,7 +120,7 @@ printreportfail() {
   local exitstatus="$2"
   printheader "FAIL" "$testname"
   printexitstatus "$exitstatus"
-  $printbody_func
+  printbody
 }
 
 printreport() {
@@ -356,13 +373,6 @@ configfromargv() {
 
 setup() {
   config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
-  if $config_split; then
-    runtestsaveoutput_func=runtestsaveoutputsplit
-    printbody_func=printbodysplit
-  else
-    runtestsaveoutput_func=runtestsaveoutputmerge
-    printbody_func=printbodymerge
-  fi
   if $config_verbose; then
     printreportpass_func=printreportpass
     printreportfail_func=printreportfail
