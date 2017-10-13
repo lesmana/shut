@@ -109,12 +109,12 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
-  printf -- '%s\n' "$testname" >> "../testsrun"
+  printf -- '%s\n' "$testname" >&5
   if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
-    printf -- '%s\n' "$testname" >> "../testspass"
+    printf -- '%s\n' "$testname" >&6
     $printreportpass_func "$testname"
   else
-    printf -- '%s\n' "$testname" >> "../testsfail"
+    printf -- '%s\n' "$testname" >&7
     $printreportfail_func "$testname" "$exitstatus"
   fi
 }
@@ -164,7 +164,7 @@ loopovertestnames() {
   local count testname
   while read -r count testname; do
     runtestinenumdir "$count" "$testname" || return $?
-  done < testsfoundenum
+  done < testsfoundenum 5>testsrun 6>testspass 7>testsfail
 }
 
 printsemanticexitstatus() {
