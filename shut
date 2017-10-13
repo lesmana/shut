@@ -157,14 +157,14 @@ runtestinenumdir() {
 
 # -----------------------------------------------------------------------------
 enumeratetestnames() {
-  nl -n rz testsfound > "$config_tempdir/testsfoundenum"
+  nl -n rz testsfound > testsfoundenum
 }
 
 loopovertestnames() {
   local count testname
   while read -r count testname; do
     runtestinenumdir "$count" "$testname" || return $?
-  done < "$config_tempdir/testsfoundenum"
+  done < testsfoundenum
 }
 
 printsemanticexitstatus() {
@@ -178,7 +178,7 @@ printsemanticexitstatus() {
 runtests() {
   touch testsrun testspass testsfail
   (
-    trap 'rm "$config_tempdir/testsfoundenum"' EXIT
+    trap 'rm testsfoundenum' EXIT
     enumeratetestnames
     loopovertestnames || exit $?
   ) || return $?
