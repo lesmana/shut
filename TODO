@@ -87,12 +87,9 @@ example
 --print-summary
 
 ----
-allow pattern for line to begin printing output
+allow custom filter to filter output of tests
 example
---show-output=10 (show last 10 lines)
---show-output=diff (show lines after line containing diff)
-
-also allow custom filter command like git filter-branch
+--output-filter='grep error'
 
 ----
 specify in output if empty
