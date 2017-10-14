@@ -23,7 +23,10 @@ mkdir -p expected/shutdir/test1/workdir
 printf -- "\
 fd3 closed
 fd4 closed
-" > expected/shutdir/test1/output
+" > expected/shutdir/test1/stdout
+
+printf -- "\
+" > expected/shutdir/test1/stderr
 
 printf -- "\
 0
@@ -51,9 +54,10 @@ printf -- "\
 printf -- "\
 ================
 PASS ./test1
-output:
+stdout:
   fd3 closed
   fd4 closed
+stderr:
 ================
 found: 1 run: 1 pass: 1 fail: 0
 " > expected/stdout

@@ -23,8 +23,11 @@ mkdir -p expected/dirname/test1/workdir
 # prepare test output
 
 printf -- "\
+" > expected/dirname/test1/stdout
+
+printf -- "\
 + true
-" > expected/dirname/test1/output
+" > expected/dirname/test1/stderr
 
 printf -- "\
 0

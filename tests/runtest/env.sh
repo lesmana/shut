@@ -32,7 +32,10 @@ printf -- "\
 $PWD/actual
 $PWD/actual/test1
 $PWD/actual/shutdir/test1/workdir
-" > expected/shutdir/test1/output
+" > expected/shutdir/test1/stdout
+
+printf -- "\
+" > expected/shutdir/test1/stderr
 
 printf -- "\
 0
@@ -44,7 +47,10 @@ printf -- "\
 $PWD/actual
 $PWD/actual/d1/test2
 $PWD/actual/shutdir/d1/test2/workdir
-" > expected/shutdir/d1/test2/output
+" > expected/shutdir/d1/test2/stdout
+
+printf -- "\
+" > expected/shutdir/d1/test2/stderr
 
 printf -- "\
 0

@@ -73,7 +73,7 @@ printf -- "\
 
 (
   cd actual
-  shut -v -x > stdout 2> stderr
+  shut -v > stdout 2> stderr
   printf -- "$?\n" > exitstatus
 )
 

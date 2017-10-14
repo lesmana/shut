@@ -25,7 +25,10 @@ printf -- "\
 3
 4
 5
-" > expected/shutdir/test1/output
+" > expected/shutdir/test1/stdout
+
+printf -- "\
+" > expected/shutdir/test1/stderr
 
 printf -- "\
 0
@@ -53,10 +56,11 @@ printf -- "\
 printf -- "\
 ================
 PASS ./test1
-output:
+stdout:
   3
   4
   5
+stderr:
 ================
 found: 1 run: 1 pass: 1 fail: 0
 " > expected/stdout

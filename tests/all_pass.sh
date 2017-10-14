@@ -29,16 +29,22 @@ mkdir -p \
 # prepare test output
 
 printf -- "\
+" > expected/shutdir/test1/stdout
+
+printf -- "\
 + true
-" > expected/shutdir/test1/output
+" > expected/shutdir/test1/stderr
 
 printf -- "\
 0
 " > expected/shutdir/test1/exitstatus
 
 printf -- "\
+" > expected/shutdir/test2/stdout
+
+printf -- "\
 + true
-" > expected/shutdir/test2/output
+" > expected/shutdir/test2/stderr
 
 printf -- "\
 0

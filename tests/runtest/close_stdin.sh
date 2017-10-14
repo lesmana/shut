@@ -44,7 +44,10 @@ mkdir -p \
 
 printf -- "\
 got nothing
-" > expected/shutdir/test1/output
+" > expected/shutdir/test1/stdout
+
+printf -- "\
+" > expected/shutdir/test1/stderr
 
 printf -- "\
 0
@@ -52,7 +55,10 @@ printf -- "\
 
 printf -- "\
 yay
-" > expected/shutdir/test2/output
+" > expected/shutdir/test2/stdout
+
+printf -- "\
+" > expected/shutdir/test2/stderr
 
 printf -- "\
 0

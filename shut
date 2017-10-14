@@ -6,7 +6,6 @@ config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
 config_keep=false
-config_split=false
 config_quiet=false
 config_tail=10
 SHUT_PWD="$PWD"
@@ -40,18 +39,9 @@ runtestsaveoutputsplit() {
   runtestsaveexitstatus "$fulltestname" 3>../stdout 4>../stderr
 }
 
-runtestsaveoutputmerge() {
-  local fulltestname="$1"
-  runtestsaveexitstatus "$fulltestname" 3>../output 4>&3
-}
-
 runtestsaveoutput() {
   local fulltestname="$1"
-  if $config_split; then
-    runtestsaveoutputsplit "$fulltestname"
-  else
-    runtestsaveoutputmerge "$fulltestname"
-  fi
+  runtestsaveoutputsplit "$fulltestname"
 }
 
 # -----------------------------------------------------------------------------
@@ -98,17 +88,8 @@ printbodysplit() {
   cat stderr | tail -n "$config_tail" | sed 's/^/  /'
 }
 
-printbodymerge() {
-  printf -- 'output:\n'
-  cat output | tail -n "$config_tail" | sed 's/^/  /'
-}
-
 printbody() {
-  if $config_split; then
-    printbodysplit
-  else
-    printbodymerge
-  fi
+  printbodysplit
 }
 
 actualprintreportpass() {
@@ -365,7 +346,6 @@ configfromargv() {
       -k) config_keep=true ;;
       -n) config_donotruntests=true ;;
       -v) config_verbose=true ;;
-      -x) config_split=true ;;
       -q) config_quiet=true ;;
       -t) shift ; config_tail="$1" ;;
       --) shift ; break ;;

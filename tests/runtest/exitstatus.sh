@@ -29,16 +29,22 @@ mkdir -p \
 # prepare test output
 
 printf -- "\
+" > expected/shutdir/test1/stdout
+
+printf -- "\
 + exit 2
-" > expected/shutdir/test1/output
+" > expected/shutdir/test1/stderr
 
 printf -- "\
 2
 " > expected/shutdir/test1/exitstatus
 
 printf -- "\
+" > expected/shutdir/test2/stdout
+
+printf -- "\
 + exit 64
-" > expected/shutdir/test2/output
+" > expected/shutdir/test2/stderr
 
 printf -- "\
 64
@@ -70,12 +76,14 @@ printf -- "\
 ================
 FAIL ./test1
 exitstatus: 2
-output:
+stdout:
+stderr:
   + exit 2
 ================
 FAIL ./test2
 exitstatus: 64
-output:
+stdout:
+stderr:
   + exit 64
 ================
 fail:
