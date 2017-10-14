@@ -34,14 +34,9 @@ runtestsaveexitstatus() {
   printf -- '%s\n' "$exitstatus"
 }
 
-runtestsaveoutputsplit() {
-  local fulltestname="$1"
-  runtestsaveexitstatus "$fulltestname" 3>../stdout 4>../stderr
-}
-
 runtestsaveoutput() {
   local fulltestname="$1"
-  runtestsaveoutputsplit "$fulltestname"
+  runtestsaveexitstatus "$fulltestname" 3>../stdout 4>../stderr
 }
 
 # -----------------------------------------------------------------------------
@@ -81,15 +76,11 @@ printexitstatus() {
   printf -- 'exitstatus: %s\n' "$exitstatus"
 }
 
-printbodysplit() {
+printbody() {
   printf -- 'stdout:\n'
   cat stdout | tail -n "$config_tail" | sed 's/^/  /'
   printf -- 'stderr:\n'
   cat stderr | tail -n "$config_tail" | sed 's/^/  /'
-}
-
-printbody() {
-  printbodysplit
 }
 
 actualprintreportpass() {
