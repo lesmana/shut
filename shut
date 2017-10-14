@@ -204,9 +204,7 @@ printsemanticexitstatus() {
 
 runtests() {
   touch testsrun testspass testsfail
-  (
-    loopovertestnames || exit $?
-  ) || return $?
+  loopovertestnames || return $?
   printsemanticexitstatus
 }
 
