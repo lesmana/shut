@@ -95,11 +95,6 @@ example
 also allow custom filter command like git filter-branch
 
 ----
-specify in output if last x lines
-example:
-output (last 10 lines)
-
-----
 specify in output if empty
 example
 stderr: (empty)
