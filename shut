@@ -7,7 +7,6 @@ config_verbose=false
 config_shutdir="shutdir"
 config_keep=false
 config_quiet=false
-config_tail=10
 SHUT_PWD="$PWD"
 
 exitstatus_pass=0
@@ -78,9 +77,9 @@ printexitstatus() {
 
 printbody() {
   printf -- 'stdout:\n'
-  cat stdout | tail -n "$config_tail" | sed 's/^/  /'
+  cat stdout | sed 's/^/  /'
   printf -- 'stderr:\n'
-  cat stderr | tail -n "$config_tail" | sed 's/^/  /'
+  cat stderr | sed 's/^/  /'
 }
 
 actualprintreportpass() {
@@ -338,7 +337,6 @@ configfromargv() {
       -n) config_donotruntests=true ;;
       -v) config_verbose=true ;;
       -q) config_quiet=true ;;
-      -t) shift ; config_tail="$1" ;;
       --) shift ; break ;;
       -*) printf -- '%s\n' "argv error: $1" ; exit 2 ;;
        *) break ;;
