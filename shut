@@ -109,18 +109,35 @@ printbody() {
   fi
 }
 
-printreportpass() {
+actualprintreportpass() {
   local testname="$1"
   printheader "PASS" "$testname"
   printbody
 }
 
-printreportfail() {
+actualprintreportfail() {
   local testname="$1"
   local exitstatus="$2"
   printheader "FAIL" "$testname"
   printexitstatus "$exitstatus"
   printbody
+}
+
+printreportpass() {
+  if ! $config_verbose; then
+    return
+  fi
+  local testname="$1"
+  actualprintreportpass "$testname"
+}
+
+printreportfail() {
+  if $config_quiet; then
+    return
+  fi
+  local testname="$1"
+  local exitstatus="$2"
+  actualprintreportfail "$testname" "$exitstatus"
 }
 
 printreport() {
@@ -129,10 +146,10 @@ printreport() {
   printf -- '%s\n' "$testname" >&5
   if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
     printf -- '%s\n' "$testname" >&6
-    $printreportpass_func "$testname"
+    printreportpass "$testname"
   else
     printf -- '%s\n' "$testname" >&7
-    $printreportfail_func "$testname" "$exitstatus"
+    printreportfail "$testname" "$exitstatus"
   fi
 }
 
@@ -373,16 +390,6 @@ configfromargv() {
 
 setup() {
   config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
-  if $config_verbose; then
-    printreportpass_func=printreportpass
-    printreportfail_func=printreportfail
-  elif $config_quiet; then
-    printreportpass_func=true
-    printreportfail_func=true
-  else
-    printreportpass_func=true
-    printreportfail_func=printreportfail
-  fi
 }
 
 configthenwork() {
