@@ -188,15 +188,10 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-enumeratetestnames() {
-  nl -n rz testsfound > testsfoundenum
-}
-
 loopovertestnames() {
-  local count testname
-  while read -r count testname; do
+  while read -r testname; do
     runtestintestdir "$testname" || return $?
-  done < testsfoundenum 5>testsrun 6>testspass 7>testsfail
+  done < testsfound 5>testsrun 6>testspass 7>testsfail
 }
 
 printsemanticexitstatus() {
@@ -210,8 +205,6 @@ printsemanticexitstatus() {
 runtests() {
   touch testsrun testspass testsfail
   (
-    trap 'rm testsfoundenum' EXIT
-    enumeratetestnames
     loopovertestnames || exit $?
   ) || return $?
   printsemanticexitstatus
