@@ -14,6 +14,14 @@ cp -a actual expected
 
 mkdir -p expected/shutdir/test1
 
+# prepare test output
+
+printf -- "\
+" > expected/shutdir/test1/stdout
+
+printf -- "\
+" > expected/shutdir/test1/stderr
+
 # prepare shutdir
 
 printf -- "\
