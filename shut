@@ -23,11 +23,6 @@ runtest() {
     exec 2>&6 6>&- # redirect stderr to &6
     "$fulltestname"
   )
-}
-
-runtestsaveoutput() {
-  local fulltestname="$1"
-  runtest "$fulltestname"
   local exitstatus=$?
   printf -- '%s\n' "$exitstatus" >&7
 }
@@ -52,7 +47,7 @@ runtestinworkdir() {
   mkdir_workdir || return $?
   (
     cd_workdir || return $?
-    runtestsaveoutput "$fulltestname"
+    runtest "$fulltestname"
   )
 }
 
