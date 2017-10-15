@@ -25,17 +25,12 @@ runtest() {
   )
 }
 
-runtestsaveexitstatus() {
+runtestsaveoutput() {
   local fulltestname="$1"
-  runtest "$fulltestname"
+  runtest "$fulltestname" 3>../stdout 4>../stderr
   local exitstatus=$?
   printf -- '%s\n' "$exitstatus" >../exitstatus
   printf -- '%s\n' "$exitstatus"
-}
-
-runtestsaveoutput() {
-  local fulltestname="$1"
-  runtestsaveexitstatus "$fulltestname" 3>../stdout 4>../stderr
 }
 
 # -----------------------------------------------------------------------------
