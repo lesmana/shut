@@ -6,8 +6,8 @@ mkdir -p actual
 
 printf -- '\
 #! /bin/sh
-{ echo foo >&3 ; } 2> /dev/null || echo fd3 closed
-{ echo foo >&4 ; } 2> /dev/null || echo fd4 closed
+{ echo foo >&5 ; } 2> /dev/null || echo fd5 closed
+{ echo foo >&6 ; } 2> /dev/null || echo fd6 closed
 ' > actual/test1
 
 chmod +x actual/test1
@@ -21,8 +21,8 @@ mkdir -p expected/shutdir/test1/workdir
 # prepare test output
 
 printf -- "\
-fd3 closed
-fd4 closed
+fd5 closed
+fd6 closed
 " > expected/shutdir/test1/stdout
 
 printf -- "\
@@ -55,8 +55,8 @@ printf -- "\
 ================
 PASS ./test1
 stdout:
-  fd3 closed
-  fd4 closed
+  fd5 closed
+  fd6 closed
 stderr:
 ================
 found: 1 run: 1 pass: 1 fail: 0

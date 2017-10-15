@@ -19,15 +19,15 @@ runtest() {
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
     exec 0</dev/null # close stdin
-    exec 1>&3 3>&- # redirect stdout to &3
-    exec 2>&4 4>&- # redirect stderr to &4
+    exec 1>&5 5>&- # redirect stdout to &5
+    exec 2>&6 6>&- # redirect stderr to &6
     "$fulltestname"
   )
 }
 
 runtestsaveoutput() {
   local fulltestname="$1"
-  runtest "$fulltestname" 3>../stdout 4>../stderr
+  runtest "$fulltestname" 5>../stdout 6>../stderr
   local exitstatus=$?
   printf -- '%s\n' "$exitstatus" >../exitstatus
   printf -- '%s\n' "$exitstatus"
