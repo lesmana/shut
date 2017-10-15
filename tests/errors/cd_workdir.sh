@@ -22,6 +22,9 @@ printf -- "\
 printf -- "\
 " > expected/shutdir/test1/stderr
 
+printf -- "\
+" > expected/shutdir/test1/exitstatus
+
 # prepare shutdir
 
 printf -- "\
