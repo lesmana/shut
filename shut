@@ -82,6 +82,12 @@ printbody() {
   cat stderr | sed 's/^/  /'
 }
 
+actualprintreporterror() {
+  local testname="$1"
+  printheader "ERROR" "$testname"
+  # TODO print error message here
+}
+
 actualprintreportpass() {
   local testname="$1"
   printheader "PASS" "$testname"
@@ -94,6 +100,11 @@ actualprintreportfail() {
   printheader "FAIL" "$testname"
   printexitstatus "$exitstatus"
   printbody
+}
+
+printreporterror() {
+  local testname="$1"
+  actualprintreporterror "$testname"
 }
 
 printreportpass() {
@@ -116,7 +127,13 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
+  local error="$3"
   printf -- '%s\n' "$testname" >&5
+  if "$error"; then
+    # TODO printf -- '%s\n' "$testname" >&6
+    printreporterror "$testname"
+    return 3
+  fi
   if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
     printf -- '%s\n' "$testname" >&6
     printreportpass "$testname"
@@ -130,8 +147,9 @@ runtestandprintreport() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
-  exitstatus="$(runtestinworkdir "$fulltestname")" || return $?
-  printreport "$testname" "$exitstatus" >&3
+  local error=false
+  exitstatus="$(runtestinworkdir "$fulltestname")" || error=true
+  printreport "$testname" "$exitstatus" "$error" >&3
 }
 
 # -----------------------------------------------------------------------------
