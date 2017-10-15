@@ -30,7 +30,6 @@ runtestsaveoutput() {
   runtest "$fulltestname"
   local exitstatus=$?
   printf -- '%s\n' "$exitstatus" >&7
-  printf -- '%s\n' "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
@@ -127,7 +126,8 @@ runtestandprintreport() {
   local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
   local error=false
-  exitstatus="$(runtestinworkdir "$fulltestname" 5>stdout 6>stderr 7>exitstatus)" || error=true
+  runtestinworkdir "$fulltestname" 5>stdout 6>stderr 7>exitstatus || error=true
+  exitstatus="$(cat exitstatus)"
   printreport "$testname" "$exitstatus" "$error" >&3
 }
 
