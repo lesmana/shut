@@ -82,29 +82,10 @@ printbody() {
   cat stderr | sed 's/^/  /'
 }
 
-actualprintreporterror() {
+printreporterror() {
   local testname="$1"
   printheader "ERROR" "$testname"
   # TODO print error message here
-}
-
-actualprintreportpass() {
-  local testname="$1"
-  printheader "PASS" "$testname"
-  printbody
-}
-
-actualprintreportfail() {
-  local testname="$1"
-  local exitstatus="$2"
-  printheader "FAIL" "$testname"
-  printexitstatus "$exitstatus"
-  printbody
-}
-
-printreporterror() {
-  local testname="$1"
-  actualprintreporterror "$testname"
 }
 
 printreportpass() {
@@ -112,7 +93,8 @@ printreportpass() {
     return
   fi
   local testname="$1"
-  actualprintreportpass "$testname"
+  printheader "PASS" "$testname"
+  printbody
 }
 
 printreportfail() {
@@ -121,7 +103,9 @@ printreportfail() {
   fi
   local testname="$1"
   local exitstatus="$2"
-  actualprintreportfail "$testname" "$exitstatus"
+  printheader "FAIL" "$testname"
+  printexitstatus "$exitstatus"
+  printbody
 }
 
 printreport() {
