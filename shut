@@ -57,11 +57,6 @@ printheader() {
   printf -- '%s %s\n' "$statusstring" "$testname"
 }
 
-printexitstatus() {
-  local exitstatus="$1"
-  printf -- 'exitstatus: %s\n' "$exitstatus"
-}
-
 printbody() {
   printf -- 'stdout:\n'
   cat stdout | sed 's/^/  /'
@@ -92,7 +87,7 @@ printreportfail() {
   local testname="$1"
   local exitstatus="$2"
   printheader "FAIL" "$testname"
-  printexitstatus "$exitstatus"
+  printf -- 'exitstatus: %s\n' "$exitstatus"
   printbody
 }
 
