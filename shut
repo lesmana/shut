@@ -72,7 +72,8 @@ printbody() {
 printreporterror() {
   local testname="$1"
   printheader "ERROR" "$testname"
-  # TODO print error message here
+  printf -- 'error:\n'
+  cat error | sed 's/^/  /'
 }
 
 printreportpass() {
@@ -119,9 +120,12 @@ runtestandprintreport() {
   local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
   local error=false
-  runtestinworkdir "$fulltestname" 5>stdout 6>stderr 7>exitstatus || error=true
-  exitstatus="$(cat exitstatus)"
-  printreport "$testname" "$exitstatus" "$error" >&3
+  (
+    trap 'rm error' EXIT
+    runtestinworkdir "$fulltestname" 4>error 5>stdout 6>stderr 7>exitstatus || error=true
+    exitstatus="$(cat exitstatus)"
+    printreport "$testname" "$exitstatus" "$error" >&3
+  )
 }
 
 # -----------------------------------------------------------------------------

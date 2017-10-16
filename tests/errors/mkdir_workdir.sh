@@ -50,10 +50,11 @@ printf -- "\
 printf -- "\
 ================
 ERROR ./test1
+error:
+  error creating workdir
 " > expected/stdout
 
 printf -- "\
-error creating workdir
 " > expected/stderr
 
 printf -- "\
