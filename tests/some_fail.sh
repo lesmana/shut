@@ -107,6 +107,9 @@ printf -- "\
 " > expected/shutdir/testsrun
 
 printf -- "\
+" > expected/shutdir/testserror
+
+printf -- "\
 ./test2
 ./test4
 " > expected/shutdir/testspass

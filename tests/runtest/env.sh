@@ -69,6 +69,9 @@ printf -- "\
 " > expected/shutdir/testsrun
 
 printf -- "\
+" > expected/shutdir/testserror
+
+printf -- "\
 ./d1/test2
 ./test1
 " > expected/shutdir/testspass

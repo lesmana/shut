@@ -101,7 +101,7 @@ printreport() {
   local error="$3"
   printf -- '%s\n' "$testname" >&5
   if "$error"; then
-    # TODO printf -- '%s\n' "$testname" >&6
+    printf -- '%s\n' "$testname" >&6
     printreporterror "$testname"
     return 3
   fi
@@ -154,7 +154,7 @@ runtestintestdir() {
 loopovertestnames() {
   while read -r testname; do
     runtestintestdir "$testname" || return $?
-  done <testsfound 5>testsrun 7>testspass 8>testsfail
+  done <testsfound 5>testsrun 6>testserror 7>testspass 8>testsfail
 }
 
 printsemanticexitstatus() {
