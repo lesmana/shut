@@ -94,17 +94,17 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$(cat exitstatus)"
-  printf -- '%s\n' "$testname" >&5
+  printf -- '%s\n' "$testname" >&5 # >testsrun
   if [ -s error ]; then
-    printf -- '%s\n' "$testname" >&6
+    printf -- '%s\n' "$testname" >&6 # >testserror
     printreporterror "$testname"
     return 3
   fi
   if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
-    printf -- '%s\n' "$testname" >&7
+    printf -- '%s\n' "$testname" >&7 # >testspass
     printreportpass "$testname"
   else
-    printf -- '%s\n' "$testname" >&8
+    printf -- '%s\n' "$testname" >&8 # >testsfail
     printreportfail "$testname" "$exitstatus"
   fi
 }
