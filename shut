@@ -28,14 +28,14 @@ runtest() {
 # -----------------------------------------------------------------------------
 mkdir_workdir() {
   mkdir workdir >/dev/null 2>&1 || {
-    printf -- 'error creating workdir\n' >&4
+    printf -- 'error creating workdir\n' >&2
     return 3
   }
 }
 
 cd_workdir() {
   cd workdir >/dev/null 2>&1 || {
-    printf -- 'error changing directory to workdir\n' >&4
+    printf -- 'error changing directory to workdir\n' >&2
     return 3
   }
 }
@@ -68,7 +68,7 @@ printreporterror() {
   local testname="$1"
   printheader "ERROR" "$testname"
   printf -- 'error:\n'
-  cat error | sed 's/^/  /'
+  cat stderr | sed 's/^/  /'
   return 3
 }
 
@@ -110,9 +110,8 @@ runtestandprintreport() {
   local exitstatus
   local error=false
   (
-    trap 'rm error' EXIT
     printf -- '%s\n' "$testname" >&5 # >testsrun
-    runtestinworkdir "$fulltestname" 4>error 1>stdout 2>stderr 3>exitstatus || {
+    runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus || {
       printf -- '%s\n' "$testname" >&6 # >testserror
       printreporterror "$testname" >&3
       exit $?

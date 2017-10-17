@@ -20,6 +20,7 @@ printf -- "\
 " > expected/shutdir/test1/stdout
 
 printf -- "\
+error changing directory to workdir
 " > expected/shutdir/test1/stderr
 
 printf -- "\
