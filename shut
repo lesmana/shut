@@ -94,7 +94,6 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$(cat exitstatus)"
-  printf -- '%s\n' "$testname" >&5 # >testsrun
   if [ -s error ]; then
     printf -- '%s\n' "$testname" >&6 # >testserror
     printreporterror "$testname"
@@ -116,6 +115,7 @@ runtestandprintreport() {
   local error=false
   (
     trap 'rm error' EXIT
+    printf -- '%s\n' "$testname" >&5 # >testsrun
     runtestinworkdir "$fulltestname" 4>error 1>stdout 2>stderr 3>exitstatus
     printreport "$testname" >&3
   )
