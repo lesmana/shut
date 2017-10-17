@@ -69,13 +69,6 @@ printbody() {
   cat stderr | sed 's/^/  /'
 }
 
-printreporterror() {
-  local testname="$1"
-  printheader "ERROR" "$testname"
-  printf -- 'error:\n'
-  cat stderr | sed 's/^/  /'
-}
-
 printreportpass() {
   if ! $config_verbose; then
     return
@@ -94,6 +87,13 @@ printreportfail() {
   printheader "FAIL" "$testname"
   printf -- 'exitstatus: %s\n' "$exitstatus"
   printbody
+}
+
+printreporterror() {
+  local testname="$1"
+  printheader "ERROR" "$testname"
+  printf -- 'error:\n'
+  cat stderr | sed 's/^/  /'
 }
 
 printreport() {
