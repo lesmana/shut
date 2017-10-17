@@ -110,12 +110,12 @@ runtestandprintreport() {
   printf -- '%s\n' "$testname" >&5 # >testsrun
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   exitstatus="$?"
-  if [ "$exitstatus" != 0 ]; then
+  if [ "$exitstatus" = 0 ]; then
+    printreport "$testname" >&3
+  else
     printf -- '%s\n' "$testname" >&6 # >testserror
     printreporterror "$testname" >&3
     return 3
-  else
-    printreport "$testname" >&3
   fi
 }
 
