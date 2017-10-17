@@ -96,6 +96,22 @@ printreportfail() {
   printbody
 }
 
+printreport() {
+  local testname="$1"
+  local exitstatus="$2"
+  if [ "$exitstatus" = 0 ]; then
+    printf -- '%s\n' "$testname" >&7 # >testspass
+    printreportpass "$testname"
+  elif [ "$exitstatus" = 1 ]; then
+    printf -- '%s\n' "$testname" >&8 # >testsfail
+    printreportfail "$testname"
+  else
+    printf -- '%s\n' "$testname" >&6 # >testserror
+    printreporterror "$testname"
+    return 3
+  fi
+}
+
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
@@ -103,17 +119,7 @@ runtestandprintreport() {
   printf -- '%s\n' "$testname" >&5 # >testsrun
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   exitstatus="$?"
-  if [ "$exitstatus" = 0 ]; then
-    printf -- '%s\n' "$testname" >&7 # >testspass
-    printreportpass "$testname" >&3
-  elif [ "$exitstatus" = 1 ]; then
-    printf -- '%s\n' "$testname" >&8 # >testsfail
-    printreportfail "$testname" >&3
-  else
-    printf -- '%s\n' "$testname" >&6 # >testserror
-    printreporterror "$testname" >&3
-    return 3
-  fi
+  printreport "$testname" "$exitstatus" >&3
 }
 
 # -----------------------------------------------------------------------------
