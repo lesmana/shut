@@ -108,7 +108,6 @@ runtestandprintreport() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
-  local error=false
   (
     printf -- '%s\n' "$testname" >&5 # >testsrun
     runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus || {
