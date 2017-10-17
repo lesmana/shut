@@ -92,8 +92,7 @@ printreportfail() {
 printreporterror() {
   local testname="$1"
   printheader "ERROR" "$testname"
-  printf -- 'error:\n'
-  cat stderr | sed 's/^/  /'
+  printbody
 }
 
 printreport() {

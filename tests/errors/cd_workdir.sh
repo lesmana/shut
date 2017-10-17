@@ -51,7 +51,8 @@ printf -- "\
 printf -- "\
 ================
 ERROR ./test1
-error:
+stdout:
+stderr:
   error changing directory to workdir
 " > expected/stdout
 
