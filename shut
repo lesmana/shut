@@ -116,9 +116,8 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
-  local exitstatus
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
-  exitstatus="$?"
+  local exitstatus="$?"
   printreport "$testname" "$exitstatus" >&3
 }
 
