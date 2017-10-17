@@ -114,8 +114,9 @@ runtestandprintreport() {
     printf -- '%s\n' "$testname" >&6 # >testserror
     printreporterror "$testname" >&3
     return 3
+  else
+    printreport "$testname" >&3
   fi
-  printreport "$testname" >&3
 }
 
 # -----------------------------------------------------------------------------
