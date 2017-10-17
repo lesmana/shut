@@ -99,6 +99,7 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
+  printf -- '%s\n' "$testname" >&5 # >testsrun
   if [ "$exitstatus" = 0 ]; then
     printf -- '%s\n' "$testname" >&7 # >testspass
     printreportpass "$testname"
@@ -116,7 +117,6 @@ runtestandprintreport() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
   local exitstatus
-  printf -- '%s\n' "$testname" >&5 # >testsrun
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   exitstatus="$?"
   printreport "$testname" "$exitstatus" >&3
