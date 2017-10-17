@@ -18,7 +18,7 @@ runtest() {
   (
     export SHUT_PWD
     export SHUT_TEST="$fulltestname"
-    # close stdin, stdout to 5, stderr to 6, close all
+    # close stdin, close all other than stdout and stderr
     "$fulltestname" 0</dev/null 3>&- 4>&- 5>&- 6>&- 7>&- 8>&- 9>&-
   )
   local exitstatus=$?
