@@ -22,7 +22,7 @@ runtest() {
     "$fulltestname" 0</dev/null 3>&- 4>&- 5>&- 6>&- 7>&- 8>&- 9>&-
   )
   local exitstatus=$?
-  printf -- '%s\n' "$exitstatus" >&7
+  printf -- '%s\n' "$exitstatus" >&3
 }
 
 # -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ runtestandprintreport() {
   local error=false
   (
     trap 'rm error' EXIT
-    runtestinworkdir "$fulltestname" 4>error 1>stdout 2>stderr 7>exitstatus
+    runtestinworkdir "$fulltestname" 4>error 1>stdout 2>stderr 3>exitstatus
     printreport "$testname" >&3
   )
 }
