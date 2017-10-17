@@ -85,7 +85,7 @@ printreportfail() {
     return
   fi
   local testname="$1"
-  local exitstatus="$2"
+  local exitstatus="$(cat exitstatus)"
   printheader "FAIL" "$testname"
   printf -- 'exitstatus: %s\n' "$exitstatus"
   printbody
@@ -99,7 +99,7 @@ printreport() {
     printreportpass "$testname"
   else
     printf -- '%s\n' "$testname" >&8 # >testsfail
-    printreportfail "$testname" "$exitstatus"
+    printreportfail "$testname"
   fi
 }
 
