@@ -69,7 +69,6 @@ printreporterror() {
   printheader "ERROR" "$testname"
   printf -- 'error:\n'
   cat stderr | sed 's/^/  /'
-  return 3
 }
 
 printreportpass() {
@@ -112,7 +111,7 @@ runtestandprintreport() {
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus || {
     printf -- '%s\n' "$testname" >&6 # >testserror
     printreporterror "$testname" >&3
-    exit $?
+    return 3
   }
   printreport "$testname" >&3
 }
