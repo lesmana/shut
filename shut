@@ -66,9 +66,13 @@ printbody() {
 
 printreporterror() {
   local testname="$1"
-  printheader "ERROR" "$testname"
-  printf -- 'error:\n'
-  cat error | sed 's/^/  /'
+  if [ -s error ]; then
+    printf -- '%s\n' "$testname" >&6 # >testserror
+    printheader "ERROR" "$testname"
+    printf -- 'error:\n'
+    cat error | sed 's/^/  /'
+    return 3
+  fi
 }
 
 printreportpass() {
@@ -94,11 +98,7 @@ printreportfail() {
 printreport() {
   local testname="$1"
   local exitstatus="$(cat exitstatus)"
-  if [ -s error ]; then
-    printf -- '%s\n' "$testname" >&6 # >testserror
-    printreporterror "$testname"
-    return 3
-  fi
+  printreporterror "$testname" || return $?
   if [ "$exitstatus" -eq "$exitstatus_pass" ]; then
     printf -- '%s\n' "$testname" >&7 # >testspass
     printreportpass "$testname"
