@@ -77,11 +77,12 @@ printf -- "\
 
 printf -- "\
 ================
-FAIL ./d1/test2
-exitstatus: 1
+TEST ./d1/test2
 stdout:
 stderr:
   + false
+exitstatus: 1
+FAIL ./d1/test2
 ================
 fail:
 ./d1/test2

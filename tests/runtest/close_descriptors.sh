@@ -66,7 +66,7 @@ printf -- "\
 
 printf -- "\
 ================
-PASS ./test1
+TEST ./test1
 stdout:
   fd3 closed
   fd4 closed
@@ -76,6 +76,7 @@ stdout:
   fd8 closed
   fd9 closed
 stderr:
+PASS ./test1
 ================
 found: 1 run: 1 pass: 1 fail: 0
 " > expected/stdout

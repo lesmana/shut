@@ -77,17 +77,19 @@ printf -- "\
 
 printf -- "\
 ================
-FAIL ./test1
-exitstatus: 2
+TEST ./test1
 stdout:
 stderr:
   + exit 2
+exitstatus: 2
+FAIL ./test1
 ================
-FAIL ./test2
-exitstatus: 64
+TEST ./test2
 stdout:
 stderr:
   + exit 64
+exitstatus: 64
+FAIL ./test2
 ================
 fail:
 ./test1

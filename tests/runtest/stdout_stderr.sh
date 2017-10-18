@@ -56,11 +56,12 @@ printf -- "\
 
 printf -- "\
 ================
-PASS ./test1
+TEST ./test1
 stdout:
   stdout
 stderr:
   stderr
+PASS ./test1
 ================
 found: 1 run: 1 pass: 1 fail: 0
 " > expected/stdout

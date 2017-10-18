@@ -123,17 +123,19 @@ printf -- "\
 
 printf -- "\
 ================
+TEST ./test1
+stdout:
+stderr:
+  + false
+exitstatus: 1
 FAIL ./test1
-exitstatus: 1
-stdout:
-stderr:
-  + false
 ================
-FAIL ./test3
-exitstatus: 1
+TEST ./test3
 stdout:
 stderr:
   + false
+exitstatus: 1
+FAIL ./test3
 ================
 fail:
 ./test1

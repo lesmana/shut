@@ -56,10 +56,9 @@ runtestinworkdir() {
 
 # -----------------------------------------------------------------------------
 printheader() {
-  local statusstring="$1"
-  local testname="$2"
+  local testname="$1"
   printf -- '================\n'
-  printf -- '%s %s\n' "$statusstring" "$testname"
+  printf -- 'TEST %s\n' "$testname"
 }
 
 printbody() {
@@ -69,13 +68,20 @@ printbody() {
   cat stderr | sed 's/^/  /'
 }
 
+printfooter() {
+  local statusstring="$1"
+  local testname="$2"
+  printf -- '%s %s\n' "$statusstring" "$testname"
+}
+
 printreportpass() {
   if ! $config_verbose; then
     return
   fi
   local testname="$1"
-  printheader "PASS" "$testname"
+  printheader "$testname"
   printbody
+  printfooter "PASS" "$testname"
 }
 
 printreportfail() {
@@ -84,15 +90,17 @@ printreportfail() {
   fi
   local testname="$1"
   local exitstatus="$(cat exitstatus)"
-  printheader "FAIL" "$testname"
-  printf -- 'exitstatus: %s\n' "$exitstatus"
+  printheader "$testname"
   printbody
+  printf -- 'exitstatus: %s\n' "$exitstatus"
+  printfooter "FAIL" "$testname"
 }
 
 printreporterror() {
   local testname="$1"
-  printheader "ERROR" "$testname"
+  printheader "$testname"
   printbody
+  printfooter "ERROR" "$testname"
 }
 
 printreport() {
