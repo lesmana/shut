@@ -95,10 +95,9 @@ printreportfail() {
     return
   fi
   local testname="$1"
-  local exitstatus="$(cat exitstatus)"
   printheader "$testname"
   printbody
-  printf -- 'exitstatus: %s\n' "$exitstatus"
+  printf -- 'exitstatus: ' | cat - exitstatus
   printfooter "FAIL" "$testname"
 }
 
