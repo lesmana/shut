@@ -55,6 +55,12 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
+runtestsaveoutput() {
+  local testname="$1"
+  local fulltestname="$SHUT_PWD/${testname#./}"
+  runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+}
+
 printheader() {
   local testname="$1"
   printf -- '================\n'
@@ -122,8 +128,7 @@ printreport() {
 
 runtestandprintreport() {
   local testname="$1"
-  local fulltestname="$SHUT_PWD/${testname#./}"
-  runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  runtestsaveoutput "$testname"
   local exitstatus="$?"
   printreport "$testname" "$exitstatus" >&3
 }
