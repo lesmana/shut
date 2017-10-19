@@ -130,11 +130,6 @@ printreport() {
   fi
 }
 
-runtestandprintreport() {
-  local testname="$1"
-  runtestsaveoutput "$testname"
-}
-
 # -----------------------------------------------------------------------------
 mkdir_testdir() {
   local testdir="$1"
@@ -157,7 +152,7 @@ runtestintestdir() {
   mkdir_testdir "$testname" || return $?
   (
     cd_testdir "$testname" || return $?
-    runtestandprintreport "$testname"
+    runtestsaveoutput "$testname"
   )
 }
 
