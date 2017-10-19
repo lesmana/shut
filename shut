@@ -93,14 +93,11 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-printheader() {
-  local testname="$1"
+printreport_() {
+  local result="$1"
+  local testname="$2"
   printf -- '================\n'
   printf -- 'TEST %s\n' "$testname"
-}
-
-printbody() {
-  local result="$1"
   printf -- 'stdout:\n'
   sed 's/^/  /' stdout
   printf -- 'stderr:\n'
@@ -108,11 +105,6 @@ printbody() {
   if [ "$result" = "FAIL" ]; then
     sed 's/^/exitstatus: /' exitstatus
   fi
-}
-
-printfooter() {
-  local result="$1"
-  local testname="$2"
   printf -- '%s %s\n' "$result" "$testname"
 }
 
@@ -121,9 +113,7 @@ printreportpass() {
     return
   fi
   local testname="$1"
-  printheader "$testname"
-  printbody
-  printfooter "PASS" "$testname"
+  printreport_ "PASS" "$testname"
 }
 
 printreportfail() {
@@ -131,16 +121,12 @@ printreportfail() {
     return
   fi
   local testname="$1"
-  printheader "$testname"
-  printbody "FAIL"
-  printfooter "FAIL" "$testname"
+  printreport_ "FAIL" "$testname"
 }
 
 printreporterror() {
   local testname="$1"
-  printheader "$testname"
-  printbody
-  printfooter "ERROR" "$testname"
+  printreport_ "ERROR" "$testname"
 }
 
 # -----------------------------------------------------------------------------
