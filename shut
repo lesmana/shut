@@ -156,7 +156,7 @@ runtestandprintreport() {
   rm stdout stderr exitstatus
 }
 
-loopovertestnames() {
+runtests() {
   touch testsrun testserror testspass testsfail
   local testname
   local fulltestname
@@ -164,10 +164,6 @@ loopovertestnames() {
     fulltestname="$SHUT_PWD/${testname#./}"
     runtestandprintreport "$testname" "$fulltestname"
   done <testsfound
-}
-
-runtests() {
-  loopovertestnames
 }
 
 # -----------------------------------------------------------------------------
