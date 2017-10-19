@@ -21,9 +21,11 @@ printf -- "\
 " > expected/shutdir/testsfound
 
 printf -- "\
+./test1
 " > expected/shutdir/testsrun
 
 printf -- "\
+./test1
 " > expected/shutdir/testserror
 
 printf -- "\
@@ -35,6 +37,11 @@ printf -- "\
 # prepare shut output
 
 printf -- "\
+================
+TEST ./test1
+stdout:
+stderr:
+ERROR ./test1
 " > expected/stdout
 
 printf -- "\

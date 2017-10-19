@@ -129,7 +129,10 @@ runtestandprintreport() {
   local testname="$1"
   runtestsaveoutput "$testname"
   local exitstatus=$?
-  printreport "$testname" "$exitstatus"
+  cat stdout >&1
+  cat stderr >&2
+  cat exitstatus >&3
+  return "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
@@ -160,8 +163,10 @@ runtestintestdir() {
 
 # -----------------------------------------------------------------------------
 runtestandprintreport_() {
-  runtestintestdir "$testname"
+  runtestintestdir "$testname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
+  printreport "$testname" "$exitstatus"
+  rm stdout stderr exitstatus
   if [ "$exitstatus" = 3 ]; then
     return 3
   else
