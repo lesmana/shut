@@ -157,7 +157,7 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-runtestandprintreport_() {
+runtestandprintreport() {
   runtestintestdir "$testname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
   printreport "$testname" "$exitstatus"
@@ -171,7 +171,7 @@ runtestandprintreport_() {
 
 loopovertestnames() {
   while read -r testname; do
-    runtestandprintreport_ "$testname" || return $?
+    runtestandprintreport "$testname" || return $?
   done <testsfound 5>testsrun 6>testserror 7>testspass 8>testsfail
 }
 
