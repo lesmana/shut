@@ -164,11 +164,6 @@ loopovertestnames() {
     fulltestname="$SHUT_PWD/${testname#./}"
     runtestandprintreport "$testname" "$fulltestname"
   done <testsfound
-  if [ ! -s testserror ]; then
-    return 0
-  else
-    return 3
-  fi
 }
 
 printsemanticexitstatus() {
@@ -180,7 +175,7 @@ printsemanticexitstatus() {
 }
 
 runtests() {
-  loopovertestnames || return $?
+  loopovertestnames
 }
 
 # -----------------------------------------------------------------------------
@@ -213,7 +208,10 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtests >&3 || return $?
+  runtests >&3
+  if [ -s testserror ]; then
+    return 3
+  fi
   printsemanticexitstatus
   printsummary >&3
 }
