@@ -66,6 +66,33 @@ runtestsaveoutput() {
   return "$exitstatus"
 }
 
+# -----------------------------------------------------------------------------
+mkdir_testdir() {
+  local testdir="$1"
+  mkdir -p -- "$testdir" >/dev/null 2>&1 || {
+    printf -- 'error creating testdir: %s\n' "$testdir" >&2
+    return 3
+  }
+}
+
+cd_testdir() {
+  local testdir="$1"
+  cd -- "$testdir" >/dev/null 2>&1 || {
+    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&2
+    return 3
+  }
+}
+
+runtestintestdir() {
+  local testname="$1"
+  mkdir_testdir "$testname" || return $?
+  (
+    cd_testdir "$testname" || return $?
+    runtestsaveoutput "$testname"
+  )
+}
+
+# -----------------------------------------------------------------------------
 printheader() {
   local testname="$1"
   printf -- '================\n'
@@ -128,32 +155,6 @@ printreport() {
     printreporterror "$testname"
     return 3
   fi
-}
-
-# -----------------------------------------------------------------------------
-mkdir_testdir() {
-  local testdir="$1"
-  mkdir -p -- "$testdir" >/dev/null 2>&1 || {
-    printf -- 'error creating testdir: %s\n' "$testdir" >&2
-    return 3
-  }
-}
-
-cd_testdir() {
-  local testdir="$1"
-  cd -- "$testdir" >/dev/null 2>&1 || {
-    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&2
-    return 3
-  }
-}
-
-runtestintestdir() {
-  local testname="$1"
-  mkdir_testdir "$testname" || return $?
-  (
-    cd_testdir "$testname" || return $?
-    runtestsaveoutput "$testname"
-  )
 }
 
 # -----------------------------------------------------------------------------
