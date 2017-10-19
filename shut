@@ -161,6 +161,12 @@ runtestintestdir() {
 # -----------------------------------------------------------------------------
 runtestandprintreport_() {
   runtestintestdir "$testname"
+  local exitstatus=$?
+  if [ "$exitstatus" = 3 ]; then
+    return 3
+  else
+    return 0
+  fi
 }
 
 loopovertestnames() {
