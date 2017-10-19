@@ -139,7 +139,7 @@ runtestandprintreport() {
 mkdir_testdir() {
   local testdir="$1"
   mkdir -p -- "$testdir" >/dev/null 2>&1 || {
-    printf -- 'error creating testdir: %s\n' "$testdir" >&4
+    printf -- 'error creating testdir: %s\n' "$testdir" >&2
     return 3
   }
 }
@@ -147,7 +147,7 @@ mkdir_testdir() {
 cd_testdir() {
   local testdir="$1"
   cd -- "$testdir" >/dev/null 2>&1 || {
-    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&4
+    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&2
     return 3
   }
 }

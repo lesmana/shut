@@ -41,11 +41,11 @@ printf -- "\
 TEST ./test1
 stdout:
 stderr:
+  error creating testdir: ./test1
 ERROR ./test1
 " > expected/stdout
 
 printf -- "\
-error creating testdir: ./test1
 " > expected/stderr
 
 printf -- "\
