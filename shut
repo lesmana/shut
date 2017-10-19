@@ -166,14 +166,6 @@ loopovertestnames() {
   done <testsfound
 }
 
-printsemanticexitstatus() {
-  if [ ! -s testsfail ]; then
-    printf -- '%s\n' "$exitstatus_pass"
-  else
-    printf -- '%s\n' "$exitstatus_fail"
-  fi
-}
-
 runtests() {
   loopovertestnames
 }
@@ -205,6 +197,14 @@ printsummary() {
     printlist fail testsfail
   fi
   printcounts
+}
+
+printsemanticexitstatus() {
+  if [ ! -s testsfail ]; then
+    printf -- '%s\n' "$exitstatus_pass"
+  else
+    printf -- '%s\n' "$exitstatus_fail"
+  fi
 }
 
 runtestsandprintsummary() {
