@@ -56,8 +56,7 @@ runtestinworkdir() {
 
 # -----------------------------------------------------------------------------
 runtestandsaveoutput() {
-  local testname="$1"
-  local fulltestname="$SHUT_PWD/${testname#./}"
+  local fulltestname="$1"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
   cat stdout >&1
@@ -85,10 +84,11 @@ cd_testdir() {
 
 runtestintestdir() {
   local testname="$1"
+  local fulltestname="$2"
   mkdir_testdir "$testname" || return $?
   (
     cd_testdir "$testname" || return $?
-    runtestandsaveoutput "$testname"
+    runtestandsaveoutput "$fulltestname"
   )
 }
 
@@ -160,7 +160,8 @@ printreport() {
 
 runtestandprintreport() {
   local testname="$1"
-  runtestintestdir "$testname" 1>stdout 2>stderr 3>exitstatus
+  local fulltestname="$2"
+  runtestintestdir "$testname" "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
   printreport "$testname" "$exitstatus"
   rm stdout stderr exitstatus
@@ -175,7 +176,8 @@ loopovertestnames() {
   touch testsrun testserror testspass testsfail
   local testname
   while read -r testname; do
-    runtestandprintreport "$testname" || return $?
+    local fulltestname="$SHUT_PWD/${testname#./}"
+    runtestandprintreport "$testname" "$fulltestname" || return $?
   done <testsfound
 }
 
