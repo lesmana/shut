@@ -143,15 +143,15 @@ printreporterror() {
 printreport() {
   local testname="$1"
   local exitstatus="$2"
-  printf -- '%s\n' "$testname" >&5 # >testsrun
+  printf -- '%s\n' "$testname" >>testsrun
   if [ "$exitstatus" = 0 ]; then
-    printf -- '%s\n' "$testname" >&7 # >testspass
+    printf -- '%s\n' "$testname" >>testspass
     printreportpass "$testname"
   elif [ "$exitstatus" = 1 ]; then
-    printf -- '%s\n' "$testname" >&8 # >testsfail
+    printf -- '%s\n' "$testname" >>testsfail
     printreportfail "$testname"
   else
-    printf -- '%s\n' "$testname" >&6 # >testserror
+    printf -- '%s\n' "$testname" >>testserror
     printreporterror "$testname"
     return 3
   fi
@@ -171,9 +171,10 @@ runtestandprintreport() {
 }
 
 loopovertestnames() {
+  touch testsrun testserror testspass testsfail
   while read -r testname; do
     runtestandprintreport "$testname" || return $?
-  done <testsfound 5>testsrun 6>testserror 7>testspass 8>testsfail
+  done <testsfound
 }
 
 printsemanticexitstatus() {
