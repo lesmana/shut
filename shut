@@ -159,8 +159,9 @@ runtestandprintreport() {
 loopovertestnames() {
   touch testsrun testserror testspass testsfail
   local testname
+  local fulltestname
   while read -r testname; do
-    local fulltestname="$SHUT_PWD/${testname#./}"
+    fulltestname="$SHUT_PWD/${testname#./}"
     runtestandprintreport "$testname" "$fulltestname"
   done <testsfound
   if [ ! -s testserror ]; then
