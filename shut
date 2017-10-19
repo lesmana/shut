@@ -173,6 +173,7 @@ runtestandprintreport() {
 
 loopovertestnames() {
   touch testsrun testserror testspass testsfail
+  local testname
   while read -r testname; do
     runtestandprintreport "$testname" || return $?
   done <testsfound
