@@ -128,7 +128,7 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   runtestsaveoutput "$testname"
-  local exitstatus="$?"
+  local exitstatus=$?
   printreport "$testname" "$exitstatus" >&3
 }
 
