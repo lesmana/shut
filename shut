@@ -55,7 +55,7 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
-runtestsaveoutput() {
+runtestandsaveoutput() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
@@ -88,7 +88,7 @@ runtestintestdir() {
   mkdir_testdir "$testname" || return $?
   (
     cd_testdir "$testname" || return $?
-    runtestsaveoutput "$testname"
+    runtestandsaveoutput "$testname"
   )
 }
 
