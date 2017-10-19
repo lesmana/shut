@@ -159,9 +159,13 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
+runtestandprintreport_() {
+  runtestintestdir "$testname"
+}
+
 loopovertestnames() {
   while read -r testname; do
-    runtestintestdir "$testname" || return $?
+    runtestandprintreport_ "$testname" || return $?
   done <testsfound 5>testsrun 6>testserror 7>testspass 8>testsfail
 }
 
