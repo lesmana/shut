@@ -93,7 +93,7 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-printreport_() {
+printreport() {
   local result="$1"
   local testname="$2"
   printf -- '================\n'
@@ -113,7 +113,7 @@ printreportpass() {
     return
   fi
   local testname="$1"
-  printreport_ "PASS" "$testname"
+  printreport "PASS" "$testname"
 }
 
 printreportfail() {
@@ -121,12 +121,12 @@ printreportfail() {
     return
   fi
   local testname="$1"
-  printreport_ "FAIL" "$testname"
+  printreport "FAIL" "$testname"
 }
 
 printreporterror() {
   local testname="$1"
-  printreport_ "ERROR" "$testname"
+  printreport "ERROR" "$testname"
 }
 
 # -----------------------------------------------------------------------------
