@@ -97,7 +97,7 @@ printreportfail() {
   local testname="$1"
   printheader "$testname"
   printbody
-  printf -- 'exitstatus: ' | cat - exitstatus
+  cat exitstatus | sed 's/^/exitstatus: /'
   printfooter "FAIL" "$testname"
 }
 
