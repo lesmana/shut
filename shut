@@ -140,6 +140,7 @@ printreporterror() {
   printfooter "ERROR" "$testname"
 }
 
+# -----------------------------------------------------------------------------
 printreport() {
   local testname="$1"
   local exitstatus="$2"
@@ -157,7 +158,6 @@ printreport() {
   fi
 }
 
-# -----------------------------------------------------------------------------
 runtestandprintreport() {
   runtestintestdir "$testname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
