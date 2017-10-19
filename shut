@@ -180,7 +180,7 @@ printsemanticexitstatus() {
 }
 
 runtests() {
-  loopovertestnames >&3 || return $?
+  loopovertestnames || return $?
 }
 
 # -----------------------------------------------------------------------------
@@ -213,7 +213,7 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtests || return $?
+  runtests >&3 || return $?
   printsemanticexitstatus
   printsummary >&3
 }
