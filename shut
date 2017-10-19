@@ -196,15 +196,15 @@ printsummary() {
 }
 
 runtestsandprintsummary() {
-  runtests >&3
+  runtests
   if [ -s testserror ]; then
     return 3
   fi
-  printsummary >&3
+  printsummary
   if [ ! -s testsfail ]; then
-    printf -- '%s\n' "$exitstatus_pass"
+    return 0
   else
-    printf -- '%s\n' "$exitstatus_fail"
+    return 1
   fi
 }
 
@@ -273,8 +273,8 @@ actualprinttestnames() {
 }
 
 printtestnames() {
-  actualprinttestnames >&3
-  printf -- '%s\n' "$exitstatus_pass"
+  actualprinttestnames
+  return 0
 }
 
 # -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ work() {
 
 workiftestsfound() {
   [ -s testsfound ] || {
-    printf -- 'no tests found\n' >&3
+    printf -- 'no tests found\n'
     return 2
   }
   work
@@ -404,15 +404,8 @@ workintempdir() {
 }
 
 # -----------------------------------------------------------------------------
-switchstdoutexitstatus() {
-  local exitstatus
-  exitstatus="$(workintempdir "$@")" 3>&1 || return $?
-  return "$exitstatus"
-}
-
-# -----------------------------------------------------------------------------
 main() {
-  switchstdoutexitstatus "$@"
+  workintempdir "$@"
 }
 
 main "$@"
