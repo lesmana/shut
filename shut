@@ -100,10 +100,14 @@ printheader() {
 }
 
 printbody() {
+  local result="$1"
   printf -- 'stdout:\n'
   sed 's/^/  /' stdout
   printf -- 'stderr:\n'
   sed 's/^/  /' stderr
+  if [ "$result" = "FAIL" ]; then
+    sed 's/^/exitstatus: /' exitstatus
+  fi
 }
 
 printfooter() {
@@ -128,8 +132,7 @@ printreportfail() {
   fi
   local testname="$1"
   printheader "$testname"
-  printbody
-  sed 's/^/exitstatus: /' exitstatus
+  printbody "FAIL"
   printfooter "FAIL" "$testname"
 }
 
