@@ -200,12 +200,12 @@ runtestsandprintsummary() {
   if [ -s testserror ]; then
     return 3
   fi
+  printsummary >&3
   if [ ! -s testsfail ]; then
     printf -- '%s\n' "$exitstatus_pass"
   else
     printf -- '%s\n' "$exitstatus_fail"
   fi
-  printsummary >&3
 }
 
 # -----------------------------------------------------------------------------
