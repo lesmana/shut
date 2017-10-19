@@ -107,9 +107,9 @@ printbody() {
 }
 
 printfooter() {
-  local statusstring="$1"
+  local result="$1"
   local testname="$2"
-  printf -- '%s %s\n' "$statusstring" "$testname"
+  printf -- '%s %s\n' "$result" "$testname"
 }
 
 printreportpass() {
