@@ -130,7 +130,7 @@ printreporterror() {
 }
 
 # -----------------------------------------------------------------------------
-printreport() {
+logresultandprintreport() {
   local testname="$1"
   local exitstatus="$2"
   printf -- '%s\n' "$testname" >>testsrun
@@ -152,7 +152,7 @@ runtestandprintreport() {
   local fulltestname="$2"
   runtestintestdir "$testname" "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
-  printreport "$testname" "$exitstatus"
+  logresultandprintreport "$testname" "$exitstatus"
   rm stdout stderr exitstatus
 }
 
