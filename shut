@@ -59,6 +59,11 @@ runtestsaveoutput() {
   local testname="$1"
   local fulltestname="$SHUT_PWD/${testname#./}"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  local exitstatus=$?
+  cat stdout >&1
+  cat stderr >&2
+  cat exitstatus >&3
+  return "$exitstatus"
 }
 
 printheader() {
@@ -128,11 +133,6 @@ printreport() {
 runtestandprintreport() {
   local testname="$1"
   runtestsaveoutput "$testname"
-  local exitstatus=$?
-  cat stdout >&1
-  cat stderr >&2
-  cat exitstatus >&3
-  return "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
