@@ -129,7 +129,7 @@ runtestandprintreport() {
   local testname="$1"
   runtestsaveoutput "$testname"
   local exitstatus=$?
-  printreport "$testname" "$exitstatus" >&3
+  printreport "$testname" "$exitstatus"
 }
 
 # -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ printsemanticexitstatus() {
 }
 
 runtests() {
-  loopovertestnames || return $?
+  loopovertestnames >&3 || return $?
   printsemanticexitstatus
 }
 
