@@ -214,42 +214,42 @@ rm_shutdir() {
     return
   fi
   if $config_keep; then
-    printf -- 'name exists: %s\n' "$config_shutdir" >&4
-    printf -- 'will not overwrite\n' >&4
+    printf -- 'name exists: %s\n' "$config_shutdir" >&2
+    printf -- 'will not overwrite\n' >&2
     return 2
   fi
   if [ ! -d "$config_fullshutdir" ]; then
-    printf -- 'is not shutdir: %s\n' "$config_shutdir" >&4
-    printf -- 'will not overwrite\n' >&4
+    printf -- 'is not shutdir: %s\n' "$config_shutdir" >&2
+    printf -- 'will not overwrite\n' >&2
     return 2
   fi
   rm -r -- "$config_fullshutdir" >/dev/null 2>&1 || {
-    printf -- 'error deleting %s\n' "$config_fullshutdir" >&4
-    printf -- 'cannot continue\n' >&4
+    printf -- 'error deleting %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
     return 3
   }
 }
 
 mkdir_shutdir() {
   mkdir -p -- "$config_fullshutdir" >/dev/null 2>&1 || {
-    printf -- 'error creating directory %s\n' "$config_fullshutdir" >&4
-    printf -- 'cannot continue\n' >&4
+    printf -- 'error creating directory %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
     return 3
   }
 }
 
 cp_tests_shutdir() {
   cp -- testsfound "$config_fullshutdir" >/dev/null 2>&1 || {
-    printf -- 'error copying testsfound to %s\n' "$config_fullshutdir" >&4
-    printf -- 'cannot continue\n' >&4
+    printf -- 'error copying testsfound to %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
     return 3
   }
 }
 
 cd_shutdir() {
   cd -- "$config_fullshutdir" >/dev/null 2>&1 || {
-    printf -- 'error changing directory to %s\n' "$config_fullshutdir" >&4
-    printf -- 'cannot continue\n' >&4
+    printf -- 'error changing directory to %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
     return 3
   }
 }
@@ -354,20 +354,6 @@ configthenwork() {
 }
 
 # -----------------------------------------------------------------------------
-workcatcherror() {
-  configthenwork "$@" 2>workerrorunhandled 4>workerrorhandled
-  local exitstatus=$?
-  if [ -s workerrorhandled ]; then
-    cat workerrorhandled >&2
-  fi
-  if [ -s workerrorunhandled ]; then
-    printf -- 'unhandled error:\n' >&2
-    cat workerrorunhandled >&2
-  fi
-  return "$exitstatus"
-}
-
-# -----------------------------------------------------------------------------
 mktemp_tempdir() {
   config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2>/dev/null)" || {
     printf -- 'error creating tempdir\n' >&2
@@ -396,7 +382,7 @@ workintempdir() {
   mktemp_tempdir || return $?
   (
     cd_tempdir || return $?
-    workcatcherror "$@"
+    configthenwork "$@"
   )
   local exitstatus=$?
   rm_tempdir || return $?
