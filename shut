@@ -159,6 +159,7 @@ printreport() {
 }
 
 runtestandprintreport() {
+  local testname="$1"
   runtestintestdir "$testname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus=$?
   printreport "$testname" "$exitstatus"
