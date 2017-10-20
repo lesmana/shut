@@ -206,9 +206,7 @@ printsummary() {
   printcounts
 }
 
-runtestsandprintsummary() {
-  runtests
-  printsummary
+runtestsexitstatus() {
   if [ -s testserror ]; then
     return 3
   fi
@@ -217,6 +215,12 @@ runtestsandprintsummary() {
   else
     return 1
   fi
+}
+
+runtestsandprintsummary() {
+  runtests
+  printsummary
+  runtestsexitstatus
 }
 
 # -----------------------------------------------------------------------------
