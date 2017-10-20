@@ -13,6 +13,19 @@ exitstatus_pass=0
 exitstatus_fail=1
 
 # -----------------------------------------------------------------------------
+runtestsubshell() {
+  local fulltestname="$1"
+  (
+    export SHUT_PWD
+    export SHUT_TEST="$fulltestname"
+    # close stdin, close all other than stdout and stderr
+    "$fulltestname" 0</dev/null 3>&- 4>&- 5>&- 6>&- 7>&- 8>&- 9>&-
+  )
+  local exitstatus=$?
+  printf -- '%s\n' "$exitstatus" >&3
+  return "$exitstatus"
+}
+
 runtestexitstatus() {
   local exitstatus="$1"
   if [ "$exitstatus" = 0 ]; then
@@ -24,14 +37,8 @@ runtestexitstatus() {
 
 runtest() {
   local fulltestname="$1"
-  (
-    export SHUT_PWD
-    export SHUT_TEST="$fulltestname"
-    # close stdin, close all other than stdout and stderr
-    "$fulltestname" 0</dev/null 3>&- 4>&- 5>&- 6>&- 7>&- 8>&- 9>&-
-  )
+  runtestsubshell "$fulltestname"
   local exitstatus=$?
-  printf -- '%s\n' "$exitstatus" >&3
   runtestexitstatus "$exitstatus"
 }
 
