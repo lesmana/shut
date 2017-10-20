@@ -157,7 +157,7 @@ runtestandprintreport() {
 }
 
 runtests() {
-  touch testsrun testserror testspass testsfail
+  touch testsrun testspass testsfail testserror
   local testname
   local fulltestname
   while read -r testname; do
