@@ -56,6 +56,9 @@ stderr:
   error changing directory to workdir
 ERROR ./test1
 ================
+error:
+./test1
+================
 found: 1 run: 1 pass: 0 fail: 0 error: 1
 " > expected/stdout
 
