@@ -175,12 +175,13 @@ runtests() {
 printlist() {
   local listname="$1"
   local filename="$2"
+  printf -- '================\n'
   printf -- '%s:\n' "$listname"
   cat "$filename"
-  printf -- '================\n'
 }
 
 printcounts() {
+  printf -- '================\n'
   wc -l testsfound testsrun testspass testsfail testserror | {
     read -r foundcount ignorefilename
     read -r runcount ignorefilename
@@ -199,7 +200,6 @@ printcounts() {
 }
 
 printsummary() {
-  printf -- '================\n'
   if [ -s testsfail ]; then
     printlist fail testsfail
   fi
@@ -284,8 +284,8 @@ runtestsinshutdir() {
 
 # -----------------------------------------------------------------------------
 actualprinttestnames() {
-  printf -- '================\n'
   printlist found testsfound
+  printf -- '================\n'
   local foundcount=$(wc -l <testsfound)
   printf -- 'found: %s\n' "$foundcount"
 }
