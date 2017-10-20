@@ -9,9 +9,6 @@ config_keep=false
 config_quiet=false
 SHUT_PWD="$PWD"
 
-exitstatus_pass=0
-exitstatus_fail=1
-
 # -----------------------------------------------------------------------------
 runtestsubshell() {
   local fulltestname="$1"
