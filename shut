@@ -189,6 +189,8 @@ printlist() {
 printcounts() {
   printf -- '================\n'
   wc -l testsfound testsrun testspass testsfail testserror | {
+    local foundcount runcount passcount failcount errorcount
+    local ignorefilename ignoretotal
     read -r foundcount ignorefilename
     read -r runcount ignorefilename
     read -r passcount ignorefilename
