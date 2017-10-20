@@ -43,6 +43,8 @@ stdout:
 stderr:
   error creating testdir: ./test1
 ERROR ./test1
+================
+found: 1 run: 1 pass: 0 fail: 0
 " > expected/stdout
 
 printf -- "\

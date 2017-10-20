@@ -197,10 +197,10 @@ printsummary() {
 
 runtestsandprintsummary() {
   runtests
+  printsummary
   if [ -s testserror ]; then
     return 3
   fi
-  printsummary
   if [ ! -s testsfail ]; then
     return 0
   else
