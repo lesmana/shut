@@ -42,7 +42,7 @@ found:
 ./xtestdir/test1
 ./xtestdir/test2
 ================
-found: 6
+found: 6 run: 0 pass: 0 fail: 0
 " > expected/stdout
 
 printf -- "\

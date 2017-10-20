@@ -20,7 +20,7 @@ found:
 ./prefix0
 ./prefix1
 ================
-found: 2
+found: 2 run: 0 pass: 0 fail: 0
 " > expected/stdout
 
 printf -- "\

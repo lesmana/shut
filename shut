@@ -292,9 +292,8 @@ runtestsinshutdir() {
 # -----------------------------------------------------------------------------
 printtestnames() {
   printlist found testsfound
-  printf -- '================\n'
-  local foundcount=$(wc -l <testsfound)
-  printf -- 'found: %s\n' "$foundcount"
+  touch testsrun testspass testsfail testserror
+  printcounts
 }
 
 # -----------------------------------------------------------------------------

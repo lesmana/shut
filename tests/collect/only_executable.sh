@@ -19,7 +19,7 @@ printf -- "\
 found:
 ./test_exec
 ================
-found: 1
+found: 1 run: 0 pass: 0 fail: 0
 " > expected/stdout
 
 printf -- "\

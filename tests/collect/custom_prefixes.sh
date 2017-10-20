@@ -22,7 +22,7 @@ found:
 ./foo1
 ./foo2
 ================
-found: 4
+found: 4 run: 0 pass: 0 fail: 0
 " > expected/stdout
 
 printf -- "\
