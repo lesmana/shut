@@ -44,7 +44,7 @@ stderr:
   error changing directory to testdir: ./test1
 ERROR ./test1
 ================
-found: 1 run: 1 pass: 0 fail: 0
+found: 1 run: 1 pass: 0 fail: 0 error: 1
 " > expected/stdout
 
 printf -- "\
