@@ -212,11 +212,10 @@ printsummary() {
 runtestsexitstatus() {
   if [ -s testserror ]; then
     return 3
-  fi
-  if [ ! -s testsfail ]; then
-    return 0
-  else
+  elif [ -s testsfail ]; then
     return 1
+  else
+    return 0
   fi
 }
 
