@@ -24,7 +24,7 @@ printf -- "\
 " > expected/stdout
 
 printf -- "\
-is not shutdir: shutdir
+is not directory: shutdir
 will not overwrite
 " > expected/stderr
 

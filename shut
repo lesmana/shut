@@ -243,7 +243,7 @@ rm_existing_shutdir() {
     return 2
   fi
   if [ ! -d "$config_fullshutdir" ]; then
-    printf -- 'is not shutdir: %s\n' "$config_shutdir" >&2
+    printf -- 'is not directory: %s\n' "$config_shutdir" >&2
     printf -- 'will not overwrite\n' >&2
     return 2
   fi
