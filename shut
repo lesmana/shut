@@ -233,7 +233,7 @@ runtestsandprintsummary() {
 }
 
 # -----------------------------------------------------------------------------
-rm_shutdir() {
+rm_existing_shutdir() {
   if [ ! -e "$config_fullshutdir" ]; then
     return
   fi
@@ -279,7 +279,7 @@ cd_shutdir() {
 }
 
 runtestsinshutdir() {
-  rm_shutdir || return "$?"
+  rm_existing_shutdir || return "$?"
   mkdir_shutdir || return "$?"
   cp_tests_shutdir || return "$?"
   (
