@@ -247,6 +247,11 @@ rm_existing_shutdir() {
     printf -- 'will not overwrite\n' >&2
     return 2
   fi
+  if [ ! -f "$config_fullshutdir/testsfound" ]; then
+    printf -- 'is not shutdir: %s\n' "$config_shutdir" >&2
+    printf -- 'will not overwrite\n' >&2
+    return 2
+  fi
   rm -r -- "$config_fullshutdir" >/dev/null 2>&1 || {
     printf -- 'error deleting %s\n' "$config_fullshutdir" >&2
     printf -- 'cannot continue\n' >&2

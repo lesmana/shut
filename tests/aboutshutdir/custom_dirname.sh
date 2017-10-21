@@ -4,6 +4,8 @@
 
 mkdir -p actual actual/dirname
 
+touch actual/dirname/testsfound
+
 printf -- "\
 #! /bin/sh
 set -x

@@ -16,6 +16,8 @@ cp -a actual expected
 
 mkdir -p actual/shutdir
 
+touch actual/shutdir/testsfound
+
 # prepare shut output
 
 printf -- "\
