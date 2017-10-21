@@ -217,6 +217,8 @@ printsummary() {
 runtestsexitstatus() {
   if [ -s testserror ]; then
     return 3
+  elif [ ! -s testsfound ]; then
+    return 2
   elif [ -s testsfail ]; then
     return 1
   else
@@ -303,10 +305,6 @@ work() {
 }
 
 workiftestsfound() {
-  [ -s testsfound ] || {
-    printf -- 'no tests found\n'
-    return 2
-  }
   work
 }
 
