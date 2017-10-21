@@ -304,10 +304,6 @@ work() {
   fi
 }
 
-workiftestsfound() {
-  work
-}
-
 # -----------------------------------------------------------------------------
 collecttestnames() {
   if [ ! -s patterns ]; then
@@ -330,7 +326,7 @@ collecttestnames() {
 
 collectnamesandwork() {
   collecttestnames
-  workiftestsfound
+  work
 }
 
 # -----------------------------------------------------------------------------
