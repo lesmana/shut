@@ -305,11 +305,6 @@ runtestsinshutdir() {
 }
 
 # -----------------------------------------------------------------------------
-work() {
-    runtestsinshutdir
-}
-
-# -----------------------------------------------------------------------------
 collecttestnames() {
   if [ ! -s patterns ]; then
     printf -- '%s\n' "$default_pattern" >patterns
@@ -330,7 +325,7 @@ collecttestnames() {
 
 collectnamesandwork() {
   collecttestnames
-  work
+  runtestsinshutdir
 }
 
 # -----------------------------------------------------------------------------
