@@ -325,8 +325,7 @@ collecttestnames() {
       print="$print -o -type f -executable -regex .*/$pattern[^/]*"
     fi
   done <patterns
-  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
-        \( $print \) -printf "./%P\n" | sort >testsfound
+  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort >testsfound
 }
 
 collectnamesandwork() {
