@@ -45,6 +45,13 @@ better marker in shutdir to recognize when deciding whether safe to delete
 something like: .shutdir
 
 ----
+skip shutdir when collecting tests
+use marker for shutdir to skip shutdir
+
+is this necessary at all?
+is it not responsibility of user to separate tests from shutdirs?
+
+----
 provide option to not create shutdir
 work in temp directory instead
 
