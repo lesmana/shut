@@ -1,6 +1,16 @@
 todo for shell unit test
 
 ----
+remove tempdir
+work in shutdir immediately
+
+problem: configfromargv writes to file patterns
+how to communicate patterns without file?
+how to store file without tempdir?
+cannot write shutdir until after parsing argv
+because do not know how it will be called
+
+----
 rename to command line tool black box test
 because this is really not a tool to do unit testing of shell scripts
 this is a tool to test command line tools
