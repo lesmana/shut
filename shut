@@ -164,13 +164,21 @@ runtestandprintreport() {
   rm stdout stderr exitstatus
 }
 
+mayberuntest() {
+  local testname="$1"
+  local fulltestname="$2"
+  if ! "$config_donotruntests"; then
+    runtestandprintreport "$testname" "$fulltestname"
+  fi
+}
+
 runtests() {
   touch testsrun testspass testsfail testserror
   local testname
   local fulltestname
   while read -r testname; do
     fulltestname="$SHUT_PWD/${testname#./}"
-    runtestandprintreport "$testname" "$fulltestname"
+    mayberuntest "$testname" "$fulltestname"
   done <testsfound
 }
 
@@ -205,6 +213,9 @@ printcounts() {
 }
 
 printsummary() {
+  if "$config_donotruntests"; then
+    printlist found testsfound
+  fi
   if [ -s testsfail ]; then
     printlist fail testsfail
   fi
@@ -294,19 +305,8 @@ runtestsinshutdir() {
 }
 
 # -----------------------------------------------------------------------------
-printtestnames() {
-  printlist found testsfound
-  touch testsrun testspass testsfail testserror
-  printcounts
-}
-
-# -----------------------------------------------------------------------------
 work() {
-  if $config_donotruntests; then
-    printtestnames
-  else
     runtestsinshutdir
-  fi
 }
 
 # -----------------------------------------------------------------------------

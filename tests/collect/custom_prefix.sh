@@ -12,6 +12,27 @@ chmod +x actual/prefix0 actual/prefix1 actual/notprefix
 
 cp -a actual expected
 
+mkdir -p expected/shutdir
+
+# prepare shutdir
+
+printf -- "\
+./prefix0
+./prefix1
+" > expected/shutdir/testsfound
+
+printf -- "\
+" > expected/shutdir/testsrun
+
+printf -- "\
+" > expected/shutdir/testserror
+
+printf -- "\
+" > expected/shutdir/testspass
+
+printf -- "\
+" > expected/shutdir/testsfail
+
 # prepare shut output
 
 printf -- "\

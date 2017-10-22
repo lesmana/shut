@@ -12,6 +12,26 @@ chmod +x actual/test1
 
 cp -a actual expected
 
+mkdir -p expected/shutdir
+
+# prepare shutdir
+
+printf -- "\
+./test1
+" > expected/shutdir/testsfound
+
+printf -- "\
+" > expected/shutdir/testsrun
+
+printf -- "\
+" > expected/shutdir/testserror
+
+printf -- "\
+" > expected/shutdir/testspass
+
+printf -- "\
+" > expected/shutdir/testsfail
+
 # prepare shut output
 
 printf -- "\
