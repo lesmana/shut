@@ -307,15 +307,11 @@ runtestsinshutdir() {
 # -----------------------------------------------------------------------------
 collecttestnames() {
   local pattern
-  for pattern in "$@"; do
-    printf -- '%s\n' "$pattern" >>patterns
-  done
-  if [ ! -s patterns ]; then
-    printf -- '%s\n' "$default_pattern" >patterns
-  fi
-  local pattern
   local print="-false"
-  while read -r pattern; do
+  if [ $# -eq 0 ]; then
+    set -- "$default_pattern"
+  fi
+  for pattern in "$@"; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
       print="$print -o -type f -executable -path */$pattern"
     elif [ -d "$SHUT_PWD/$pattern" ]; then
@@ -323,7 +319,7 @@ collecttestnames() {
     else
       print="$print -o -type f -executable -regex .*/$pattern[^/]*"
     fi
-  done <patterns
+  done
   find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort >testsfound
 }
 
