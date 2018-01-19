@@ -306,6 +306,10 @@ runtestsinshutdir() {
 
 # -----------------------------------------------------------------------------
 collecttestnames() {
+  local pattern
+  for pattern in "$@"; do
+    printf -- '%s\n' "$pattern" >>patterns
+  done
   if [ ! -s patterns ]; then
     printf -- '%s\n' "$default_pattern" >patterns
   fi
@@ -324,7 +328,7 @@ collecttestnames() {
 }
 
 collectnamesandwork() {
-  collecttestnames
+  collecttestnames "$@"
   runtestsinshutdir
 }
 
@@ -346,10 +350,8 @@ configfromargv() {
     esac
     shift
   done
-  local pattern
-  for pattern in "$@"; do
-    printf -- '%s\n' "$pattern" >>patterns
-  done
+  setup
+  collectnamesandwork "$@"
 }
 
 setup() {
@@ -358,8 +360,6 @@ setup() {
 
 configthenwork() {
   configfromargv "$@"
-  setup
-  collectnamesandwork
 }
 
 # -----------------------------------------------------------------------------
