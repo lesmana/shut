@@ -337,12 +337,8 @@ configfromargv() {
     esac
     shift
   done
-  setup
-  collectnamesandwork "$@"
-}
-
-setup() {
   config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
+  collectnamesandwork "$@"
 }
 
 configthenwork() {
