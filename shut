@@ -238,6 +238,7 @@ runtestsexitstatus() {
 }
 
 runtestsandprintsummary() {
+  cat >testsfound
   runtests
   printsummary
   runtestsexitstatus
@@ -278,14 +279,6 @@ mkdir_shutdir() {
   }
 }
 
-cp_tests_shutdir() {
-  cp -- testsfound "$config_fullshutdir" >/dev/null 2>&1 || {
-    printf -- 'error copying testsfound to %s\n' "$config_fullshutdir" >&2
-    printf -- 'cannot continue\n' >&2
-    return 3
-  }
-}
-
 cd_shutdir() {
   cd -- "$config_fullshutdir" >/dev/null 2>&1 || {
     printf -- 'error changing directory to %s\n' "$config_fullshutdir" >&2
@@ -297,7 +290,6 @@ cd_shutdir() {
 runtestsinshutdir() {
   rm_existing_shutdir || return "$?"
   mkdir_shutdir || return "$?"
-  cp_tests_shutdir || return "$?"
   (
     cd_shutdir || return "$?"
     runtestsandprintsummary
@@ -320,12 +312,11 @@ collecttestnames() {
       print="$print -o -type f -executable -regex .*/$pattern[^/]*"
     fi
   done
-  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort >testsfound
+  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
 }
 
 collectnamesandwork() {
-  collecttestnames "$@"
-  runtestsinshutdir
+  collecttestnames "$@" | runtestsinshutdir
 }
 
 # -----------------------------------------------------------------------------

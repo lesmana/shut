@@ -30,15 +30,13 @@ printf -- "\
 
 printf -- '#! /bin/sh
 shutdir="%s/actual/shutdir"
-realcp="%s"
-if [ "$*" = "-- testsfound $shutdir" ]; then
-  rm -rf -- "$shutdir"
-else
-  "$realcp" "$@"
+realmkdir="%s"
+if [ "$*" != "-p -- $shutdir" ]; then
+  "$realmkdir" "$@"
 fi
-' "$PWD" "$(which cp)" > cp
+' "$PWD" "$(which mkdir)" > mkdir
 
-chmod +x cp
+chmod +x mkdir
 
 export PATH="$PWD:$PATH"
 
