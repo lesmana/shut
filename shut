@@ -350,44 +350,8 @@ configthenwork() {
 }
 
 # -----------------------------------------------------------------------------
-mktemp_tempdir() {
-  config_tempdir="$(mktemp -d --tmpdir shuttempdir.XXX 2>/dev/null)" || {
-    printf -- 'error creating tempdir\n' >&2
-    printf -- 'cannot continue\n' >&2
-    return 3
-  }
-}
-
-cd_tempdir() {
-  cd -- "$config_tempdir" >/dev/null 2>&1 || {
-    printf -- 'failed changing directory to %s\n' "$config_tempdir" >&2
-    printf -- 'cannot continue\n' >&2
-    return 3
-  }
-}
-
-rm_tempdir() {
-  rm -r -- "$config_tempdir" >/dev/null 2>&1 || {
-    printf -- 'error deleting tempdir\n' >&2
-    printf -- 'not fatal but annoying\n' >&2
-    return 3
-  }
-}
-
-workintempdir() {
-  mktemp_tempdir || return "$?"
-  (
-    cd_tempdir || return "$?"
-    configthenwork "$@"
-  )
-  local exitstatus="$?"
-  rm_tempdir || return "$?"
-  return "$exitstatus"
-}
-
-# -----------------------------------------------------------------------------
 main() {
-  workintempdir "$@"
+  configthenwork "$@"
 }
 
 main "$@"
