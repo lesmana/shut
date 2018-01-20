@@ -315,10 +315,6 @@ collecttestnames() {
   find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
 }
 
-collectnamesandwork() {
-  runtestsinshutdir "$@"
-}
-
 # -----------------------------------------------------------------------------
 main() {
   local arg
@@ -337,7 +333,7 @@ main() {
     shift
   done
   config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
-  collectnamesandwork "$@"
+  runtestsinshutdir "$@"
 }
 
 main "$@"
