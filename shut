@@ -238,7 +238,7 @@ runtestsexitstatus() {
 }
 
 runtestsandprintsummary() {
-  cat >testsfound
+  collecttestnames "$@" >testsfound
   runtests
   printsummary
   runtestsexitstatus
@@ -292,7 +292,7 @@ runtestsinshutdir() {
   mkdir_shutdir || return "$?"
   (
     cd_shutdir || return "$?"
-    runtestsandprintsummary
+    runtestsandprintsummary "$@"
   )
 }
 
@@ -316,7 +316,7 @@ collecttestnames() {
 }
 
 collectnamesandwork() {
-  collecttestnames "$@" | runtestsinshutdir
+  runtestsinshutdir "$@"
 }
 
 # -----------------------------------------------------------------------------
