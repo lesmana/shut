@@ -320,8 +320,7 @@ collectnamesandwork() {
 }
 
 # -----------------------------------------------------------------------------
-configfromargv() {
-  # this function expects "$@" as argument
+main() {
   local arg
   while [ $# -ge 1 ]; do
     arg="$1"
@@ -339,15 +338,6 @@ configfromargv() {
   done
   config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
   collectnamesandwork "$@"
-}
-
-configthenwork() {
-  configfromargv "$@"
-}
-
-# -----------------------------------------------------------------------------
-main() {
-  configthenwork "$@"
 }
 
 main "$@"
