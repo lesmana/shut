@@ -2,72 +2,307 @@
 
 default_pattern="test"
 
-config_shiftargv=0
 config_donotruntests=false
 config_verbose=false
 config_shutdir="shutdir"
 config_keep=false
-config_split=false
 config_quiet=false
-config_tail=10
-SHUT_PWD=$PWD
+SHUT_PWD="$PWD"
 
-configfromargv() {
-  # this function expects "$@" as argument
-  argc=$#
-  while [ $# -ge 1 ]; do
-    arg=$1
-    case "$arg" in
-      -d) shift ; config_shutdir="$1" ;;
-      -k) config_keep=true ;;
-      -n) config_donotruntests=true ;;
-      -v) config_verbose=true ;;
-      -x) config_split=true ;;
-      -q) config_quiet=true ;;
-      -t) shift ; config_tail="$1" ;;
-      --) shift ; break ;;
-      -*) echo "argv error: $1" ; exit 2 ;;
-       *) break ;;
-    esac
-    shift
-  done
-  config_shiftargv=$((argc - $#))
+# -----------------------------------------------------------------------------
+runtestsubshell() {
+  local fulltestname="$1"
+  (
+    export SHUT_PWD
+    export SHUT_TEST="$fulltestname"
+    "$fulltestname" 0</dev/null 3>&- 4>&- 5>&- 6>&- 7>&- 8>&- 9>&-
+  )
+  local exitstatus="$?"
+  printf -- '%s\n' "$exitstatus" >&3
+  return "$exitstatus"
 }
 
-setup() {
-  config_fullshutdir=$(readlink -f "$config_shutdir")
-  if $config_donotruntests; then
-    whatiswork_func=workisprinttestnames
+runtestexitstatus() {
+  local exitstatus="$1"
+  if [ "$exitstatus" = 0 ]; then
+    return 0
   else
-    whatiswork_func=workisruntests
-  fi
-  if $config_split; then
-    runtestsaveoutput_func=runtestsaveoutputsplit
-    printbody_func=printbodysplit
-  else
-    runtestsaveoutput_func=runtestsaveoutputmerge
-    printbody_func=printbodymerge
-  fi
-  if $config_verbose; then
-    printreportpass_func=actualprintreport
-    printreportfail_func=actualprintreport
-  elif $config_quiet; then
-    printreportpass_func=true
-    printreportfail_func=true
-  else
-    printreportpass_func=true
-    printreportfail_func=actualprintreport
+    return 1
   fi
 }
 
+runtest() {
+  local fulltestname="$1"
+  runtestsubshell "$fulltestname"
+  local exitstatus="$?"
+  runtestexitstatus "$exitstatus"
+}
+
+# -----------------------------------------------------------------------------
+mkdir_workdir() {
+  mkdir workdir >/dev/null 2>&1 || {
+    printf -- 'error creating workdir\n' >&2
+    return 3
+  }
+}
+
+cd_workdir() {
+  cd workdir >/dev/null 2>&1 || {
+    printf -- 'error changing directory to workdir\n' >&2
+    return 3
+  }
+}
+
+runtestinworkdir() {
+  local fulltestname="$1"
+  mkdir_workdir || return "$?"
+  (
+    cd_workdir || return "$?"
+    runtest "$fulltestname"
+  )
+}
+
+# -----------------------------------------------------------------------------
+runtestandsaveoutput() {
+  local fulltestname="$1"
+  runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  local exitstatus="$?"
+  cat stdout >&1
+  cat stderr >&2
+  cat exitstatus >&3
+  return "$exitstatus"
+}
+
+# -----------------------------------------------------------------------------
+mkdir_testdir() {
+  local testdir="$1"
+  mkdir -p -- "$testdir" >/dev/null 2>&1 || {
+    printf -- 'error creating testdir: %s\n' "$testdir" >&2
+    return 3
+  }
+}
+
+cd_testdir() {
+  local testdir="$1"
+  cd -- "$testdir" >/dev/null 2>&1 || {
+    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&2
+    return 3
+  }
+}
+
+runtestintestdir() {
+  local testname="$1"
+  local fulltestname="$2"
+  mkdir_testdir "$testname" || return "$?"
+  (
+    cd_testdir "$testname" || return "$?"
+    runtestandsaveoutput "$fulltestname"
+  )
+}
+
+# -----------------------------------------------------------------------------
+printreport() {
+  local result="$1"
+  local testname="$2"
+  printf -- '================\n'
+  printf -- 'TEST %s\n' "$testname"
+  printf -- 'stdout:\n'
+  sed 's/^/  /' stdout
+  printf -- 'stderr:\n'
+  sed 's/^/  /' stderr
+  if [ "$result" = "FAIL" ]; then
+    sed 's/^/exitstatus: /' exitstatus
+  fi
+  printf -- '%s %s\n' "$result" "$testname"
+}
+
+printreportpass() {
+  if ! $config_verbose; then
+    return
+  fi
+  local testname="$1"
+  printreport "PASS" "$testname"
+}
+
+printreportfail() {
+  if $config_quiet; then
+    return
+  fi
+  local testname="$1"
+  printreport "FAIL" "$testname"
+}
+
+printreporterror() {
+  local testname="$1"
+  printreport "ERROR" "$testname"
+}
+
+# -----------------------------------------------------------------------------
+logresultandprintreport() {
+  local testname="$1"
+  local exitstatus="$2"
+  printf -- '%s\n' "$testname" >>testsrun
+  if [ "$exitstatus" = 0 ]; then
+    printf -- '%s\n' "$testname" >>testspass
+    printreportpass "$testname"
+  elif [ "$exitstatus" = 1 ]; then
+    printf -- '%s\n' "$testname" >>testsfail
+    printreportfail "$testname"
+  else
+    printf -- '%s\n' "$testname" >>testserror
+    printreporterror "$testname"
+    return 3
+  fi
+}
+
+runtestandprintreport() {
+  local testname="$1"
+  local fulltestname="$2"
+  runtestintestdir "$testname" "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  local exitstatus="$?"
+  logresultandprintreport "$testname" "$exitstatus"
+  rm stdout stderr exitstatus
+}
+
+mayberuntest() {
+  local testname="$1"
+  local fulltestname="$2"
+  if ! "$config_donotruntests"; then
+    runtestandprintreport "$testname" "$fulltestname"
+  fi
+}
+
+runtests() {
+  touch testsrun testspass testsfail testserror
+  local testname
+  local fulltestname
+  while read -r testname; do
+    fulltestname="$SHUT_PWD/${testname#./}"
+    mayberuntest "$testname" "$fulltestname"
+  done <testsfound
+}
+
+# -----------------------------------------------------------------------------
+printlist() {
+  local listname="$1"
+  local filename="$2"
+  printf -- '================\n'
+  printf -- '%s:\n' "$listname"
+  cat "$filename"
+}
+
+printcounts() {
+  printf -- '================\n'
+  wc -l testsfound testsrun testspass testsfail testserror | {
+    local foundcount runcount passcount failcount errorcount
+    local ignorefilename ignoretotal
+    read -r foundcount ignorefilename
+    read -r runcount ignorefilename
+    read -r passcount ignorefilename
+    read -r failcount ignorefilename
+    read -r errorcount ignorefilename
+    read -r ignoretotal
+    if [ "$errorcount" = 0 ]; then
+      printf -- 'found: %d run: %d pass: %d fail: %d\n' \
+            "$foundcount" "$runcount" "$passcount" "$failcount"
+    else
+      printf -- 'found: %d run: %d pass: %d fail: %d error: %d\n' \
+            "$foundcount" "$runcount" "$passcount" "$failcount" "$errorcount"
+    fi
+  }
+}
+
+printsummary() {
+  if "$config_donotruntests"; then
+    printlist found testsfound
+  fi
+  if [ -s testsfail ]; then
+    printlist fail testsfail
+  fi
+  if [ -s testserror ]; then
+    printlist error testserror
+  fi
+  printcounts
+}
+
+runtestsexitstatus() {
+  if [ -s testserror ]; then
+    return 3
+  elif [ ! -s testsfound ]; then
+    return 2
+  elif [ -s testsfail ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+runtestsandprintsummary() {
+  collecttestnames "$@" >testsfound
+  runtests
+  printsummary
+  runtestsexitstatus
+}
+
+# -----------------------------------------------------------------------------
+rm_existing_shutdir() {
+  if [ ! -e "$config_fullshutdir" ]; then
+    return
+  fi
+  if $config_keep; then
+    printf -- 'name exists: %s\n' "$config_shutdir" >&2
+    printf -- 'will not overwrite\n' >&2
+    return 2
+  fi
+  if [ ! -d "$config_fullshutdir" ]; then
+    printf -- 'is not directory: %s\n' "$config_shutdir" >&2
+    printf -- 'will not overwrite\n' >&2
+    return 2
+  fi
+  if [ ! -f "$config_fullshutdir/testsfound" ]; then
+    printf -- 'is not shutdir: %s\n' "$config_shutdir" >&2
+    printf -- 'will not overwrite\n' >&2
+    return 2
+  fi
+  rm -r -- "$config_fullshutdir" >/dev/null 2>&1 || {
+    printf -- 'error deleting %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
+    return 3
+  }
+}
+
+mkdir_shutdir() {
+  mkdir -p -- "$config_fullshutdir" >/dev/null 2>&1 || {
+    printf -- 'error creating directory %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
+    return 3
+  }
+}
+
+cd_shutdir() {
+  cd -- "$config_fullshutdir" >/dev/null 2>&1 || {
+    printf -- 'error changing directory to %s\n' "$config_fullshutdir" >&2
+    printf -- 'cannot continue\n' >&2
+    return 3
+  }
+}
+
+runtestsinshutdir() {
+  rm_existing_shutdir || return "$?"
+  mkdir_shutdir || return "$?"
+  (
+    cd_shutdir || return "$?"
+    runtestsandprintsummary "$@"
+  )
+}
+
+# -----------------------------------------------------------------------------
 collecttestnames() {
-  # this function expects "$@" as argument
-  # the same "$@" as the function configfromargv
-  shift "$config_shiftargv"
+  local pattern
+  local print="-false"
   if [ $# -eq 0 ]; then
     set -- "$default_pattern"
   fi
-  print="-false"
   for pattern in "$@"; do
     if [ -f "$SHUT_PWD/$pattern" ]; then
       print="$print -o -type f -executable -path */$pattern"
@@ -77,288 +312,28 @@ collecttestnames() {
       print="$print -o -type f -executable -regex .*/$pattern[^/]*"
     fi
   done
-  find "$SHUT_PWD" -type d -name "$config_shutdir" -prune -o \
-        \( $print \) -printf "./%P\n" | sort
+  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
 }
 
-deleteshutdir() {
-  if [ ! -e "$config_fullshutdir" ]; then
-    return
-  fi
-  if $config_keep; then
-    echo "name exists: $config_shutdir" >&2
-    echo "will not overwrite" >&2
-    return 2
-  fi
-  if [ ! -d "$config_fullshutdir" ]; then
-    echo "is not shutdir: $config_shutdir" >&2
-    echo "will not overwrite" >&2
-    return 2
-  fi
-  rm -r "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error deleting $config_fullshutdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-}
-
-runtest() {
-  fulltestname=$1
-  (
-    export SHUT_PWD
-    export SHUT_TEST="$fulltestname"
-    exec 0<&- 2>&3 3>&-
-    "$fulltestname"
-  )
-}
-
-runtestsaveexitstatus() {
-  fulltestname=$1
-  runtest "$fulltestname"
-  exitstatus=$?
-  echo $exitstatus > ../exitstatus
-}
-
-runtestsaveoutputsplit() {
-  fulltestname=$1
-  runtestsaveexitstatus "$fulltestname" > ../stdout 3> ../stderr
-}
-
-runtestsaveoutputmerge() {
-  fulltestname=$1
-  runtestsaveexitstatus "$fulltestname" > ../output 3>&1
-}
-
-runtestinworkdir() {
-  fulltestname=$1
-  mkdir -p workdir > /dev/null 2>&1 || {
-    echo "error creating workdir" >&2
-    return 3
-  }
-  (
-    cd workdir > /dev/null 2>&1 || {
-      echo "error changing directory to workdir" >&2
-      return 3
-    }
-    $runtestsaveoutput_func "$fulltestname"
-  )
-}
-
-printbodysplit() {
-  echo "stdout:"
-  cat stdout | tail -n $config_tail | sed 's/^/  /'
-  echo "stderr:"
-  cat stderr | tail -n $config_tail | sed 's/^/  /'
-}
-
-printbodymerge() {
-  echo "output:"
-  cat output | tail -n $config_tail | sed 's/^/  /'
-}
-
-actualprintreport() {
-  statusstring=$1
-  testname=$2
-  exitstatus=$3
-  printbody_func=$4
-  echo "================"
-  echo "$statusstring $testname"
-  echo "exitstatus: $exitstatus"
-  $printbody_func
-}
-
-printreport() {
-  testname=$1
-  exitstatus=$(cat exitstatus)
-  if [ $exitstatus -eq 0 ]; then
-    echo "$testname" >> "$config_fullshutdir/pass"
-    printreport_func=$printreportpass_func
-    statusstring="PASS"
-  else
-    echo "$testname" >> "$config_fullshutdir/fail"
-    printreport_func=$printreportfail_func
-    statusstring="FAIL"
-  fi
-  $printreport_func $statusstring "$testname" $exitstatus $printbody_func
-}
-
-runtestandprintreport() {
-  testname=$1
-  fulltestname=$2
-  runtestinworkdir "$fulltestname" || {
-    return
-  }
-  printreport "$testname"
-}
-
-runtestintestdir() {
-  testname=$1
-  fulltestname=$2
-  testdir="$testname.dir"
-  mkdir -p "$testdir" > /dev/null 2>&1 || {
-    echo "error creating testdir" >&2
-    return 3
-  }
-  (
-    cd "$testdir" > /dev/null 2>&1 || {
-      echo "error changing directory to testdir" >&2
-      return 3
-    }
-    runtestandprintreport "$testname" "$fulltestname"
-  )
-}
-
-runtestifexecutable() {
-  testname=$1
-  fulltestname="$SHUT_PWD/${testname#./}"
-  [ -x "$fulltestname" ] || {
-    echo "not found or not executable: $testname" >&2
-    return 3
-  }
-  runtestintestdir "$testname" "$fulltestname"
-}
-
-runtestandreporterror() {
-  testname=$1
-  runtestifexecutable "$testname" 2> "$config_tempdir/lasterror" || {
-    echo "$testname" >> "$config_fullshutdir/error"
-    echo "================"
-    echo "ERROR $testname"
-    echo "exitstatus: n/a"
-    cat "$config_tempdir/lasterror"
-  }
-}
-
-runtests() {
-  touch ../pass ../fail ../error
-  while read testname; do
-    runtestandreporterror "$testname"
-  done < ../tests
-}
-
-runtestsinlogdir() {
-  mkdir -p logdir > /dev/null 2>&1 || {
-    echo "error creating logdir" >&2
-    return 3
-  }
-  (
-    cd logdir > /dev/null 2>&1 || {
-      echo "error changing directory to logdir" >&2
-      return 3
-    }
-    runtests
-  )
-}
-
-printlist() {
-  listname=$1
-  echo "================"
-  echo "$listname:"
-  cat "$listname"
-}
-
-printcounts() {
-  wc -l tests pass fail error | {
-    read runcount ignorefilename
-    read passcount ignorefilename
-    read failcount ignorefilename
-    read errorcount ignorefilename
-    read ignoretotal
-    echo "================"
-    printf "run: %d pass: %d fail: %d error: %d\n" \
-          "$runcount" "$passcount" "$failcount" "$errorcount"
-  }
-}
-
-printsummary() {
-  if [ -s fail ]; then
-    printlist fail
-  fi
-  if [ -s error ]; then
-    printlist error
-  fi
-  printcounts
-}
-
-runtestsandprintsummary() {
-  runtestsinlogdir || {
-    return
-  }
-  printsummary
-  [ ! -s fail ] && [ ! -s error ] # exitstatus based on list empty or not
-}
-
-runtestsinshutdir() {
-  mkdir -p "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error creating directory $config_fullshutdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-  cp tests "$config_fullshutdir" > /dev/null 2>&1 || {
-    echo "error copying tests to $config_fullshutdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-  (
-    cd "$config_fullshutdir" > /dev/null 2>&1 || {
-      echo "error changing directory to $config_fullshutdir" >&2
-      echo "cannot continue" >&2
-      return 3
-    }
-    runtestsandprintsummary
-  )
-}
-
-workisruntests() {
-  deleteshutdir || {
-    return
-  }
-  runtestsinshutdir
-}
-
-workisprinttestnames() {
-  cat tests
-  count=$(wc -l < tests)
-  echo "================"
-  echo "would run: $count"
-}
-
-collectnamesandwork() {
-  collecttestnames "$@" > tests
-  test -s tests || {
-    echo "no tests found"
-    return 2
-  }
-  $whatiswork_func
-}
-
-workintempdir() {
-  config_tempdir=$(mktemp -d --tmpdir shuttempdir.XXX 2> /dev/null) || {
-    echo "error creating tempdir" >&2
-    echo "cannot continue" >&2
-    return 3
-  }
-  (
-    cd "$config_tempdir" > /dev/null 2>&1 || {
-      echo "failed changing directory to $config_tempdir" >&2
-      echo "cannot continue" >&2
-      return 3
-    }
-    collectnamesandwork "$@"
-  )
-  exitstatus=$?
-  rm -r "$config_tempdir" > /dev/null 2>&1 || {
-    echo "error deleting tempdir" >&2
-    echo "not fatal but annoying" >&2
-    return 3
-  }
-  return $exitstatus
-}
-
+# -----------------------------------------------------------------------------
 main() {
-  configfromargv "$@"
-  setup
-  workintempdir "$@"
+  local arg
+  while [ $# -ge 1 ]; do
+    arg="$1"
+    case "$arg" in
+      -d) shift ; config_shutdir="$1" ;;
+      -k) config_keep=true ;;
+      -n) config_donotruntests=true ;;
+      -v) config_verbose=true ;;
+      -q) config_quiet=true ;;
+      --) shift ; break ;;
+      -*) printf -- '%s\n' "argv error: $1" ; exit 2 ;;
+       *) break ;;
+    esac
+    shift
+  done
+  config_fullshutdir="$(readlink -f "$SHUT_PWD/$config_shutdir")"
+  runtestsinshutdir "$@"
 }
 
 main "$@"
