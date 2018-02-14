@@ -67,9 +67,7 @@ runtestandsaveoutput() {
   local fulltestname="$1"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus="$?"
-  cat stdout >&1
-  cat stderr >&2
-  cat exitstatus >&3
+  xprintreport "$testname" "$exitstatus"
   return "$exitstatus"
 }
 
@@ -168,11 +166,9 @@ xlogresult() {
 runtestandprintreport() {
   local testname="$1"
   local fulltestname="$2"
-  runtestintestdir "$testname" "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  runtestintestdir "$testname" "$fulltestname"
   local exitstatus="$?"
-  xprintreport "$testname" "$exitstatus"
   xlogresult "$testname" "$exitstatus"
-  rm stdout stderr exitstatus
 }
 
 mayberuntest() {
