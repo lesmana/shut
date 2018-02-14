@@ -138,19 +138,29 @@ printreporterror() {
 }
 
 # -----------------------------------------------------------------------------
-logresultandprintreport() {
+xprintreport() {
+  local testname="$1"
+  local exitstatus="$2"
+  if [ "$exitstatus" = 0 ]; then
+    printreportpass "$testname"
+  elif [ "$exitstatus" = 1 ]; then
+    printreportfail "$testname"
+  else
+    printreporterror "$testname"
+    return 3
+  fi
+}
+
+xlogresult() {
   local testname="$1"
   local exitstatus="$2"
   printf -- '%s\n' "$testname" >>testsrun
   if [ "$exitstatus" = 0 ]; then
     printf -- '%s\n' "$testname" >>testspass
-    printreportpass "$testname"
   elif [ "$exitstatus" = 1 ]; then
     printf -- '%s\n' "$testname" >>testsfail
-    printreportfail "$testname"
   else
     printf -- '%s\n' "$testname" >>testserror
-    printreporterror "$testname"
     return 3
   fi
 }
@@ -160,7 +170,8 @@ runtestandprintreport() {
   local fulltestname="$2"
   runtestintestdir "$testname" "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus="$?"
-  logresultandprintreport "$testname" "$exitstatus"
+  xprintreport "$testname" "$exitstatus"
+  xlogresult "$testname" "$exitstatus"
   rm stdout stderr exitstatus
 }
 
