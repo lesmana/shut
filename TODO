@@ -104,6 +104,13 @@ example
 stderr: (empty)
 
 ----
+indent using tab character to not mess up output relying on tab
+for example diff
+
+----
+give option for custom indent string
+
+----
 recreate report from existing shutdir without rerunning tests
 
 ----
