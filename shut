@@ -63,7 +63,7 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
-printreport() {
+printgenericreport() {
   local result="$1"
   local testname="$2"
   printf -- '================\n'
@@ -83,7 +83,7 @@ printreportpass() {
     return
   fi
   local testname="$1"
-  printreport "PASS" "$testname"
+  printgenericreport "PASS" "$testname"
 }
 
 printreportfail() {
@@ -91,15 +91,15 @@ printreportfail() {
     return
   fi
   local testname="$1"
-  printreport "FAIL" "$testname"
+  printgenericreport "FAIL" "$testname"
 }
 
 printreporterror() {
   local testname="$1"
-  printreport "ERROR" "$testname"
+  printgenericreport "ERROR" "$testname"
 }
 
-xprintreport() {
+printreport() {
   local testname="$1"
   local exitstatus="$2"
   if [ "$exitstatus" = 0 ]; then
@@ -112,11 +112,11 @@ xprintreport() {
   fi
 }
 
-runtestandsaveoutput() {
+runtestandprintreport() {
   local fulltestname="$1"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus="$?"
-  xprintreport "$testname" "$exitstatus" | tee report
+  printreport "$testname" "$exitstatus" | tee report
   return "$exitstatus"
 }
 
@@ -143,7 +143,7 @@ runtestintestdir() {
   mkdir_testdir "$testname" || return "$?"
   (
     cd_testdir "$testname" || return "$?"
-    runtestandsaveoutput "$fulltestname"
+    runtestandprintreport "$fulltestname"
   )
 }
 
