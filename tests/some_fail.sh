@@ -58,6 +58,16 @@ printf -- "\
 " > expected/shutdir/test1/exitstatus
 
 printf -- "\
+================
+TEST ./test1
+stdout:
+stderr:
+  + false
+exitstatus: 1
+FAIL ./test1
+" > expected/shutdir/test1/report
+
+printf -- "\
 " > expected/shutdir/test2/stdout
 
 printf -- "\
@@ -67,6 +77,9 @@ printf -- "\
 printf -- "\
 0
 " > expected/shutdir/test2/exitstatus
+
+printf -- "\
+" > expected/shutdir/test2/report
 
 printf -- "\
 " > expected/shutdir/test3/stdout
@@ -80,6 +93,16 @@ printf -- "\
 " > expected/shutdir/test3/exitstatus
 
 printf -- "\
+================
+TEST ./test3
+stdout:
+stderr:
+  + false
+exitstatus: 1
+FAIL ./test3
+" > expected/shutdir/test3/report
+
+printf -- "\
 " > expected/shutdir/test4/stdout
 
 printf -- "\
@@ -89,6 +112,9 @@ printf -- "\
 printf -- "\
 0
 " > expected/shutdir/test4/exitstatus
+
+printf -- "\
+" > expected/shutdir/test4/report
 
 # prepare shutdir
 

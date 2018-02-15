@@ -26,6 +26,15 @@ error creating workdir
 printf -- "\
 " > expected/shutdir/test1/exitstatus
 
+printf -- "\
+================
+TEST ./test1
+stdout:
+stderr:
+  error creating workdir
+ERROR ./test1
+" > expected/shutdir/test1/report
+
 # prepare shutdir
 
 printf -- "\

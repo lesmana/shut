@@ -40,6 +40,16 @@ printf -- "\
 " > expected/shutdir/d1/test2/exitstatus
 
 printf -- "\
+================
+TEST ./d1/test2
+stdout:
+stderr:
+  + false
+exitstatus: 1
+FAIL ./d1/test2
+" > expected/shutdir/d1/test2/report
+
+printf -- "\
 " > expected/shutdir/d2/d3/test4/stdout
 
 printf -- "\
@@ -49,6 +59,9 @@ printf -- "\
 printf -- "\
 0
 " > expected/shutdir/d2/d3/test4/exitstatus
+
+printf -- "\
+" > expected/shutdir/d2/d3/test4/report
 
 # prepare shutdir
 

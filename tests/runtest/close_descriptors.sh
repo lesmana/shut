@@ -42,6 +42,21 @@ printf -- "\
 0
 " > expected/shutdir/test1/exitstatus
 
+printf -- "\
+================
+TEST ./test1
+stdout:
+  fd3 closed
+  fd4 closed
+  fd5 closed
+  fd6 closed
+  fd7 closed
+  fd8 closed
+  fd9 closed
+stderr:
+PASS ./test1
+" > expected/shutdir/test1/report
+
 # prepare shutdir
 
 printf -- "\

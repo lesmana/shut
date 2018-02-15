@@ -35,6 +35,9 @@ printf -- "\
 0
 " > expected/dirname/test1/exitstatus
 
+printf -- "\
+" > expected/dirname/test1/report
+
 # prepare shutdir
 
 printf -- "\

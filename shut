@@ -67,7 +67,7 @@ runtestandsaveoutput() {
   local fulltestname="$1"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus="$?"
-  xprintreport "$testname" "$exitstatus"
+  xprintreport "$testname" "$exitstatus" | tee report
   return "$exitstatus"
 }
 

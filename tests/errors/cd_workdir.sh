@@ -26,6 +26,15 @@ error changing directory to workdir
 printf -- "\
 " > expected/shutdir/test1/exitstatus
 
+printf -- "\
+================
+TEST ./test1
+stdout:
+stderr:
+  error changing directory to workdir
+ERROR ./test1
+" > expected/shutdir/test1/report
+
 # prepare shutdir
 
 printf -- "\
