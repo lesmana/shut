@@ -63,42 +63,6 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
-runtestandsaveoutput() {
-  local fulltestname="$1"
-  runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
-  local exitstatus="$?"
-  xprintreport "$testname" "$exitstatus" | tee report
-  return "$exitstatus"
-}
-
-# -----------------------------------------------------------------------------
-mkdir_testdir() {
-  local testdir="$1"
-  mkdir -p -- "$testdir" >/dev/null 2>&1 || {
-    printf -- 'error creating testdir: %s\n' "$testdir" >&2
-    return 3
-  }
-}
-
-cd_testdir() {
-  local testdir="$1"
-  cd -- "$testdir" >/dev/null 2>&1 || {
-    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&2
-    return 3
-  }
-}
-
-runtestintestdir() {
-  local testname="$1"
-  local fulltestname="$2"
-  mkdir_testdir "$testname" || return "$?"
-  (
-    cd_testdir "$testname" || return "$?"
-    runtestandsaveoutput "$fulltestname"
-  )
-}
-
-# -----------------------------------------------------------------------------
 printreport() {
   local result="$1"
   local testname="$2"
@@ -135,7 +99,6 @@ printreporterror() {
   printreport "ERROR" "$testname"
 }
 
-# -----------------------------------------------------------------------------
 xprintreport() {
   local testname="$1"
   local exitstatus="$2"
@@ -149,6 +112,42 @@ xprintreport() {
   fi
 }
 
+runtestandsaveoutput() {
+  local fulltestname="$1"
+  runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  local exitstatus="$?"
+  xprintreport "$testname" "$exitstatus" | tee report
+  return "$exitstatus"
+}
+
+# -----------------------------------------------------------------------------
+mkdir_testdir() {
+  local testdir="$1"
+  mkdir -p -- "$testdir" >/dev/null 2>&1 || {
+    printf -- 'error creating testdir: %s\n' "$testdir" >&2
+    return 3
+  }
+}
+
+cd_testdir() {
+  local testdir="$1"
+  cd -- "$testdir" >/dev/null 2>&1 || {
+    printf -- 'error changing directory to testdir: %s\n' "$testdir" >&2
+    return 3
+  }
+}
+
+runtestintestdir() {
+  local testname="$1"
+  local fulltestname="$2"
+  mkdir_testdir "$testname" || return "$?"
+  (
+    cd_testdir "$testname" || return "$?"
+    runtestandsaveoutput "$fulltestname"
+  )
+}
+
+# -----------------------------------------------------------------------------
 xlogresult() {
   local testname="$1"
   local exitstatus="$2"
