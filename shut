@@ -148,7 +148,7 @@ runtestintestdir() {
 }
 
 # -----------------------------------------------------------------------------
-xlogresult() {
+logresult() {
   local testname="$1"
   local exitstatus="$2"
   printf -- '%s\n' "$testname" >>testsrun
@@ -162,19 +162,19 @@ xlogresult() {
   fi
 }
 
-runtestandprintreport() {
+runtestandlogresult() {
   local testname="$1"
   local fulltestname="$2"
   runtestintestdir "$testname" "$fulltestname"
   local exitstatus="$?"
-  xlogresult "$testname" "$exitstatus"
+  logresult "$testname" "$exitstatus"
 }
 
 mayberuntest() {
   local testname="$1"
   local fulltestname="$2"
   if ! "$config_donotruntests"; then
-    runtestandprintreport "$testname" "$fulltestname"
+    runtestandlogresult "$testname" "$fulltestname"
   fi
 }
 
