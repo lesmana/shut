@@ -159,7 +159,6 @@ logresult() {
     printf -- '%s\n' "$testname" >>testsfail
   else
     printf -- '%s\n' "$testname" >>testserror
-    return 3
   fi
 }
 
