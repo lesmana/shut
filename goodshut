@@ -63,13 +63,57 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
-runtestandsaveoutput() {
-  local fulltestname="$1"
+printreportgeneric() {
+  local result="$1"
+  local testname="$2"
+  printf -- '================\n'
+  printf -- 'TEST %s\n' "$testname"
+  printf -- 'stdout:\n'
+  sed 's/^/  /' stdout
+  printf -- 'stderr:\n'
+  sed 's/^/  /' stderr
+  if [ "$result" = "FAIL" ]; then
+    sed 's/^/exitstatus: /' exitstatus
+  fi
+  printf -- '%s %s\n' "$result" "$testname"
+}
+
+printreportpass() {
+  local testname="$1"
+  printreportgeneric "PASS" "$testname" > report
+  if $config_verbose; then
+    cat report
+  fi
+}
+
+printreportfail() {
+  local testname="$1"
+  printreportgeneric "FAIL" "$testname" > report
+  if ! $config_quiet; then
+    cat report
+  fi
+}
+
+printreport() {
+  local testname="$1"
+  local exitstatus="$2"
+  if [ "$exitstatus" = 0 ]; then
+    printreportpass "$testname"
+  elif [ "$exitstatus" = 1 ]; then
+    printreportfail "$testname"
+  else
+    touch report
+    cat stdout
+    cat stderr >&2
+  fi
+}
+
+runtestandprintreport() {
+  local testname="$1"
+  local fulltestname="$2"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus="$?"
-  cat stdout >&1
-  cat stderr >&2
-  cat exitstatus >&3
+  printreport "$testname" "$exitstatus"
   return "$exitstatus"
 }
 
@@ -96,83 +140,60 @@ runtestintestdir() {
   mkdir_testdir "$testname" || return "$?"
   (
     cd_testdir "$testname" || return "$?"
-    runtestandsaveoutput "$fulltestname"
+    runtestandprintreport "$testname" "$fulltestname"
   )
 }
 
 # -----------------------------------------------------------------------------
-printreport() {
-  local result="$1"
-  local testname="$2"
-  printf -- '================\n'
-  printf -- 'TEST %s\n' "$testname"
-  printf -- 'stdout:\n'
-  sed 's/^/  /' stdout
-  printf -- 'stderr:\n'
-  sed 's/^/  /' stderr
-  if [ "$result" = "FAIL" ]; then
-    sed 's/^/exitstatus: /' exitstatus
-  fi
-  printf -- '%s %s\n' "$result" "$testname"
-}
-
-printreportpass() {
-  if ! $config_verbose; then
-    return
-  fi
-  local testname="$1"
-  printreport "PASS" "$testname"
-}
-
-printreportfail() {
-  if $config_quiet; then
-    return
-  fi
-  local testname="$1"
-  printreport "FAIL" "$testname"
-}
-
-printreporterror() {
-  local testname="$1"
-  printreport "ERROR" "$testname"
-}
-
-# -----------------------------------------------------------------------------
-logresultandprintreport() {
+logresult() {
   local testname="$1"
   local exitstatus="$2"
   printf -- '%s\n' "$testname" >>testsrun
   if [ "$exitstatus" = 0 ]; then
     printf -- '%s\n' "$testname" >>testspass
-    printreportpass "$testname"
   elif [ "$exitstatus" = 1 ]; then
     printf -- '%s\n' "$testname" >>testsfail
-    printreportfail "$testname"
   else
     printf -- '%s\n' "$testname" >>testserror
-    printreporterror "$testname"
-    return 3
   fi
 }
 
-runtestandprintreport() {
+runtestandlogresult() {
   local testname="$1"
   local fulltestname="$2"
-  runtestintestdir "$testname" "$fulltestname" 1>stdout 2>stderr 3>exitstatus
+  runtestintestdir "$testname" "$fulltestname"
   local exitstatus="$?"
-  logresultandprintreport "$testname" "$exitstatus"
-  rm stdout stderr exitstatus
+  logresult "$testname" "$exitstatus"
 }
 
 mayberuntest() {
   local testname="$1"
   local fulltestname="$2"
   if ! "$config_donotruntests"; then
-    runtestandprintreport "$testname" "$fulltestname"
+    runtestandlogresult "$testname" "$fulltestname"
   fi
 }
 
+collecttestnames() {
+  local pattern
+  local print="-false"
+  if [ $# -eq 0 ]; then
+    set -- "$default_pattern"
+  fi
+  for pattern in "$@"; do
+    if [ -f "$SHUT_PWD/$pattern" ]; then
+      print="$print -o -type f -executable -path */$pattern"
+    elif [ -d "$SHUT_PWD/$pattern" ]; then
+      print="$print -o -type f -executable -path */$pattern/*"
+    else
+      print="$print -o -type f -executable -regex .*/$pattern[^/]*"
+    fi
+  done
+  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
+}
+
 runtests() {
+  collecttestnames "$@" >testsfound
   touch testsrun testspass testsfail testserror
   local testname
   local fulltestname
@@ -238,8 +259,7 @@ runtestsexitstatus() {
 }
 
 runtestsandprintsummary() {
-  collecttestnames "$@" >testsfound
-  runtests
+  runtests "$@"
   printsummary
   runtestsexitstatus
 }
@@ -294,25 +314,6 @@ runtestsinshutdir() {
     cd_shutdir || return "$?"
     runtestsandprintsummary "$@"
   )
-}
-
-# -----------------------------------------------------------------------------
-collecttestnames() {
-  local pattern
-  local print="-false"
-  if [ $# -eq 0 ]; then
-    set -- "$default_pattern"
-  fi
-  for pattern in "$@"; do
-    if [ -f "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path */$pattern"
-    elif [ -d "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path */$pattern/*"
-    else
-      print="$print -o -type f -executable -regex .*/$pattern[^/]*"
-    fi
-  done
-  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
 }
 
 # -----------------------------------------------------------------------------
