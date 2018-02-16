@@ -94,11 +94,6 @@ printreportfail() {
   fi
 }
 
-printreporterror() {
-  local testname="$1"
-  printgenericreport "ERROR" "$testname" | tee report
-}
-
 printreport() {
   local testname="$1"
   local exitstatus="$2"
@@ -107,7 +102,9 @@ printreport() {
   elif [ "$exitstatus" = 1 ]; then
     printreportfail "$testname"
   else
-    printreporterror "$testname"
+    touch report
+    cat stdout
+    cat stderr >&2
   fi
 }
 

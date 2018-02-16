@@ -27,12 +27,6 @@ printf -- "\
 " > expected/shutdir/test1/exitstatus
 
 printf -- "\
-================
-TEST ./test1
-stdout:
-stderr:
-  error changing directory to workdir
-ERROR ./test1
 " > expected/shutdir/test1/report
 
 # prepare shutdir
@@ -59,12 +53,6 @@ printf -- "\
 
 printf -- "\
 ================
-TEST ./test1
-stdout:
-stderr:
-  error changing directory to workdir
-ERROR ./test1
-================
 error:
 ./test1
 ================
@@ -72,6 +60,7 @@ found: 1 run: 1 pass: 0 fail: 0 error: 1
 " > expected/stdout
 
 printf -- "\
+error changing directory to workdir
 " > expected/stderr
 
 printf -- "\
