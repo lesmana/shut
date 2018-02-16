@@ -42,6 +42,14 @@ printf -- "\
 " > expected/shutdir/test1/exitstatus
 
 printf -- "\
+================
+TEST ./test1
+stdout:
+  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual
+  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/test1
+  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/shutdir/test1/workdir
+stderr:
+PASS ./test1
 " > expected/shutdir/test1/report
 
 # prepare test output
@@ -60,6 +68,14 @@ printf -- "\
 " > expected/shutdir/d1/test2/exitstatus
 
 printf -- "\
+================
+TEST ./d1/test2
+stdout:
+  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual
+  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/d1/test2
+  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/shutdir/d1/test2/workdir
+stderr:
+PASS ./d1/test2
 " > expected/shutdir/d1/test2/report
 
 # prepare shutdir

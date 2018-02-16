@@ -79,6 +79,12 @@ printf -- "\
 " > expected/shutdir/test2/exitstatus
 
 printf -- "\
+================
+TEST ./test2
+stdout:
+stderr:
+  + true
+PASS ./test2
 " > expected/shutdir/test2/report
 
 printf -- "\
@@ -114,6 +120,12 @@ printf -- "\
 " > expected/shutdir/test4/exitstatus
 
 printf -- "\
+================
+TEST ./test4
+stdout:
+stderr:
+  + true
+PASS ./test4
 " > expected/shutdir/test4/report
 
 # prepare shutdir

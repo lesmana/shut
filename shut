@@ -79,24 +79,24 @@ printgenericreport() {
 }
 
 printreportpass() {
-  if ! $config_verbose; then
-    return
-  fi
   local testname="$1"
-  printgenericreport "PASS" "$testname"
+  printgenericreport "PASS" "$testname" > report
+  if $config_verbose; then
+    cat report
+  fi
 }
 
 printreportfail() {
-  if $config_quiet; then
-    return
-  fi
   local testname="$1"
-  printgenericreport "FAIL" "$testname"
+  printgenericreport "FAIL" "$testname" > report
+  if ! $config_quiet; then
+    cat report
+  fi
 }
 
 printreporterror() {
   local testname="$1"
-  printgenericreport "ERROR" "$testname"
+  printgenericreport "ERROR" "$testname" | tee report
 }
 
 printreport() {
@@ -117,7 +117,7 @@ runtestandprintreport() {
   local fulltestname="$2"
   runtestinworkdir "$fulltestname" 1>stdout 2>stderr 3>exitstatus
   local exitstatus="$?"
-  printreport "$testname" "$exitstatus" | tee report
+  printreport "$testname" "$exitstatus"
   return "$exitstatus"
 }
 

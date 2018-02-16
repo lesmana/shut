@@ -36,6 +36,12 @@ printf -- "\
 " > expected/shutdir/test1/exitstatus
 
 printf -- "\
+================
+TEST ./test1
+stdout:
+stderr:
+  + true
+PASS ./test1
 " > expected/shutdir/test1/report
 
 # prepare shutdir
