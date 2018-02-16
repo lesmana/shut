@@ -174,7 +174,26 @@ mayberuntest() {
   fi
 }
 
+collecttestnames() {
+  local pattern
+  local print="-false"
+  if [ $# -eq 0 ]; then
+    set -- "$default_pattern"
+  fi
+  for pattern in "$@"; do
+    if [ -f "$SHUT_PWD/$pattern" ]; then
+      print="$print -o -type f -executable -path */$pattern"
+    elif [ -d "$SHUT_PWD/$pattern" ]; then
+      print="$print -o -type f -executable -path */$pattern/*"
+    else
+      print="$print -o -type f -executable -regex .*/$pattern[^/]*"
+    fi
+  done
+  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
+}
+
 runtests() {
+  collecttestnames "$@" >testsfound
   touch testsrun testspass testsfail testserror
   local testname
   local fulltestname
@@ -239,27 +258,8 @@ runtestsexitstatus() {
   fi
 }
 
-collecttestnames() {
-  local pattern
-  local print="-false"
-  if [ $# -eq 0 ]; then
-    set -- "$default_pattern"
-  fi
-  for pattern in "$@"; do
-    if [ -f "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path */$pattern"
-    elif [ -d "$SHUT_PWD/$pattern" ]; then
-      print="$print -o -type f -executable -path */$pattern/*"
-    else
-      print="$print -o -type f -executable -regex .*/$pattern[^/]*"
-    fi
-  done
-  find "$SHUT_PWD" \( $print \) -printf "./%P\n" | sort
-}
-
 runtestsandprintsummary() {
-  collecttestnames "$@" >testsfound
-  runtests
+  runtests "$@"
   printsummary
   runtestsexitstatus
 }
