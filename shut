@@ -63,7 +63,7 @@ runtestinworkdir() {
 }
 
 # -----------------------------------------------------------------------------
-printgenericreport() {
+printreportgeneric() {
   local result="$1"
   local testname="$2"
   printf -- '================\n'
@@ -80,7 +80,7 @@ printgenericreport() {
 
 printreportpass() {
   local testname="$1"
-  printgenericreport "PASS" "$testname" > report
+  printreportgeneric "PASS" "$testname" > report
   if $config_verbose; then
     cat report
   fi
@@ -88,7 +88,7 @@ printreportpass() {
 
 printreportfail() {
   local testname="$1"
-  printgenericreport "FAIL" "$testname" > report
+  printreportgeneric "FAIL" "$testname" > report
   if ! $config_quiet; then
     cat report
   fi
