@@ -108,7 +108,6 @@ printreport() {
     printreportfail "$testname"
   else
     printreporterror "$testname"
-    return 3
   fi
 }
 
