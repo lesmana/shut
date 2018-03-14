@@ -1,16 +1,6 @@
 todo for shell unit test
 
 ----
-rename to command line tool black box test
-because this is really not a tool to do unit testing of shell scripts
-this is a tool to test command line tools
-and it is a black box test because we only
-give input assert output and side effects
-hence: command line tool black box test
-
-short: cltbbt
-
-----
 how to build arguments for find in collecttests
 
     while read -r pattern; do
