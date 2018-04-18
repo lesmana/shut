@@ -284,7 +284,7 @@ rm_existing_shutdir() {
     printf -- 'will not overwrite\n' >&2
     return 2
   fi
-  rm -r -- "$config_fullshutdir" >/dev/null 2>&1 || {
+  rm -r --interactive=never -- "$config_fullshutdir" >/dev/null 2>&1 || {
     printf -- 'error deleting %s\n' "$config_fullshutdir" >&2
     printf -- 'cannot continue\n' >&2
     return 3

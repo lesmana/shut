@@ -37,7 +37,7 @@ printf -- "\
 printf -- '#! /bin/sh
 shutdir="%s/actual/shutdir"
 realrm="%s"
-if [ "$*" = "-r -- $shutdir" ]; then
+if [ "$*" = "-r --interactive=never -- $shutdir" ]; then
   "$realrm" "$@"
 fi
 "$realrm" "$@"
