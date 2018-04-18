@@ -45,9 +45,9 @@ printf -- "\
 ================
 TEST ./test1
 stdout:
-  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual
-  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/test1
-  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/shutdir/test1/workdir
+  $PWD/actual
+  $PWD/actual/test1
+  $PWD/actual/shutdir/test1/workdir
 stderr:
 PASS ./test1
 " > expected/shutdir/test1/report
@@ -71,9 +71,9 @@ printf -- "\
 ================
 TEST ./d1/test2
 stdout:
-  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual
-  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/d1/test2
-  /home/lesmana/projects/command-line-tool-black-box-test/shutdir/tests/runtest/env.sh/workdir/actual/shutdir/d1/test2/workdir
+  $PWD/actual
+  $PWD/actual/d1/test2
+  $PWD/actual/shutdir/d1/test2/workdir
 stderr:
 PASS ./d1/test2
 " > expected/shutdir/d1/test2/report
