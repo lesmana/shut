@@ -1,6 +1,12 @@
 todo for shell unit test
 
 ----
+log error messages from rm and friends
+
+----
+prepend shut error messages with "shut:"
+
+----
 how to build arguments for find in collecttests
 
     while read -r pattern; do
