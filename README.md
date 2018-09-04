@@ -25,3 +25,15 @@ optionally print messages which help to determine what went wrong.
 
 shut will then execute the tests and print a nice summary.
 if some tests failed also print the messages from the tests.
+
+License
+-------
+
+Copyright Lesmana Zimmer lesmana@gmx.de
+
+This program is licensed under GNU GPL version 3 or later.
+That means you can use this program for any purpose,
+you can study and modify this program to suit your needs,
+and you can share this program (in original or modified form)
+with anyone provided that you do so under the same license.
+For details see https://www.gnu.org/licenses/gpl-3.0.html

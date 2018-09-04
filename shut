@@ -1,5 +1,10 @@
 #! /bin/dash
 
+# shut
+# Copyright Lesmana Zimmer lesmana@gmx.de
+# Licensed under GNU GPL version 3 or later
+# https://www.gnu.org/licenses/gpl-3.0.html
+
 default_pattern="test"
 
 config_donotruntests=false
